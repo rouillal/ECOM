@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app="eComBio">
+<head>
+<meta charset="utf-8">
+<title>Achat de produit bio en ligne</title>
+<script type="text/javascript" src="resources/jsext/angular.min.js"></script>
+<script>
+	var eComBioApp = angular.module('eComBio', [ ]);
+</script>
+<script type="text/javascript"
+	src="resources/modules/dao-rest-svc/dao-rest-svc.js"></script>
+<script type="text/javascript"
+	src="resources/modules/main-ctrl/main-ctrl.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+<h1>Liste de fruits :</h1>
+<ul ng-repeat="fruit in listFruits">
+<li>{{fruit.name}}</li>
+</ul>
+<h1 ng-show="anomalieTechnique != ''">anomalieTechnique : {{anomalieTechnique}}</h1>
+</body>
+</html>
