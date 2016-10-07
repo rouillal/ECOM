@@ -1,1 +1,1 @@
-insert into Fruit(id, name) values (0, 'Pomme'),(1, 'Poire') ,(2, 'Raisin'); 
+insert into Produit(id, name, variete, prix, provenance, dateCueillette) values (0, 'Pomme', 'PinkLady', 15, 'La ferme A Dédé', '16/09/2016'), (1, 'Pomme', 'Golden', 10, 'La ferme A Dédé', '10/09/2016') ,(2, 'Raisin', 'Centennial', 62, 'La ferme A Dédé', '20/09/2016'); 

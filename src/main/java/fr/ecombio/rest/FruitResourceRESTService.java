@@ -10,7 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import fr.ecombio.data.FruitRepository;
-import fr.ecombio.model.Fruit;
+import fr.ecombio.model.Produit;
 
 
 /**
@@ -27,7 +27,7 @@ public class FruitResourceRESTService {
 
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Fruit> listAllFruits() {
+    public List<Produit> listAllFruits() {
         return repository.findAllOrderedByName();
     }
 }

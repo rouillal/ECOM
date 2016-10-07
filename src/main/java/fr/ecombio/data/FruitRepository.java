@@ -7,7 +7,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import fr.ecombio.model.Fruit;
+import fr.ecombio.model.Produit;
 
 import java.util.List;
 
@@ -17,19 +17,19 @@ public class FruitRepository {
 	@Inject
 	private EntityManager em;
 
-	public Fruit findById(Long id) {
-		return em.find(Fruit.class, id);
+	public Produit findById(Long id) {
+		return em.find(Produit.class, id);
 	}
 
-	public List<Fruit> findAllOrderedByName() {
+	public List<Produit> findAllOrderedByName() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Fruit> criteria = cb.createQuery(Fruit.class);
-		Root<Fruit> Fruit = criteria.from(Fruit.class);
+		CriteriaQuery<Produit> criteria = cb.createQuery(Produit.class);
+		Root<Produit> Produit = criteria.from(Produit.class);
 		// Swap criteria statements if you would like to try out type-safe
 		// criteria queries, a new
 		// feature in JPA 2.0
-		// criteria.select(Fruit).orderBy(cb.asc(Fruit.get(Fruit_.name)));
-		criteria.select(Fruit).orderBy(cb.asc(Fruit.get("name")));
+		// criteria.select(Produit).orderBy(cb.asc(Produit.get(Produit_.name)));
+		criteria.select(Produit).orderBy(cb.asc(Produit.get("name")));
 		return em.createQuery(criteria).getResultList();
 	}
 }
