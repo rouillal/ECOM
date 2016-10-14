@@ -37,7 +37,6 @@ public class Produit implements Serializable {
 
 
 	@NotNull
-	@Size(min = 1, max = 25)
 	//@Pattern(regexp = "^(?:[1-9]\\d*|0)?(?:\\.\\d+)?$", message = "Must be float")
 	private float prix;
 

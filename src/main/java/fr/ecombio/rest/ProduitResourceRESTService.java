@@ -16,9 +16,9 @@ import fr.ecombio.model.Produit;
 /**
  * JAX-RS Example
  * <p/>
- * This class produces a RESTful service to read/write the contents of the Fruits table.
+ * This class produces a RESTful service to read/write the contents of the Produits table.
  */
-@Path("/fruit")
+@Path("/produit")
 @RequestScoped
 public class ProduitResourceRESTService {
 
