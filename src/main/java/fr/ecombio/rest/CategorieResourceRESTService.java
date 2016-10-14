@@ -9,25 +9,20 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import fr.ecombio.data.CategorieRepository;
 import fr.ecombio.data.ProduitRepository;
+import fr.ecombio.model.Categorie;
 import fr.ecombio.model.Produit;
-
-
-/**
- * JAX-RS Example
- * <p/>
- * This class produces a RESTful service to read/write the contents of the Fruits table.
- */
-@Path("/produit")
+@Path("/categorie")
 @RequestScoped
-public class ProduitResourceRESTService {
+public class CategorieResourceRESTService {
 
 	@Inject
-    private ProduitRepository repository;
+    private CategorieRepository repository;
 
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Produit> listAllProduits() {
+    public List<Categorie> listAllProduits() {
         return repository.findAllOrderedByName();
-    }
+	}
 }
