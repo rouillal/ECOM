@@ -9,8 +9,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import fr.ecombio.data.FruitRepository;
-import fr.ecombio.model.Fruit;
+import fr.ecombio.data.ProduitRepository;
+import fr.ecombio.model.Produit;
 
 
 /**
@@ -20,14 +20,14 @@ import fr.ecombio.model.Fruit;
  */
 @Path("/fruit")
 @RequestScoped
-public class FruitResourceRESTService {
+public class ProduitResourceRESTService {
 
 	@Inject
-    private FruitRepository repository;
+    private ProduitRepository repository;
 
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Fruit> listAllFruits() {
+    public List<Produit> listAllProduits() {
         return repository.findAllOrderedByName();
     }
 }
