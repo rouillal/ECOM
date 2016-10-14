@@ -1,13 +1,17 @@
 eComBioApp.controller('MainCtrl', [ '$scope', '$window', 'restBackendSvc',
 		function($scope, $window, restBackendSvc) {
-			$scope.listFruits = [ 't', 'tt' ];
+			$scope.listProduits = [ 'p', 'pp' ];
+			$scope.listCategories = [ 'c', 'cc' ];
 			$scope.anomalieTechnique = "";
 			
 			$scope.$on('anomalieTechnique', function(event, msg) {
 				$scope.anomalieTechnique = msg;
 			});
 			
-			restBackendSvc.getItems().then(function(data) {
-				$scope.listFruits = data.data;
+			restBackendSvc.getItems(0).then(function(data) {
+				$scope.listProduits = data.data;
+			});
+			restBackendSvc.getItems(1).then(function(data) {
+				$scope.listCategories = data.data;
 			});
 		} ])

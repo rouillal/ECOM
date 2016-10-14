@@ -12,12 +12,14 @@ eComBioApp.factory('restBackendSvc', [
 		'$rootScope',
 		function($http, $q, $location, $rootScope) {
 			var backandGlobalUrlRoot = 'http://' + $location.host()
-					+ ':8080/ECOM/rest/fruit';
+					+ ':8080/ECOM/rest/';
+			var backandGlobalUrl = [backandGlobalUrlRoot + 'produit',
+			backandGlobalUrlRoot + 'categorie'];
 
-			function getItems() {
+			function getItems(rubrique) {
 				var request = $http({
 					method : 'GET',
-					url : backandGlobalUrlRoot
+					url : backandGlobalUrl[rubrique]
 
 				});
 
