@@ -2,9 +2,7 @@ package fr.ecombio.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -23,6 +21,10 @@ public class Produit implements Serializable {
 	@GeneratedValue
 	private Long id;
 
+	@ManyToOne
+	@JoinColumn(name="Categorie_id")
+	private Categorie categorie;
+	
 	@NotNull
 	@Size(min = 1, max = 25)
 	@Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
@@ -36,7 +38,7 @@ public class Produit implements Serializable {
 
 	@NotNull
 	@Size(min = 1, max = 25)
-	@Pattern(regexp = "^(?:[1-9]\\d*|0)?(?:\\.\\d+)?$", message = "Must be float")
+	//@Pattern(regexp = "^(?:[1-9]\\d*|0)?(?:\\.\\d+)?$", message = "Must be float")
 	private float prix;
 
 	/*@NotNull
@@ -93,6 +95,14 @@ public class Produit implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public Categorie getCategorie() {
+		return categorie;
+	}
+
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
 	}
 
 	public String getName() {

@@ -12,7 +12,7 @@ import fr.ecombio.model.Produit;
 import java.util.List;
 
 @ApplicationScoped
-public class FruitRepository {
+public class ProduitRepository {
 
 	@Inject
 	private EntityManager em;
