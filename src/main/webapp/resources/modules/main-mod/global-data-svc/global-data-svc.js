@@ -21,17 +21,16 @@ eComBioApp
 														switch (rubrique_order
 																.toString()) {
 														case '0':
-															liste_items[rubrique_order] = data.data._embedded.produit;
+															liste_items[rubrique_order] = data.data;
 															break;
 														case '1':
-															liste_items[rubrique_order] = data.data._embedded.categorie;
+															liste_items[rubrique_order] = data.data;
 															break;
 														}
 														cached_items[rubrique_order] = true;
 														$rootScope.$broadcast(
 																'datasupplied',
-																rubrique_order,
-																data);
+																rubrique_order);
 													});
 								}
 								return ret;
