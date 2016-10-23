@@ -1,4 +1,4 @@
-eComBioApp.controller('ProductCatalogCtrl', [ '$scope','$window', 'restBackendSvc', function($scope,$window,restBackendSvc) {
+eComBioApp.controller('ProductCatalogCtrl', [ '$scope','$window', 'globalDataSvc', 'restBackendSvc', function($scope,$window,globalDataSvc,restBackendSvc) {
 	$scope.listProduits = [ 'p', 'pp' ];
 	$scope.listCategories = [ 'c', 'cc' ];
 	

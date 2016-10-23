@@ -25,6 +25,32 @@ eComBioApp.factory('restBackendSvc', [
 
 				return sendRequest(request);
 			}
+			
+			function createItem(rubrique, body) {
+				var request = $http({
+					method : 'POST',
+					data : body,
+					url : backandGlobalUrl[rubrique]
+				});
+				return sendRequest(request);
+			}
+			
+			function updateItem(urlid, body) {
+				var request = $http({
+					method : 'PUT',
+					data : body,
+					url : urlid
+				});
+				return sendRequest(request);
+			}
+
+			function deleteItem(urlid) {
+				var request = $http({
+					method : 'DELETE',
+					url : urlid
+				});
+				return sendRequest(request);
+			}
 
 			function sendRequest(config) {
 				var deferred = $q.defer();
@@ -41,6 +67,9 @@ eComBioApp.factory('restBackendSvc', [
 			}
 
 			return {
-				getItems : getItems
+				createItem : createItem,
+				getItems : getItems,
+				updateItem : updateItem,
+				deleteItem : deleteItem
 			};
 		} ]);
