@@ -1,12 +1,18 @@
 <div class="row">
 	<div class="col-xs-12 col-sm-3">
-		<h1>Categories :</h1>
-		
-		&nbsp; &nbsp;
+		<h1>Categories :{{searchProductString}}</h1>
+		<div class="row">
+			<input type="text" ng-model="searchProductString" />
+			&nbsp; &nbsp;
+			<button class="btn" ng-click="getProductSearchName()"
+				ng-show="isSelectProduct()">
+				<span class="glyphicon glyphicon-plus"></span>
+			</button>
+		</div>
 	</div>
 
 	<div class="col-xs-12 col-sm-9">
-		<h1>Liste de categorieas :</h1>
+		<h1>Liste de categories :</h1>
 		<div ng-repeat="produit in listProduits">
 			<div class="col-xs-3">{{produit.name}}</div>
 		</div>
