@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 @Entity
 public class Produit implements Serializable {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@ManyToOne
