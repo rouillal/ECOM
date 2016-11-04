@@ -5,6 +5,7 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -32,6 +33,11 @@ public class ProduitResourceRESTService {
         return repository.findAllOrderedByName();
     }
 	
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public void AjoutProduit(Produit prod){
+		repository.AjoutProduit(prod);
+	}
 	@GET
 	@Path("{cat}")
     @Produces(MediaType.APPLICATION_JSON)

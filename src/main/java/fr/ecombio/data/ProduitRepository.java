@@ -33,6 +33,20 @@ public class ProduitRepository {
 		criteria.select(Produit).orderBy(cb.asc(Produit.get("name")));
 		return em.createQuery(criteria).getResultList();
 	}
+	
+	public  void AjoutProduit(Produit prod) {
+		/*Produit prod = new Produit();
+		prod.setName(name);
+		prod.setVariete(variete);
+		prod.setQuantite(quantite);
+		prod.setStock(stock);
+		prod.setPrix(prix);
+		prod.setProvenance(provenance);
+		prod.setDateCueillette(dateCueillette);*/
+		em.getTransaction().begin();
+		em.persist(prod);
+		em.getTransaction().commit();
+	}
 
 	public List<Produit> findCatOrderedByName(String cat) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();

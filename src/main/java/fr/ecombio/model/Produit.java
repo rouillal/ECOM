@@ -16,6 +16,7 @@ import javax.validation.constraints.Size;
 
 @SuppressWarnings("serial")
 @Entity
+@Table(name = "Produit")
 public class Produit implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +35,12 @@ public class Produit implements Serializable {
 	@Size(min = 1, max = 25)
 	@Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
 	private String variete;
-
+	
+	@NotNull
+	private int quantite;
+	
+	@NotNull
+	private int stock;
 
 	@NotNull
 	//@Pattern(regexp = "^(?:[1-9]\\d*|0)?(?:\\.\\d+)?$", message = "Must be float")
@@ -44,6 +50,8 @@ public class Produit implements Serializable {
     //@Size(min = 1, max = 25)
     //@Pattern(regexp = "[0-9]*", message = "Must contain numbers")
     private ?? image;*/
+	
+	private String filename;
 
 	// provenance
 	@NotNull
@@ -111,5 +119,22 @@ public class Produit implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public int getQuantite() {
+		return quantite;
+	}
+
+	public void setQuantite(int quantite) {
+		this.quantite = quantite;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
 
 }
