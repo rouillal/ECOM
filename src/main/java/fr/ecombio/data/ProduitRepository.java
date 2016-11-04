@@ -7,6 +7,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import fr.ecombio.model.Categorie;
 import fr.ecombio.model.Produit;
 
 import java.util.List;
@@ -45,5 +46,18 @@ public class ProduitRepository {
 		em.getTransaction().begin();
 		em.persist(prod);
 		em.getTransaction().commit();
+	}
+
+	public List<Produit> findCatOrderedByName(String cat) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Categorie> criteria = cb.createQuery(Categorie.class);
+		Root<Categorie> Categorie = criteria.from(Categorie.class);
+		criteria.select(Categorie).where( cb.equal( Categorie.get("name"),cat ));
+		List<Categorie> cats = em.createQuery(criteria).getResultList();
+		List<Produit> result = null;
+		for (Categorie cat1 : cats) {
+			result.addAll(cat1.getProduits());
+		}
+		return result;
 	}
 }
