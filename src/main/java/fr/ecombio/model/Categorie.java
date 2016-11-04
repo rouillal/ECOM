@@ -10,6 +10,7 @@ import javax.validation.constraints.Size;
 
 @SuppressWarnings("serial")
 @Entity
+@Table(name="Categorie")
 public class Categorie implements Serializable {
 
 
