@@ -26,6 +26,24 @@ public class Produit implements Serializable {
 	@JoinColumn(name="Categorie_id")
 	private Categorie categorie;
 	
+	public Produit() {
+		super();
+	}
+
+	public Produit(Categorie categorie, String name, String variete, int quantite, int stock, float prix,
+			String filename, String provenance, String dateCueillette) {
+		super();
+		this.categorie = categorie;
+		this.name = name;
+		this.variete = variete;
+		this.quantite = quantite;
+		this.stock = stock;
+		this.prix = prix;
+		this.filename = filename;
+		this.provenance = provenance;
+		this.dateCueillette = dateCueillette;
+	}
+
 	@NotNull
 	@Size(min = 1, max = 25)
 	@Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")

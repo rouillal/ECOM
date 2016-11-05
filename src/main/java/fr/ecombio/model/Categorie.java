@@ -37,7 +37,14 @@ public class Categorie implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
+	public Categorie(String name, Collection<Produit> produits) {
+		super();
+		this.name = name;
+		this.produits = produits;
+	}
+
+
 	public Categorie(String name) {
 		super();
 		this.name = name;

@@ -1,5 +1,6 @@
 package fr.ecombio.data;
 
+import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -12,7 +13,7 @@ import fr.ecombio.model.Produit;
 
 import java.util.List;
 
-@ApplicationScoped
+@Stateless
 public class ProduitRepository {
 
 	@Inject
@@ -43,9 +44,7 @@ public class ProduitRepository {
 		prod.setPrix(prix);
 		prod.setProvenance(provenance);
 		prod.setDateCueillette(dateCueillette);*/
-		em.getTransaction().begin();
 		em.persist(prod);
-		em.getTransaction().commit();
 	}
 
 	public List<Produit> findCatOrderedByName(String cat) {

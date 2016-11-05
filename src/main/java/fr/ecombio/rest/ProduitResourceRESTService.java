@@ -1,5 +1,4 @@
 package fr.ecombio.rest;
-
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
@@ -38,6 +37,7 @@ public class ProduitResourceRESTService {
 	public void AjoutProduit(Produit prod){
 		repository.AjoutProduit(prod);
 	}
+	
 	@GET
 	@Path("{cat}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -45,3 +45,4 @@ public class ProduitResourceRESTService {
         return repository.findCatOrderedByName(cat);
     }
 }
+
