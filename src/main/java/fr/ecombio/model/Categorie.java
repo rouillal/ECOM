@@ -8,20 +8,25 @@ import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.*;
+
 @SuppressWarnings("serial")
 @Entity
-@Table(name="Categorie")
+@Table(name="categorie")
 public class Categorie implements Serializable {
 
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "categorie_id")
 	private Long id ;
 	
 	@Size(min = 1, max = 25)
 	@Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
+    @Column(name = "categorie_name")
 	private String name;
 	
+	@JsonBackReference
 	@OneToMany(mappedBy="categorie", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private Collection<Produit> produits;
 	
