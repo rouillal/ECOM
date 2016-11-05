@@ -22,7 +22,7 @@ public class CategorieResourceRESTService {
 
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Categorie> listAllProduits() {
+    public List<Categorie> listAllCategories() {
         return repository.findAllOrderedByName();
 	}
 }
