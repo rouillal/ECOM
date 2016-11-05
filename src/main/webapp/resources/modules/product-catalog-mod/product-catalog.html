@@ -6,9 +6,12 @@
 	</div>
 
 	<div class="col-xs-12 col-sm-9">
-		<h1>Liste de categories :</h1>
 		<div ng-repeat="produit in listProduits">
-			<div class="col-xs-3">{{produit.name}}</div>
+			<div style="text-align:center; margin-top:100px;" class="col-xs-3">
+			{{produit.name}} {{produit.variete}}<br>
+			<img width="200px" height="200px" ng-src="resources/modules/product-catalog-mod/img/{{produit.name}}{{produit.variete}}.jpg"><br>
+			{{produit.prix}}€
+			</div>
 		</div>
 	</div>
 </div>
