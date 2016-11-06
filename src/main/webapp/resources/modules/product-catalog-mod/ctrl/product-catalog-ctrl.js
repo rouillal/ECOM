@@ -1,40 +1,36 @@
-eComBioApp.controller('ProductCatalogCtrl', [ '$scope','$window', 'globalDataSvc', 'productSvc', function($scope,$window,globalDataSvc,productSvc) {
-	$scope.listProduits = [ 'p', 'pp' ];
+eComBioApp.controller('ProductCatalogCtrl', [ '$scope','$window', 'globalDataSvc', 'productSvc','searchProductCriteriaSvc',function($scope,$window,globalDataSvc,productSvc,searchProductCriteriaSvc) {
+	$scope.listProducts = productSvc.getAllProducts();
 	$scope.listCategories = [ 'c', 'cc' ];
-	$scope.searchProductString="se";
+	$scope.searchProductString = searchProductCriteriaSvc.getSearchProductStringCriteria();
+	
+	$scope.selectedProduct='';
+	$scope.selectDetailsProduct = function(productSelected) {
+		$scope.selectedProduct=productSelected;
+	}
 	
 	$scope.isSelectProduct = function() {
 		return $scope.searchProductString != "";
 	}
 	
-	$scope.getProductSearchName  = function() {
-		productSvc.getProductBySearchName($scope.searchProductString);
+	$scope.searchProductByName  = function() {
+		searchProductCriteriaSvc.setSearchProductStringCriteria($scope.searchProductString);
 	}
 	
-	$scope.listProduits = globalDataSvc.getListItems(0, false);
-	$scope.listCategories = globalDataSvc.getListItems(1, false);
+	$scope.selectProduct  = function(productSelected) {
+		$window.alert('Yo !');
+		$scope.selectedProduct = productSelected;
+	}
 	
-	$scope.$on('datasupplied', function(event, rubrique_order) {
-		switch (rubrique_order
-				.toString()) {
-		case '0':
-			$scope.listProduits = globalDataSvc.getListItems(0, false);
-			break;
-		case '1':
-			$scope.listProduits = globalDatalSvc.getListItems(0, false);
-			break;
-		}
+	//$scope.listProducts = globalDataSvc.getListItems(0, false);
+	//$scope.listCategories = globalDataSvc.getListItems(1, false);
+	
+	
+	$scope.$on('listProductsSupplied', function(event,listProductsReceived) {
+		$scope.listProducts = listProductsReceived;
 	});
 	
-	$scope.$on('datasupplied', function(event, rubrique_order) {
-		switch (rubrique_order
-				.toString()) {
-		case '0':
-			$scope.listProduits = globalDataSvc.getListItems(0, false);
-			break;
-		case '1':
-			$scope.listProduits = globalDatalSvc.getListItems(0, false);
-			break;
-		}
+	$scope.$on('detailsProductSupplied', function(event,listProductsReceived) {
+		$scope.listProducts = listProductsReceived;
 	});
+	
 } ]);

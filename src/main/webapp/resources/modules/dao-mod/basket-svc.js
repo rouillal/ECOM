@@ -1,13 +1,13 @@
 eComBioApp
 		.factory(
-				'productSvc',
+				'basketSvc',
 				[
 						'$rootScope',
 						'restBackendSvc',
 						'$window',
 						function($rootScope, restBackendSvc,$window) {
 							var getProductBySearchName = function(searchString) {
-								$window.alert("ee");
+								$window.alert("ef");
 								restBackendSvc
 											.getItemsByUrl("produit/cat?parameter="+searchString)
 											.then(

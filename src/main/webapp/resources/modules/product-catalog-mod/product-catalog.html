@@ -2,19 +2,20 @@
 	<div class="col-xs-12 col-sm-3">
 		<h1>Categories :{{searchProductString}}</h1>
 		<div class="row">
-			<input type="text" ng-model="searchProductString" />
-			&nbsp; &nbsp;
-			<button class="btn" ng-click="getProductSearchName()"
+			<input type="text" ng-model="searchProductString" /> &nbsp;
+			<button class="btn" ng-click="searchProductByName()"
 				ng-show="isSelectProduct()">
-				<span class="glyphicon glyphicon-plus"></span>
+				<span class="glyphicon glyphicon-search"></span>
 			</button>
 		</div>
 	</div>
 
 	<div class="col-xs-12 col-sm-9">
 		<h1>Liste de categories :</h1>
-		<div ng-repeat="produit in listProduits">
-			<div class="col-xs-3">{{produit.name}}</div>
+		<div ng-include src="'resources/modules/product-catalog-mod/partials/modalContent.html'"></div>
+
+		<div ng-repeat="product in listProducts">
+			<div class="col-xs-3" ng-click="selectDetailsProduct(product)" data-toggle="modal" data-target="#myModal">{{product.name}}</div>
 		</div>
 	</div>
 </div>
