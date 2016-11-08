@@ -1,6 +1,7 @@
-eComBioApp.controller('ProductCatalogCtrl', [ '$scope','$window', 'globalDataSvc', 'productSvc','searchProductCriteriaSvc',function($scope,$window,globalDataSvc,productSvc,searchProductCriteriaSvc) {
-	$scope.listProducts = productSvc.getAllProducts();
-	$scope.listCategories = [ 'c', 'cc' ];
+eComBioApp.controller('ProductCatalogCtrl', [ '$scope','$window','categorieSvc','productSvc','searchProductCriteriaSvc',function($scope,$window,categorieSvc,productSvc,searchProductCriteriaSvc) {
+	$scope.listProduits = productSvc.getAllProducts();
+	$scope.listCategories = categorieSvc.getAllCategories();
+	$scope.listCategoriesChoix=[false,true,false];
 	$scope.searchProductString = searchProductCriteriaSvc.getSearchProductStringCriteria();
 	
 	$scope.selectedProduct='';
@@ -24,13 +25,16 @@ eComBioApp.controller('ProductCatalogCtrl', [ '$scope','$window', 'globalDataSvc
 	//$scope.listProducts = globalDataSvc.getListItems(0, false);
 	//$scope.listCategories = globalDataSvc.getListItems(1, false);
 	
+	$scope.$on('listCategoriesSupplied', function(event,listCategoriesSupplied) {
+		$scope.listCategories = listCategoriesSupplied;
+	});
 	
 	$scope.$on('listProductsSupplied', function(event,listProductsReceived) {
-		$scope.listProducts = listProductsReceived;
+		$scope.listProduits = listProductsReceived;
 	});
 	
 	$scope.$on('detailsProductSupplied', function(event,listProductsReceived) {
-		$scope.listProducts = listProductsReceived;
+		$scope.listProduits = listProductsReceived;
 	});
 	
 } ]);
