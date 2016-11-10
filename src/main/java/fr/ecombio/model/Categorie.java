@@ -10,6 +10,13 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.*;
 
+
+/**
+ * 
+ * Classe représentant une catégorie
+ * Fruit, Legumes, Cremerie
+ *
+ */
 @SuppressWarnings("serial")
 @Entity
 @Table(name="categorie")

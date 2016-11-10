@@ -10,16 +10,17 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
-/*
- * unité de mesure
- * durée de conservation
- * calories
+/**
+ * 
+ * Classe représentant un produit
+ *
  */
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "produit")
 public class Produit implements Serializable {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "produit_id")
