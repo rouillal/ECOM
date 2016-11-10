@@ -5,6 +5,8 @@
 <title>Commerce de produits bio en ligne</title>
 <link rel="stylesheet" type="text/css"
 	href="resources/cssext/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="resources/cssext/bootstrap-theme.min.css" />
 <script type="text/javascript" src="resources/jsext/angular.min.js"></script>
 <script type="text/javascript" src="resources/jsext/jquery.min.js"></script>
 <script type="text/javascript"
@@ -18,7 +20,17 @@
 <script type="text/javascript"
 	src="resources/modules/main-mod/global-data-svc/global-data-svc.js"></script>
 <script type="text/javascript"
+	src="resources/modules/dao-mod/categorie-svc.js"></script>
+<script type="text/javascript"
+	src="resources/modules/dao-mod/product-svc.js"></script>
+<script type="text/javascript"
+	src="resources/modules/dao-mod/basket-svc.js"></script>
+<script type="text/javascript"
+	src="resources/modules/product-catalog-mod/svc/search-product-crit-svc.js"></script>
+<script type="text/javascript"
 	src="resources/modules/product-catalog-mod/ctrl/product-catalog-ctrl.js"></script>
+<script type="text/javascript"
+	src="resources/modules/product-catalog-mod/ctrl/product-detail-ctrl.js"></script>
 <script type="text/javascript"
 	src="resources/modules/recipe-mod/ctrl/recipe-ctrl.js"></script>
 <script type="text/javascript"
@@ -26,39 +38,41 @@
 <script type="text/javascript"
 	src="resources/modules/connect-mod/ctrl/connect-ctrl.js"></script>
 <script type="text/javascript"
+	src="resources/modules/signIn-mod/ctrl/signIn-ctrl.js"></script>
+<script type="text/javascript"
 	src="resources/modules/main-mod/main-ctrl/route-config.js"></script>
 <script type="text/javascript"
 	src="resources/modules/main-mod/main-ctrl/main-ctrl.js"></script>
 </head>
 <body ng-controller="MainCtrl">
-	<div id="headerBan" class="row">
-		<div class="col-xs-2">
-			<a href="#"> <img
-				src="resources/modules/main-mod/img/catalog.jpg">
-			</a>
-		</div>
-		<div class="col-xs-2">
-			<a href="#/recipe"> <img
-				src="resources/modules/main-mod/img/toque.jpg">
-			</a>
-		</div>
-		<div class="col-xs-4">
-			logo de ouf &nbsp; <img id="logo"
-				src="resources/modules/main-mod/img/logo.jpg" alt="logo de ouf"
-				title="Tip : logo de ouf" alt="Background image" />
-		</div>
-		<div class="col-xs-4">
-			<div class="col-xs-1">
-				<a href="#/connect"> Se Connecter </a>
-			</div>
-			<div class="col-xs-1"></div>
-			<div class="col-xs-2">
-				<a href="#/basket"> <img
-					src="resources/modules/main-mod/img/panier.jpg">
-				</a>
-			</div>
-		</div>
-	</div>
+	<header
+		style="background-image:url(resources/modules/main-mod/img/fond.jpg); background-repeat: repeat; height: 125px; color: White; font-family: Bradley Hand"">
+		<nav style="width: 1000px; margin: auto;">
+			<ul>
+				<li style="display: inline-block; vertical-align: middle"><a
+					href="#"> <img
+						src="resources/modules/main-mod/img/produits.png">
+				</a></li>
+				<li
+					style="display: inline-block; margin-left: 75px; vertical-align: middle"><a
+					href="#/recipe"> <img
+						src="resources/modules/main-mod/img/recettes.png">
+				</a></li>
+				<li
+					style="display: inline-block; margin-left: 75px; vertical-align: middle"><img
+					style="margin-top: 10px; width: 250px; height: 125px;"
+					src="resources/modules/main-mod/img/logo.png" alt="logo"
+					title="logo" /></li>
+				<li
+					style="display: inline-block; margin-left: 150px;"><a
+					style="text-decoration: none; color: White;" href="#/connect">Me
+						Connecter </a> - <a style="text-decoration: none; color: White;"
+					href="#/signIn"> M'inscrire </a><br><a href="#/basket"> <img
+						style="margin-top:20px; margin-left: 25px" src="resources/modules/main-mod/img/panier.png">
+				</a></li>
+			</ul>
+		</nav>
+	</header>
 	<div ng-view></div>
 	<h1 ng-show="anomalieTechnique != ''">anomalieTechnique :
 		{{anomalieTechnique}}</h1>

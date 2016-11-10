@@ -26,6 +26,16 @@ eComBioApp.factory('restBackendSvc', [
 				return sendRequest(request);
 			}
 			
+			function getItemsByUrl(url) {
+				var urlTmp = backandGlobalUrlRoot + url;
+				var request = $http({
+					method : 'GET',
+					url : urlTmp
+				});
+
+				return sendRequest(request);
+			}
+			
 			function createItem(rubrique, body) {
 				var request = $http({
 					method : 'POST',
@@ -69,6 +79,7 @@ eComBioApp.factory('restBackendSvc', [
 			return {
 				createItem : createItem,
 				getItems : getItems,
+				getItemsByUrl : getItemsByUrl,
 				updateItem : updateItem,
 				deleteItem : deleteItem
 			};
