@@ -17,9 +17,34 @@ eComBioApp
 													});
 							}
 							
-							var getProductBySearchName = function(searchString) {
+							var getProductBySearchName = function(searchString,listCategories,listCategoriesChoix) {
+								var restAdress="produit";
+								var categoSelected = '';
+								angular.forEach(listCategories, function(categorie, key) {
+									if (listCategoriesChoix[key]) {
+										if (categoSelected != '') {
+											categoSelected += ',';
+										}
+										categoSelected += categorie.id;
+									} 
+								});
+								if ((categoSelected != '')||(searchString != '')) {
+									restAdress += '/filter?';
+								}
+								if (categoSelected != '') {
+									restAdress += 'cat='+categoSelected;
+								}
+								if (searchString != '') {
+									if (categoSelected != '') {
+										restAdress += '&';
+									}
+									restAdress += 'search='+searchString;
+								}
+								$rootScope.$broadcast(
+										'debug',
+										restAdress);
 								restBackendSvc
-											.getItemsByUrl("produit/cat?parameter="+searchString)
+											.getItemsByUrl(restAdress)
 											.then(
 													function(data) {
 														$rootScope.$broadcast(

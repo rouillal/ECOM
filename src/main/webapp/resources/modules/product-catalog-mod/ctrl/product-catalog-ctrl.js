@@ -4,6 +4,7 @@ eComBioApp.controller('ProductCatalogCtrl', [ '$scope','$window','categorieSvc',
 	$scope.listCategoriesChoix=[false,true,false];
 	$scope.searchProductString = searchProductCriteriaSvc.getSearchProductStringCriteria();
 	
+	$scope.debug = 'R';
 	$scope.selectedProduct='';
 	$scope.selectDetailsProduct = function(productSelected) {
 		$scope.selectedProduct=productSelected;
@@ -13,8 +14,13 @@ eComBioApp.controller('ProductCatalogCtrl', [ '$scope','$window','categorieSvc',
 		return $scope.searchProductString != "";
 	}
 	
+	$scope.searchProductByCategoChange  = function() {
+		//$window.alert('Yo !');
+		searchProductCriteriaSvc.searchProductDirectly($scope.listCategories,$scope.listCategoriesChoix);
+	}
+	
 	$scope.searchProductByName  = function() {
-		searchProductCriteriaSvc.setSearchProductStringCriteria($scope.searchProductString);
+		searchProductCriteriaSvc.setSearchProductStringCriteria($scope.searchProductString,$scope.listCategories,$scope.listCategoriesChoix);
 	}
 	
 	$scope.selectProduct  = function(productSelected) {
@@ -35,6 +41,10 @@ eComBioApp.controller('ProductCatalogCtrl', [ '$scope','$window','categorieSvc',
 	
 	$scope.$on('detailsProductSupplied', function(event,listProductsReceived) {
 		$scope.listProduits = listProductsReceived;
+	});
+
+	$scope.$on('debug', function(event,message) {
+		$scope.debug = message;
 	});
 	
 } ]);
