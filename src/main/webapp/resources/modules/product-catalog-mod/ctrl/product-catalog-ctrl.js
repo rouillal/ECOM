@@ -1,26 +1,13 @@
-eComBioApp.controller('ProductCatalogCtrl', [ '$scope','$window','categorieSvc','productSvc','searchProductCriteriaSvc',function($scope,$window,categorieSvc,productSvc,searchProductCriteriaSvc) {
+eComBioApp.controller('ProductCatalogCtrl', [ '$scope','$window','productSvc',function($scope,$window,productSvc) {
 	$scope.listProduits = productSvc.getAllProducts();
-	$scope.listCategories = categorieSvc.getAllCategories();
-	$scope.listCategoriesChoix=[false,true,false];
-	$scope.searchProductString = searchProductCriteriaSvc.getSearchProductStringCriteria();
+	$scope.selectedProduit='';
 	
-	$scope.debug = 'R';
-	$scope.selectedProduct='';
-	$scope.selectDetailsProduct = function(productSelected) {
-		$scope.selectedProduct=productSelected;
+	$scope.selectDetailsProduit = function(selectedProduitParam) {
+		$scope.selectedProduit=selectedProduitParam;
 	}
 	
 	$scope.isSelectProduct = function() {
 		return $scope.searchProductString != "";
-	}
-	
-	$scope.searchProductByCategoChange  = function() {
-		//$window.alert('Yo !');
-		searchProductCriteriaSvc.searchProductDirectly($scope.listCategories,$scope.listCategoriesChoix);
-	}
-	
-	$scope.searchProductByName  = function() {
-		searchProductCriteriaSvc.setSearchProductStringCriteria($scope.searchProductString,$scope.listCategories,$scope.listCategoriesChoix);
 	}
 	
 	$scope.selectProduct  = function(productSelected) {
@@ -31,10 +18,6 @@ eComBioApp.controller('ProductCatalogCtrl', [ '$scope','$window','categorieSvc',
 	//$scope.listProducts = globalDataSvc.getListItems(0, false);
 	//$scope.listCategories = globalDataSvc.getListItems(1, false);
 	
-	$scope.$on('listCategoriesSupplied', function(event,listCategoriesSupplied) {
-		$scope.listCategories = listCategoriesSupplied;
-	});
-	
 	$scope.$on('listProductsSupplied', function(event,listProductsReceived) {
 		$scope.listProduits = listProductsReceived;
 	});
@@ -42,9 +25,4 @@ eComBioApp.controller('ProductCatalogCtrl', [ '$scope','$window','categorieSvc',
 	$scope.$on('detailsProductSupplied', function(event,listProductsReceived) {
 		$scope.listProduits = listProductsReceived;
 	});
-
-	$scope.$on('debug', function(event,message) {
-		$scope.debug = message;
-	});
-	
 } ]);

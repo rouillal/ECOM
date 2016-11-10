@@ -17,10 +17,10 @@ eComBioApp
 										controller : 'RecipeCtrl'
 									})
 							.when(
-									'/basket',
+									'/panier',
 									{
-										templateUrl : 'resources/modules/basket-mod/basket.html',
-										controller : 'BasketCtrl'
+										templateUrl : 'resources/modules/panier-mod/panier.html',
+										controller : 'PanierCtrl'
 									})
 							.when(
 									'/connect',

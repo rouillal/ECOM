@@ -75,6 +75,25 @@ eComBioApp.factory('restBackendSvc', [
 				});
 				return deferred.promise;
 			}
+			
+			function sendRequest2(config) {
+				var deferred = $q.defer();
+
+				config.then(function(response) {
+					deferred.resolve(response);
+					$rootScope.$broadcast('datasupplied', response);
+				}, function(error) {
+					$rootScope.$broadcast('debug', error);
+					if (error.status == 404) {
+						$rootScope.$broadcast('datasupplied', response);
+					} else {
+						$rootScope.$broadcast('anomalieTechnique', error);
+						console.log("error");
+						deferred.reject(error);
+					}
+				});
+				return deferred.promise;
+			}
 
 			return {
 				createItem : createItem,
