@@ -1,0 +1,22 @@
+<div ng-controller="SearchProductCtrl">
+	<h1>Debug:{{debug}}</h1>
+	<div class="row" ng-controller="SearchProductCtrl">
+		<div class="col-xs-10">
+			<input type="text" ng-model="searchProductString" /> &nbsp;
+		</div>
+		<div class="col-xs-2">
+			<button class="btn" ng-click="searchProductByName()">
+				<span class="glyphicon glyphicon-search"></span>
+			</button>
+		</div>
+	</div>
+	<div ng-repeat="categorie in listCategories">
+		<div class="row">
+			<div class="col-xs-8">{{categorie.name}}</div>
+			<div class="col-xs-4">
+				<input type="checkbox" ng-model="listCategoriesChoix[$index]"
+					ng-change="searchProductByCategoChange()">
+			</div>
+		</div>
+	</div>
+</div>
