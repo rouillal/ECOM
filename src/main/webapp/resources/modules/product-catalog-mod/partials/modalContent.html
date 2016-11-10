@@ -9,14 +9,14 @@
 				<h4 class="modal-title">Détail d'un produit</h4>
 			</div>
 			<div class="modal-body">
-				<h1>{{selectedProduct.name}}</h1>
+				<h1>{{selectedProduit.name}}</h1>
 				<div class="row">
 					<div class="col-xs-6">
 						<img src="resources/modules/main-mod/img/logo.jpg">
 					</div>
 					<div class="col-xs-6">
 						<div class="row">
-							<div class="col-xs-2">11</div>
+							<div class="col-xs-2">{{selectedProduit.name}}</div>
 							<div class="col-xs-2">
 								<button class="btn" ng-click="minusProduct()"
 									ng-show="isMinusProductShown()">
@@ -35,7 +35,7 @@
 						</div>
 					</div>
 				</div>
-				<h4>L'histoire de ce fruit : .. {{selectedProduct.name}}</h4>
+				<h4>L'histoire de ce fruit : .. {{selectedProduit.name}}</h4>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
 				</div>
@@ -43,3 +43,4 @@
 
 		</div>
 	</div>
+</div>

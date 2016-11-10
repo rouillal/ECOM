@@ -1,22 +1,23 @@
-eComBioApp.controller('ProductDetailCtrl', [ '$scope','$window', 'productSvc',function($scope,$window,globalDataSvc,productSvc) {
+eComBioApp.controller('ProductDetailCtrl', [ '$scope','$window', 'productSvc','panierSvc',function($scope,$window,globalDataSvc,productSvc,panierSvc) {
 	$scope.aa='tt';
 	$scope.basket='2';
 	
-	$scope.isMinusProductShown=function() {
+	$scope.isMinusProductShown=function(produit) {
 		return true;
 	};
 	
 	
-	$scope.minusProduct=function() {
+	$scope.minusProduct=function(produit) {
 		$window.alert("minusProduct");
 	};
 	
-	$scope.isPlusProductShown=function() {
+	$scope.isPlusProductShown=function(produit) {
 		return true;
 	};
 	
-	$scope.plusProduct=function() {
+	$scope.plusProduct=function(produit) {
 		$window.alert("plusProduct");
+		
 	};
 	
 } ]);

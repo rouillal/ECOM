@@ -1,8 +1,9 @@
 eComBioApp.controller('ProductCatalogCtrl', [ '$scope','$window','productSvc',function($scope,$window,productSvc) {
 	$scope.listProduits = productSvc.getAllProducts();
-	$scope.selectedProduct='';
-	$scope.selectDetailsProduct = function(productSelected) {
-		$scope.selectedProduct=productSelected;
+	$scope.selectedProduit='';
+	
+	$scope.selectDetailsProduit = function(selectedProduitParam) {
+		$scope.selectedProduit=selectedProduitParam;
 	}
 	
 	$scope.isSelectProduct = function() {
