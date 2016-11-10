@@ -1,12 +1,14 @@
 package fr.ecombio.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
@@ -30,6 +32,10 @@ public class Produit implements Serializable {
 	@JoinColumn(name="categorie_id")
     @JsonManagedReference
 	private Categorie categorie;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="produits")
+	@JsonBackReference
+    private Collection<ProduitSaison> saisons;
 	
 	public Produit() {
 		super();
@@ -165,6 +171,22 @@ public class Produit implements Serializable {
 
 	public void setStock(int stock) {
 		this.stock = stock;
+	}
+
+	public Collection<ProduitSaison> getSaisons() {
+		return saisons;
+	}
+
+	public void setSaisons(Collection<ProduitSaison> saisons) {
+		this.saisons = saisons;
+	}
+
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
 
 
