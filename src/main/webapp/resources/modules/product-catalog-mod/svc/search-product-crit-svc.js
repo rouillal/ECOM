@@ -7,11 +7,15 @@ eComBioApp.factory('searchProductCriteriaSvc', [ '$rootScope',
 		return searchProductStringCriteria;
 	}
 	
-	var setSearchProductStringCriteria = function(newSearchString) {
+	var setSearchProductStringCriteria = function(newSearchString,listCategories,listCategoriesChoix) {
 		if (newSearchString != searchProductStringCriteria) {
 			searchProductStringCriteria = newSearchString;
-			productSvc.getProductBySearchName(searchProductStringCriteria);
+			productSvc.getProductBySearchName(searchProductStringCriteria,listCategories,listCategoriesChoix);
 		}
+	}
+	
+	var searchProductDirectly = function(listCategories,listCategoriesChoix) {
+		productSvc.getProductBySearchName(searchProductStringCriteria,listCategories,listCategoriesChoix);
 	}
 	
 	var setSelectedProduct  = function(newSelectedProduct) {
@@ -20,7 +24,8 @@ eComBioApp.factory('searchProductCriteriaSvc', [ '$rootScope',
 	
 	return {
 		getSearchProductStringCriteria : getSearchProductStringCriteria,
-		setSearchProductStringCriteria : setSearchProductStringCriteria
+		setSearchProductStringCriteria : setSearchProductStringCriteria,
+		searchProductDirectly : searchProductDirectly
 	};
 
 		} ]);
