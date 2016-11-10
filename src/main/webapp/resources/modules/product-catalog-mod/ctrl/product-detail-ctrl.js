@@ -17,7 +17,7 @@ eComBioApp.controller('ProductDetailCtrl', [ '$scope','$window', 'productSvc','p
 	
 	$scope.plusProduct=function(produit) {
 		$window.alert("plusProduct");
-		
+		//panierSvc.add(produit);
 	};
 	
 } ]);
