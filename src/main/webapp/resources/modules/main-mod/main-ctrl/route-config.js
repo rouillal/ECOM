@@ -23,6 +23,12 @@ eComBioApp
 										controller : 'PanierCtrl'
 									})
 							.when(
+									'/command',
+									{
+										templateUrl : 'resources/modules/command-mod/command.html',
+										controller : 'CommandCtrl'
+									})
+							.when(
 									'/connect',
 									{
 										templateUrl : 'resources/modules/connect-mod/connect.html',

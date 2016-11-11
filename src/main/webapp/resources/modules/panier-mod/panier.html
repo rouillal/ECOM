@@ -4,7 +4,8 @@
 	<div class="col-xs-12 col-sm-9">
 		<div ng-repeat="ligne in listePanier">
 			<div class="row">
-				<div class="col-xs-4">{{ligne.name}} - {{ligne.variete}}</div>
+				<div class="col-xs-1"></div>
+				<div class="col-xs-3">{{ligne.name}} - {{ligne.variete}}</div>
 				<div class="col-xs-1"></div>
 				<div class="col-xs-3">
 					<div class="row">
@@ -39,5 +40,21 @@
 				</div>
 			</div>
 		</div>
+	</div>
+</div>
+<br>
+<div class="row" ng-show="isTotalAffiche()">
+	<div class="col-xs-8"></div>
+	<div class="col-xs-3">Total {{montantTotal}} €</div>
+</div>
+<br>
+<div class="row" ng-show="isTotalAffiche()">
+	<div class="col-xs-1"></div>
+	<div class="col-xs-3">
+		<a href="#/catalog" class="btn btn-info btn-lg" role="button">CONTINUER MES ACHATS</a>
+	</div>
+	<div class="col-xs-4"></div>
+	<div class="col-xs-3">
+		<a href="#/command" class="btn btn-info btn-lg" role="button">COMMANDER</a>
 	</div>
 </div>
