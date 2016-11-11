@@ -1,4 +1,4 @@
-eComBioApp.controller('MainCtrl', [ '$scope', '$window',
+eComBioApp.controller('MainCtrl', [ '$scope', '$window','categorieSvc','productSvc','panierSvc',
 		function($scope, $window) {
 			$scope.anomalieTechnique = "";
 			

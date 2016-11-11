@@ -20,23 +20,29 @@
 <script type="text/javascript"
 	src="resources/modules/main-mod/rest-svc/rest-svc.js"></script>
 <script type="text/javascript"
-	src="resources/modules/main-mod/global-data-svc/global-data-svc.js"></script>
-<script type="text/javascript"
 	src="resources/modules/dao-mod/categorie-svc.js"></script>
 <script type="text/javascript"
 	src="resources/modules/dao-mod/product-svc.js"></script>
 <script type="text/javascript"
-	src="resources/modules/dao-mod/basket-svc.js"></script>
+	src="resources/modules/dao-mod/panier-svc.js"></script>
 <script type="text/javascript"
-	src="resources/modules/product-catalog-mod/svc/search-product-crit-svc.js"></script>
+	src="resources/modules/search-product-mod/svc/search-product-svc.js"></script>
+
+<script type="text/javascript"
+	src="resources/modules/search-product-mod/ctrl/search-product-ctrl.js"></script>
+
 <script type="text/javascript"
 	src="resources/modules/product-catalog-mod/ctrl/product-catalog-ctrl.js"></script>
+<script type="text/javascript"
+	src="resources/modules/product-catalog-mod/ctrl/product-tri-pagin-ctrl.js"></script>
 <script type="text/javascript"
 	src="resources/modules/product-catalog-mod/ctrl/product-detail-ctrl.js"></script>
 <script type="text/javascript"
 	src="resources/modules/recipe-mod/ctrl/recipe-ctrl.js"></script>
 <script type="text/javascript"
-	src="resources/modules/basket-mod/ctrl/basket-ctrl.js"></script>
+	src="resources/modules/panier-mod/ctrl/panier-ctrl.js"></script>
+<script type="text/javascript"
+	src="resources/modules/command-mod/ctrl/command-ctrl.js"></script>
 <script type="text/javascript"
 	src="resources/modules/connect-mod/ctrl/connect-ctrl.js"></script>
 <script type="text/javascript"
@@ -57,7 +63,7 @@
 			<li class="col-md-3"><img id="logo"
 				src="resources/modules/main-mod/img/logo.png" alt="logo"
 				title="logo" /></li>
-			<li style="margin-top:25px;" class="col-md-2"><a
+			<li style="margin-top: 25px;" class="col-md-2"><a
 				ng-class="menuIndice == 3 ? 'current':''" class="menuText"
 				ng-click="menuIndice = 3" href="#/connect"><span>Me
 						Connecter &nbsp;</span></a> <a ng-class="menuIndice == 4 ? 'current':''"
@@ -65,8 +71,7 @@
 				<ul>
 					<li ng-class="menuIndice == 5 ? 'current':''"><a id="basket"
 						ng-click="menuIndice = 5" href="#/basket"></a></li>
-				</ul>
-			</li>
+				</ul></li>
 			<li class="col-md-2"></li>
 		</ul>
 	</div>

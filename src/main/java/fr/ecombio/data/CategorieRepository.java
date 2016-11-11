@@ -2,6 +2,7 @@ package fr.ecombio.data;
 
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -9,7 +10,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import fr.ecombio.model.Categorie;
+import fr.ecombio.model.Produit;
 
+@Stateless
 public class CategorieRepository {
 
 	@Inject
@@ -29,5 +32,10 @@ public class CategorieRepository {
 		// criteria.select(Categorie).orderBy(cb.asc(Categorie.get(Categorie_.name)));
 		criteria.select(Categorie).orderBy(cb.asc(Categorie.get("name")));
 		return em.createQuery(criteria).getResultList();
+	}
+	
+
+	public  void AjoutCategorie(Categorie cat) {
+		em.persist(cat);
 	}
 }

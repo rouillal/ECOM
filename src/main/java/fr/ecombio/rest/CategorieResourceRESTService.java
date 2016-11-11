@@ -25,4 +25,6 @@ public class CategorieResourceRESTService {
     public List<Categorie> listAllCategories() {
         return repository.findAllOrderedByName();
 	}
+	
+	
 }

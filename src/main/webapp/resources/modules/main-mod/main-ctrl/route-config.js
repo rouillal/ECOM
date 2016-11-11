@@ -17,25 +17,31 @@ eComBioApp
         						 controller : 'RecipeCtrl'
         					 })
         					 .when(
-        							 '/basket',
+        							 '/panier',
         							 {
-        								 templateUrl : 'resources/modules/basket-mod/basket.html',
-        								 controller : 'BasketCtrl'
+        								 templateUrl : 'resources/modules/panier-mod/panier.html',
+        								 controller : 'PanierCtrl'
         							 })
         							 .when(
-        									 '/signin',
+        									 '/command',
         									 {
-        										 templateUrl : 'resources/modules/signin-mod/signin.html',
-        										 controller : 'SigninCtrl'
+        										 templateUrl : 'resources/modules/command-mod/command.html',
+        										 controller : 'CommandCtrl'
         									 })
         									 .when(
-        											 '/connect',
+        											 '/signin',
         											 {
-        												 templateUrl : 'resources/modules/connect-mod/connect.html',
-        												 controller : 'ConnectCtrl'
-        											 }).otherwise({
-        												 redirectTo : '/catalog'
-        											 });
+        												 templateUrl : 'resources/modules/signin-mod/signin.html',
+        												 controller : 'SigninCtrl'
+        											 })
+        											 .when(
+        													 '/connect',
+        													 {
+        														 templateUrl : 'resources/modules/connect-mod/connect.html',
+        														 controller : 'ConnectCtrl'
+        													 }).otherwise({
+        														 redirectTo : '/catalog'
+        													 });
 
         	 $locationProvider.html5Mode(false);
 

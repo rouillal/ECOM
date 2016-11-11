@@ -1,25 +1,28 @@
 package fr.ecombio.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
-/*
- * unité de mesure
- * durée de conservation
- * calories
+/**
+ * 
+ * Classe représentant un produit
+ *
  */
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "produit")
 public class Produit implements Serializable {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "produit_id")
@@ -30,6 +33,28 @@ public class Produit implements Serializable {
     @JsonManagedReference
 	private Categorie categorie;
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="produits")
+	@JsonBackReference
+    private Collection<ProduitSaison> saisons;
+	
+	public Produit() {
+		super();
+	}
+
+	public Produit(Categorie categorie, String name, String variete, int quantite, int stock, float prix,
+			String filename, String provenance, String dateCueillette) {
+		super();
+		this.categorie = categorie;
+		this.name = name;
+		this.variete = variete;
+		this.quantite = quantite;
+		this.stock = stock;
+		this.prix = prix;
+		this.filename = filename;
+		this.provenance = provenance;
+		this.dateCueillette = dateCueillette;
+	}
+
 	@NotNull
 	@Size(min = 1, max = 25)
 	@Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
@@ -146,6 +171,22 @@ public class Produit implements Serializable {
 
 	public void setStock(int stock) {
 		this.stock = stock;
+	}
+
+	public Collection<ProduitSaison> getSaisons() {
+		return saisons;
+	}
+
+	public void setSaisons(Collection<ProduitSaison> saisons) {
+		this.saisons = saisons;
+	}
+
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
 
 

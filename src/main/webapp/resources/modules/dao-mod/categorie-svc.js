@@ -15,6 +15,7 @@ eComBioApp
 																'listCategoriesSupplied',
 																data.data);
 													});
+								return [];
 							}
 							
 							return {
