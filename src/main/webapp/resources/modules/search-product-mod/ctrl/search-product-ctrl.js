@@ -1,22 +1,20 @@
-eComBioApp.controller('SearchProductCtrl', [ '$scope','$window','searchProductCriteriaSvc',function($scope,$window,searchProductCriteriaSvc) {
-	$scope.listCategories = searchProductCriteriaSvc.getListCategories();
-	$scope.listCategoriesChoix=searchProductCriteriaSvc.getListCategoriesChoix();
-	$scope.searchProductString = searchProductCriteriaSvc.getSearchProductStringCriteria();
+eComBioApp.controller('SearchProductCtrl', [ '$scope','$window','searchProductSvc',function($scope,$window,searchProductSvc) {
+	$scope.listCategories = searchProductSvc.getListCategories();
+	$scope.listCategoriesChoix=searchProductSvc.getListCategoriesChoix();
+	$scope.searchProductString = searchProductSvc.getSearchString();
 	$scope.debug = 'Url Rest Search à venir';
 	
 	$scope.changeProductCatego = function() {
-		$scope.debug = $scope.listCategoriesChoix;
-		searchProductCriteriaSvc.changeListCategoriesChoix($scope.listCategoriesChoix);
+		searchProductSvc.changeListCategoriesChoix($scope.listCategoriesChoix);
 	}
 	
 	$scope.searchProductByName  = function() {
-		$scope.debug = $scope.listCategoriesChoix;
-		searchProductCriteriaSvc.setSearchProductStringCriteria($scope.searchProductString,$scope.listCategories,$scope.listCategoriesChoix);
+		searchProductSvc.setSearchString($scope.searchProductString);
 	}
 	
 	$scope.$on('listCategoriesCritSupplied', function(event) {
-		$scope.listCategories = searchProductCriteriaSvc.getListCategories();
-		$scope.listCategoriesChoix=searchProductCriteriaSvc.getListCategoriesChoix();
+		$scope.listCategories = searchProductSvc.getListCategories();
+		$scope.listCategoriesChoix=searchProductSvc.getListCategoriesChoix();
 	});
 	
 	$scope.$on('debug', function(event,message) {

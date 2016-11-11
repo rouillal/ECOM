@@ -1,0 +1,19 @@
+<div class="row" ng-controller="ProductTriPaginCtrl">
+	<div class="col-xs-4">
+		<div class="row">
+			<button class="btn" ng-click="pagedown()">
+				<span class="glyphicon glyphicon-chevron-left"></span>
+			</button>
+
+			&nbsp;{{currentPage}}&nbsp;
+			<button class="btn" ng-click="pageup()">
+				<span class="glyphicon glyphicon-chevron-right"></span>
+			</button>
+		</div>
+	</div>
+	<div ng-repeat="tri in listeTris" class="col-xs-2">
+		<label> {{tri.libelle}}
+			<input type="radio" ng-model="$parent.currentTriIndex" ng-value="$index" ng-change="changeTri($index)" />
+		</label>
+	</div>
+</div>

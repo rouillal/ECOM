@@ -3,11 +3,13 @@
 		src="'resources/modules/search-product-mod/search-product.html'"></div>
 	<div class="col-xs-12 col-sm-9">
 		<div ng-include
-			src="'resources/modules/product-catalog-mod/partials/modalContent.html'"></div>
+			src="'resources/modules/product-catalog-mod/partials/headerProductTriAndPage.html'"></div>
+		<div ng-include
+			src="'resources/modules/product-catalog-mod/partials/selectedProductDisplay.html'"></div>
 		<div ng-repeat="produit in listProduits">
 			<div style="text-align: center; margin-top: 100px;" class="col-xs-3"
 				ng-click="selectDetailsProduit(produit)" data-toggle="modal"
-				data-target="#myModal">
+				data-target="#selectedProductDisplay">
 				{{produit.name}} {{produit.variete}}<br> <img width="200px"
 					height="200px"
 					ng-src="resources/modules/product-catalog-mod/img/{{produit.name}}{{produit.variete}}.jpg"><br>

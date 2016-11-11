@@ -18,21 +18,21 @@
 <script type="text/javascript"
 	src="resources/modules/main-mod/rest-svc/rest-svc.js"></script>
 <script type="text/javascript"
-	src="resources/modules/main-mod/global-data-svc/global-data-svc.js"></script>
-<script type="text/javascript"
 	src="resources/modules/dao-mod/categorie-svc.js"></script>
 <script type="text/javascript"
 	src="resources/modules/dao-mod/product-svc.js"></script>
 <script type="text/javascript"
 	src="resources/modules/dao-mod/panier-svc.js"></script>
 <script type="text/javascript"
-	src="resources/modules/product-catalog-mod/svc/search-product-crit-svc.js"></script>
+	src="resources/modules/search-product-mod/svc/search-product-svc.js"></script>
 
 <script type="text/javascript"
 	src="resources/modules/search-product-mod/ctrl/search-product-ctrl.js"></script>
 	
 <script type="text/javascript"
 	src="resources/modules/product-catalog-mod/ctrl/product-catalog-ctrl.js"></script>
+<script type="text/javascript"
+	src="resources/modules/product-catalog-mod/ctrl/product-tri-pagin-ctrl.js"></script>
 <script type="text/javascript"
 	src="resources/modules/product-catalog-mod/ctrl/product-detail-ctrl.js"></script>
 <script type="text/javascript"
@@ -77,6 +77,7 @@
 			</ul>
 		</nav>
 	</header>
+	<br>
 	<div ng-view></div>
 	<h1 ng-show="anomalieTechnique != ''">anomalieTechnique :
 		{{anomalieTechnique}}</h1>
