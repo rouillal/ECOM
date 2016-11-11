@@ -2,11 +2,13 @@
 <html ng-app="eComBio">
 <head>
 <meta charset="utf-8">
-<title>Commerce de produits bio en ligne</title>
+<title>Achetez bio en ligne - Bio To Be Alive</title>
 <link rel="stylesheet" type="text/css"
 	href="resources/cssext/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css"
 	href="resources/cssext/bootstrap-theme.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="resources/cssin/bandeau.css" />
 <script type="text/javascript" src="resources/jsext/angular.min.js"></script>
 <script type="text/javascript" src="resources/jsext/jquery.min.js"></script>
 <script type="text/javascript"
@@ -38,41 +40,36 @@
 <script type="text/javascript"
 	src="resources/modules/connect-mod/ctrl/connect-ctrl.js"></script>
 <script type="text/javascript"
-	src="resources/modules/signIn-mod/ctrl/signIn-ctrl.js"></script>
+	src="resources/modules/signin-mod/ctrl/signin-ctrl.js"></script>
 <script type="text/javascript"
 	src="resources/modules/main-mod/main-ctrl/route-config.js"></script>
 <script type="text/javascript"
 	src="resources/modules/main-mod/main-ctrl/main-ctrl.js"></script>
 </head>
 <body ng-controller="MainCtrl">
-	<header
-		style="background-image:url(resources/modules/main-mod/img/fond.jpg); background-repeat: repeat; height: 125px; color: White; font-family: Bradley Hand"">
-		<nav style="width: 1000px; margin: auto;">
-			<ul>
-				<li style="display: inline-block; vertical-align: middle"><a
-					href="#"> <img
-						src="resources/modules/main-mod/img/produits.png">
-				</a></li>
-				<li
-					style="display: inline-block; margin-left: 75px; vertical-align: middle"><a
-					href="#/recipe"> <img
-						src="resources/modules/main-mod/img/recettes.png">
-				</a></li>
-				<li
-					style="display: inline-block; margin-left: 75px; vertical-align: middle"><img
-					style="margin-top: 10px; width: 250px; height: 125px;"
-					src="resources/modules/main-mod/img/logo.png" alt="logo"
-					title="logo" /></li>
-				<li
-					style="display: inline-block; margin-left: 150px;"><a
-					style="text-decoration: none; color: White;" href="#/connect">Me
-						Connecter </a> - <a style="text-decoration: none; color: White;"
-					href="#/signIn"> M'inscrire </a><br><a href="#/basket"> <img
-						style="margin-top:20px; margin-left: 25px" src="resources/modules/main-mod/img/panier.png">
-				</a></li>
-			</ul>
-		</nav>
-	</header>
+	<div id="ruban" class="row">
+		<ul class="col-xs-12">
+			<li class="col-md-3"></li>
+			<li class="col-md-1" ng-class="menuIndice == 1 ? 'current':''"><a
+				id="product" ng-click="menuIndice = 1" href="#"> </a></li>
+			<li class="col-md-1" ng-class="menuIndice == 2 ? 'current':''"><a
+				id="recipe" ng-click="menuIndice = 2" href="#/recipe"> </a></li>
+			<li class="col-md-3"><img id="logo"
+				src="resources/modules/main-mod/img/logo.png" alt="logo"
+				title="logo" /></li>
+			<li style="margin-top:25px;" class="col-md-2"><a
+				ng-class="menuIndice == 3 ? 'current':''" class="menuText"
+				ng-click="menuIndice = 3" href="#/connect"><span>Me
+						Connecter &nbsp;</span></a> <a ng-class="menuIndice == 4 ? 'current':''"
+				class="menuText" ng-click="menuIndice = 4" href="#/signin"><span>M'inscrire</span></a>
+				<ul>
+					<li ng-class="menuIndice == 5 ? 'current':''"><a id="basket"
+						ng-click="menuIndice = 5" href="#/basket"></a></li>
+				</ul>
+			</li>
+			<li class="col-md-2"></li>
+		</ul>
+	</div>
 	<div ng-view></div>
 	<h1 ng-show="anomalieTechnique != ''">anomalieTechnique :
 		{{anomalieTechnique}}</h1>
