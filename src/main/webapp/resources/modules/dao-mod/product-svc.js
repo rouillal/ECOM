@@ -17,8 +17,8 @@ eComBioApp
 													});
 							}
 							
-							var getProductBySearchName = function(searchString,listCategories,listCategoriesChoix) {
-								var restAdress="produit";
+							var getProductBySearchName = function(searchString,listCategories,listCategoriesChoix,page) {
+								var restAdress="produit/filter?";
 								var categoSelected = '';
 								angular.forEach(listCategories, function(categorie, key) {
 									if (listCategoriesChoix[key]) {
@@ -28,9 +28,6 @@ eComBioApp
 										categoSelected += categorie.id;
 									} 
 								});
-								if ((categoSelected != '')||(searchString != '')) {
-									restAdress += '/filter?';
-								}
 								if (categoSelected != '') {
 									restAdress += 'cat='+categoSelected;
 								}
@@ -40,6 +37,10 @@ eComBioApp
 									}
 									restAdress += 'search='+searchString;
 								}
+								if ((categoSelected != '')||(searchString != '')) {
+									restAdress += '&';
+								}
+								restAdress += 'page='+page;
 								$rootScope.$broadcast(
 										'debug',
 										restAdress);
