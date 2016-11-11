@@ -3,12 +3,7 @@ eComBioApp.factory('productSvc', [
 		'restBackendSvc',
 		'$window',
 		function($rootScope, restBackendSvc, $window) {
-			var getAllProducts = function() {
-				restBackendSvc.getItemsByUrl("produit").then(function(data) {
-					$rootScope.$broadcast('listProductsSupplied', data.data);
-				});
-			}
-
+			
 			var getProductBySearchName = function(searchString, listCategories,
 					listCategoriesChoix, page) {
 				var restAdress = "produit/filter?";
@@ -77,7 +72,6 @@ eComBioApp.factory('productSvc', [
 			}
 
 			return {
-				getAllProducts : getAllProducts,
 				getProductBySearchName : getProductBySearchName,
 				getDetailsProduct : getDetailsProduct
 			};

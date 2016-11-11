@@ -5,7 +5,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Détail d'un produit</h4>
+				<h4 class="modal-title">DÃ©tail d'un produit</h4>
 			</div>
 			<div class="modal-body">
 				<h1>{{selectedProduit.name}}</h1>
@@ -17,17 +17,17 @@
 						<div class="row">
 							<div class="col-xs-2">{{selectedProduit.name}}</div>
 							<div class="col-xs-2">
-								<button class="btn" ng-click="minusProduct()"
-									ng-show="isMinusProductShown()">
+								<button class="btn" ng-click="moinsProduit()"
+									ng-disabled="isMoinsProduitInactif()">
 									<span class="glyphicon glyphicon-minus"></span>
 								</button>
 							</div>
 							<div class="col-xs-2">
-								<input type="text" size="2" ng-model="basket" />
+								<input type="text" size="2" ng-model="panierQuantite" />
 							</div>
 							<div class="col-xs-2">
-								<button class="btn" ng-click="plusProduct()"
-									ng-show="isPlusProductShown()">
+								<button class="btn" ng-click="plusProduit()"
+									ng-disabled="isPlusProduitInactif()">
 									<span class="glyphicon glyphicon-plus"></span>
 								</button>
 							</div>

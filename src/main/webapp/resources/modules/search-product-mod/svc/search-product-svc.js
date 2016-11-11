@@ -50,10 +50,6 @@ eComBioApp.factory('searchProductSvc', [ '$rootScope','categorieSvc','productSvc
 		productSvc.getProductBySearchName(searchProductString,listCategories,listCategoriesChoix,currentPage);
 	}
 	
-	var setSelectedProduct  = function(newSelectedProduct) {
-		
-	}
-	
 	var setSelectedPage = function(newSelectedPage) {
 		if (currentPage != newSelectedPage) {
 			currentPage = newSelectedPage;
