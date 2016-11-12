@@ -10,6 +10,13 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.*;
 
+
+/**
+ * 
+ * Classe représentant une catégorie
+ * Fruit, Legumes, Cremerie
+ *
+ */
 @SuppressWarnings("serial")
 @Entity
 @Table(name="categorie")
@@ -42,7 +49,14 @@ public class Categorie implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
+	public Categorie(String name, Collection<Produit> produits) {
+		super();
+		this.name = name;
+		this.produits = produits;
+	}
+
+
 	public Categorie(String name) {
 		super();
 		this.name = name;

@@ -1,30 +1,15 @@
 <div class="row">
-	<div class="col-xs-12 col-sm-3">
-		<div class="row">
-			<div class="col-xs-10">
-				<input type="text" ng-model="searchProductString" /> &nbsp;
-			</div>
-			<div class="col-xs-2">
-				<button class="btn" ng-click="searchProductByName()"
-					ng-show="isSelectProduct()">
-					<span class="glyphicon glyphicon-search"></span>
-				</button>
-			</div>
-		</div>
-		<div ng-repeat="categorie in listCategories">
-			<div class="row">
-				<div class="col-xs-8">{{categorie.name}}</div>
-				<div class="col-xs-4">
-					<input type="checkbox" ng-model="listCategoriesChoix[$index]">
-				</div>
-			</div>
-		</div>
-	</div>
-
+	<div class="col-xs-12 col-sm-3" ng-include
+		src="'resources/modules/search-product-mod/search-product.html'"></div>
 	<div class="col-xs-12 col-sm-9">
-		<div ng-include src="'resources/modules/product-catalog-mod/partials/modalContent.html'"></div>
+		<div ng-include
+			src="'resources/modules/product-catalog-mod/partials/headerProductTriAndPage.html'"></div>
+		<div ng-include
+			src="'resources/modules/product-catalog-mod/partials/selectedProductDisplay.html'"></div>
 		<div ng-repeat="produit in listProduits">
-			<div style="text-align: center; margin-top: 100px;" class="col-xs-3" ng-click="selectDetailsProduct(product)" data-toggle="modal" data-target="#myModal">
+			<div style="text-align: center; margin-top: 100px;" class="col-xs-3"
+				ng-click="selectDetailsProduit(produit)" data-toggle="modal"
+				data-target="#selectedProductDisplay">
 				{{produit.name}} {{produit.variete}}<br> <img width="200px"
 					height="200px"
 					ng-src="resources/modules/product-catalog-mod/img/{{produit.name}}{{produit.variete}}.jpg"><br>

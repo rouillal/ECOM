@@ -1,5 +1,4 @@
 package fr.ecombio.rest;
-
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
@@ -49,3 +48,4 @@ public class ProduitResourceRESTService {
         return repository.findCatOrderedByName(cat, search, page);
     }
 }
+

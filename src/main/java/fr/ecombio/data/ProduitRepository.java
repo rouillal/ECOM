@@ -10,11 +10,11 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import fr.ecombio.model.Categorie;
 import fr.ecombio.model.Produit;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Stateless
 public class ProduitRepository {
@@ -22,6 +22,11 @@ public class ProduitRepository {
 	@Inject
 	private EntityManager em;
 
+	/**
+	 * 
+	 * @param id
+	 * @return Produit
+	 */
 	public Produit findById(Long id) {
 		return em.find(Produit.class, id);
 	}
@@ -36,9 +41,26 @@ public class ProduitRepository {
 		typequery.setMaxResults(6);
 		return typequery.getResultList();
 	}
-
+	
 	public  void AjoutProduit(Produit prod) {
 		em.persist(prod);
+	}
+	
+	/**
+	 * 
+	 * @param cat
+	 * @return
+	 */
+	public List<Produit> findCatOrderedByName(String cat) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Produit> criteria = cb.createQuery(Produit.class);
+		Root<Produit> Produit = criteria.from(Produit.class);
+		// Swap criteria statements if you would like to try out type-safe
+		// criteria queries, a new
+		// feature in JPA 2.0
+		// criteria.select(Produit).orderBy(cb.asc(Produit.get(Produit_.name)));
+		criteria.select(Produit).where( cb.equal( Produit.get("categorie").get("name"),cat ));
+		return em.createQuery(criteria).getResultList();
 	}
 
 	public List<Produit> findCatOrderedByName(String cat, String search, int page) {
