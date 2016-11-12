@@ -1,7 +1,6 @@
 package fr.ecombio.data;
 
 import javax.ejb.Stateless;
-import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -12,7 +11,6 @@ import javax.persistence.criteria.Root;
 
 import fr.ecombio.model.Produit;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -73,7 +71,7 @@ public class ProduitRepository {
 		
 		if(cat == null || cat == "") {
 			if(search == null || search == "") {
-				return this.findAllOrderedByName(0);
+				return this.findAllOrderedByName(page);
 			}
 		} else {
 			String[] cats = cat.split(",");
