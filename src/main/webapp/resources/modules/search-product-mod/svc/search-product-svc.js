@@ -2,7 +2,7 @@ eComBioApp.factory('searchProductSvc', [ '$rootScope','categorieSvc','productSvc
 	var listCategories = categorieSvc.getAllCategories();
 	var searchProductString ="";
 	var currentPage=0;
-	var listeTris = [{'name':'alpha','libelle':'par noms'},{'name':'prixup','libelle':'prix croissants'},{'name':'prixdown','libelle':'prix décroissants'}];
+	var listeTris = [{'name':'alpha','libelle':'noms'},{'name':'prixup','libelle':'prix croissants'},{'name':'prixdown','libelle':'prix décroissants'}];
 	var currentTriIndex = 0;
 	
 	var initListCategoriesChoix = function() {

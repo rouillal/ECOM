@@ -1,19 +1,24 @@
-<div class="row" ng-controller="ProductTriPaginCtrl">
-	<div class="col-xs-4">
-		<div class="row">
+<div class="col-xs-12" style="margin-top:20px;" ng-controller="ProductTriPaginCtrl">
+	<div class="col-lg-9" class="col-xs-12">
+		<span style="color: rgb(221, 131, 14);">Trier par: </span> 
+		<select>
+			<option ng-repeat="tri in listeTris"
+				ng-model="$parent.currentTriIndex" ng-change="changeTri($index)"
+				ng-value="$index">{{tri.libelle}}</option>
+		</select>
+	</div>
+	<div class="col-lg-3" class="col-xs-12">
+		<div style="color: rgb(221, 131, 14);" class="row">
 			<button class="btn" ng-click="pagedown()">
-				<span class="glyphicon glyphicon-chevron-left"></span>
+				<span style="color: rgb(221, 131, 14);"
+					class="glyphicon glyphicon-chevron-left"></span>
 			</button>
 
-			&nbsp;{{currentPage}}&nbsp;
+			&nbsp;Page {{currentPage}} sur &nbsp;
 			<button class="btn" ng-click="pageup()">
-				<span class="glyphicon glyphicon-chevron-right"></span>
+				<span style="color: rgb(221, 131, 14);"
+					class="glyphicon glyphicon-chevron-right"></span>
 			</button>
 		</div>
-	</div>
-	<div ng-repeat="tri in listeTris" class="col-xs-2">
-		<label> {{tri.libelle}}
-			<input type="radio" ng-model="$parent.currentTriIndex" ng-value="$index" ng-change="changeTri($index)" />
-		</label>
 	</div>
 </div>

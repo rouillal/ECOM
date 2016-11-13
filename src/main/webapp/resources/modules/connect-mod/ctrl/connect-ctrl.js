@@ -1,3 +1,10 @@
 eComBioApp.controller('ConnectCtrl', [ '$scope','$window', function($scope,$window) {
-	$scope.aa="A faire .";
+	$(window).ready(function(){
+	    $("#myBtnConnect").click(function(){
+	        $("#myModalConnect").modal();
+	    });
+	    $("#myBtnSignin").click(function(){
+	        $("#myModalConnect").modal('hide');
+	    });
+	});
 } ]);

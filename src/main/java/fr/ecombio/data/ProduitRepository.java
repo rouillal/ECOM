@@ -11,14 +11,9 @@ import javax.persistence.criteria.Root;
 
 import fr.ecombio.model.Produit;
 
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 
- * 
- *
- */
+
 @Stateless
 public class ProduitRepository {
 
@@ -76,7 +71,7 @@ public class ProduitRepository {
 		
 		if(cat == null || cat == "") {
 			if(search == null || search == "") {
-				return this.findAllOrderedByName(0);
+				return this.findAllOrderedByName(page);
 			}
 		} else {
 			String[] cats = cat.split(",");
@@ -87,11 +82,13 @@ public class ProduitRepository {
 			}
 		}
 		if(search != null && search != "") {
+			search = search.toLowerCase();
 			String[] prods = search.split(",");
-				predicate2 = cb.equal(Produit.get("name"), prods[0]);
-				predicate2 = cb.or(predicate2,(cb.equal(Produit.get("variete"), prods[0])));
+				predicate2 = cb.equal(cb.lower(Produit.<String>get("name")), prods[0]);
+				predicate2 = cb.or(predicate2,(cb.equal(cb.lower(Produit.<String>get("variete")), prods[0])));
 			for (String prod1 : prods) {
-				predicate2 = cb.and(predicate2, cb.or((cb.equal(Produit.get("name"), prod1)),(cb.equal(Produit.get("variete"), prod1))));
+				predicate2 = cb.and(predicate2, cb.or((cb.equal(cb.lower(Produit.<String>get("name")), prod1)),
+						(cb.equal(cb.lower(Produit.<String>get("variete")), prod1))));
 			}
 		}
 		if(predicate != null) {

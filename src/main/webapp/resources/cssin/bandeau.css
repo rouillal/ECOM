@@ -1,0 +1,77 @@
+#logo{
+	margin-top: 10px; 
+	width: 250px; 
+	height: 125px;
+}
+
+#ruban{
+	background-image: url(../modules/main-mod/img/fond.jpg);
+	font-family: Bradley Hand;
+}
+
+#ruban li{
+	display: inline-block;
+}
+
+#ruban .menuText, #ruban .connect{
+	text-decoration: none; 
+	color: White;
+}
+
+#ruban .menuText:hover span, #ruban .connect:hover span {
+	color:rgb(221,131,14);
+}
+
+#ruban .current span{
+	color:rgb(221,131,14);
+}
+
+#ruban #basket{
+	margin-top: 10px;
+	width : 100px;
+    height : 51px;
+    display : block;
+	background: url(../modules/main-mod/img/panier.png); 
+}
+
+#ruban #basket:hover {
+	background: url(../modules/main-mod/img/panierSelected.png);
+}
+
+#ruban .current #basket{
+	background: url(../modules/main-mod/img/panierSelected.png);
+}
+
+#ruban #product{
+	margin-top: 25px;
+	width : 78px;
+    height : 89px;
+    display : block;
+	background: url(../modules/main-mod/img/produits.png); 
+}
+
+#ruban #product:hover {
+	background: url(../modules/main-mod/img/produitsSelected.png);
+}
+
+#ruban .current #product{
+	background: url(../modules/main-mod/img/produitsSelected.png);
+}
+
+#ruban #recipe{
+	margin-top: 26px;
+	width : 78px;
+    height : 89px;
+    display : block;
+	background: url(../modules/main-mod/img/recettes.png); 
+}
+
+#ruban #recipe:hover {
+	background: url(../modules/main-mod/img/recettesSelected.png);
+}
+
+#ruban .current #recipe{
+	background: url(../modules/main-mod/img/recettesSelected.png);
+}
+
+	
