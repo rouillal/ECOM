@@ -1,3 +1,41 @@
-<div class="row">
-	<h1>Connection: {{aa}}</h1>
+<div style="font-family: Times New Roman;" class="modal fade"
+	id="myModalConnect" role="dialog" ng-controller="ConnectCtrl">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header"
+				style="padding: 35px 50px; background-color: #f9f9f9;; color: rgb(221, 131, 14); font-family: Bradley Hand; text-align: center; font-size: 30px;">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h3>
+					<span class="glyphicon glyphicon-lock"></span> Connexion
+				</h3>
+			</div>
+			<div class="modal-body" style="padding: 40px 50px;">
+				<form role="form">
+					<div class="form-group">
+						<label for="usrmail"><span
+							class="glyphicon glyphicon-user"></span> E-mail</label> <input
+							type="text" class="form-control" id="usrmail"
+							placeholder="Entrez votre e-mail">
+					</div>
+					<div class="form-group">
+						<label for="psw"><span
+							class="glyphicon glyphicon-eye-open"></span> Mot de passe</label> <input
+							type="text" class="form-control" id="psw"
+							placeholder="Entrez votre mot de passe">
+					</div>
+					<button
+						style="background-color: rgb(221, 131, 14); border-radius: 10px;"
+						type="submit" class="col-xs-12">
+						<span class="glyphicon glyphicon-off"></span> Me connecter
+					</button>
+				</form>
+			</div>
+			<div class="modal-footer" style="background-color: #f9f9f9;">
+				Pas encore inscrit? <a
+					style="text-decoration: none; color: rgb(221, 131, 14);"
+					href="#/signin" id="myBtnSignin">M'inscrire</a>
+			</div>
+		</div>
+	</div>
 </div>

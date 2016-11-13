@@ -5,8 +5,7 @@
 }
 
 #ruban{
-	background-image: url(../modules/main-mod/img/fond.jpg); 
-	color: White; 
+	background-image: url(../modules/main-mod/img/fond.jpg);
 	font-family: Bradley Hand;
 }
 
@@ -14,12 +13,12 @@
 	display: inline-block;
 }
 
-#ruban .menuText{
+#ruban .menuText, #ruban .connect{
 	text-decoration: none; 
 	color: White;
 }
 
-#ruban .menuText:hover span {
+#ruban .menuText:hover span, #ruban .connect:hover span {
 	color:rgb(221,131,14);
 }
 

@@ -52,7 +52,9 @@
 <script type="text/javascript"
 	src="resources/modules/main-mod/main-ctrl/main-ctrl.js"></script>
 </head>
+
 <body ng-controller="MainCtrl">
+	<div ng-include src="'resources/modules/connect-mod/connect.html'"></div>
 	<div id="ruban" class="row">
 		<ul class="col-xs-12">
 			<li class="col-md-3"></li>
@@ -64,10 +66,10 @@
 				src="resources/modules/main-mod/img/logo.png" alt="logo"
 				title="logo" /></li>
 			<li style="margin-top: 25px;" class="col-md-2"><a
-				ng-class="menuIndice == 3 ? 'current':''" class="menuText"
-				ng-click="menuIndice = 3" href="#/connect"><span>Me
-						Connecter &nbsp;</span></a> <a ng-class="menuIndice == 4 ? 'current':''"
-				class="menuText" ng-click="menuIndice = 4" href="#/signin"><span>M'inscrire</span></a>
+				data-toggle="modal" id="myBtnConnect" class="connect"
+				data-target="#/connect"><span>Me Connecter &nbsp;</span></a><a
+				ng-class="menuIndice == 4 ? 'current':''" class="menuText"
+				ng-click="menuIndice = 4" href="#/signin"><span>M'inscrire</span></a>
 				<ul>
 					<li ng-class="menuIndice == 5 ? 'current':''"><a id="basket"
 						ng-click="menuIndice = 5" href="#/basket"></a></li>
