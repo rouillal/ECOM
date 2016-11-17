@@ -2,6 +2,7 @@ package fr.ecombio.model;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -35,7 +36,7 @@ public class Produit implements Serializable {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy="produits")
 	@JsonBackReference
-    private Collection<ProduitSaison> saisons;
+    private Set<ProduitSaison> saisons;
 	
 	public Produit() {
 		super();
@@ -187,11 +188,11 @@ public class Produit implements Serializable {
 		this.stock = stock;
 	}
 
-	public Collection<ProduitSaison> getSaisons() {
+	public Set<ProduitSaison> getSaisons() {
 		return saisons;
 	}
 
-	public void setSaisons(Collection<ProduitSaison> saisons) {
+	public void setSaisons(Set<ProduitSaison> saisons) {
 		this.saisons = saisons;
 	}
 

@@ -2,6 +2,7 @@ package fr.ecombio.model;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,13 +29,13 @@ public class Panier implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy="panier")
 	@JsonBackReference
     @Column(name = "produit_articles")
-	private Collection<Article> articles; 
+	private Set<Article> articles; 
     
 	public Panier() {
 		super();
 	}
 
-    public Panier(Collection<Article> commande) {
+    public Panier(Set<Article> commande) {
 		this.setArticles(commande);
 	}
 
@@ -46,11 +47,11 @@ public class Panier implements Serializable {
 		this.id = id;
 	}
 
-	public Collection<Article> getArticles() {
+	public Set<Article> getArticles() {
 		return articles;
 	}
 
-	public void setArticles(Collection<Article> articles) {
+	public void setArticles(Set<Article> articles) {
 		this.articles = articles;
 	}
 }

@@ -44,7 +44,12 @@ public class Article implements Serializable {
 	
 	public Article() {
 	}
-	
+
+	public Article(Produit produit, int quotite) {
+		this.produit = produit;
+		this.quotite = quotite;
+	}
+
 	public Long getId() {
 		return id;
 	}
