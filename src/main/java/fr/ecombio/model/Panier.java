@@ -30,8 +30,15 @@ public class Panier implements Serializable {
     @Column(name = "produit_articles")
 	private Collection<Article> articles; 
     
+	public Panier() {
+		super();
+	}
 
-    public Long getId() {
+    public Panier(Collection<Article> commande) {
+		this.setArticles(commande);
+	}
+
+	public Long getId() {
 		return id;
 	}
 

@@ -34,6 +34,9 @@ public class Article implements Serializable {
 	@NotNull
 	private int quotite;
 	
+	@NotNull
+	private int prixTotal;
+	
 	@ManyToOne
 	@JoinColumn(name="panier_id")
 	@JsonManagedReference

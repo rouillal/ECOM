@@ -2,6 +2,7 @@ package fr.ecombio.rest;
 
 
 import java.io.PrintWriter;
+import java.util.Collection;
 import java.util.List;
 import org.jboss.logging.Logger;
 
@@ -13,6 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import fr.ecombio.data.PanierRepository;
+import fr.ecombio.model.Article;
 import fr.ecombio.model.GestionCommande;
 import fr.ecombio.model.Panier;
 
@@ -27,17 +29,12 @@ public class PanierResourceRESTService {
 
 	@POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Long createUpdatePanier(List<Object> commande) {
-		/*PrintWriter writer = new PrintWriter("the-file-name.txt", "UTF-8");
-	    writer.println("The first line");
-	    writer.println("The second line");
-	    writer.close();*/
-		log.getLogger(" coucou ");
-		/*Collection<Article> articles = new Collection<Article>();
+    public Long createUpdatePanier(Collection<Article> commande) {
 		
-		Panier panier = new Panier(articles);
-        return repository.AjoutPanier(panier);*/
-		return 150L;
+		//Collection<Article> articles = new Collection<Article>();
+		
+		Panier panier = new Panier(commande);
+        return repository.AjoutPanier(panier);
 	}
 	
 }
