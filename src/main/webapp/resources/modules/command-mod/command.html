@@ -1,1 +1,72 @@
-<h1>{{aa}}</h1>
+<div class="form-group">
+	<label for="commandmail"><span class="glyphicon glyphicon-user"></span>
+		Nom</label> <input type="text" class="form-control" ng-model="commandInfo.nom"
+		placeholder="Entrez votre nom">
+</div>
+<div class="form-group">
+	<label for="commandprenom"><span
+		class="glyphicon glyphicon-user"></span> Prenom</label> <input type="text"
+		class="form-control" ng-model="commandInfo.prenom"
+		placeholder="Entrez votre prenom">
+</div>
+<div class="form-group">
+	<label for="commandmail"><span
+		class="glyphicon glyphicon-envelope"></span> Mail</label> <input type="text"
+		class="form-control" ng-model="commandInfo.mail"
+		placeholder="Entrez votre mail">
+</div>
+<div class="form-group">
+	<label for="commandadresse"><span
+		class="glyphicon glyphicon-user"></span> Adresse</label> <input type="text"
+		class="form-control" ng-model="commandInfo.adresse"
+		placeholder="Entrez votre adresse">
+</div>
+<div class="form-group">
+	<label for="commandcp"></span> Code postal</label> <input type="text"
+		class="form-control" ng-model="commandInfo.cp"
+		placeholder="Entrez votre code postal">
+</div>
+<div class="form-group">
+	<label for="commandville"> Ville</label> <input type="text"
+		class="form-control" ng-model="commandInfo.ville"
+		placeholder="Entrez votre ville">
+</div>
+<div class="form-group">
+	<label for="commandadresse"><span
+		class="glyphicon glyphicon-user"></span> Adresse</label> <input type="text"
+		class="form-control" ng-model="commandInfo.adresse"
+		placeholder="Entrez votre adresse">
+</div>
+<div class="form-group">
+	<label for="commanddate"></span>Date</label> <input type="text"
+		class="form-control" ng-model="commandInfo.date"
+		placeholder="Entrez la date de livraison">
+</div>
+<h2>{{commandInfo.heure}}</h2>
+<div class="form-group">
+	<label for="commandheure"> Ville</label>
+	<select name="horaireSelect" id="horaireSelect" ng-model="commandInfo.heure">
+      <option ng-repeat="horaire in listeHoraires" value="{{horaire.id}}">{{horaire.libelle}}</option>
+    </select>
+	 <input type="text"
+		class="form-control" ng-model="commandInfo.heure"
+		placeholder="Entrez l'heure de livraison">
+</div>
+<div class="row">
+	<div class="col-xs-2" style="margin-top: 10px;"></div>
+	<div class="col-xs-3" style="margin-top: 10px;">
+		<button style="background-color: #f9f9f9; border-radius: 10px;">
+			<a style="text-decoration: none; color: Black;" href="#/catalog">Revenir
+				au catalogue</a>
+		</button>
+	</div>
+	<div class="col-xs-4" style="margin-top: 10px;"></div>
+	<div class="col-xs-3" style="margin-top: 10px;">
+		<button style="background-color: #f9f9f9; border-radius: 10px;" ng-click="payerInfo()">
+			<a style="text-decoration: none; color: Black;">Payer</a>
+		</button>
+	</div>
+</div>
+<br>
+<div ng-include src="'resources/modules/command-mod/partials/paiement.html'"
+		ng-show="payerInfoVoir"></div>

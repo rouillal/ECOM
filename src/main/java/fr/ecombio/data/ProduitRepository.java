@@ -31,11 +31,22 @@ public class ProduitRepository {
 		return em.find(Produit.class, id);
 	}
 
-	public List<Produit> findAllOrderedByName(int page) {
+	public List<Produit> findAllOrderedByName(int page, String tri) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Produit> criteria = cb.createQuery(Produit.class);
 		Root<Produit> Produit = criteria.from(Produit.class);
-		criteria.select(Produit).orderBy(cb.asc(Produit.get("name")));
+		criteria.select(Produit);
+		if(tri != null && tri != ""){
+			if(tri.equalsIgnoreCase("alpha")) {
+				criteria.orderBy(cb.asc(Produit.get("name")));
+			} else if(tri.equalsIgnoreCase("prixup")) {
+				criteria.orderBy(cb.asc(Produit.get("prix")));
+			} else if(tri.equalsIgnoreCase("prixdown")) {
+				criteria.orderBy(cb.desc(Produit.get("prix")));
+			} 
+		} else {
+			criteria.orderBy(cb.asc(Produit.get("name")));
+		}
 		TypedQuery<Produit> typequery = em.createQuery(criteria);
 		typequery.setFirstResult(page*6);
 		typequery.setMaxResults(6);
@@ -63,7 +74,7 @@ public class ProduitRepository {
 		return em.createQuery(criteria).getResultList();
 	}
 
-	public List<Produit> findCatOrderedByName(String cat, String search, int page) {
+	public List<Produit> findCatOrderedByName(String cat, String search, int page, String tri) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Produit> criteria = cb.createQuery(Produit.class);
 		Root<Produit> Produit = criteria.from(Produit.class);
@@ -73,7 +84,7 @@ public class ProduitRepository {
 		
 		if(cat == null || cat == "") {
 			if(search == null || search == "") {
-				return this.findAllOrderedByName(page);
+				return this.findAllOrderedByName(page, tri);
 			}
 		} else {
 			String[] cats = cat.split(",");
@@ -101,6 +112,15 @@ public class ProduitRepository {
 			predicate = predicate2;
 		}
 		criteria.where(predicate);
+		if(tri != null && tri != "") {
+			if(tri.equalsIgnoreCase("alpha")) {
+				criteria.orderBy(cb.asc(Produit.get("name")));
+			} else if(tri.equalsIgnoreCase("prixup")) {
+				criteria.orderBy(cb.asc(Produit.get("prix")));
+			} else if(tri.equalsIgnoreCase("prixdown")) {
+				criteria.orderBy(cb.desc(Produit.get("prix")));
+			}
+		}
 		TypedQuery<Produit> typequery = em.createQuery(criteria);
 		typequery.setFirstResult(page*6);
 		typequery.setMaxResults(6);
