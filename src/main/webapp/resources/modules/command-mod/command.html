@@ -42,7 +42,6 @@
 		class="form-control" ng-model="commandInfo.date"
 		placeholder="Entrez la date de livraison">
 </div>
-<h2>{{commandInfo.heure}}</h2>
 <div class="form-group">
 	<label for="commandheure"> Horaire</label>
 	<select name="horaireSelect" id="horaireSelect" ng-model="commandInfo.heure">
@@ -53,8 +52,8 @@
 <div class="row">
 	<div class="col-xs-2" style="margin-top: 10px;"></div>
 	<div class="col-xs-3" style="margin-top: 10px;">
-		<button style="background-color: #f9f9f9; border-radius: 10px;">
-			<a style="text-decoration: none; color: Black;" href="#/catalog">Revenir
+		<button style="background-color: #f9f9f9; border-radius: 10px;" ng-click="revenirCatalog()">
+			<a style="text-decoration: none; color: Black;">Revenir
 				au catalogue</a>
 		</button>
 	</div>

@@ -1,12 +1,24 @@
-<h1>Paiement</h1>
+<h1>Montant de la commande : {{montantTotal}}</h1>
 <div class="form-group">
-	<label for="commandville"> Ville</label> <input type="text"
-		class="form-control" ng-model="commandInfo.ville"
-		placeholder="Entrez votre ville">
+	<label for="commandpaienum"> Numéro de la carte bancaire</label> <input
+		type="text" class="form-control" ng-model="commandPaieInfo.num"
+		placeholder="Entrez votre numéro de carte">
+</div>
+
+<div class="form-group">
+	<label for="commandpaiemois"> Date d'expiration&nbsp;</label> <select
+		name="moisSelect" id="moisSelect"
+		ng-model="commandPaieInfo.mois">
+		<option ng-repeat="mois in listeMois" value="{{mois.value}}">{{mois.libelle}}</option>
+	</select> &nbsp;&nbsp;{{commandPaieInfo.mois}}
+&nbsp;/&nbsp;{{commandPaieInfo.annee}} <select
+		name="anneeSelect" id="anneeSelect"
+		ng-model="commandPaieInfo.annee">
+		<option ng-repeat="annee in listeAnnees" value="{{annee.value}}">{{annee.libelle}}</option>
+	</select> &nbsp;&nbsp;
 </div>
 <div class="form-group">
-	<label for="commandadresse"><span
-		class="glyphicon glyphicon-user"></span> Adresse</label> <input type="text"
-		class="form-control" ng-model="commandInfo.adresse"
+	<label for="commandpaiecodeverif"> Code de vérification</label> <input
+		type="text" class="form-control" ng-model="commandPaieInfo.codeVerif"
 		placeholder="Entrez votre adresse">
 </div>
