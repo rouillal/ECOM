@@ -9,6 +9,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.jboss.logging.Logger;
+
 import fr.ecombio.model.Produit;
 
 import java.util.List;
