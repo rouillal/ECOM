@@ -3,7 +3,7 @@ package fr.ecombio.rest;
 
 import java.io.PrintWriter;
 import java.util.List;
-import org.jboss.logging.Logger;
+//import org.jboss.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -23,7 +23,7 @@ public class PanierResourceRESTService {
 	@Inject
     private PanierRepository repository;
 	
-	Logger log;
+	//Logger log;
 
 	@POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -32,7 +32,7 @@ public class PanierResourceRESTService {
 	    writer.println("The first line");
 	    writer.println("The second line");
 	    writer.close();*/
-		log.getLogger(" coucou ");
+		//log.getLogger(" coucou ");
 		/*Collection<Article> articles = new Collection<Article>();
 		
 		Panier panier = new Panier(articles);
