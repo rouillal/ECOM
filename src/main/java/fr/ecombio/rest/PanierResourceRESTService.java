@@ -3,7 +3,7 @@ package fr.ecombio.rest;
 
 import java.io.PrintWriter;
 import java.util.List;
-//import org.jboss.logging.*;
+//import org.jboss.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -27,12 +27,12 @@ public class PanierResourceRESTService {
 
 	@POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Long createUpdatePanier(Object commande) {
+    public Long createUpdatePanier(List<Object> commande) {
 		/*PrintWriter writer = new PrintWriter("the-file-name.txt", "UTF-8");
 	    writer.println("The first line");
 	    writer.println("The second line");
 	    writer.close();*/
-		//log.debug(commande.toString());
+		//log.getLogger(" coucou ");
 		/*Collection<Article> articles = new Collection<Article>();
 		
 		Panier panier = new Panier(articles);

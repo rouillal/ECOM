@@ -68,9 +68,15 @@ public class Produit implements Serializable {
 	private String variete;
 	
 	@NotNull
+	@Size(min = 1, max = 25)
+	@Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
+    @Column(name = "produit_unite")
+	private String unite;
+	
+	@NotNull
     @Column(name = "produit_quantite")
 	private int quantite;
-	
+
 	@NotNull
     @Column(name = "produit_stock")
 	private int stock;
@@ -155,6 +161,14 @@ public class Produit implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getUnite() {
+		return unite;
+	}
+
+	public void setUnite(String unite) {
+		this.unite = unite;
 	}
 	
 	public int getQuantite() {
