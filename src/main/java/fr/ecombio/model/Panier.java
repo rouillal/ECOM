@@ -2,6 +2,7 @@ package fr.ecombio.model;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -35,6 +36,9 @@ public class Panier implements Serializable {
     @Column(name = "produit_articles")
 	private Map<Long,Article> articles = new HashMap<Long,Article>(); 
     
+	
+	Date dateDerniereModif = new Date();
+	
 	public Panier() {
 		super();
 	}
@@ -49,13 +53,16 @@ public class Panier implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+		dateDerniereModif = new Date();
 	}
 
 	public Map<Long,Article> getArticles() {
+		dateDerniereModif = new Date();
 		return articles;
 	}
 
 	public void setArticles(Map<Long,Article> articles) {
 		this.articles = articles;
+		dateDerniereModif = new Date();
 	}
 }
