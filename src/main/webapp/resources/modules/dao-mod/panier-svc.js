@@ -60,14 +60,16 @@ eComBioApp.factory('panierSvc', [
 					}
 				}
 				//$window.alert('ff');
-				if (tokenServer < 0) {
-					restBackendSvc.createItem('panier', listePanier).then(
+				var panierJson = angular.toJson(listePanier);
+				$window.alert('Panier : '+panierJson);
+				if (idPanierServer < 0) {
+					restBackendSvc.createItem('panier', panierJson).then(
 							function(data) {
 								$window.alert('ff'+data.data);
 								idPanierServer = data.data;
 							});
 				} else {
-					restBackendSvc.updateItem('panier?id='+idPanierServer, listePanier).then(
+					restBackendSvc.updateItem('panier?id='+idPanierServer, panierJson).then(
 							function(data) {
 								$window.alert('gg');
 							});
