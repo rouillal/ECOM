@@ -7,13 +7,17 @@
 		<div ng-include
 			src="'resources/modules/product-catalog-mod/partials/selectedProductDisplay.html'"></div>
 		<div ng-repeat="produit in listProduits">
-			<div style="text-align: center; margin-top: 100px;" class="col-xs-3"
-				ng-click="selectDetailsProduit(produit)" data-toggle="modal"
-				data-target="#selectedProductDisplay">
-				{{produit.name}} {{produit.variete}}<br> <img width="200px"
-					height="200px"
-					ng-src="resources/modules/product-catalog-mod/img/{{produit.name}}{{produit.variete}}.jpg"><br>
-				{{produit.prix}}€ - {{produit.quantite}}
+			<div style="text-align: center;" class="col-md-4" class="col-sm-6"
+				class="col-xs-12" ng-click="selectDetailsProduit(produit)"
+				data-toggle="modal" data-target="#selectedProductDisplay">
+				<div style="margin-top: 50px;" class="col-xs-12">{{produit.name}}
+					{{produit.variete}}</div>
+				<div class="col-xs-12">
+					<img width="250px" height="250px"
+						ng-src="resources/modules/product-catalog-mod/img/{{produit.name}}{{produit.variete}}.jpg">
+				</div>
+				<div class="col-xs-12">{{produit.prix}}€ -
+					{{produit.quantite}}{{produit.unite}}</div>
 			</div>
 		</div>
 	</div>
