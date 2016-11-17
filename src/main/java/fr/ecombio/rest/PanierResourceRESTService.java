@@ -23,7 +23,6 @@ public class PanierResourceRESTService {
 	@Inject
     private PanierRepository repository;
 	
-	@Inject
 	Logger log;
 
 	@POST
