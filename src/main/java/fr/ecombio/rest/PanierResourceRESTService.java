@@ -44,6 +44,9 @@ public class PanierResourceRESTService {
 		Panier panier = new Panier();
 		for(GestionArticle article : commande) {
 			Produit produit = ProduitRepository.findById(article.getProduit());
+			/*
+			 * TO DO : Update des stocks
+			 */
 			Article a = new Article(produit,article.getQuotite());
 			panier.getArticles().add(a);
 		}
@@ -56,6 +59,9 @@ public class PanierResourceRESTService {
 		Panier panier = PanierRepository.findById(id);
 		for(GestionArticle article : commande) {
 			Produit produit = ProduitRepository.findById(article.getProduit());
+			/*
+			 * TO DO : Update des stocks
+			 */
 			Article a = new Article(produit,article.getQuotite());
 			panier.getArticles().add(a);
 		}
