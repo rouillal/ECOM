@@ -1,60 +1,97 @@
 <div class="row">
 	<div class="col-xs-12 col-sm-3" ng-include
 		src="'resources/modules/search-product-mod/search-product.html'"></div>
-	<div class="col-xs-12 col-sm-9">
-		<div ng-repeat="ligne in listePanier">
+	<div class="col-xs-12 col-sm-9" style="margin-top: 20px;">
+		<div class="col-xs-10"
+			style="text-align: center; font-size: 25px; font-family: Bradley Hand; color: rgb(221, 131, 14);">
+			Mon panier
+			<hr>
+		</div>
+		<div class="col-xs-10">
 			<div class="row">
+				<div class="col-xs-3"
+					style="text-align: center; font-size: 15px; font-style: italic">Produit</div>
 				<div class="col-xs-1"></div>
-				<div class="col-xs-3">{{ligne.name}} - {{ligne.variete}}</div>
+				<div class="col-xs-3"
+					style="text-align: center; font-size: 15px; font-style: italic">Quantité</div>
+				<div class="col-xs-1"></div>
+				<div class="col-xs-3"
+					style="text-align: center; font-size: 15px; font-style: italic">Prix</div>
+				<div class="col-xs-1"></div>
+			</div>
+		</div>
+		<div class="col-xs-10" style="margin-top: 10px;"></div>
+		<div class="col-xs-10" style="margin-top: 10px;"
+			ng-repeat="ligne in listePanier">
+			<div class="row">
+				<div class="col-xs-3">{{ligne.name}} {{ligne.variete}}</div>
 				<div class="col-xs-1"></div>
 				<div class="col-xs-3">
-					<div class="row">
-						<div class="col-xs-2">
-							<button class="btn" ng-click="moinsProduit(ligne)"
-								ng-disabled="isMoinsProduitInactif(ligne)">
-								<span class="glyphicon glyphicon-minus"></span>
-							</button>
-						</div>
-						<div class="col-xs-2">
-							<input type="text" size="2" ng-model="ligne.qt" />
-						</div>
-						<div class="col-xs-2">
-							<button class="btn" ng-click="plusProduit(ligne)"
-								ng-disabled="isPlusProduitInactif(ligne)">
-								<span class="glyphicon glyphicon-plus"></span>
-							</button>
-						</div>
+					<div class="col-xs-4">
+						<button class="btn" ng-click="moinsProduit(ligne)"
+							ng-disabled="isMoinsProduitInactif(ligne)">
+							<span style="color: rgb(221, 131, 14);"
+								class="glyphicon glyphicon-minus"></span>
+						</button>
+					</div>
+					<div class="col-xs-4">
+						<input type="text" size="1" ng-model="ligne.qt" />
+					</div>
+					<div class="col-xs-4">
+						<button class="btn" ng-click="plusProduit(ligne)"
+							ng-disabled="isPlusProduitInactif(ligne)">
+							<span style="color: rgb(221, 131, 14);"
+								class="glyphicon glyphicon-plus"></span>
+						</button>
 					</div>
 				</div>
 				<div class="col-xs-1"></div>
-				<div class="col-xs-3">
-					<div class="row">
-						<div class="col-xs-8">{{ligne.px}} €</div>
-						<div class="col-xs-1"></div>
-						<div class="col-xs-2">
-							<button class="btn" ng-click="supprimeLigne(ligne)"">
-								<span class="glyphicon glyphicon-trash"></span>
-							</button>
-						</div>
-					</div>
+				<div class="col-xs-3" style="text-align: center;">{{ligne.px}}
+					€</div>
+				<div class="col-xs-1">
+					<button class="btn" ng-click="supprimeLigne(ligne)"">
+						<span style="color: rgb(221, 131, 14);"
+							class="glyphicon glyphicon-trash"></span>
+					</button>
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
-<br>
-<div class="row" ng-show="isTotalAffiche()">
-	<div class="col-xs-8"></div>
-	<div class="col-xs-3">Total {{montantTotal}} €</div>
-</div>
-<br>
-<div class="row" ng-show="isTotalAffiche()">
-	<div class="col-xs-1"></div>
-	<div class="col-xs-3">
-		<a href="#/catalog" class="btn btn-info btn-lg" role="button">CONTINUER MES ACHATS</a>
-	</div>
-	<div class="col-xs-4"></div>
-	<div class="col-xs-3">
-		<a href="#/command" class="btn btn-info btn-lg" role="button">COMMANDER</a>
+		<div class="col-xs-10" ng-show="isTotalAffiche()">
+			<div class="col-xs-8"></div>
+			<div
+				style="color: rgb(221, 131, 14); font-size: 20px; margin-top: 50px; text-align: center;"
+				class="col-xs-3">Total : {{montantTotal}} €</div>
+			<div class="col-xs-1"></div>
+		</div>
+		<div style="margin-top: 25px;" class="col-xs-10"
+			ng-show="isTotalAffiche()">
+			<div class="col-xs-3">
+				<button style="background-color: #f9f9f9; border-radius: 10px;">
+					<a style="text-decoration: none; color: Black;" href="#/catalog">Continuer
+						mes achats</a>
+				</button>
+			</div>
+			<div class="col-xs-6"></div>
+			<div class="col-xs-3">
+				<button
+					style="background-color: rgb(221, 131, 14); border-radius: 10px;">
+					<a style="text-decoration: none; color: Black;" href="#/command">Commander</a>
+				</button>
+			</div>
+		</div>
+		<div class="col-xs-10" ng-show="isPanierVide()">
+			<div
+				style="margin-top: 50px; text-align: center;">Votre
+				panier est vide</div>
+		</div>
+		<div style="margin-top: 25px;" class="col-xs-10"
+			ng-show="isPanierVide()">
+			<div class="col-xs-3">
+				<button style="background-color: #f9f9f9; border-radius: 10px;">
+					<a style="text-decoration: none; color: Black;" href="#/catalog">Revenir
+						au catalogue</a>
+				</button>
+			</div>
+		</div>
 	</div>
 </div>

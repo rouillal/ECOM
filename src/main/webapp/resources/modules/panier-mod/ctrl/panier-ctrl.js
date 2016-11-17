@@ -31,6 +31,10 @@ eComBioApp.controller('PanierCtrl', [ '$scope', '$location', 'panierSvc',
 				return ($scope.montantTotal>0);
 			}
 			
+			$scope.isPanierVide = function() {
+				return ($scope.listePanier.length==0);
+			}
+			
 			$scope.goNext = function(hash) {
 				$location.path(hash);
 			}
