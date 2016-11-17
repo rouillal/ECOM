@@ -11,9 +11,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import fr.ecombio.data.PanierRepository;
+import fr.ecombio.model.GestionCommande;
 import fr.ecombio.model.Panier;
 
-@Path("/categorie")
+@Path("/panier")
 @RequestScoped
 public class PanierResourceRESTService {
 
@@ -22,8 +23,12 @@ public class PanierResourceRESTService {
 
 	@POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Long listAllCategories(Panier panier) {
-        return repository.AjoutPanier(panier);
+    public Long createUpdatePanier(Object commande) {
+		/*Collection<Article> articles = new Collection<Article>();
+		
+		Panier panier = new Panier(articles);
+        return repository.AjoutPanier(panier);*/
+		return 150L;
 	}
 	
 }
