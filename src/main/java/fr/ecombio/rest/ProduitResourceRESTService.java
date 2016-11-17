@@ -44,8 +44,8 @@ public class ProduitResourceRESTService {
 	@Path("/filter")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Produit> listAllProduits(@QueryParam("cat") String cat, @QueryParam("search") String search, 
-    		@DefaultValue("0") @QueryParam("page") int page) {
-        return repository.findCatOrderedByName(cat, search, page);
+    		@DefaultValue("0") @QueryParam("page") int page, @QueryParam("tri") String tri) {
+        return repository.findCatOrderedByName(cat, search, page, tri);
     }
 }
 

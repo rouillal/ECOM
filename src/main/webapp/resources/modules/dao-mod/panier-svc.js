@@ -60,7 +60,7 @@ eComBioApp.factory('panierSvc', [
 					}
 				}
 				//$window.alert('ff');
-				if (tokenServer < 0) {
+				if (idPanierServer < 0) {
 					restBackendSvc.createItem('panier', listePanier).then(
 							function(data) {
 								$window.alert('ff'+data.data);

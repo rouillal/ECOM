@@ -61,7 +61,7 @@ public class ProduitRepository {
 		return em.createQuery(criteria).getResultList();
 	}
 
-	public List<Produit> findCatOrderedByName(String cat, String search, int page) {
+	public List<Produit> findCatOrderedByName(String cat, String search, int page, String tri) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Produit> criteria = cb.createQuery(Produit.class);
 		Root<Produit> Produit = criteria.from(Produit.class);
@@ -99,6 +99,13 @@ public class ProduitRepository {
 			predicate = predicate2;
 		}
 		criteria.where(predicate);
+		if(tri == "alpha") {
+			criteria.orderBy(cb.asc(Produit.get("name")));
+		} else if(tri == "prixup") {
+			criteria.orderBy(cb.asc(Produit.get("prix")));
+		} else if(tri == "prixdown") {
+			criteria.orderBy(cb.desc(Produit.get("prix")));
+		}
 		TypedQuery<Produit> typequery = em.createQuery(criteria);
 		typequery.setFirstResult(page*6);
 		typequery.setMaxResults(6);
