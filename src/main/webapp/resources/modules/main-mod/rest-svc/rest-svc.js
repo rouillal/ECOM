@@ -48,16 +48,18 @@ eComBioApp.factory('restBackendSvc', [
 				return sendRequest(request);
 			}
 			
-			function updateItem(urlid, body) {
+			function updateItem(url, body) {
+				var urlTmp = backandGlobalUrlRoot + url;
 				var request = $http({
 					method : 'PUT',
 					data : body,
-					url : urlid
+					url : urlTmp
 				});
 				return sendRequest(request);
 			}
 
 			function deleteItem(urlid) {
+				var urlTmp = backandGlobalUrlRoot + url;
 				var request = $http({
 					method : 'DELETE',
 					url : urlid
