@@ -44,13 +44,11 @@
 </div>
 <h2>{{commandInfo.heure}}</h2>
 <div class="form-group">
-	<label for="commandheure"> Ville</label>
+	<label for="commandheure"> Horaire</label>
 	<select name="horaireSelect" id="horaireSelect" ng-model="commandInfo.heure">
-      <option ng-repeat="horaire in listeHoraires" value="{{horaire.id}}">{{horaire.libelle}}</option>
+      <option ng-repeat="horaire in listeHoraires" value="{{horaire.value}}">{{horaire.libelle}}</option>
     </select>
-	 <input type="text"
-		class="form-control" ng-model="commandInfo.heure"
-		placeholder="Entrez l'heure de livraison">
+	 &nbsp;&nbsp;{{listeHoraires[commandInfo.heure].libelle}}
 </div>
 <div class="row">
 	<div class="col-xs-2" style="margin-top: 10px;"></div>

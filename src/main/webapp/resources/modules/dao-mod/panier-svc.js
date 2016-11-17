@@ -80,7 +80,8 @@ eComBioApp.factory('panierSvc', [
 								idPanierServer = data.data;
 							});
 				} else {
-					restBackendSvc.updateItem('panier?id='+idPanierServer, panierJson).then(
+					var urlUpdate = 'panier?id='+idPanierServer;
+					restBackendSvc.updateItem(urlUpdate, panierJson).then(
 							function(data) {
 								$window.alert('gg');
 							});
