@@ -10,7 +10,8 @@ eComBioApp.factory('restBackendSvc', [
 		'$q',
 		'$location',
 		'$rootScope',
-		function($http, $q, $location, $rootScope) {
+		'$window',
+		function($http, $q, $location, $rootScope,$window) {
 			var backandGlobalUrlRoot = 'http://' + $location.host()
 					+ ':8080/ECOM/rest/';
 			var backandGlobalUrl = [backandGlobalUrlRoot + 'produit',
@@ -36,25 +37,29 @@ eComBioApp.factory('restBackendSvc', [
 				return sendRequest(request);
 			}
 			
-			function createItem(rubrique, body) {
+			function createItem(url, body) {
+				var urlTmp = backandGlobalUrlRoot + url;
+				//$window.alert('hhelo');
 				var request = $http({
 					method : 'POST',
 					data : body,
-					url : backandGlobalUrl[rubrique]
+					url : urlTmp
 				});
 				return sendRequest(request);
 			}
 			
-			function updateItem(urlid, body) {
+			function updateItem(url, body) {
+				var urlTmp = backandGlobalUrlRoot + url;
 				var request = $http({
 					method : 'PUT',
 					data : body,
-					url : urlid
+					url : urlTmp
 				});
 				return sendRequest(request);
 			}
 
 			function deleteItem(urlid) {
+				var urlTmp = backandGlobalUrlRoot + url;
 				var request = $http({
 					method : 'DELETE',
 					url : urlid
