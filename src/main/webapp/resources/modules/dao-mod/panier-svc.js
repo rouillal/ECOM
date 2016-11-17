@@ -60,6 +60,8 @@ eComBioApp
 										montantTotal += price;
 									}
 								}
+								//$window.alert('ff');
+								restBackendSvc.createItem('panier',listePanier);
 								$rootScope.$broadcast('selectedProduitChange', produitAChanger,quantite);
 								$rootScope.$broadcast('rafraichirPanier');
 							};
