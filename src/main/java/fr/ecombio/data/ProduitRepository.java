@@ -125,6 +125,10 @@ public class ProduitRepository {
 		typequery.setFirstResult(page*6);
 		typequery.setMaxResults(6);
 		return typequery.getResultList();
+	}
+
+	public void updateProduit(Produit p) {
+		em.merge(p);
 	}	
 }
 
