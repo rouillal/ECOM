@@ -43,7 +43,7 @@ public class PanierResourceRESTService {
 	@ResponseWrapper public Long createUpdatePanier(GestionArticle[] commande) {
 		Panier panier = new Panier();
 		for(GestionArticle article : commande) {
-			Produit produit = ProduitRepository.findById(article.getProduit());
+			Produit produit = ProduitRepository.findById(article.getId());
 			/*
 			 * TO DO : Update des stocks
 			 */
@@ -58,7 +58,7 @@ public class PanierResourceRESTService {
 	public void createUpdatePanier(@QueryParam("id") Long id, GestionArticle[] commande) {
 		Panier panier = PanierRepository.findById(id);
 		for(GestionArticle article : commande) {
-			Produit produit = ProduitRepository.findById(article.getProduit());
+			Produit produit = ProduitRepository.findById(article.getId());
 			/*
 			 * TO DO : Update des stocks
 			 */

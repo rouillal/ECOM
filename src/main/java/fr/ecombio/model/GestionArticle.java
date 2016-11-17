@@ -6,11 +6,11 @@ public class GestionArticle {
 	private int quotite;
 
 
-	public Long getProduit() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setProduit(Long produit_id) {
+	public void setId(Long produit_id) {
 		this.id = produit_id;
 	}
 
