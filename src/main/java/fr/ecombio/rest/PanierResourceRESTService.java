@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.xml.ws.ResponseWrapper;
 
 import fr.ecombio.data.PanierRepository;
+import fr.ecombio.data.ArticleRepository;
 import fr.ecombio.data.ProduitRepository;
 import fr.ecombio.model.Article;
 import fr.ecombio.model.GestionArticle;
@@ -30,6 +31,10 @@ public class PanierResourceRESTService {
 	
 	@Inject
 	private ProduitRepository ProduitRepository;
+	
+
+	@Inject
+	private ArticleRepository ArticleRepository;
 
 	//Logger log;
 
@@ -48,7 +53,8 @@ public class PanierResourceRESTService {
 			 * TO DO : Update des stocks
 			 */
 			Article a = new Article(produit,article.getQuotite());
-			panier.getArticles().add(a);
+			ArticleRepository.AjoutArticle(a);
+			panier.getArticles().put(article.getId(), a);
 		}
 		return PanierRepository.AjoutPanier(panier);
 	}
@@ -62,8 +68,15 @@ public class PanierResourceRESTService {
 			/*
 			 * TO DO : Update des stocks
 			 */
-			Article a = new Article(produit,article.getQuotite());
-			panier.getArticles().add(a);
+			if (panier.getArticles().containsKey(produit.getId())) {
+				Article a = panier.getArticles().get(produit.getId());
+				ArticleRepository.updateArticle(a);
+				panier.getArticles().put(a.getProduit().getId(), a);
+			} else {
+				Article a = new Article(produit,article.getQuotite());
+				ArticleRepository.AjoutArticle(a);
+				panier.getArticles().put(a.getProduit().getId(), a);
+			}
 		}
 		PanierRepository.updatePanier(panier);
 	}

@@ -22,7 +22,7 @@ public class PanierRepository {
 	}
 
 	public void updatePanier(Panier panier) {
-		em.persist(panier);
+		em.merge(panier);
 	}
 
 }
