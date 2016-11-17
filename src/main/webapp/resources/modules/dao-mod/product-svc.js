@@ -31,7 +31,12 @@ eComBioApp.factory('productSvc', [
 				restAdress += 'page=' + page;
 				$rootScope.$broadcast('debug', restAdress);
 				restBackendSvc.getItemsByUrl(restAdress).then(function(data) {
-					$rootScope.$broadcast('listProductsSupplied', data.data);
+					var listProduit = data.data;
+					angular.forEach(listProduit, function(produit, key) {
+						produit['qt']=0;
+						produit['px']=0;
+					});
+					$rootScope.$broadcast('listProductsSupplied',listProduit);
 				}, function(reason) {
 					$rootScope.$broadcast('debug', reason);
 					if (reason.status == 404) {
