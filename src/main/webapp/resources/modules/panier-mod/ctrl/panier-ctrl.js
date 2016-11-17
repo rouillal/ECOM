@@ -4,13 +4,13 @@ eComBioApp.controller('PanierCtrl', [ '$scope', '$location', 'panierSvc',
 			$scope.montantTotal = panierSvc.getMontantTotal();
 
 			$scope.isMoinsProduitInactif = function(ligne) {
-				return !(ligne.qt > 0);
+				return !(ligne.quotite > 0);
 			};
 
 			$scope.moinsProduit = function(ligne) {
-				if (ligne.qt > 0) {
-					ligne.qt -= 1;
-					panierSvc.changeProduit(ligne, ligne.qt);
+				if (ligne.quotite > 0) {
+					ligne.quotite -= 1;
+					panierSvc.changeProduit(ligne, ligne.quotite);
 				}
 			};
 
@@ -19,8 +19,8 @@ eComBioApp.controller('PanierCtrl', [ '$scope', '$location', 'panierSvc',
 			};
 
 			$scope.plusProduit = function(ligne) {
-				ligne.qt += 1;
-				panierSvc.changeProduit(ligne, ligne.qt);
+				ligne.quotite += 1;
+				panierSvc.changeProduit(ligne, ligne.quotite);
 			};
 
 			$scope.supprimeLigne = function(ligne) {
