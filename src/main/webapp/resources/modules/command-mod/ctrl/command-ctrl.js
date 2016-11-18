@@ -3,6 +3,7 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 	$scope.commandInfo = commandSvc.getCommandInfo();
 	$scope.commandPaieInfo = commandSvc.getCommandPaieInfo();
 	$scope.payerInfoVoir = false;
+	$scope.recapVoir = false;
 	$scope.montantTotal = panierSvc.getMontantTotal();
 	//Liste des horaires
 	$scope.listeHoraires=[];
@@ -57,8 +58,10 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 	});
 	
 	$scope.validationCmd = function(){
-		$window.alert("Bravo, vous avez passé commande chez nous");
+		commandSvc.validePaiement();
 	}
 	
-	//angular.toJson(listePanier);
+	$scope.$on('recapAEditer', function(event) {
+		$scope.recapVoir = true;
+	});
 } ]);

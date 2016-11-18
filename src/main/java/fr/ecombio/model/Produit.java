@@ -107,7 +107,6 @@ public class Produit implements Serializable {
 
 	//nombre de jours
 	@NotNull
-	@Size(min = 10, max = 10)
     @Column(name = "produit_dureeConservation")
 	private int dureeConservation;
 
