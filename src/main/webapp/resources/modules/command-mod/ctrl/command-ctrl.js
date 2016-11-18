@@ -2,7 +2,7 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 		function($scope, $location,$window,commandSvc,panierSvc) {
 	$scope.commandInfo = commandSvc.getCommandInfo();
 	$scope.commandPaieInfo = commandSvc.getCommandPaieInfo();
-	$scope.payerInfoVoir = true;
+	$scope.payerInfoVoir = false;
 	$scope.montantTotal = panierSvc.getMontantTotal();
 	//Liste des horaires
 	$scope.listeHoraires=[];

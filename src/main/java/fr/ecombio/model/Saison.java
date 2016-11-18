@@ -3,6 +3,7 @@ package fr.ecombio.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -39,10 +40,9 @@ public class Saison implements Serializable {
 	
 	@JsonBackReference
 	@OneToMany(mappedBy="saisons", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	private Collection<ProduitSaison> produits;
+	private Set<ProduitSaison> produits;
 	
 	public Saison() {
-		this.produits = new ArrayList<ProduitSaison>();
 	}
 	
 
@@ -54,11 +54,11 @@ public class Saison implements Serializable {
 		this.name = name;
 	}
 
-	public Collection<ProduitSaison> getProduits() {
+	public Set<ProduitSaison> getProduits() {
 		return produits;
 	}
 
-	public void setProduits(Collection<ProduitSaison> produits) {
+	public void setProduits(Set<ProduitSaison> produits) {
 		this.produits = produits;
 	}
 }

@@ -3,6 +3,7 @@ package fr.ecombio.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
@@ -35,10 +36,9 @@ public class Categorie implements Serializable {
 	
 	@JsonBackReference
 	@OneToMany(mappedBy="categorie", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	private Collection<Produit> produits;
+	private Set<Produit> produits;
 	
 	public Categorie() {
-		this.produits = new ArrayList<Produit>();
 	}
 	
 	
@@ -50,7 +50,7 @@ public class Categorie implements Serializable {
 		this.id = id;
 	}
 
-	public Categorie(String name, Collection<Produit> produits) {
+	public Categorie(String name, Set<Produit> produits) {
 		super();
 		this.name = name;
 		this.produits = produits;
@@ -60,7 +60,6 @@ public class Categorie implements Serializable {
 	public Categorie(String name) {
 		super();
 		this.name = name;
-		this.produits = new ArrayList<Produit>();
 	}
 
 	public String getName() {
@@ -75,7 +74,7 @@ public class Categorie implements Serializable {
 		return produits;
 	}
 
-	public void setProduits(Collection<Produit> produits) {
+	public void setProduits(Set<Produit> produits) {
 		this.produits = produits;
 	}
 	

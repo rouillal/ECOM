@@ -3,6 +3,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import fr.ecombio.model.Categorie;
 import fr.ecombio.model.Panier;
 
 @Stateless
@@ -15,4 +16,13 @@ public class PanierRepository {
 		em.persist(panier);
 		return panier.getId();
 	}
+	
+	public Panier findById(Long id) {
+		return em.find(Panier.class, id);
+	}
+
+	public void updatePanier(Panier panier) {
+		em.merge(panier);
+	}
+
 }

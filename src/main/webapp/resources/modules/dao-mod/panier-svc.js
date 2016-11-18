@@ -44,7 +44,6 @@ eComBioApp.factory('panierSvc', [
 					listePanierServeur.push(ligneServeurTmp);
 				});
 				var listePanierServeurJson = angular.toJson(listePanierServeur);
-				$window.alert('Panier Serveur : '+listePanierServeurJson);
 				return listePanierServeurJson; 
 			}
 
@@ -76,7 +75,6 @@ eComBioApp.factory('panierSvc', [
 				if (idPanierServer < 0) {
 					restBackendSvc.createItem('panier', panierJson).then(
 							function(data) {
-								$window.alert('ff'+data.data);
 								idPanierServer = data.data;
 							});
 				} else {
