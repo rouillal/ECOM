@@ -20,6 +20,7 @@ eComBioApp.factory('commandSvc', [ '$rootScope', 'restBackendSvc', '$window',
 								restBackendSvc.createItem('commande', commandInfoJson).then(
 										function(data) {
 											$window.alert("Bravo, vous avez passé commande chez nous");
+											$rootScope.$broadcast('recapAEditer');
 										}, function(error) {
 											$window.alert("Problème de prise de la commande");
 										});
