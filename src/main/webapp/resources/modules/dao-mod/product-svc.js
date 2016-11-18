@@ -5,7 +5,7 @@ eComBioApp.factory('productSvc', [
 		function($rootScope, restBackendSvc, $window) {
 			
 			var getProductBySearchName = function(searchString, listCategories,
-					listCategoriesChoix, page) {
+					listCategoriesChoix, page,saison) {
 				var restAdress = "produit/filter?";
 				var categoSelected = '';
 				angular.forEach(listCategories, function(categorie, key) {
@@ -28,6 +28,11 @@ eComBioApp.factory('productSvc', [
 				if ((categoSelected != '') || (searchString != '')) {
 					restAdress += '&';
 				}
+				
+				if (saison) {
+					restAdress += 'saison=1&';
+				}
+				
 				restAdress += 'page=' + page;
 				$rootScope.$broadcast('debug', restAdress);
 				restBackendSvc.getItemsByUrl(restAdress).then(function(data) {

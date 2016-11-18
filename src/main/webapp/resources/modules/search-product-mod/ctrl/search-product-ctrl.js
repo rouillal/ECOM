@@ -3,9 +3,14 @@ eComBioApp.controller('SearchProductCtrl', [ '$scope','$window','searchProductSv
 	$scope.listCategoriesChoix=searchProductSvc.getListCategoriesChoix();
 	$scope.searchProductString = searchProductSvc.getSearchString();
 	$scope.debug = 'Url Rest Search à venir';
+	$scope.isSaison = searchProductSvc.getIsSaison();
 	
 	$scope.changeProductCatego = function() {
 		searchProductSvc.changeListCategoriesChoix($scope.listCategoriesChoix);
+	}
+	
+	$scope.changeSaison = function() {
+		searchProductSvc.changeSaison($scope.isSaison);
 	}
 	
 	$scope.searchProductByName  = function() {

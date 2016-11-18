@@ -45,10 +45,7 @@ public class ProduitRepository {
 				criteria.orderBy(cb.asc(Produit.get("prix")));
 			} else if(tri.equalsIgnoreCase("prixdown")) {
 				criteria.orderBy(cb.desc(Produit.get("prix")));
-			} else if(tri.equalsIgnoreCase("saison")) {
-				Long saisonDuMoment = this.getSeason(new Date());
-				criteria.where( cb.equal( Produit.get("saisons").get("saisons").get("id"), saisonDuMoment));
-			}
+			} 
 		} else {
 			criteria.orderBy(cb.asc(Produit.get("name")));
 		}
@@ -79,7 +76,7 @@ public class ProduitRepository {
 		return em.createQuery(criteria).getResultList();
 	}
 
-	public List<Produit> findCatOrderedByName(String cat, String search, int page, String tri) {
+	public List<Produit> findCatOrderedByName(String cat, String search, int page, String tri, int saison) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Produit> criteria = cb.createQuery(Produit.class);
 		Root<Produit> Produit = criteria.from(Produit.class);
@@ -115,6 +112,10 @@ public class ProduitRepository {
 			}
 		} else {
 			predicate = predicate2;
+		}
+		if(saison == 1) {
+			Long saisonDuMoment = this.getSeason(new Date());
+			predicate = cb.and(predicate,cb.equal( Produit.get("saisons").get("saisons").get("id"), saisonDuMoment));
 		}
 		criteria.where(predicate);
 		if(tri != null && tri != "") {
