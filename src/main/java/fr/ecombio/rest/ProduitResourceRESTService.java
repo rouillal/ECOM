@@ -30,8 +30,8 @@ public class ProduitResourceRESTService {
 
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Produit> listAllProduits(@DefaultValue("0") @QueryParam("page") int page, @QueryParam("tri") String tri ) {
-        return repository.findAllOrderedByName(page, tri);
+    public List<Produit> listAllProduits(@DefaultValue("0") @QueryParam("page") int page, @QueryParam("tri") String tri, @QueryParam("saison") int saison) {
+        return repository.findAllOrderedByName(page, tri, saison);
     }
 	
 	@POST
@@ -43,8 +43,8 @@ public class ProduitResourceRESTService {
 	@GET
 	@Path("/filter")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Produit> listAllProduits(@QueryParam("cat") String cat, @QueryParam("search") String search, 
-    		@DefaultValue("0") @QueryParam("page") int page, @QueryParam("tri") String tri,@DefaultValue("0")   @QueryParam("saison") int saison) {
+    public List<Produit> listAllProduits(@QueryParam("cat") String cat, @QueryParam("search") String search, @QueryParam("saison") int saison,
+    		@DefaultValue("0") @QueryParam("page") int page, @QueryParam("tri") String tri) {
         return repository.findCatOrderedByName(cat, search, page, tri, saison);
     }
 }
