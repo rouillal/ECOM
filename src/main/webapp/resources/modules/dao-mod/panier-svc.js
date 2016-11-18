@@ -80,7 +80,7 @@ eComBioApp.factory('panierSvc', [
 				} else {
 					var urlUpdate = 'panier?id='+idPanierServer;
 					restBackendSvc.updateItem(urlUpdate, panierJson).then(function(response) {
-						$window.alert('OK !!');
+						//$window.alert('OK !!');
 					}, function(error) {
 						var errorJson = angular.toJson(error);
 						if (error.status == 304) {

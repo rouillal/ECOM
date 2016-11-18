@@ -26,9 +26,9 @@ public class PaiementRESTService {
 	@ResponseWrapper public String validationPaiement(ValidationPaiement infos) {
 		String err = infos.verify();
 		if (err!=null && !err.isEmpty()) {
-			return "Paiement OK";
+			return err;
 		}
-		return err;
+		return "Paiement OK";
 	}
 
 }
