@@ -57,7 +57,7 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 	});
 	
 	$scope.validationCmd = function(){
-		$window.alert("Bravo, vous avez passé commande chez nous");
+		commandSvc.validePaiement();
 	}
 	
 	//angular.toJson(listePanier);

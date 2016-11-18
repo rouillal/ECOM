@@ -11,9 +11,27 @@ eComBioApp.factory('commandSvc', [ '$rootScope', 'restBackendSvc', '$window',
 			var getCommandPaieInfo = function() {
 				return commandPaieInfo;
 			};
+			
+			var validePaiement = function() {
+				var commandPaieInfoJson = angular.toJson(commandPaieInfo);
+				restBackendSvc.createItem('paiement', commandPaieInfo).then(
+							function(data) {
+								var commandInfoJson = angular.toJson(commandInfo);
+								restBackendSvc.createItem('commande', commandInfoJson).then(
+										function(data) {
+											$window.alert("Bravo, vous avez passé commande chez nous");
+										}, function(error) {
+											$window.alert("Problème de prise de la commande");
+										});
+							}, function(error) {
+								$window.alert("Problème de paiement");
+							});
+			}
+				
 
 			return {
 				getCommandInfo : getCommandInfo,
-				getCommandPaieInfo : getCommandPaieInfo
+				getCommandPaieInfo : getCommandPaieInfo,
+				validePaiement : validePaiement
 			};
 		} ]);
