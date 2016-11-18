@@ -2,6 +2,7 @@ package fr.ecombio.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +22,7 @@ public class ProduitSaison implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JoinColumn(name="produitsaison_id")
+	@Column(name="produitsaison_id")
 	private Long Id;
 	
 	@ManyToOne
