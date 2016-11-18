@@ -105,7 +105,28 @@ public class Produit implements Serializable {
     @Column(name = "produit_dateCueillette")
 	private String dateCueillette;
 
+	//nombre de jours
+	@NotNull
+	@Size(min = 10, max = 10)
+    @Column(name = "produit_dureeConservation")
+	private int dureeConservation;
 
+	@NotNull
+	@Column(name = "produit_calories")
+	private int calories;
+	
+	@NotNull
+	@Column(name = "produit_glucides")
+	private int glucides;
+	
+	@NotNull
+	@Column(name = "produit_fibres")
+	private int fibres;
+	
+	@NotNull
+	@Column(name = "produit_proteines")
+	private int proteines;
+	
 	public String getVariete() {
 		return variete;
 	}
@@ -200,6 +221,46 @@ public class Produit implements Serializable {
 
 	public void setFilename(String filename) {
 		this.filename = filename;
+	}
+
+	public int getDureeConservation() {
+		return dureeConservation;
+	}
+
+	public void setDureeConservation(int dureeConservation) {
+		this.dureeConservation = dureeConservation;
+	}
+
+	public int getCalories() {
+		return calories;
+	}
+
+	public void setCalories(int calories) {
+		this.calories = calories;
+	}
+
+	public int getGlucides() {
+		return glucides;
+	}
+
+	public void setGlucides(int glucides) {
+		this.glucides = glucides;
+	}
+
+	public int getFibres() {
+		return fibres;
+	}
+
+	public void setFibres(int fibres) {
+		this.fibres = fibres;
+	}
+
+	public int getProteines() {
+		return proteines;
+	}
+
+	public void setProteines(int proteines) {
+		this.proteines = proteines;
 	}
 
 
