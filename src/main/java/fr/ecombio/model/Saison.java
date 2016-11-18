@@ -38,8 +38,8 @@ public class Saison implements Serializable {
     @Column(name = "saison_name")
 	private String name;
 	
-	@JsonBackReference
 	@OneToMany(mappedBy="saisons", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@JsonBackReference
 	private Set<ProduitSaison> produits;
 	
 	public Saison() {
