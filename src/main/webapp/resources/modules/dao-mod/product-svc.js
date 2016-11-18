@@ -57,6 +57,7 @@ eComBioApp.factory('productSvc', [
 						.getItemsByUrl("produit/id?parameter=" + nameOrId)
 						.then(
 								function(data) {
+									$window.alert('Detail produit demande');
 									$rootScope.$broadcast(
 											'detailsProductSupplied', data);
 								});
