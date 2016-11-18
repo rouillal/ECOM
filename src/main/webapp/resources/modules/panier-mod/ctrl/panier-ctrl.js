@@ -38,6 +38,14 @@ eComBioApp.controller('PanierCtrl', [ '$scope', '$location', 'panierSvc',
 			$scope.goNext = function(hash) {
 				$location.path(hash);
 			}
+			
+			$scope.revenirCatalog = function() {
+				$location.path("#/catalog");
+			}
+			
+			$scope.passerCmd = function() {
+				$location.path("command");
+			}
 
 			$scope.$on('rafraichirPanier', function(event) {
 				$scope.listePanier = panierSvc.getListePanier();

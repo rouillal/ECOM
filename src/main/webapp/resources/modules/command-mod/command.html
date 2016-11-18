@@ -29,36 +29,44 @@
 			<div align="center" style="margin-top: 20px;" class="col-xs-12">
 				<form name="form1">
 					<span>Livraison à :</span> <input type="radio" name="livraison"
-						ng-model="commandInfo.livDom"> l'entrepôt <input
-						type="radio" name="livraison" ng-model="!commandInfo.livDom">
-					domicile
+						ng-model="commandInfo.livDom" value="e"> l'entrepôt <input
+						type="radio" name="livraison" ng-model="commandInfo.livDom"
+						value="d"> domicile
 				</form>
 			</div>
-			<div ng-show="commandInfo.livDom">
-				<div class="col-xs-12" class="form-group">
+			<div class="col-xs-12" align="center"
+				style="margin-top: 20px; text-align: :center; font-style: italic"
+				ng-show="commandInfo.livDom=='e'">
+				Venez retirer votre commande à :<br> Bio To Be Alive<br>
+				15 Chemin de Taillat<br> 38240 Meylan
+			</div>
+			<div ng-show="commandInfo.livDom=='d'">
+				<div class="col-xs-12" style="margin-top: 20px;" class="form-group">
 					<label for="commandadresse"><span
 						class="glyphicon glyphicon-user"></span> Adresse</label> <input
 						type="text" class="form-control" ng-model="commandInfo.adresse"
 						placeholder="Entrez votre adresse (n°, libellé de la voie)">
 				</div>
-				<div class="col-xs-6" class="form-group">
+				<div class="col-xs-6" style="margin-top: 20px;" class="form-group">
 					<label for="commandcp"></span> Code postal</label> <input type="text"
 						class="form-control" ng-model="commandInfo.cp"
 						placeholder="Entrez votre code postal">
 				</div>
-				<div class="col-xs-6" class="form-group">
+				<div class="col-xs-6" style="margin-top: 20px;" class="form-group">
 					<label for="commandville"> Ville</label> <input type="text"
 						class="form-control" ng-model="commandInfo.ville"
 						placeholder="Entrez votre ville">
 				</div>
 			</div>
-			<div class="form-group">
+			<div class="col-sm-6 col-xs-12" style="margin-top: 20px;"
+				class="form-group">
 				<label for="commanddate"></span>Date</label> <input type="text"
 					class="form-control" ng-model="commandInfo.date"
 					placeholder="Entrez la date de livraison">
 			</div>
-			<div class="form-group">
-				<label for="commandheure"> Horaire</label> <select
+			<div class="col-sm-6 col-xs-12" style="margin-top: 20px;"
+				class="form-group">
+				<label for="commandheure"> Horaire</label> <br> <select
 					name="horaireSelect" id="horaireSelect"
 					ng-model="commandInfo.heure">
 					<option ng-repeat="horaire in listeHoraires"
@@ -66,22 +74,19 @@
 				</select>
 				<!--  &nbsp;&nbsp;{{listeHoraires[commandInfo.heure].libelle}} -->
 			</div>
-			<div class="row">
-				<div class="col-xs-2" style="margin-top: 10px;"></div>
-				<div class="col-xs-3" style="margin-top: 10px;">
-					<button style="background-color: #f9f9f9; border-radius: 10px;"
-						ng-click="revenirCatalog()">
-						<a style="text-decoration: none; color: Black;">Revenir au
-							catalogue</a>
-					</button>
-				</div>
-				<div class="col-xs-4" style="margin-top: 10px;"></div>
-				<div class="col-xs-3" style="margin-top: 10px;">
-					<button style="background-color: #f9f9f9; border-radius: 10px;"
-						ng-click="payerInfo()">
-						<a style="text-decoration: none; color: Black;">Payer</a>
-					</button>
-				</div>
+			<div class="col-xs-10" style="margin-top: 40px;">
+				<button style="background-color: #f9f9f9; border-radius: 10px;"
+					ng-click="revenirPanier()">
+					<span>Retourner au panier</span>
+				</button>
+			</div>
+			<div class="col-xs-2" style="margin-top: 40px;">
+				<button
+					style="background-color: rgb(221, 131, 14); border-radius: 10px;"
+					ng-click="payerInfo()" data-toggle="modal" id="myBtnPayer"
+					class="payer" data-target="#paiement">
+					<span>Payer</span>
+				</button>
 			</div>
 		</div>
 	</div>
