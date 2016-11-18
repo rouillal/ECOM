@@ -40,5 +40,25 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 		$scope.payerInfoVoir = true;
 	}
 	
+	$scope.revenirPanier = function() {
+		$location.path("panier");
+	}
+	
+	$(window).ready(function(){
+	    $("#myBtnPayer").click(function(){
+	        $("#myModalPaiement").modal();
+	    });
+	});
+	
+	$(window).ready(function(){
+	    $("#myBtnAnnulePaiement").click(function(){
+	        $("#myModalPaiement").modal('hide');
+	    });
+	});
+	
+	$scope.validationCmd = function(){
+		$window.alert("Bravo, vous avez passé commande chez nous");
+	}
+	
 	//angular.toJson(listePanier);
 } ]);

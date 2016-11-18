@@ -1,24 +1,51 @@
-<h1>Montant de la commande : {{montantTotal}}</h1>
-<div class="form-group">
-	<label for="commandpaienum"> Numéro de la carte bancaire</label> <input
-		type="text" class="form-control" ng-model="commandPaieInfo.num"
-		placeholder="Entrez votre numéro de carte">
-</div>
-
-<div class="form-group">
-	<label for="commandpaiemois"> Date d'expiration&nbsp;</label> <select
-		name="moisSelect" id="moisSelect"
-		ng-model="commandPaieInfo.mois">
-		<option ng-repeat="mois in listeMois" value="{{mois.value}}">{{mois.libelle}}</option>
-	</select> &nbsp;&nbsp;{{commandPaieInfo.mois}}
-&nbsp;/&nbsp;{{commandPaieInfo.annee}} <select
-		name="anneeSelect" id="anneeSelect"
-		ng-model="commandPaieInfo.annee">
-		<option ng-repeat="annee in listeAnnees" value="{{annee.value}}">{{annee.libelle}}</option>
-	</select> &nbsp;&nbsp;
-</div>
-<div class="form-group">
-	<label for="commandpaiecodeverif"> Code de vérification</label> <input
-		type="text" class="form-control" ng-model="commandPaieInfo.codeVerif"
-		placeholder="Entrez votre adresse">
+<div class="modal fade" id="myModalPaiement" role="dialog"
+	ng-controller="CommandCtrl">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header"
+				style="padding: 35px 50px; background-color: #f9f9f9;; color: rgb(221, 131, 14); font-family: Bradley Hand; text-align: center; font-size: 30px;">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h3>
+					<span class="glyphicon glyphicon-lock"></span> Paiement
+				</h3>
+			</div>
+			<div class="modal-body">
+				<h4 style="text-align: center;">Montant de la transaction :
+					{{montantTotal}}€</h4>
+				<div class="form-group">
+					<label for="commandpaienum"> N° de carte : </label> <input
+						type="text" class="form-control" ng-model="commandPaieInfo.num"
+						placeholder="Entrez votre numéro de carte bancaire">
+				</div>
+				<div class="form-group">
+					<label for="commandpaiemois"> Expire fin : </label> <select
+						name="moisSelect" id="moisSelect" ng-model="commandPaieInfo.mois">
+						<option ng-repeat="mois in listeMois" value="{{mois.value}}">{{mois.libelle}}</option>
+					</select> <select name="anneeSelect" id="anneeSelect"
+						ng-model="commandPaieInfo.annee">
+						<option ng-repeat="annee in listeAnnees" value="{{annee.value}}">{{annee.libelle}}</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="commandpaiecodeverif"> Cryptogramme visuel</label> <input
+						type="text" class="form-control"
+						ng-model="commandPaieInfo.codeVerif"
+						placeholder="Saisir le cryptogramme visuel">
+				</div>
+				<div align="center">
+					<button
+						style="background-color: rgb(221, 131, 14); border-radius: 10px;"
+						ng-click="validationCmd()">Valider</button>
+				</div>
+			</div>
+			<div class="modal-footer" style="background-color: #f9f9f9;">
+				<div align="center">
+					<button type="button" id="myBtnAnnulePaiement"
+						style="background-color: #f9f9f9; border-radius: 10px;">Annuler
+						et retourner à ma commande</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
