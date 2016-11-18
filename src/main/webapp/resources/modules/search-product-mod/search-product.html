@@ -17,5 +17,9 @@
 		<input type="checkbox" ng-model="listCategoriesChoix[$index]"
 			ng-change="changeProductCatego()">&nbsp;&nbsp;{{categorie.name}}
 	</div>
+	<div class="col-xs-12">
+		<input type="checkbox" ng-model="isSaison"
+			ng-change="changeSaison()">&nbsp;&nbsp;Produits de saison
+	</div>
 	<h6>Debug:{{debug}}</h6>
 </div>
