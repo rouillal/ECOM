@@ -105,5 +105,4 @@ public class PanierResourceRESTService {
 			throw new WebApplicationException(cause,Response.Status.NOT_FOUND);
 		}
 	}
-
 }
