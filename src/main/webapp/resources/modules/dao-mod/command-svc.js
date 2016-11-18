@@ -1,8 +1,8 @@
 eComBioApp.factory('commandSvc', [ '$rootScope', 'restBackendSvc', '$window',
 		function($rootScope, restBackendSvc, $window) {
-
-			var commandInfo = {'nom':'UU','prenom':'UUp','mail':'UU@gm.ll','livDom':false,'adresse':'1 rue GG','cp':'49002','ville':'Mope','date':'12/05/2016','heure':7};
-			var commandPaieInfo = {'num':'123456789','mois':5,'annee':2016,'codeVerif':'789'};
+	
+			var commandInfo = {'nom':'Dupont','prenom':'Jean','mail':'dupont@gmail.com','livDom':'e','adresse':'17 Rue des Marguerites','cp':'38000','ville':'Grenoble','date':'17/12/2016','heure':'5'};
+			var commandPaieInfo = {'num':'1234567891234567','mois':'5','annee':'2017','codeVerif':'789'};
 			
 			var getCommandInfo = function() {
 				return commandInfo;
