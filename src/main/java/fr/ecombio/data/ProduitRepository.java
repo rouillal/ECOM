@@ -13,6 +13,8 @@ import javax.persistence.criteria.Root;
 
 import fr.ecombio.model.Produit;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -43,7 +45,10 @@ public class ProduitRepository {
 				criteria.orderBy(cb.asc(Produit.get("prix")));
 			} else if(tri.equalsIgnoreCase("prixdown")) {
 				criteria.orderBy(cb.desc(Produit.get("prix")));
-			} 
+			} else if(tri.equalsIgnoreCase("saison")) {
+				Long saisonDuMoment = this.getSeason(new Date());
+				criteria.where( cb.equal( Produit.get("saisons").get("saisons").get("id"), saisonDuMoment));
+			}
 		} else {
 			criteria.orderBy(cb.asc(Produit.get("name")));
 		}
@@ -130,5 +135,27 @@ public class ProduitRepository {
 	public void updateProduit(Produit p) {
 		em.merge(p);
 	}	
+	
+	private Long getSeason(Date today) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(today);
+	    switch(cal.get(Calendar.MONTH)) {
+	          case 11:
+	          case 12:
+	          case 1:
+	          case 2:
+	                return 3L;
+	          case 3:
+	          case 4:
+	                return 0L;
+	          case 5:
+	          case 6:
+	          case 7:
+	          case 8:
+	                return 1L;
+	          default:
+	                return 2L;
+	      }
+	}
 }
 

@@ -31,7 +31,7 @@ public class Panier implements Serializable {
     @Column(name = "produit_id")
 	private Long id;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.MERGE, mappedBy="panier")
+	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.REMOVE, mappedBy="panier")
 	@JsonBackReference
     @Column(name = "produit_articles")
 	private Map<Long,Article> articles = new HashMap<Long,Article>(); 
@@ -64,5 +64,14 @@ public class Panier implements Serializable {
 	public void setArticles(Map<Long,Article> articles) {
 		this.articles = articles;
 		dateDerniereModif = new Date();
+	}
+
+
+	public Date getDateDerniereModif() {
+		return dateDerniereModif;
+	}
+
+	public void setDateDerniereModif(Date dateDerniereModif) {
+		this.dateDerniereModif = dateDerniereModif;
 	}
 }

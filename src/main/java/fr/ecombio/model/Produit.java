@@ -64,13 +64,11 @@ public class Produit implements Serializable {
 
 	@NotNull
 	@Size(min = 1, max = 25)
-	@Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
     @Column(name = "produit_variete")
 	private String variete;
 	
 	@NotNull
 	@Size(min = 1, max = 25)
-	@Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
     @Column(name = "produit_unite")
 	private String unite;
 	
