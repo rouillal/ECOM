@@ -45,7 +45,7 @@ public class StockManagerRepository {
 	public void decrementeStock(Panier panier) {
 		for (Entry<Long,Article> entry : panier.getArticles().entrySet()){
 			Article valeur = entry.getValue();
-			valeur.getProduit().setStock(valeur.getProduit().getStock()-valeur.getQuotite());
+			valeur.getProduit().setStock(valeur.getProduit().getStock()-1);
 			Produitrepository.updateProduit(valeur.getProduit());
 		}
 		panier.setDateDerniereModif(new Date());
