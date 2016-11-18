@@ -79,13 +79,27 @@ eComBioApp.factory('panierSvc', [
 							});
 				} else {
 					var urlUpdate = 'panier?id='+idPanierServer;
-					restBackendSvc.updateItem(urlUpdate, panierJson).then(
-							function(data) {
-								$window.alert('gg');
-							});
+					restBackendSvc.updateItem(urlUpdate, panierJson).then(function(response) {
+						$window.alert('OK !!');
+					}, function(error) {
+						var errorJson = angular.toJson(error);
+						if (error.status == 304) {
+							$rootScope.$broadcast('anomalieTechnique', "Plus de stock");
+							$window.alert("Plus de stock - "+errorJson);
+						} else if (error.status == 404) {
+							$rootScope.$broadcast('anomalieTechnique', "Votre panier a été supprimé, temps d'inactivité trop long - Recréation - "+errorJson);
+							$window.alert("Votre panier a été supprimé, temps d'inactivité trop long - Recréation - "+errorJson);
+							restBackendSvc.createItem('panier', panierJson).then(
+									function(data) {
+										idPanierServer = data.data;
+										$window.alert("Panier créé à nouveau !");
+									});
+						} else {
+							$rootScope.$broadcast('anomalieTechnique', errorJson);
+							$window.alert('Error : '+errorJson);
+						}
+					});
 				}
-				
-				;
 				$rootScope.$broadcast('selectedProduitChange', produitAChanger,
 						quantite);
 				$rootScope.$broadcast('rafraichirPanier');
