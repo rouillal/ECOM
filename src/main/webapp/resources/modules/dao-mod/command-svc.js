@@ -25,7 +25,8 @@ eComBioApp.factory('commandSvc', [ '$rootScope', 'restBackendSvc', '$window',
 											$window.alert("Problème de prise de la commande");
 										});
 							}, function(error) {
-								$window.alert("Problème de paiement");
+								var ff = angular.toJson(error);
+								$window.alert("Problème de paiement :"+ff);
 							});
 			}
 				
