@@ -5,20 +5,19 @@ eComBioApp.controller('ProductDetailCtrl', [
 		function($scope, $window, panierSvc) {
 			$scope.selectedProduitPanier = '';
 			$scope.panierQuantite = 0;
+			$scope.panierPrixQt = 0;
 
 			$scope.isMoinsProduitInactif = function() {
 				return !($scope.panierQuantite > 0);
 			};
 
 			$scope.moinsProduit = function() {
-				if ($scope.panierQuantite == 1) {
-					$scope.selectedProduitPanier.prixTotal = 0;
-				}
 				if ($scope.panierQuantite > 0) {
 					panierSvc.changeProduit($scope.selectedProduitPanier,
 							$scope.panierQuantite - 1);
 				} else {
 					$scope.panierQuantite = 0;
+					$scope.panierPrixQt = 0;
 				}
 			};
 
@@ -32,8 +31,9 @@ eComBioApp.controller('ProductDetailCtrl', [
 			};
 
 			$scope.$on('selectedProduitChange', function(event,
-					newSelectedProduit, qt) {
+					newSelectedProduit, qt ) {
 				$scope.selectedProduitPanier = newSelectedProduit;
 				$scope.panierQuantite = qt;
+				$scope.panierPrixQt = qt * newSelectedProduit.prix;
 			});
 		} ]);

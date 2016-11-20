@@ -14,7 +14,8 @@ eComBioApp.factory('commandSvc', [ '$rootScope', 'restBackendSvc', '$window',
 			
 			var validePaiement = function() {
 				var commandPaieInfoJson = angular.toJson(commandPaieInfo);
-				restBackendSvc.createItem('paiement', commandPaieInfo).then(
+				$window.alert("Paiement : "+commandPaieInfoJson);
+				restBackendSvc.createItem('paiement', commandPaieInfoJson).then(
 							function(data) {
 								var commandInfoJson = angular.toJson(commandInfo);
 								restBackendSvc.createItem('commande', commandInfoJson).then(
@@ -26,7 +27,7 @@ eComBioApp.factory('commandSvc', [ '$rootScope', 'restBackendSvc', '$window',
 										});
 							}, function(error) {
 								var ff = angular.toJson(error);
-								$window.alert("Problème de paiement :"+ff);
+								$window.alert("Problème de paiement : "+ff);
 							});
 			}
 				
