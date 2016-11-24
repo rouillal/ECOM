@@ -3,7 +3,7 @@ eComBioApp.factory('searchProductSvc', [ '$rootScope','categorieSvc','productSvc
 	var searchProductString ="";
 	var currentPage=0;
 	var listeTris = [{'name':'alpha','libelle':'noms'},{'name':'prixup','libelle':'prix croissants'},{'name':'prixdown','libelle':'prix décroissants'}];
-	var currentTriIndex = 0;
+	var currentTri = {'name':'alpha','libelle':'noms'};
 	var isSaison = false;
 	
 	var initListCategoriesChoix = function() {
@@ -32,17 +32,20 @@ eComBioApp.factory('searchProductSvc', [ '$rootScope','categorieSvc','productSvc
 		currentPage=0;
 		$rootScope.$broadcast('reinitPageDueToNewSearch',currentPage);
 	}
+	var doSearch = function() {
+		productSvc.getProductBySearchName(searchProductString,listCategories,listCategoriesChoix,currentPage,isSaison,currentTri.name);
+	}
 	
 	var changeListCategoriesChoix = function(listCategoriesChoixChanged) {
 		listCategoriesChoix = listCategoriesChoixChanged;
 		reinitPageDueToNewSearch();
-		productSvc.getProductBySearchName(searchProductString,listCategories,listCategoriesChoix,currentPage,isSaison);
+		doSearch();
 	}
 	
 	var changeSaison = function(saisonChanged) {
 		isSaison = saisonChanged;
 		reinitPageDueToNewSearch();
-		productSvc.getProductBySearchName(searchProductString,listCategories,listCategoriesChoix,currentPage,isSaison);
+		doSearch();
 	}
 		
 	var getSearchString = function() {
@@ -53,23 +56,23 @@ eComBioApp.factory('searchProductSvc', [ '$rootScope','categorieSvc','productSvc
 		if (newSearchString != searchProductString) {
 			searchProductString = newSearchString;
 			reinitPageDueToNewSearch();
-			productSvc.getProductBySearchName(searchProductString,listCategories,listCategoriesChoix,currentPage,isSaison);
+			doSearch();
 		}
 	}
 	
 	var getProductsInit = function() {
-		productSvc.getProductBySearchName(searchProductString,listCategories,listCategoriesChoix,currentPage,isSaison);
+		doSearch();
 	}
 	
 	var setSelectedPage = function(newSelectedPage) {
 		if (currentPage != newSelectedPage) {
 			currentPage = newSelectedPage;
-			productSvc.getProductBySearchName(searchProductString,listCategories,listCategoriesChoix,currentPage,isSaison);
+			doSearch();
 		}
 	}
 	
-	var setSelectedTriIndex  = function(newSelectedTriIndex) {
-		selectedTriIndex = newSelectedTriIndex;
+	var setSelectedTri  = function(newSelectedTri) {
+		currentTri = newSelectedTri;
 	}
 	
 	var getlisteTris = function() {
@@ -83,7 +86,7 @@ eComBioApp.factory('searchProductSvc', [ '$rootScope','categorieSvc','productSvc
 	var pagedown = function() {
 		if (currentPage >0) {
 			currentPage -= 1;
-			productSvc.getProductBySearchName(searchProductString,listCategories,listCategoriesChoix,currentPage,isSaison);
+			doSearch();
 		}
 		return currentPage;
 	}
@@ -91,17 +94,18 @@ eComBioApp.factory('searchProductSvc', [ '$rootScope','categorieSvc','productSvc
 	var pageup = function() {
 		if (currentPage < 99) {
 			currentPage += 1;
-			productSvc.getProductBySearchName(searchProductString,listCategories,listCategoriesChoix,currentPage,isSaison);
+			doSearch();
 		}
 		return currentPage;
 	}
 	
-	var getCurrentTriIndex = function() {
-		return currentTriIndex;
+	var getCurrentTri = function() {
+		return currentTri;
 	}
 	
-	var setCurrentTriIndex = function(newTriIndex) {
-		currentTriIndex = newTriIndex;
+	var setCurrentTri = function(newTri) {
+		currentTri = newTri;
+		doSearch();
 		reinitPageDueToNewSearch();
 	}
 	
@@ -124,7 +128,7 @@ eComBioApp.factory('searchProductSvc', [ '$rootScope','categorieSvc','productSvc
 		getCurrentPage : getCurrentPage,
 		pagedown : pagedown,
 		pageup : pageup,
-		getCurrentTriIndex : getCurrentTriIndex,
-		setCurrentTriIndex : setCurrentTriIndex
+		getCurrentTri : getCurrentTri,
+		setCurrentTri : setCurrentTri
 	};
 		} ]);
