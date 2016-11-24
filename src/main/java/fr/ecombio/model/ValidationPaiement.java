@@ -14,6 +14,10 @@ public class ValidationPaiement {
 	private String annee;
 	private String codeVerif;
 	
+	public ValidationPaiement() {
+		super();
+	}
+	
 	public ValidationPaiement(String num, String mois, String annee, String codeVerif) {
 		super();
 		this.num = num;
