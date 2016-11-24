@@ -7,6 +7,8 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,15 +18,19 @@ import javax.servlet.http.HttpServletResponse;
         urlPatterns = "/image",
         initParams =
         {
-            @WebInitParam(name = "saveDir", value = "C:\\tempEcom\\")
+            @WebInitParam(name = "saveDir", value = "C:\\tempEcom\\"),
+            @WebInitParam(name = "filenameParamName", value = "name")
         }
 )
-public class ImageProviderService extends HttpServlet {
+public class ImageProviderService extends HttpServlet implements ServletContextListener {
+	//Directory path where the files are stored
+	private String fileDirName;
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		String saveDir = getInitParameter("saveDir");
-		File file = new File(saveDir+"lac.jpg");
+		String fileName = request.getParameter("name");
+		File file = new File(saveDir+fileName+".jpg");
 		if (file.exists()) {
 
 			response.setContentType("image/jpg");
@@ -48,5 +54,17 @@ public class ImageProviderService extends HttpServlet {
 			writer.println("<html>Hello, I am a Java servlet!</html>");
 			writer.flush();
 		}
+	}
+
+	@Override
+	public void contextDestroyed(ServletContextEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void contextInitialized(ServletContextEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }

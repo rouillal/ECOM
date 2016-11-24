@@ -1,3 +1,82 @@
-<div class="row">
-	<h1>Inscription: {{ao}}</h1>
+<div style="font-family: Times New Roman;" class="modal fade"
+	id="myModalSignin" role="dialog" ng-controller="SigninCtrl">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header"
+				style="padding: 35px 50px; background-color: #f9f9f9;; color: rgb(221, 131, 14); font-family: Bradley Hand; text-align: center; font-size: 30px;">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h3>
+					<span class="glyphicon glyphicon-lock"></span> Inscription
+				</h3>
+			</div>
+			<div class="modal-body" style="padding: 40px 50px;">
+				<div class="row">
+					<form role="form">
+						<div class="col-xs-6" class="form-group">
+							<label for="signinnom"><span
+								class="glyphicon glyphicon-user"></span> Nom</label> <input type="text"
+								class="form-control" ng-model="signinInfo.nom"
+								placeholder="Entrez votre nom">
+						</div>
+						<div class="col-xs-6" class="form-group">
+							<label for="signinprenom"><span
+								class="glyphicon glyphicon-user"></span> Prénom</label> <input
+								type="text" class="form-control" ng-model="signinInfo.prenom"
+								placeholder="Entrez votre prénom">
+						</div>
+						<div style="margin-top: 10px;" class="col-xs-12"
+							class="form-group">
+							<label for="signinadr"><span
+								class="glyphicon glyphicon-user"></span> Adresse</label> <input
+								type="text" class="form-control" ng-model="signinInfo.adr"
+								placeholder="Entrez le n° et libellé de la voie">
+						</div>
+						<div style="margin-top: 10px;" class="col-xs-6" class="form-group">
+							<label for="signincp"><span
+								class="glyphicon glyphicon-user"></span> Code postal</label> <input
+								type="text" class="form-control" ng-model="signinInfo.cp"
+								placeholder="Entrez votre code postal">
+						</div>
+						<div style="margin-top: 10px;" class="col-xs-6" class="form-group">
+							<label for="signinville"><span
+								class="glyphicon glyphicon-user"></span> Ville</label> <input
+								type="text" class="form-control" ng-model="signinInfo.ville"
+								placeholder="Entrez votre ville">
+						</div>
+						<div style="margin-top: 10px;" class="col-xs-12"
+							class="form-group">
+							<label for="signinmail"><span
+								class="glyphicon glyphicon-envelope"></span> Mail</label> <input
+								type="text" class="form-control" ng-model="signinInfo.mail"
+								placeholder="Entrez votre mail">
+						</div>
+						<div style="margin-top: 10px;" class="col-xs-6" class="form-group">
+							<label for="signinpsw"><span
+								class="glyphicon glyphicon-eye-open"></span> Mot de passe</label> <input
+								type="text" class="form-control" id="signinInfo.psw"
+								placeholder="Entrez votre mot de passe">
+						</div>
+						<div style="margin-top: 10px;" class="col-xs-6" class="form-group">
+							<label for="signinpsw2"><span
+								class="glyphicon glyphicon-eye-open"></span> Vérification</label> <input
+								type="text" class="form-control" id="signinInfo.psw2"
+								placeholder="Retapez votre mot de passe">
+						</div>
+						<button
+							style="background-color: rgb(221, 131, 14); border-radius: 10px; margin-top: 20px;"
+							type="submit" class="col-xs-12">
+							<span class="glyphicon glyphicon-off"></span> Je m'inscris
+						</button>
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer" style="background-color: #f9f9f9;">
+				Déjà inscrit(e) ? <a
+					style="text-decoration: none; color: rgb(221, 131, 14);"
+					data-toggle="modal" data-target="#/connect" id="myBtnConnexion">Me
+					connecter</a>
+			</div>
+		</div>
+	</div>
 </div>

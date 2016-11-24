@@ -104,6 +104,10 @@ eComBioApp.factory('panierSvc', [
 						quantite);
 				$rootScope.$broadcast('rafraichirPanier');
 			};
+			
+			var getIdPanierServer = function() {
+				return idPanierServer;
+			};
 
 			var getPanierQuantite = function(produit) {
 				var ret = 0;
@@ -124,6 +128,7 @@ eComBioApp.factory('panierSvc', [
 				getSelectedProduit : getSelectedProduit,
 				getListePanier : getListePanier,
 				changeProduit : changeProduit,
+				getIdPanierServer : getIdPanierServer,
 				getPanierQuantite : getPanierQuantite,
 				supprimeArticlePanier : supprimeArticlePanier,
 				getMontantTotal : getMontantTotal

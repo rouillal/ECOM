@@ -9,6 +9,7 @@ eComBioApp.controller('ProductTriPaginCtrl', [
 					.getCurrentTriIndex();
 
 			$scope.changeTri = function(newTriIndex) {
+				$window.alert('Ou');//newTriIndex);
 				searchProductSvc.setCurrentTriIndex(newTriIndex);
 			}
 

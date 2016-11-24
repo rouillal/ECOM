@@ -3,6 +3,9 @@ eComBioApp.controller('ConnectCtrl', [ '$scope','$window', function($scope,$wind
 	    $("#myBtnConnect").click(function(){
 	        $("#myModalConnect").modal();
 	    });
+	    $("#myBtnConnexion").click(function(){
+	        $("#myModalConnect").modal();
+	    });
 	    $("#myBtnSignin").click(function(){
 	        $("#myModalConnect").modal('hide');
 	    });

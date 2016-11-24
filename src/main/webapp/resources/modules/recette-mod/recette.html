@@ -1,0 +1,13 @@
+<h1>recettes: {{aa}}</h1>
+<div class="row">
+	<div class="col-xs-12 col-sm-3" ng-include
+		src="'resources/modules/search-recette-mod/search-recette.html'"></div>
+	<div class="col-xs-12 col-sm-9">
+		<div ng-repeat="recette in listRecettes">
+			<div style="text-align: center;" class="col-md-4 col-sm-6 col-xs-12" ng-click="selectDetailsRecette(recette)"
+				data-toggle="modal" data-target="#selectedRecetteDisplay">
+				<div style="margin-top: 50px;" class="col-xs-12">{{recette.name}}</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,3 +1,13 @@
 eComBioApp.controller('SigninCtrl', [ '$scope','$window', function($scope,$window) {
-	$scope.ao="A faire .";
+	$(window).ready(function(){
+		$("#myBtnSign").click(function(){
+			$("#myModalSignin").modal();
+		});
+		$("#myBtnSignin").click(function(){
+			$("#myModalSignin").modal();
+		});
+		$("#myBtnConnexion").click(function(){
+	        $("#myModalSignin").modal('hide');
+	    });
+	});
 } ]);
