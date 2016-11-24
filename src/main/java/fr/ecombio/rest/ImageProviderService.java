@@ -30,7 +30,7 @@ public class ImageProviderService extends HttpServlet implements ServletContextL
 
 		String saveDir = getInitParameter("saveDir");
 		String fileName = request.getParameter("name");
-		File file = new File(saveDir+"lac.jpg");
+		File file = new File(saveDir+fileName+".jpg");
 		if (file.exists()) {
 
 			response.setContentType("image/jpg");
