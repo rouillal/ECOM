@@ -1,5 +1,5 @@
-eComBioApp.factory('commandSvc', [ '$rootScope', 'restBackendSvc', '$window',
-		function($rootScope, restBackendSvc, $window) {
+eComBioApp.factory('commandSvc', [ '$rootScope', 'restBackendSvc', '$window','panier',
+		function($rootScope, restBackendSvc, $window,panier) {
 	
 			var commandInfo = {'nom':'Dupont','prenom':'Jean','mail':'dupont@gmail.com','livDom':'e','adresse':'17 Rue des Marguerites','cp':'38000','ville':'Grenoble','date':'17/12/2016','heure':'5'};
 			var commandPaieInfo = {'num':'1234567891234567','mois':'5','annee':'2017','codeVerif':'789'};
@@ -14,7 +14,8 @@ eComBioApp.factory('commandSvc', [ '$rootScope', 'restBackendSvc', '$window',
 			
 			var validePaiement = function() {
 				var commandPaieInfoJson = angular.toJson(commandPaieInfo);
-				$window.alert("Paiement : "+commandPaieInfoJson);
+				var idpan = panier.getIdPanierServer();
+				$window.alert("Paiement : "+idpan);
 				restBackendSvc.createItem('paiement', commandPaieInfoJson).then(
 							function(data) {
 								var commandInfoJson = angular.toJson(commandInfo);
