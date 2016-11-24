@@ -1,5 +1,6 @@
 package fr.ecombio.model;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.ws.rs.core.Variant;
 
-public class ValidationPaiement {
+public class ValidationPaiement implements Serializable{
 	private String num;
 	private String mois;
 	private String annee;

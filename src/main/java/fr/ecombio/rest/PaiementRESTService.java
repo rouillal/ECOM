@@ -15,6 +15,7 @@ import fr.ecombio.model.Article;
 import fr.ecombio.model.GestionArticle;
 import fr.ecombio.model.Panier;
 import fr.ecombio.model.Produit;
+import fr.ecombio.model.ValidationCommande;
 import fr.ecombio.model.ValidationPaiement;
 
 @Path("/paiement")
@@ -23,8 +24,8 @@ public class PaiementRESTService {
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	@ResponseWrapper public Response validationPaiement(ValidationPaiement infos) throws Exception {
-		String err = infos.verify();
+	@ResponseWrapper public Response validationPaiement(ValidationCommande infos) throws Exception {
+		String err = infos.getCommandPaieInfo().verify();
 		if (err!=null || (err!=null && !err.isEmpty())) {
 			return Response.notModified(err).build();
 		}
