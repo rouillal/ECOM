@@ -6,13 +6,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 //import org.jboss.logging.Logger;
 
 import fr.ecombio.model.Produit;
+import fr.ecombio.model.ProduitSaison;
+import fr.ecombio.model.Saison;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +37,7 @@ public class ProduitRepository {
 		return em.find(Produit.class, id);
 	}
 
-	public List<Produit> findAllOrderedByName(int page, String tri) {
+	public List<Produit> findAllOrderedByName(int page, String tri, int saison) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Produit> criteria = cb.createQuery(Produit.class);
 		Root<Produit> Produit = criteria.from(Produit.class);
@@ -48,6 +52,12 @@ public class ProduitRepository {
 			} 
 		} else {
 			criteria.orderBy(cb.asc(Produit.get("name")));
+		}
+		if( saison == 1 ) {
+			String saisonDuMoment = this.getSeason(new Date());
+			Join<Produit, ProduitSaison> join1 = Produit.join("saisons");
+			Join<ProduitSaison, Saison> join2 = join1.join("saisons");
+			criteria.where(cb.equal( cb.lower(join2.<String>get("name")), saisonDuMoment));
 		}
 		TypedQuery<Produit> typequery = em.createQuery(criteria);
 		typequery.setFirstResult(page*6);
@@ -86,7 +96,7 @@ public class ProduitRepository {
 		
 		if(cat == null || cat == "") {
 			if(search == null || search == "") {
-				return this.findAllOrderedByName(page, tri);
+				return this.findAllOrderedByName(page, tri, saison);
 			}
 		} else {
 			String[] cats = cat.split(",");
@@ -113,9 +123,12 @@ public class ProduitRepository {
 		} else {
 			predicate = predicate2;
 		}
-		if(saison == 1) {
-			Long saisonDuMoment = this.getSeason(new Date());
-			predicate = cb.and(predicate,cb.equal( Produit.get("saisons").get("saisons").get("id"), saisonDuMoment));
+		if( saison == 1 ) {
+			String saisonDuMoment = this.getSeason(new Date());
+			Join<Produit, ProduitSaison> join1 = Produit.join("saisons");
+			Join<ProduitSaison, Saison> join2 = join1.join("saisons");
+			predicate2 = cb.equal( cb.lower(join2.<String>get("name")), saisonDuMoment);
+			predicate = cb.and(predicate,predicate2);
 		}
 		criteria.where(predicate);
 		if(tri != null && tri != "") {
@@ -137,25 +150,30 @@ public class ProduitRepository {
 		em.merge(p);
 	}	
 	
-	private Long getSeason(Date today) {
+	private String getSeason(Date today) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(today);
 	    switch(cal.get(Calendar.MONTH)) {
-	          case 11:
 	          case 12:
+	                return "hiver";
 	          case 1:
+	                return "hiver";
 	          case 2:
-	                return 3L;
+	                return "hiver";
 	          case 3:
+	                return "printemps";
 	          case 4:
-	                return 0L;
+	                return "printemps";
 	          case 5:
+	                return "printemps";
 	          case 6:
+	                return "ete";
 	          case 7:
+	                return "ete";
 	          case 8:
-	                return 1L;
+	                return "ete";
 	          default:
-	                return 2L;
+	                return "automne";
 	      }
 	}
 }
