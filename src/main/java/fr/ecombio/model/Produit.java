@@ -34,7 +34,7 @@ public class Produit implements Serializable {
     @JsonManagedReference
 	private Categorie categorie;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy="produits")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="produits", cascade=CascadeType.ALL)
 	@JsonBackReference
     private Set<ProduitSaison> saisons;
 	
