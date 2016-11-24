@@ -105,6 +105,8 @@ public class Produit implements Serializable {
     @Column(name = "produit_dateCueillette")
 	private String dateCueillette;
 
+	
+	//TEST
 	//nombre de jours
 	@NotNull
     @Column(name = "produit_dureeConservation")
