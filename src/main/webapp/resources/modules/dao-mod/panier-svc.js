@@ -128,9 +128,9 @@ eComBioApp.factory('panierSvc', [
 				getSelectedProduit : getSelectedProduit,
 				getListePanier : getListePanier,
 				changeProduit : changeProduit,
+				getIdPanierServer : getIdPanierServer,
 				getPanierQuantite : getPanierQuantite,
 				supprimeArticlePanier : supprimeArticlePanier,
-				getIdPanierServer : getIdPanierServer,
 				getMontantTotal : getMontantTotal
 			};
 		} ]);
