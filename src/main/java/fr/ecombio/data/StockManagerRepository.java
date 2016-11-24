@@ -2,6 +2,7 @@ package fr.ecombio.data;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -35,16 +36,21 @@ public class StockManagerRepository {
 	private PanierRepository Panierrepository;
 
 	public void incrementeStock(Panier panier) {
-		for (Entry<Long,Article> entry : panier.getArticles().entrySet()){
-			Article valeur = entry.getValue();
+		Iterator<Article> i=panier.getArticles().iterator();
+		while(i.hasNext()) // tant qu'on a un suivant
+		{
+			Article valeur = i.next();
 			valeur.getProduit().setStock(valeur.getProduit().getStock()+valeur.getQuotite());
 			Produitrepository.updateProduit(valeur.getProduit());
 		}
 	}
 
 	public void decrementeStock(Panier panier) {
-		for (Entry<Long,Article> entry : panier.getArticles().entrySet()){
-			Article valeur = entry.getValue();
+
+		Iterator<Article> i=panier.getArticles().iterator();
+		while(i.hasNext()) // tant qu'on a un suivant
+		{
+			Article valeur = i.next();
 			valeur.getProduit().setStock(valeur.getProduit().getStock()-1);
 			Produitrepository.updateProduit(valeur.getProduit());
 		}

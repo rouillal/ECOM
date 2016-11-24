@@ -19,6 +19,7 @@ public class ArticleRepository {
 
 	public  void AjoutArticle(Article article) {
 		em.persist(article);
+		em.flush();
 	}
 
 

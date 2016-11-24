@@ -29,43 +29,43 @@ public class ValidationPaiement {
 		return num;
 	}
 	public void setNum(String num) {
-		this.num = num;
+		this.num = num.replace("\n", "");
 	}
 	public String getMois() {
 		return mois;
 	}
 	public void setMois(String mois) {
-		this.mois = mois;
+		this.mois = mois.replace("\n", "");
 	}
 	public String getAnnee() {
 		return annee;
 	}
 	public void setAnnee(String annee) {
-		this.annee = annee;
+		this.annee = annee.replace("\n", "");
 	}
 	public String getCodeVerif() {
 		return codeVerif;
 	}
 	public void setCodeVerif(String codeVerif) {
-		this.codeVerif = codeVerif;
+		this.codeVerif = codeVerif.replace("\n", "");
 	}
 	
 	public String verify() {
 		// TODO Auto-generated method stub
 		if (num.length() != 16) {
-			return GestionErreur.PAIEMENT_NUM_LENGTH;
+			return "num<"+num+">"+GestionErreur.PAIEMENT_NUM_LENGTH;
 			
 		} else if(!this.isInteger(num)) {
-			return GestionErreur.PAIEMENT_NUM_CHAR;
+			return "num<"+num+">"+GestionErreur.PAIEMENT_NUM_CHAR;
 			
 		} else if (!this.verifyDate()) {
-			return GestionErreur.PAIEMENT_DATE_PASSE;
+			return "date :"+GestionErreur.PAIEMENT_DATE_PASSE;
 			
 		} else if (codeVerif.length() != 3) {
-			return GestionErreur.PAIEMENT_CODE_CHAR;
+			return "code<"+codeVerif+">"+GestionErreur.PAIEMENT_CODE_LENGTH;
 			
-		} else if(this.isInteger(codeVerif)) {
-			return GestionErreur.PAIEMENT_CODE_LENGTH;
+		} else if(!this.isInteger(codeVerif)) {
+			return "code<"+codeVerif+">"+GestionErreur.PAIEMENT_CODE_CHAR;
 			
 		}
 		return null;

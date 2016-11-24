@@ -23,12 +23,11 @@ public class PaiementRESTService {
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	@ResponseWrapper public String validationPaiement(ValidationPaiement infos) {
+	@ResponseWrapper public Response validationPaiement(ValidationPaiement infos) throws Exception {
 		String err = infos.verify();
-		if (err!=null && !err.isEmpty()) {
-			return err;
+		if (err!=null || (err!=null && !err.isEmpty())) {
+			return Response.notModified(err).build();
 		}
-		return "Paiement OK";
+		return Response.ok("Paiement OK").build();
 	}
-
 }
