@@ -110,6 +110,7 @@ public class Produit implements Serializable {
     @Column(name = "produit_dureeConservation")
 	private int dureeConservation;
 
+	
 	@NotNull
 	@Column(name = "produit_calories")
 	private int calories;
