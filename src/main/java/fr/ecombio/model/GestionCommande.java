@@ -2,6 +2,7 @@ package fr.ecombio.model;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class GestionCommande implements Serializable{
 	
 	private String nom;

@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.ws.rs.core.Variant;
 
+@SuppressWarnings("serial")
 public class ValidationPaiement implements Serializable{
 	private String num;
 	private String mois;
