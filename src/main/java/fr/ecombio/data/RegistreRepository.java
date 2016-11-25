@@ -1,5 +1,6 @@
 package fr.ecombio.data;
 
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -92,8 +93,9 @@ public class RegistreRepository {
 		Panier nouveauPanier = new Panier();
 		log.log(Level.INFO,"get panier");
 		Panier ancienPanier = em.find(Panier.class, infos.getIdPanier());
-		nouveauPanier.setDateDerniereModif(null);
+		nouveauPanier.setDateDerniereModif(new Date());
 		nouveauPanier.setArticles(ancienPanier.getArticles());
+		nouveauPanier.setIsRegistred(true);
 		log.log(Level.INFO,"save panier");
 		em.persist(nouveauPanier);
 		log.log(Level.INFO,"ok");
