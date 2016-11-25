@@ -1,27 +1,73 @@
 eComBioApp.factory('searchRecetteSvc', [ '$rootScope','categorieSvc','recetteSvc','$window',function($rootScope,categorieSvc,recetteSvc,$window) {
 	var listCategories = categorieSvc.getAllCategories();
+	var listTypesRecette = [{'name':'Aperitif'},{'name':'Entree'}];
+	var listSaison = [{'name':'Automne'},{'name':'Hivers'}];
+	var listComposition = [{'name':'Sans gluten'},{'name':'Sans lactose'}];
 	var searchRecetteString ="";
 	var currentPage=0;
 	var listeTris = [{'name':'alpha','libelle':'noms'},{'name':'prixup','libelle':'prix croissants'},{'name':'prixdown','libelle':'prix décroissants'}];
 	var currentTriIndex = 0;
 	var isSaison = false;
 	
-	var initListCategoriesChoix = function() {
-		var listCategoriesChoixTmp = [];
-		angular.forEach(listCategories, function(cat, key) {
-			listCategoriesChoixTmp.push(false);
+	var initListChoix = function(listSrc) {
+		var listChoixRet = [];
+		angular.forEach(listSrc, function(cat, key) {
+			listChoixRet.push(false);
 		});
-		return listCategoriesChoixTmp;
+		return listChoixRet;
 	}
 	
-	var listCategoriesChoix = initListCategoriesChoix();
-	
+	var listCategoriesChoix = initListChoix(listCategories);
 	var getListCategories = function() {
 		return listCategories;
 	}
-	
 	var getListCategoriesChoix = function() {
 		return listCategoriesChoix;
+	}
+	
+	var changeListCategoriesChoix = function(listCategoriesChoixChanged) {
+		listCategoriesChoix = listCategoriesChoixChanged;
+		reinitPageDueToNewSearch();
+		recetteSvc.getRecetteBySearchName(searchRecetteString,listCategories,listCategoriesChoix,currentPage,isSaison);
+	}
+	
+	var listTypesRecetteChoix = initListChoix(listTypesRecette);
+	var getListTypesRecette = function() {
+		return listTypesRecette;
+	}
+	var getListTypesRecetteChoix = function() {
+		return listTypesRecetteChoix;
+	}
+	var changeListTypesRecetteChoix = function(listCategoriesChoixChanged) {
+		listCategoriesChoix = listCategoriesChoixChanged;
+		reinitPageDueToNewSearch();
+		recetteSvc.getRecetteBySearchName(searchRecetteString,listCategories,listCategoriesChoix,currentPage,isSaison);
+	}
+	
+	var listSaisonChoix = initListChoix(listSaison);
+	var getListSaison = function() {
+		return listSaison;
+	}
+	var getListSaisonChoix = function() {
+		return listSaisonChoix;
+	}
+	var changeListSaisonChoix = function(listSaisonChoixChanged) {
+		listSaisonChoix = listSaisonChoixChanged;
+		reinitPageDueToNewSearch();
+		recetteSvc.getRecetteBySearchName(searchRecetteString,listCategories,listCategoriesChoix,currentPage,isSaison);
+	}
+	
+	var listCompositionChoix = initListChoix(listComposition);
+	var getListComposition = function() {
+		return listComposition;
+	}
+	var getListCompositionChoix = function() {
+		return listCompositionChoix;
+	}
+	var changeListCompositionChoix = function(listCompositionChoixChanged) {
+		listCompositionChoix = listCompositionChoixChanged;
+		reinitPageDueToNewSearch();
+		recetteSvc.getRecetteBySearchName(searchRecetteString,listCategories,listCategoriesChoix,currentPage,isSaison);
 	}
 	
 	var getIsSaison = function() {
@@ -31,12 +77,6 @@ eComBioApp.factory('searchRecetteSvc', [ '$rootScope','categorieSvc','recetteSvc
 	var reinitPageDueToNewSearch = function() {
 		currentPage=0;
 		$rootScope.$broadcast('reinitPageDueToNewSearch',currentPage);
-	}
-	
-	var changeListCategoriesChoix = function(listCategoriesChoixChanged) {
-		listCategoriesChoix = listCategoriesChoixChanged;
-		reinitPageDueToNewSearch();
-		recetteSvc.getRecetteBySearchName(searchRecetteString,listCategories,listCategoriesChoix,currentPage,isSaison);
 	}
 	
 	var changeSaison = function(saisonChanged) {
@@ -107,16 +147,27 @@ eComBioApp.factory('searchRecetteSvc', [ '$rootScope','categorieSvc','recetteSvc
 	
 	$rootScope.$on('listCategoriesSupplied', function(event,listCategoriesSupplied) {
 		listCategories = listCategoriesSupplied;
-		listCategoriesChoix = initListCategoriesChoix();
+		listCategoriesChoix = initListChoix(listCategories);
 		$rootScope.$broadcast('listCategoriesCritSupplied');
 	});
 	
 	return {
 		getListCategories : getListCategories,
 		getListCategoriesChoix : getListCategoriesChoix,
+		getListTypesRecette : getListTypesRecette,
+		changeListCategoriesChoix : changeListCategoriesChoix,
+		getListTypesRecetteChoix : getListTypesRecetteChoix,
+		changeListTypesRecetteChoix : changeListTypesRecetteChoix,
+		
+		getListSaison : getListSaison,
+		getListSaisonChoix : getListSaisonChoix,
+		changeListSaisonChoix : changeListSaisonChoix,
+		getListComposition : getListComposition,
+		getListCompositionChoix : getListCompositionChoix,
+		changeListCompositionChoix : changeListCompositionChoix,
+		
 		getIsSaison : getIsSaison,
 		changeSaison : changeSaison,
-		changeListCategoriesChoix : changeListCategoriesChoix,
 		getSearchString : getSearchString,
 		setSearchString : setSearchString,
 		getRecettesInit : getRecettesInit,
