@@ -34,6 +34,6 @@ eComBioApp.controller('ProductDetailCtrl', [
 					newSelectedProduit, qt ) {
 				$scope.selectedProduitPanier = newSelectedProduit;
 				$scope.panierQuantite = qt;
-				$scope.panierPrixQt = qt * newSelectedProduit.prix;
+				$scope.panierPrixQt = Math.round(qt * newSelectedProduit.prix*100)/100;
 			});
 		} ]);

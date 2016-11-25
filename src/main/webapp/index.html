@@ -8,14 +8,18 @@
 <link rel="stylesheet" type="text/css"
 	href="resources/cssext/bootstrap-theme.min.css" />
 <link rel="stylesheet" type="text/css"
+	href="resources/cssext/angular-date-picker.css" />
+<link rel="stylesheet" type="text/css"
 	href="resources/cssin/bandeau.css" />
 <script type="text/javascript" src="resources/jsext/angular.min.js"></script>
 <script type="text/javascript" src="resources/jsext/jquery.min.js"></script>
 <script type="text/javascript"
+	src="resources/jsext/angular-date-picker.js"></script>
+<script type="text/javascript"
 	src="resources/jsext/angular-route.min.js"></script>
 <script type="text/javascript" src="resources/jsext/bootstrap.min.js"></script>
 <script>
-	var eComBioApp = angular.module('eComBio', [ 'ngRoute']);
+	var eComBioApp = angular.module('eComBio', [ 'ngRoute','mp.datePicker']);
 </script>
 <script type="text/javascript"
 	src="resources/modules/main-mod/rest-svc/img-provider-svc.js"></script>
@@ -84,8 +88,9 @@
 						ng-click="menuIndice = 5" href="#/panier"></a></li>
 				</ul>
 				<ul>
-					<li><span style="margin-left: 25px; color: rgb(221, 131, 14);">Montant €</span></li>
-				</ul></li>
+					<li><span style="margin-left: 5px; color: rgb(221, 131, 14);">Montant {{montantPanier}} €</span></li>
+				</ul>
+			</li>
 			<li class="col-md-2"></li>
 		</ul>
 	</div>
