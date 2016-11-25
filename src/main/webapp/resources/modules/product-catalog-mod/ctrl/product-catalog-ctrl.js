@@ -3,11 +3,6 @@ eComBioApp.controller('ProductCatalogCtrl', [ '$scope','$window','searchProductS
 	$scope.selectedProduit='';
 	
 	$scope.selectDetailsProduit = function(selectedProduitParam) {
-		//Correction bug prixTotal non init.
-		if (typeof selectedProduitParam.prixTotal == 'undefined') {
-			selectedProduitParam['prixTotal']=0;
-		}
-
 		panierSvc.setSelectedProduit(selectedProduitParam);
 		$scope.selectedProduit=selectedProduitParam;
 	}
@@ -17,10 +12,6 @@ eComBioApp.controller('ProductCatalogCtrl', [ '$scope','$window','searchProductS
 	}
 	
 	$scope.$on('listProductsSupplied', function(event,listProductsReceived) {
-		$scope.listProduits = listProductsReceived;
-	});
-	
-	$scope.$on('detailsProductSupplied', function(event,listProductsReceived) {
 		$scope.listProduits = listProductsReceived;
 	});
 } ]);

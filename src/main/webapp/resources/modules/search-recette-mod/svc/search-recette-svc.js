@@ -1,9 +1,9 @@
-eComBioApp.factory('searchProductSvc', [ '$rootScope','categorieSvc','productSvc','$window',function($rootScope,categorieSvc,productSvc,$window) {
+eComBioApp.factory('searchRecetteSvc', [ '$rootScope','categorieSvc','recetteSvc','$window',function($rootScope,categorieSvc,recetteSvc,$window) {
 	var listCategories = categorieSvc.getAllCategories();
-	var searchProductString ="";
+	var searchRecetteString ="";
 	var currentPage=0;
 	var listeTris = [{'name':'alpha','libelle':'noms'},{'name':'prixup','libelle':'prix croissants'},{'name':'prixdown','libelle':'prix décroissants'}];
-	var currentTri = {'name':'alpha','libelle':'noms'};
+	var currentTriIndex = 0;
 	var isSaison = false;
 	
 	var initListCategoriesChoix = function() {
@@ -32,47 +32,44 @@ eComBioApp.factory('searchProductSvc', [ '$rootScope','categorieSvc','productSvc
 		currentPage=0;
 		$rootScope.$broadcast('reinitPageDueToNewSearch',currentPage);
 	}
-	var doSearch = function() {
-		productSvc.getProductBySearchName(searchProductString,listCategories,listCategoriesChoix,currentPage,isSaison,currentTri.name);
-	}
 	
 	var changeListCategoriesChoix = function(listCategoriesChoixChanged) {
 		listCategoriesChoix = listCategoriesChoixChanged;
 		reinitPageDueToNewSearch();
-		doSearch();
+		recetteSvc.getRecetteBySearchName(searchRecetteString,listCategories,listCategoriesChoix,currentPage,isSaison);
 	}
 	
 	var changeSaison = function(saisonChanged) {
 		isSaison = saisonChanged;
 		reinitPageDueToNewSearch();
-		doSearch();
+		recetteSvc.getRecetteBySearchName(searchRecetteString,listCategories,listCategoriesChoix,currentPage,isSaison);
 	}
 		
 	var getSearchString = function() {
-		return searchProductString;
+		return searchRecetteString;
 	}
 	
 	var setSearchString = function(newSearchString) {
-		if (newSearchString != searchProductString) {
-			searchProductString = newSearchString;
+		if (newSearchString != searchRecetteString) {
+			searchRecetteString = newSearchString;
 			reinitPageDueToNewSearch();
-			doSearch();
+			recetteSvc.getRecetteBySearchName(searchRecetteString,listCategories,listCategoriesChoix,currentPage,isSaison);
 		}
 	}
 	
-	var getProductsInit = function() {
-		doSearch();
+	var getRecettesInit = function() {
+		recetteSvc.getRecetteBySearchName(searchRecetteString,listCategories,listCategoriesChoix,currentPage,isSaison);
 	}
 	
 	var setSelectedPage = function(newSelectedPage) {
 		if (currentPage != newSelectedPage) {
 			currentPage = newSelectedPage;
-			doSearch();
+			recetteSvc.getRecetteBySearchName(searchRecetteString,listCategories,listCategoriesChoix,currentPage,isSaison);
 		}
 	}
 	
-	var setSelectedTri  = function(newSelectedTri) {
-		currentTri = newSelectedTri;
+	var setSelectedTriIndex  = function(newSelectedTriIndex) {
+		selectedTriIndex = newSelectedTriIndex;
 	}
 	
 	var getlisteTris = function() {
@@ -86,7 +83,7 @@ eComBioApp.factory('searchProductSvc', [ '$rootScope','categorieSvc','productSvc
 	var pagedown = function() {
 		if (currentPage >0) {
 			currentPage -= 1;
-			doSearch();
+			recetteSvc.getRecetteBySearchName(searchRecetteString,listCategories,listCategoriesChoix,currentPage,isSaison);
 		}
 		return currentPage;
 	}
@@ -94,18 +91,17 @@ eComBioApp.factory('searchProductSvc', [ '$rootScope','categorieSvc','productSvc
 	var pageup = function() {
 		if (currentPage < 99) {
 			currentPage += 1;
-			doSearch();
+			recetteSvc.getRecetteBySearchName(searchRecetteString,listCategories,listCategoriesChoix,currentPage,isSaison);
 		}
 		return currentPage;
 	}
 	
-	var getCurrentTri = function() {
-		return currentTri;
+	var getCurrentTriIndex = function() {
+		return currentTriIndex;
 	}
 	
-	var setCurrentTri = function(newTri) {
-		currentTri = newTri;
-		doSearch();
+	var setCurrentTriIndex = function(newTriIndex) {
+		currentTriIndex = newTriIndex;
 		reinitPageDueToNewSearch();
 	}
 	
@@ -123,12 +119,12 @@ eComBioApp.factory('searchProductSvc', [ '$rootScope','categorieSvc','productSvc
 		changeListCategoriesChoix : changeListCategoriesChoix,
 		getSearchString : getSearchString,
 		setSearchString : setSearchString,
-		getProductsInit : getProductsInit,
+		getRecettesInit : getRecettesInit,
 		getlisteTris : getlisteTris,
 		getCurrentPage : getCurrentPage,
 		pagedown : pagedown,
 		pageup : pageup,
-		getCurrentTri : getCurrentTri,
-		setCurrentTri : setCurrentTri
+		getCurrentTriIndex : getCurrentTriIndex,
+		setCurrentTriIndex : setCurrentTriIndex
 	};
 		} ]);

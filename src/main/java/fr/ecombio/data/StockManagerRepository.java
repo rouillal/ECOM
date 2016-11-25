@@ -2,6 +2,7 @@ package fr.ecombio.data;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -35,16 +36,21 @@ public class StockManagerRepository {
 	private PanierRepository Panierrepository;
 
 	public void incrementeStock(Panier panier) {
-		for (Entry<Long,Article> entry : panier.getArticles().entrySet()){
-			Article valeur = entry.getValue();
+		Iterator<Article> i=panier.getArticles().iterator();
+		while(i.hasNext()) // tant qu'on a un suivant
+		{
+			Article valeur = i.next();
 			valeur.getProduit().setStock(valeur.getProduit().getStock()+valeur.getQuotite());
 			Produitrepository.updateProduit(valeur.getProduit());
 		}
 	}
 
 	public void decrementeStock(Panier panier) {
-		for (Entry<Long,Article> entry : panier.getArticles().entrySet()){
-			Article valeur = entry.getValue();
+
+		Iterator<Article> i=panier.getArticles().iterator();
+		while(i.hasNext()) // tant qu'on a un suivant
+		{
+			Article valeur = i.next();
 			valeur.getProduit().setStock(valeur.getProduit().getStock()-1);
 			Produitrepository.updateProduit(valeur.getProduit());
 		}
@@ -64,7 +70,7 @@ public class StockManagerRepository {
 				if (Panierrepository != null) {
 					List<Panier> paniers = Panierrepository.getAll();
 					for(Panier panier : paniers) {
-						if (getDateDiff(panier.getDateDerniereModif(),today,TimeUnit.MINUTES) >= 1){
+						if (panier.getDateDerniereModif() != null && getDateDiff(panier.getDateDerniereModif(),today,TimeUnit.MINUTES) >= 1){
 							// on incrémente le stock
 							incrementeStock(panier);
 							// on supprime le panier

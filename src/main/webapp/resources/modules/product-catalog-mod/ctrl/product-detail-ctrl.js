@@ -10,7 +10,7 @@ eComBioApp.controller('ProductDetailCtrl', [
 			$scope.isMoinsProduitInactif = function() {
 				return !($scope.panierQuantite > 0);
 			};
-
+			
 			$scope.moinsProduit = function() {
 				if ($scope.panierQuantite > 0) {
 					panierSvc.changeProduit($scope.selectedProduitPanier,

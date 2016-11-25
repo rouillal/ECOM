@@ -11,10 +11,10 @@ eComBioApp
 										controller : 'ProductCatalogCtrl'
 									})
 							.when(
-									'/recipe',
+									'/recette',
 									{
-										templateUrl : 'resources/modules/recipe-mod/recipe.html',
-										controller : 'RecipeCtrl'
+										templateUrl : 'resources/modules/recette-mod/recette.html',
+										controller : 'RecetteCtrl'
 									})
 							.when(
 									'/panier',

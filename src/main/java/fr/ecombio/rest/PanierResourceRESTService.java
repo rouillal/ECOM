@@ -3,6 +3,8 @@ package fr.ecombio.rest;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -42,6 +44,7 @@ public class PanierResourceRESTService {
 	private StockManagerRepository StockManagerRepository;
 
 	//Logger log;
+	Logger log = java.util.logging.Logger.getLogger("org.hibernate");
 
 	/*objet en JSon
 	 * {
@@ -50,57 +53,72 @@ public class PanierResourceRESTService {
 	 */
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	@ResponseWrapper public Response createUpdatePanier(GestionArticle[] commande) {
+	@ResponseWrapper public Response createUpdatePanier(GestionArticle[] commande){
 		Panier panier = new Panier();
+		Long PanierID = PanierRepository.AjoutPanier(panier);
 		for(GestionArticle article : commande) {
 			Produit produit = ProduitRepository.findById(article.getId());
 			// si le stock est suffisant 
 			if (produit.getStock()>=1) {
 				// on crée l'article
-				Article a = new Article(produit,article.getQuotite());
+				Article a = new Article();
+				a.setProduit(produit);
+				a.setQuotite(article.getQuotite());
 				ArticleRepository.AjoutArticle(a);
 				// on l'ajoute au panier
-				panier.getArticles().put(article.getId(), a);
+				panier.getArticles().add(a);
 			} else {
 				return Response.notModified("Le stock de ce produit n'est pas suffisant").build();
 			}
 		}
 		// on va alors décrementer les stocks en base
 		StockManagerRepository.decrementeStock(panier);
-		return Response.ok(PanierRepository.AjoutPanier(panier)).build();
+		PanierRepository.updatePanier(panier);
+		return Response.ok(PanierID).build();
 	}
 
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
-	@ResponseWrapper public Response createUpdatePanier(@QueryParam("id") Long id, GestionArticle[] commande) {
+	@ResponseWrapper public Response createUpdatePanier(@QueryParam("id") Long id, GestionArticle[] commande){
+		log.log(Level.INFO, "begin transaction");
 		Panier panier = PanierRepository.findById(id);
 		// si le panier existe
 		if (panier != null) {
 			// pour chaque article
 			for(GestionArticle article : commande) {
+				log.log(Level.INFO, "article"+article.getId());
 				// on va chercher le produit correspondant en base
 				Produit produit = ProduitRepository.findById(article.getId());
 				// si le stock est suffisant
 				if (produit.getStock()>=1) {
 					// on met à jour les quantite du panier 
-					if (panier.getArticles().containsKey(produit.getId())) {
-						Article a = panier.getArticles().get(produit.getId());
-						ArticleRepository.updateArticle(a);
-						panier.getArticles().put(a.getProduit().getId(), a);
+					if (panier.contains(produit.getId())) {
+						Article a = panier.getArticle(produit.getId());
+						if ( a!= null && a.getQuotite() != article.getQuotite() ) {
+							a.setQuotite(article.getQuotite());
+							ArticleRepository.updateArticle(a);
+						}
 					} else {
-						Article a = new Article(produit,article.getQuotite());
+						log.log(Level.INFO, "ajout");
+						Article a = new Article();
+						a.setProduit(produit);
+						a.setQuotite(article.getQuotite());
 						ArticleRepository.AjoutArticle(a);
-						panier.getArticles().put(a.getProduit().getId(), a);
+						panier.getArticles().add(a);
 					}
+					PanierRepository.updatePanier(panier);
 				} else {
+					log.log(Level.INFO, "end transaction");
 					return Response.notModified("Le stock de ce produit n'est pas suffisant").build();
 				}
 			}
-			PanierRepository.updatePanier(panier);
 			// on va alors décrementer les stocks en base
 			StockManagerRepository.decrementeStock(panier);
+			PanierRepository.updatePanier(panier);
+			log.log(Level.INFO, "end transaction");
 			return Response.ok().build();
 		} else {
+			log.log(Level.INFO, "end transaction");
 			Throwable cause = new Throwable("Votre panier a été supprimé, temps d'inactivité trop long");
 			throw new WebApplicationException(cause,Response.Status.NOT_FOUND);
 		}
