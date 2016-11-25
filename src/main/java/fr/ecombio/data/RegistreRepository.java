@@ -96,6 +96,7 @@ public class RegistreRepository {
 		nouveauPanier.setArticles(ancienPanier.getArticles());
 		log.log(Level.INFO,"save panier");
 		em.persist(nouveauPanier);
+		log.log(Level.INFO,"ok");
 
 		HistoriqueCommande com = new HistoriqueCommande();
 		com.setDate(infos.getCommandInfo().getDate());
