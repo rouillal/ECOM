@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "historiquecomande")
+@Table(name = "historiquecommande")
 public class HistoriqueCommande implements Serializable {
 
 	@Id

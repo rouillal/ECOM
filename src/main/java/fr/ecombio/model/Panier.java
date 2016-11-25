@@ -67,7 +67,11 @@ public class Panier implements Serializable {
 	}
 
 	public void setArticles(Set<Article> articles) {
-		this.articles = articles;
+		this.articles = new HashSet<Article>();
+		Iterator<Article> it = articles.iterator();
+		while(it.hasNext()){
+			this.articles.add(it.next());
+		}
 		dateDerniereModif = new Date();
 	}
 
