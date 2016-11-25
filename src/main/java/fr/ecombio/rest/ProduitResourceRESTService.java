@@ -47,5 +47,19 @@ public class ProduitResourceRESTService {
     		@DefaultValue("0") @QueryParam("page") int page, @QueryParam("tri") String tri) {
         return repository.findCatOrderedByName(cat, search, page, tri, saison);
     }
+	
+	@GET
+	@Path("/page/filter")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Long NumberPage(@QueryParam("cat") String cat, @QueryParam("search") String search, @QueryParam("saison") int saison) {
+        return repository.findNumberPage(cat, search, saison);
+    }
+	
+	@GET
+	@Path("/page")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Long NumberPage(@QueryParam("saison") int saison) {
+        return repository.findNumberPage(saison);
+    }
 }
 
