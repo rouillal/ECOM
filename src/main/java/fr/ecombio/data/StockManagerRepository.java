@@ -70,7 +70,7 @@ public class StockManagerRepository {
 				if (Panierrepository != null) {
 					List<Panier> paniers = Panierrepository.getAll();
 					for(Panier panier : paniers) {
-						if (getDateDiff(panier.getDateDerniereModif(),today,TimeUnit.MINUTES) >= 1){
+						if (panier.getDateDerniereModif() != null && getDateDiff(panier.getDateDerniereModif(),today,TimeUnit.MINUTES) >= 1){
 							// on incrémente le stock
 							incrementeStock(panier);
 							// on supprime le panier
