@@ -22,7 +22,7 @@ public class MyCryptoConverter {
 					.getResourceAsStream("persistence.properties"));
 		} catch (Exception e) {
 			properties.put(algorithm_property_key, "AES/ECB/PKCS5Padding");
-			properties.put(secret_property_key, "BioToBeAlive");
+			properties.put(secret_property_key, "MySuperSecretKey");
 		}
 		ALGORITHM = (String) properties.get(algorithm_property_key);
 		KEY = ((String) properties.get(secret_property_key)).getBytes();
