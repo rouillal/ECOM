@@ -3,14 +3,15 @@ eComBioApp.controller('ProductTriPaginCtrl', [
 		'$window',
 		'searchProductSvc',
 		function($scope, $window, searchProductSvc) {
+			$scope.aab='tt';
 			$scope.listeTris = searchProductSvc.getlisteTris();
 			$scope.currentPage = searchProductSvc.getCurrentPage();
-			$scope.currentTriIndex = searchProductSvc
-					.getCurrentTriIndex();
-
-			$scope.changeTri = function(newTriIndex) {
-				searchProductSvc.setCurrentTriIndex(newTriIndex);
-			}
+			$scope.currentTri = searchProductSvc
+					.getCurrentTri();
+			
+			$scope.$watch('currentTri', function() {
+				searchProductSvc.setCurrentTri($scope.currentTri);
+			});
 
 			$scope.isPagedownActive = function() {
 				return ($scope.currentPage != 0);

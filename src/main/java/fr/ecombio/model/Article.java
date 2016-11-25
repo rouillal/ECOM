@@ -21,25 +21,25 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @SuppressWarnings("serial")
-@Table(name="article")
 @Entity
+@Table(name="article")
 public class Article implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "article_id")
-	private Long id ;
+	private Long id;
 
 	@ManyToOne
+    @JsonManagedReference
 	@JoinColumn(name="produit_id")
-	@JsonManagedReference
 	private Produit produit;
 	
 	@NotNull
 	private int quotite;
 	
-	@NotNull
-	private int prixTotal;
+	//@NotNull
+	//private int prixTotal;
 	
 	@ManyToOne
 	@JoinColumn(name="panier_id")
@@ -47,9 +47,11 @@ public class Article implements Serializable {
 	private Panier panier;
 	
 	public Article() {
+		super();
 	}
 
 	public Article(Produit produit, int quotite) {
+		super();
 		this.produit = produit;
 		this.quotite = quotite;
 	}
@@ -78,12 +80,12 @@ public class Article implements Serializable {
 		this.quotite = quotite;
 	}	
 
-	public Panier getPanier() {
+	/*public Panier getPanier() {
 		return panier;
 	}
 
 	public void setPanier(Panier panier) {
 		this.panier = panier;
-	}
+	}*/
 
 }

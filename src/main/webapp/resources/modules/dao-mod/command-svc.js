@@ -18,8 +18,8 @@ eComBioApp.factory('commandSvc', [ '$rootScope', 'restBackendSvc', '$window','pa
 				var idPanier = panierSvc.getIdPanierServer();
 				var messageServeur = new Object();
 				messageServeur['idPanier'] = idPanier;
-				messageServeur['commandInfo'] = commandInfoJson;
-				messageServeur['commandPaieInfo'] = commandPaieInfoJson;
+				messageServeur['commandInfo'] = commandInfo;
+				messageServeur['commandPaieInfo'] = commandPaieInfo;
 				var messageServeurJson = angular.toJson(messageServeur);
 				$window.alert("messageServeurJson : "+messageServeurJson);
 				restBackendSvc.createItem('paiement', messageServeurJson).then(

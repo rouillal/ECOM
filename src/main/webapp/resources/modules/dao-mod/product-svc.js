@@ -2,10 +2,11 @@ eComBioApp.factory('productSvc', [
 		'$rootScope',
 		'restBackendSvc',
 		'$window',
-		function($rootScope, restBackendSvc, $window) {
+		'imgProviderSvc',
+		function($rootScope, restBackendSvc, $window,imgProviderSvc) {
 			
 			var getProductBySearchName = function(searchString, listCategories,
-					listCategoriesChoix, page,saison) {
+					listCategoriesChoix, page,saison,tri) {
 				var restAdress = "produit/filter?";
 				var categoSelected = '';
 				angular.forEach(listCategories, function(categorie, key) {
@@ -34,12 +35,14 @@ eComBioApp.factory('productSvc', [
 				}
 				
 				restAdress += 'page=' + page;
+				restAdress += '&tri=' + tri;
 				$rootScope.$broadcast('debug', restAdress);
 				restBackendSvc.getItemsByUrl(restAdress).then(function(data) {
 					var listProduit = data.data;
 					angular.forEach(listProduit, function(produit, key) {
 						produit['quotite']=0;
 						produit['prixTotal']=0;
+						produit['url']=imgProviderSvc.getImage(produit.filename);
 					});
 					$rootScope.$broadcast('listProductsSupplied',listProduit);
 				}, function(reason) {
@@ -50,17 +53,6 @@ eComBioApp.factory('productSvc', [
 						alert('Failed: ' + reason);
 					}
 				});
-			}
-
-			var getDetailsProduct = function(nameOrId) {
-				restBackendSvc
-						.getItemsByUrl("produit/id?parameter=" + nameOrId)
-						.then(
-								function(data) {
-									$window.alert('Detail produit demande');
-									$rootScope.$broadcast(
-											'detailsProductSupplied', data);
-								});
 			}
 
 			var createProduct = function(product) {
@@ -83,7 +75,6 @@ eComBioApp.factory('productSvc', [
 			}
 
 			return {
-				getProductBySearchName : getProductBySearchName,
-				getDetailsProduct : getDetailsProduct
+				getProductBySearchName : getProductBySearchName
 			};
 		} ]);

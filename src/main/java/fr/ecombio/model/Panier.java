@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,6 +16,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -28,22 +30,25 @@ public class Panier implements Serializable {
 	// identification de la session
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "produit_id")
+    @Column(name = "panier_id")
 	private Long id;
 
+	//private Map<Long,Article> articles = new HashMap<Long,Article>(); 
+	
 	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.REMOVE, mappedBy="panier")
 	@JsonBackReference
-    @Column(name = "produit_articles")
-	private Map<Long,Article> articles = new HashMap<Long,Article>(); 
+    @Column(name = "panier_articles")
+	private Set<Article> articles;
     
 	
 	Date dateDerniereModif = new Date();
 	
 	public Panier() {
 		super();
+		this.articles = new HashSet<Article>();
 	}
 
-    public Panier(Map<Long,Article> commande) {
+    public Panier(Set<Article> commande) {
 		this.setArticles(commande);
 	}
 
@@ -56,12 +61,12 @@ public class Panier implements Serializable {
 		dateDerniereModif = new Date();
 	}
 
-	public Map<Long,Article> getArticles() {
+	public Set<Article> getArticles() {
 		dateDerniereModif = new Date();
 		return articles;
 	}
 
-	public void setArticles(Map<Long,Article> articles) {
+	public void setArticles(Set<Article> articles) {
 		this.articles = articles;
 		dateDerniereModif = new Date();
 	}
@@ -73,5 +78,28 @@ public class Panier implements Serializable {
 
 	public void setDateDerniereModif(Date dateDerniereModif) {
 		this.dateDerniereModif = dateDerniereModif;
+	}
+
+	public boolean contains(Long id) {
+		Iterator<Article> i=articles.iterator();
+		while(i.hasNext()) // tant qu'on a un suivant
+		{
+			if ((i.next()).getProduit().getId() == id) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public Article getArticle(Long id) {
+		Iterator<Article> i=articles.iterator();
+		while(i.hasNext()) // tant qu'on a un suivant
+		{
+			Article article = i.next();
+			if ((article).getProduit().getId() == id) {
+				return article;
+			}
+		}
+		return null;
 	}
 }

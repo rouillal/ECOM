@@ -35,7 +35,7 @@ public class Categorie implements Serializable {
 	private String name;
 	
 	@JsonBackReference
-	@OneToMany(mappedBy="categorie", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="categorie", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private Set<Produit> produits;
 	
 	public Categorie() {
