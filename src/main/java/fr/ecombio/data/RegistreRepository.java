@@ -14,6 +14,7 @@ import javax.persistence.criteria.Root;
 
 import fr.ecombio.model.Client;
 import fr.ecombio.model.HistoriqueCommande;
+import fr.ecombio.model.MyCryptoConverter;
 import fr.ecombio.model.Panier;
 import fr.ecombio.model.RegistreClient;
 import fr.ecombio.model.ValidationClient;
@@ -30,10 +31,11 @@ public class RegistreRepository {
 
 
 	public Client findClientByMailAndMdp(String mail, String mdp) {
+		String encryptedPwd = MyCryptoConverter.encrypt(mdp);
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<RegistreClient> criteria = cb.createQuery(RegistreClient.class);
 		Root<RegistreClient> RegistreClient = criteria.from(RegistreClient.class);
-		criteria.select(RegistreClient).where( cb.and(cb.equal( RegistreClient.get("mail"), mail ), cb.equal( RegistreClient.get("mdp"), mdp )));
+		criteria.select(RegistreClient).where( cb.and(cb.equal( RegistreClient.get("mail"), mail ), cb.equal( RegistreClient.get("mdp"), encryptedPwd )));
 		List<RegistreClient> res = em.createQuery(criteria).getResultList();
 		if (res.size() != 1) {
 			return null;
