@@ -43,6 +43,8 @@ public class Panier implements Serializable {
 	
 	Date dateDerniereModif = new Date();
 	
+	Boolean isRegistred = false;
+	
 	public Panier() {
 		super();
 		this.articles = new HashSet<Article>();
@@ -105,5 +107,13 @@ public class Panier implements Serializable {
 			}
 		}
 		return null;
+	}
+
+	public Boolean getIsRegistred() {
+		return isRegistred;
+	}
+
+	public void setIsRegistred(Boolean isRegistred) {
+		this.isRegistred = isRegistred;
 	}
 }
