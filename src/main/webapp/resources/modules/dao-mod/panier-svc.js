@@ -5,7 +5,7 @@ eComBioApp.factory('panierSvc', [
 		function($rootScope, restBackendSvc, $window) {
 			var listePanier = [];
 			var selectedProduit = '';
-			var montantTotal = 0;
+			var montantTotal = 0.00;
 			var idPanierServer = -1;
 
 			var setSelectedProduit = function(newSelectedProduit) {
@@ -24,7 +24,7 @@ eComBioApp.factory('panierSvc', [
 			};
 
 			var supprimeArticlePanier = function(ligne) {
-				montantTotal = 0;
+				montantTotal = 0.00;
 				angular.forEach(listePanier, function(ligneArticle, key) {
 					if (ligneArticle.id == ligne.id) {
 						listePanier.splice(key, 1);
@@ -52,11 +52,11 @@ eComBioApp.factory('panierSvc', [
 					supprimeArticlePanier(produitAChanger);
 				} else {
 					var ligne = '';
-					montantTotal = 0;
+					montantTotal = 0.00;
 					angular.forEach(listePanier, function(ligneArticle, key) {
 						if (produitAChanger.id == ligneArticle.id) {
 							ligneArticle.quotite = quantite;
-							ligneArticle.prixTotal = Math.round(quantite * ligneArticle.prix*100)/100;
+							ligneArticle.prixTotal = quantite * ligneArticle.prix;
 							ligne = ligneArticle;
 						}
 						montantTotal += ligneArticle.prixTotal;
@@ -120,7 +120,7 @@ eComBioApp.factory('panierSvc', [
 			};
 
 			var getMontantTotal = function() {
-				return montantTotal;
+				return Math.round(montantTotal*100)/100;
 			};
 
 			return {
