@@ -58,11 +58,18 @@
 						placeholder="Entrez votre ville">
 				</div>
 			</div>
+			<!--  
 			<div class="col-sm-6 col-xs-12" style="margin-top: 20px;"
 				class="form-group">
 				<label for="commanddate"></span>Date de livraison</label> <input type="text"
 					class="form-control" ng-model="commandInfo.date"
 					placeholder="Entrez la date de livraison">
+			</div>
+			-->
+			 
+			<div class="col-sm-6 col-xs-12" style="margin-top: 20px;" class="form-group"><label for="commanddate"></span>Date de livraison</label>
+				<input type="text" ng-model="commandInfo.date">
+				<date-picker ng-model="commandInfo.date"> </date-picker>
 			</div>
 			<div class="col-sm-6 col-xs-12" style="margin-top: 20px;"
 				class="form-group">
