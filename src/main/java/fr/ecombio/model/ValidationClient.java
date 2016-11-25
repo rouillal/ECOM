@@ -3,48 +3,18 @@ package fr.ecombio.model;
 import java.io.Serializable;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @SuppressWarnings("serial")
-@Entity
-@Table(name = "client")
-public class Client implements Serializable {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "client_id")
-	private Long id;
-	
-	@NotNull
-	@Column(name = "client_nom")
+public class ValidationClient implements Serializable{
 	private String nom;
-	
-	@NotNull
-	@Column(name = "client_prenom")
 	private String prenom;
-	
-	@NotNull
-	@Column(name = "client_mail")
 	private String mail;
-
-	@Column(name = "client_adresse")
 	private String adresse;
-	@Column(name = "client_cp")
 	private String cp;
-	@Column(name = "client_ville")
 	private String ville;
+	private String psw;
 	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
 	public String getNom() {
 		return nom;
 	}
@@ -80,5 +50,11 @@ public class Client implements Serializable {
 	}
 	public void setVille(String ville) {
 		this.ville = ville;
+	}
+	public String getPsw() {
+		return psw;
+	}
+	public void setPsw(String psw) {
+		this.psw = psw;
 	}
 }
