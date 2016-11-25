@@ -12,14 +12,23 @@
 			</span>
 		</div>
 	</div>
-	<div style="color: rgb(221, 131, 14); margin-top:10px; margin-bottom: 10px;" class="col-xs-12">Catégories :</div>
-	<div class="col-xs-12" ng-repeat="categorie in listCategories">
-		<input type="checkbox" ng-model="listCategoriesChoix[$index]"
-			ng-change="changeRecetteCatego()">&nbsp;&nbsp;{{categorie.name}}
+	<div style="color: rgb(221, 131, 14); margin-top:10px; margin-bottom: 10px;" class="col-xs-12">Types de Recette:</div>
+	<div class="col-xs-12" ng-repeat="typeRecette in listTypesRecette">
+		<input type="checkbox" ng-model="listTypesRecetteChoix[$index]"
+			ng-change="changeTypeRecette()">&nbsp;&nbsp;{{typeRecette.name}}
 	</div>
-	<div class="col-xs-12">
-		<input type="checkbox" ng-model="isSaison"
-			ng-change="changeSaison()">&nbsp;&nbsp;Produits de saison
+	
+	<div style="color: rgb(221, 131, 14); margin-top:10px; margin-bottom: 10px;" class="col-xs-12">Par saison :</div>
+	<div class="col-xs-12" ng-repeat="saison in listSaisons">
+		<input type="checkbox" ng-model="listSaisonsChoix[$index]"
+			ng-change="changeSaisons()">&nbsp;&nbsp;{{saison.name}}
 	</div>
+	
+	<div style="color: rgb(221, 131, 14); margin-top:10px; margin-bottom: 10px;" class="col-xs-12">Par composition :</div>
+	<div class="col-xs-12" ng-repeat="composition in listCompositions">
+		<input type="checkbox" ng-model="listCompositionsChoix[$index]"
+			ng-change="changeComposition()">&nbsp;&nbsp;{{composition.name}}
+	</div>
+
 	<h6>Debug:{{debug}}</h6>
 </div>

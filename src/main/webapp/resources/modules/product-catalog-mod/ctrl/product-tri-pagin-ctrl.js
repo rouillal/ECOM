@@ -3,7 +3,7 @@ eComBioApp.controller('ProductTriPaginCtrl', [
 		'$window',
 		'searchProductSvc',
 		function($scope, $window, searchProductSvc) {
-			$scope.aab='tt';
+			$scope.pageMax=0;
 			$scope.listeTris = searchProductSvc.getlisteTris();
 			$scope.currentPage = searchProductSvc.getCurrentPage();
 			$scope.currentTri = searchProductSvc
@@ -24,9 +24,18 @@ eComBioApp.controller('ProductTriPaginCtrl', [
 			$scope.pageup = function() {
 				$scope.currentPage = searchProductSvc.pageup();
 			};
+			
+			$scope.isPageupActive = function() {
+				return ($scope.currentPage < $scope.pageMax);
+			};
 
 			$scope.$on('reinitPageDueToNewSearch', function(event,
 					newCurrentPage) {
 				$scope.currentPage = newCurrentPage;
+			});
+			
+			$scope.$on('pageMaxReset', function(event,
+					newPageMax) {
+				$scope.pageMax = newPageMax;
 			});
 		} ]);

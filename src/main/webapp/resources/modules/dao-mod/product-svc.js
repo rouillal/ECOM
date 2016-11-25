@@ -7,7 +7,7 @@ eComBioApp.factory('productSvc', [
 			
 			var getProductBySearchName = function(searchString, listCategories,
 					listCategoriesChoix, page,saison,tri) {
-				var restAdress = "produit/filter?";
+				var restAdress = "/filter?";
 				var categoSelected = '';
 				angular.forEach(listCategories, function(categorie, key) {
 					if (listCategoriesChoix[key]) {
@@ -37,7 +37,7 @@ eComBioApp.factory('productSvc', [
 				restAdress += 'page=' + page;
 				restAdress += '&tri=' + tri;
 				$rootScope.$broadcast('debug', restAdress);
-				restBackendSvc.getItemsByUrl(restAdress).then(function(data) {
+				restBackendSvc.getItemsByUrl('produit'+restAdress).then(function(data) {
 					var listProduit = data.data;
 					angular.forEach(listProduit, function(produit, key) {
 						produit['quotite']=0;
@@ -52,6 +52,13 @@ eComBioApp.factory('productSvc', [
 					} else {
 						alert('Failed: ' + reason);
 					}
+				});
+				restBackendSvc.getItemsByUrl('produit/page'+restAdress).then(function(data) {
+					var pageMax = data.data;
+					$rootScope.$broadcast('pageMaxReset',pageMax);
+				}, function(reason) {
+					$rootScope.$broadcast('debug', reason);
+					alert('Failed: ' + reason);
 				});
 			}
 
