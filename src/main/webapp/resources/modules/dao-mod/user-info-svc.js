@@ -11,7 +11,7 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window',
 				userInfo = userInfoParam; 
 				var userInfoJson = angular.toJson(userInfo);
 				$window.alert("userInfoParam : "+userInfoJson);
-				restBackendSvc.createItem('signin', userInfoJson).then(
+				restBackendSvc.createItem('connect', userInfoJson).then(
 							function(data) {
 								$window.alert("Bravo, vous êtes inscrit chez nous");
 							}, function(error) {
