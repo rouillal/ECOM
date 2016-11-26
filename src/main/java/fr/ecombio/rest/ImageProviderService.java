@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
         urlPatterns = "/image",
         initParams =
         {
-            @WebInitParam(name = "saveDir", value = "C:\\tempEcom\\"),
+            @WebInitParam(name = "saveDir", value = "/Users/lorrie/Desktop/images/"),
             @WebInitParam(name = "filenameParamName", value = "name")
         }
 )
@@ -30,10 +30,10 @@ public class ImageProviderService extends HttpServlet implements ServletContextL
 
 		String saveDir = getInitParameter("saveDir");
 		String fileName = request.getParameter("name");
-		File file = new File(saveDir+fileName+".jpg");
+		File file = new File(saveDir+fileName+".png");
 		if (file.exists()) {
 
-			response.setContentType("image/jpg");
+			response.setContentType("image/png");
 			OutputStream out = response.getOutputStream();
 
 			response.setContentLength((int) file.length());
