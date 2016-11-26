@@ -58,24 +58,17 @@
 						placeholder="Entrez votre ville">
 				</div>
 			</div>
-			<!--  
 			<div class="col-sm-6 col-xs-12" style="margin-top: 20px;"
 				class="form-group">
-				<label for="commanddate"></span>Date de livraison</label> <input type="text"
-					class="form-control" ng-model="commandInfo.date"
-					placeholder="Entrez la date de livraison">
-			</div>
-			-->
-			 
-			<div class="col-sm-6 col-xs-12" style="margin-top: 20px;" class="form-group"><label for="commanddate"></span>Date de livraison</label>
-				<input type="text" ng-model="commandInfo.date">
-				<date-picker ng-model="commandInfo.date"> </date-picker>
+				<label for="commanddate">Date de livraison</label> <br> <input
+					type="text" ng-click="seeCalendar()" ng-model="commandInfo.date">
+				<date-picker ng-show="seeCalend==true" ng-model="commandInfo.date"> </date-picker>
 			</div>
 			<div class="col-sm-6 col-xs-12" style="margin-top: 20px;"
 				class="form-group">
 				<label for="commandheure"> Horaire de livraison</label> <br> <select
 					name="horaireSelect" id="horaireSelect"
-					ng-model="commandInfo.heure">
+					ng-model="commandInfo.heure" ng-click="hideCalendar()">
 					<option ng-repeat="horaire in listeHoraires"
 						value="{{horaire.value}}">{{horaire.libelle}}</option>
 				</select>
