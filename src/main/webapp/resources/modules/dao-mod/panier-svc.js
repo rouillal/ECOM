@@ -56,7 +56,7 @@ eComBioApp.factory('panierSvc', [
 					angular.forEach(listePanier, function(ligneArticle, key) {
 						if (produitAChanger.id == ligneArticle.id) {
 							ligneArticle.quotite = quantite;
-							ligneArticle.prixTotal = quantite * ligneArticle.prix;
+							ligneArticle.prixTotal = Math.round(quantite * ligneArticle.prix*100)/100;
 							ligne = ligneArticle;
 						}
 						montantTotal += ligneArticle.prixTotal;
