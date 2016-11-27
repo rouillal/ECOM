@@ -22,7 +22,9 @@ eComBioApp.controller('ProductTriPaginCtrl', [
 			};
 
 			$scope.pageup = function() {
-				$scope.currentPage = searchProductSvc.pageup();
+				if($scope.currentPage < ($scope.pageMax-1)){
+					$scope.currentPage = searchProductSvc.pageup();
+				}
 			};
 			
 			$scope.isPageupActive = function() {

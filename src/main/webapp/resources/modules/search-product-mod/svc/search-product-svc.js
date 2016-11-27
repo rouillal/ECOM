@@ -2,8 +2,8 @@ eComBioApp.factory('searchProductSvc', [ '$rootScope','categorieSvc','productSvc
 	var listCategories = categorieSvc.getAllCategories();
 	var searchProductString ="";
 	var currentPage=0;
-	var listeTris = [{'name':'alpha','libelle':'noms'},{'name':'prixup','libelle':'prix croissants'},{'name':'prixdown','libelle':'prix décroissants'}];
-	var currentTri = {'name':'alpha','libelle':'noms'};
+	var listeTris = [{'name':'alpha','libelle':'Noms'},{'name':'prixup','libelle':'Prix croissants'},{'name':'prixdown','libelle':'Prix décroissants'}];
+	var currentTri = {'name':'alpha','libelle':'Noms'};
 	var isSaison = false;
 	
 	var initListCategoriesChoix = function() {

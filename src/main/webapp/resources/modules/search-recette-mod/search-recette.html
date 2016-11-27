@@ -1,9 +1,9 @@
 <div style="margin-top: 20px;" ng-controller="SearchRecetteCtrl">
-	<div class="col-xs-12" class="form-group"
+	<div class="col-xs-10" class="form-group"
 		ng-controller="SearchRecetteCtrl">
 		<div class="input-group input-group-sm icon-addon addon-sm">
 			<input type="text" ng-model="searchRecetteString"
-				placeholder="Rechercher un recette" class="form-control input-sm">
+				placeholder="Rechercher par ingrédient/recette" class="form-control input-sm">
 			<span class="input-group-btn">
 				<button ng-click="searchRecetteByName()" class="btn btn-inverse">
 					<span style="color: rgb(221, 131, 14);"
@@ -12,7 +12,7 @@
 			</span>
 		</div>
 	</div>
-	<div style="color: rgb(221, 131, 14); margin-top:10px; margin-bottom: 10px;" class="col-xs-12">Types de Recette:</div>
+	<div style="color: rgb(221, 131, 14); margin-top:10px; margin-bottom: 10px;" class="col-xs-12">Par type de recette:</div>
 	<div class="col-xs-12" ng-repeat="typeRecette in listTypesRecette">
 		<input type="checkbox" ng-model="listTypesRecetteChoix[$index]"
 			ng-change="changeTypeRecette()">&nbsp;&nbsp;{{typeRecette.name}}
@@ -30,5 +30,5 @@
 			ng-change="changeComposition()">&nbsp;&nbsp;{{composition.name}}
 	</div>
 
-	<h6>Debug:{{debug}}</h6>
+	<h6 class="col-xs-12">Debug:{{debug}}</h6>
 </div>

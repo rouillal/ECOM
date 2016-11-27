@@ -1,8 +1,8 @@
 eComBioApp.factory('searchRecetteSvc', [ '$rootScope','categorieSvc','recetteSvc','$window',function($rootScope,categorieSvc,recetteSvc,$window) {
 	var listCategories = categorieSvc.getAllCategories();
-	var listTypesRecette = [{'name':'Aperitif'},{'name':'Entree'}];
-	var listSaison = [{'name':'Automne'},{'name':'Hivers'}];
-	var listComposition = [{'name':'Sans gluten'},{'name':'Sans lactose'}];
+	var listTypesRecette = [{'name':'Apéritif'},{'name':'Entrée'},{'name':'Plat'},{'name':'Dessert'},{'name':'Boisson'}];
+	var listSaison = [{'name':'Printemps'},{'name':'Eté'},{'name':'Automne'},{'name':'Hiver'}];
+	var listComposition = [{'name':'Sans gluten'},{'name':'Sans lactose'},{'name':'Végétalien'},{'name':'Végétarien'}];
 	var searchRecetteString ="";
 	var currentPage=0;
 	var listeTris = [{'name':'alpha','libelle':'noms'},{'name':'prixup','libelle':'prix croissants'},{'name':'prixdown','libelle':'prix décroissants'}];
