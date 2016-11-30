@@ -67,12 +67,12 @@ public class PanierResourceRESTService {
 				ArticleRepository.AjoutArticle(a);
 				// on l'ajoute au panier
 				panier.getArticles().add(a);
+				StockManagerRepository.decrementeStock(panier,a);
 			} else {
 				return Response.notModified("Le stock de ce produit n'est pas suffisant").build();
 			}
 		}
 		// on va alors décrementer les stocks en base
-		StockManagerRepository.decrementeStock(panier);
 		PanierRepository.updatePanier(panier);
 		return Response.ok(PanierID).build();
 	}
@@ -90,35 +90,48 @@ public class PanierResourceRESTService {
 				// on va chercher le produit correspondant en base
 				Produit produit = ProduitRepository.findById(article.getId());
 				// si le stock est suffisant
+				Article a = panier.getArticle(produit.getId());
 				if (produit.getStock()>=1) {
 					// on met à jour les quantite du panier 
 					if (panier.contains(produit.getId())) {
-						Article a = panier.getArticle(produit.getId());
-						if ( a!= null && a.getQuotite() != article.getQuotite() ) {
-							a.setQuotite(article.getQuotite());
-							ArticleRepository.updateArticle(a);
+						if ( a!= null ){
+							if (a.getQuotite() < article.getQuotite() ) {
+								for (int i =0; i<Math.abs(a.getQuotite() - article.getQuotite()) ; i++) {
+									StockManagerRepository.decrementeStock(panier,a);
+								}
+								a.setQuotite(article.getQuotite());
+								ArticleRepository.updateArticle(a);
+							} else if (a.getQuotite() > article.getQuotite()) {
+								for (int i =0; i<Math.abs(a.getQuotite() - article.getQuotite()) ; i++) {
+									StockManagerRepository.incrementeStock(panier,a);
+								}
+								a.setQuotite(article.getQuotite());
+								ArticleRepository.updateArticle(a);
+							}
 						}
 					} else {
 						log.log(Level.INFO, "ajout");
-						Article a = new Article();
-						a.setProduit(produit);
-						a.setQuotite(article.getQuotite());
-						ArticleRepository.AjoutArticle(a);
-						panier.getArticles().add(a);
+						Article a2 = new Article();
+						a2.setProduit(produit);
+						a2.setQuotite(article.getQuotite());
+						ArticleRepository.AjoutArticle(a2);
+						panier.getArticles().add(a2);
+						for (int i =0; i<a2.getQuotite() ; i++) {
+							StockManagerRepository.decrementeStock(panier,a2);
+						}
 					}
 					PanierRepository.updatePanier(panier);
-				} else {
-					log.log(Level.INFO, "end transaction");
+				} else if (panier.contains(produit.getId()) && a.getQuotite() != article.getQuotite()) {
+					log.log(Level.INFO, "echec end transaction");
 					return Response.notModified("Le stock de ce produit n'est pas suffisant").build();
 				}
+				//log.log(Level.INFO, Integer.toString(a.getQuotite()) + Integer.toString(article.getQuotite()));
 			}
 			// on va alors décrementer les stocks en base
-			StockManagerRepository.decrementeStock(panier);
 			PanierRepository.updatePanier(panier);
-			log.log(Level.INFO, "end transaction");
 			return Response.ok().build();
 		} else {
-			log.log(Level.INFO, "end transaction");
+			log.log(Level.INFO, "echec end transaction");
 			Throwable cause = new Throwable("Votre panier a été supprimé, temps d'inactivité trop long");
 			throw new WebApplicationException(cause,Response.Status.NOT_FOUND);
 		}

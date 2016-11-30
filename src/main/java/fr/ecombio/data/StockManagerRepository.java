@@ -44,15 +44,32 @@ public class StockManagerRepository {
 			Produitrepository.updateProduit(valeur.getProduit());
 		}
 	}
+	
 
-	public void decrementeStock(Panier panier) {
+	public void incrementeStock(Panier panier, Article a) {
+		Iterator<Article> i=panier.getArticles().iterator();
+		while(i.hasNext()) // tant qu'on a un suivant
+		{
+			Article valeur = i.next();
+			if (valeur.getId() == a.getId()){
+				valeur.getProduit().setStock(valeur.getProduit().getStock()+1);
+				Produitrepository.updateProduit(valeur.getProduit());
+			}
+		}
+		panier.setDateDerniereModif(new Date());
+		Panierrepository.updatePanier(panier);
+	}
+
+	public void decrementeStock(Panier panier, Article a) {
 
 		Iterator<Article> i=panier.getArticles().iterator();
 		while(i.hasNext()) // tant qu'on a un suivant
 		{
 			Article valeur = i.next();
-			valeur.getProduit().setStock(valeur.getProduit().getStock()-1);
-			Produitrepository.updateProduit(valeur.getProduit());
+			if (valeur.getId() == a.getId()){
+				valeur.getProduit().setStock(valeur.getProduit().getStock()-1);
+				Produitrepository.updateProduit(valeur.getProduit());
+			}
 		}
 		panier.setDateDerniereModif(new Date());
 		Panierrepository.updatePanier(panier);
@@ -87,4 +104,5 @@ public class StockManagerRepository {
 		Timer timer = new Timer("mon timer");
 		timer.scheduleAtFixedRate(timertask, 0, 60000);
 	}
+
 }
