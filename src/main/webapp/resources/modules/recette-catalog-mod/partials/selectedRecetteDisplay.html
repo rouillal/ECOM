@@ -20,7 +20,21 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal-body"></div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-xs-6">
+						<span style="color: rgb(221, 131, 14);">Ingrédients :</span>
+						<div ng-bind-html="selectedRecette.listeIngredients | unsafe"></div>
+					</div>
+					<div class="col-xs-6"></div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<span style="color: rgb(221, 131, 14);">Préparation :</span>
+						<div ng-bind-html="selectedRecette.preparation | unsafe"></div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

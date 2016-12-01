@@ -36,8 +36,8 @@ eComBioApp.factory('recetteSvc', [
 				restAdress += 'page=' + page;
 				$rootScope.$broadcast('debug', restAdress);
 				//Mock
-				var listRecette = [{'name':'Tofu en bolo','nbPersonnes':4,'tpsPreparation':15,'tpsCuisson':20,'cout':'Bon marché','difficulte':'Très facile','listeIngredients':'<ul><li> 1 oignon,</li><li> 2 carottes</li></ul>','preparation':'1,2,3'},
-				                   {'name':'Tofu2 en bolo','nbPersonnes':4,'tpsPreparation':15,'tpsCuisson':20,'cout':'Bon marché','difficulte':'Très facile','listeIngredients':'1 oignon','preparation':'1,2,3'}];
+				var listRecette = [{'name':'Tofu en bolo','nbPersonnes':4,'tpsPreparation':15,'tpsCuisson':20,'cout':'Bon marché','difficulte':'Très facile','listeIngredients':'<ul><li>1 oignon,</li><li>2 carottes</li></ul>','preparation':'<ul><li>1.</li><li>2.</li><li>3.</li></ul>'},
+				                   {'name':'Tofu2 en bolo','nbPersonnes':4,'tpsPreparation':15,'tpsCuisson':20,'cout':'Bon marché','difficulte':'Très facile','listeIngredients':'1 oignon','preparation':'<ul><li>1.</li><li>2.</li><li>3.</li></ul>'}];
 				var listRecetteJson = angular.toJson(listRecette);
 				//Fin Mock
 				restBackendSvc.getItemsByUrl(restAdress).then(function(data) {
