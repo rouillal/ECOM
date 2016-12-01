@@ -4,7 +4,7 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 	$scope.commandPaieInfo = commandSvc.getCommandPaieInfo();
 	$scope.payerInfoVoir = false;
 	$scope.seeCalend = false;
-	$scope.recapVoir = false;
+	$scope.recapInfoVoir = false;
 	$scope.montantTotal = panierSvc.getMontantTotal();
 	//Liste des horaires
 	$scope.listeHoraires=[];
@@ -35,6 +35,7 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 	
 	$scope.payerInfo = function() {
 		$scope.payerInfoVoir = true;
+		$scope.recapInfoVoir = false;
 	}
 	
 	$scope.revenirCatalog = function() {
@@ -45,18 +46,6 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 	$scope.revenirPanier = function() {
 		$location.path("panier");
 	}
-	
-	$(window).ready(function(){
-	    $("#myBtnPayer").click(function(){
-	        $("#myModalPaiement").modal();
-	    });
-	});
-	
-	$(window).ready(function(){
-	    $("#myBtnAnnulePaiement").click(function(){
-	        $("#myModalPaiement").modal('hide');
-	    });
-	});
 	
 	$scope.validationCmd = function(){
 		commandSvc.validePaiement();
@@ -71,6 +60,7 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 	}
 	
 	$scope.$on('recapAEditer', function(event) {
-		$scope.recapVoir = true;
+		$scope.recapInfoVoir = true;
+		$scope.payerInfoVoir = false;
 	});
 } ]);

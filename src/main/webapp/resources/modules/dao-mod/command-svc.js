@@ -24,7 +24,8 @@ eComBioApp.factory('commandSvc', [ '$rootScope', 'restBackendSvc', '$window','pa
 				$window.alert("messageServeurJson : "+messageServeurJson);
 				restBackendSvc.createItem('paiement', messageServeurJson).then(
 							function(data) {
-								$window.alert("Bravo, vous avez passé commande chez nous");
+								$window.alert("RRRRTT ");
+								$rootScope.$broadcast('recapAEditer');
 							}, function(error) {
 								var ff = angular.toJson(error);
 								$window.alert("Problème de paiement : "+ff);
