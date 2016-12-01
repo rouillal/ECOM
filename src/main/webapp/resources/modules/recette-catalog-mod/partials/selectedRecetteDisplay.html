@@ -1,0 +1,57 @@
+<div class="modal fade" id="selected*recetteDisplay" role="dialog"
+	ng-controller="RecetteDetailCtrl">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<div class="row">
+					<img class="col-xs-4" width="150px" height="150px"
+						ng-src="{{selectedProduit.url}}">
+					<div class="col-xs-8"
+						style="text-align: center; margin-top: 25px; font-size: 25px; font-family: Bradley Hand;"><span style="color: rgb(221, 131, 14);">{{selectedProduit.name}}
+						{{selectedProduit.variete}}</span> - {{selectedProduit.quantite}} {{selectedProduit.unite}}</div>
+					<div class="col-xs-4" style="margin-top: 20px; text-align: center;">Ajouter
+						au panier :</div>
+					<div class="col-xs-1" style="margin-top: 15px;">
+						<button class="btn" ng-click="moinsProduit()"
+							ng-disabled="isMoinsProduitInactif()">
+							<span style="color: rgb(221, 131, 14);"
+								class="glyphicon glyphicon-minus"></span>
+						</button>
+					</div>
+					<div class="col-xs-1" style="margin-top: 17px;">
+						<input type="text" size="1" ng-model="panierQuantite" />
+					</div>
+					<div class="col-xs-1" style="margin-top: 15px;">
+						<button class="btn" ng-click="plusProduit()"
+							ng-disabled="isPlusProduitInactif()">
+							<span style="color: rgb(221, 131, 14);"
+								class="glyphicon glyphicon-plus"></span>
+						</button>
+					</div>
+					<div class="col-xs-8" style="text-align: center; margin-top: 20px;">
+						Prix à l'unité : {{selectedProduit.prix}} € - <span
+							style="color: rgb(221, 131, 14);">Prix à payer :
+							{{panierPrixQt}} €</span>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body">
+				<ul>
+					<li>Provenance : {{selectedProduit.provenance}}</li>
+					<li>Date de production : {{selectedProduit.dateCueillette}}</li>
+					<li>Durée de conservation: {{selectedProduit.dureeConservation}} jours</li>
+					<li>Informations nutritionnelles (100g) :
+						<ul>
+							<li>Calories : {{selectedProduit.calories}} kcal</li>
+							<li>Glucides : {{selectedProduit.glucides}} g</li>
+							<li>Protéines : {{selectedProduit.proteines}} g</li>
+							<li>Fibres : {{selectedProduit.fibres}} g</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

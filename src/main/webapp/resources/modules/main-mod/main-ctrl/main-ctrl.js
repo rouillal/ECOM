@@ -10,4 +10,5 @@ eComBioApp.controller('MainCtrl', [ '$scope', '$window','productSvc','categorieS
 	$scope.$on('anomalieTechnique', function(event, msg) {
 		$scope.anomalieTechnique = msg;
 	});
+	
 }])
