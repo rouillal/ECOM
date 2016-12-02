@@ -73,4 +73,5 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 	$scope.$on('recapAEditer', function(event) {
 		$scope.recapVoir = true;
 	});
+	
 } ]);
