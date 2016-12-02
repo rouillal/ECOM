@@ -12,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Variant;
+import javax.ws.rs.core.Response.Status;
 import javax.xml.ws.ResponseWrapper;
 
 import fr.ecombio.data.RegistreRepository;
@@ -33,13 +34,15 @@ public class PaiementRESTService {
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	@ResponseWrapper public void validationPaiement(ValidationCommande infos) throws Exception {
+	@ResponseWrapper public Response validationPaiement(ValidationCommande infos) throws Exception {
 		String err = infos.getCommandPaieInfo().verify();
 		if (err!=null || (err!=null && !err.isEmpty())) {
-			throw new Exception(err);
+			return Response.ok(err).build();
+			//throw new Exception(err);
 		} else {
 			// enregistrer le client et l'historique de la commande
 			RegistreRepository.registerCommande(infos);
+			return Response.ok("ok").build();
 		}
 	}
 }

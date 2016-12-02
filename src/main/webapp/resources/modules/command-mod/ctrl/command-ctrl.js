@@ -5,6 +5,7 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 	$scope.payerInfoVoir = false;
 	$scope.seeCalend = false;
 	$scope.recapInfoVoir = false;
+	$scope.erreurVoir = false;
 	$scope.erreurPaiement='';
 	$scope.montantTotal = panierSvc.getMontantTotal();
 	//Liste des horaires
@@ -44,6 +45,12 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 		$scope.payerInfoVoir = true;
 	}
 	
+	$scope.revenirAccueil = function() {
+		$location.path("#/catalog");
+		$scope.payerInfoVoir = false;
+		$scope.recapInfoVoir = false;
+	}
+	
 	$scope.revenirPanier = function() {
 		$location.path("panier");
 	}
@@ -67,6 +74,7 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 	});
 	
 	$scope.$on('erreurPaiement', function(event,message) {
+		$scope.erreurVoir = true;
 		var ff = angular.toJson(message);
 		$window.alert("Problème de paiement : "+ff);
 		$scope.recapInfoVoir = false;
