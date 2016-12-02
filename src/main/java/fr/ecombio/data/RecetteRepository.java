@@ -17,6 +17,8 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import fr.ecombio.model.Categorie;
+import fr.ecombio.model.Composition;
+import fr.ecombio.model.CompositionRecette;
 
 //import org.jboss.logging.Logger;
 
@@ -73,7 +75,7 @@ public class RecetteRepository {
 
 	}
 
-	public List<Recette> findAllOrderedByName(int page, String cat, String saison, String search) {
+	public List<Recette> findAllOrderedByName(int page, String cat, String saison, String search, String compo) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Recette> criteria = cb.createQuery(Recette.class);
 		Root<Recette> Recette = criteria.from(Recette.class);
@@ -83,6 +85,7 @@ public class RecetteRepository {
 
 		if(cat == null || cat == "") {
 			if(search == null || search == "") {
+				if(compo == null || compo == "")
 				return this.findAllOrderedByName(page, saison);
 			}
 		} else {
@@ -119,6 +122,19 @@ public class RecetteRepository {
 			}
 			for (String saison1 : saisons) {
 				predicate = cb.or(predicate,cb.equal( join2.get("id"), Integer.parseInt(saison1)));
+			}
+		}
+		if(compo != null && compo != "") {
+			String[] compos = compo.split(",");
+			Join<Recette, CompositionRecette> join1 = Recette.join("compositions");
+			Join<CompositionRecette, Composition> join2 = join1.join("compositions");
+			if(predicate == null) {
+				predicate = cb.equal( join2.get("id"), Integer.parseInt(compos[0])) ;
+			} else {
+				predicate = cb.or(predicate,cb.equal( join2.get("id"), Integer.parseInt(compos[0]))) ;
+			}
+			for (String compo1 : compos) {
+				predicate = cb.or(predicate,cb.equal( join2.get("id"), Integer.parseInt(compo1)));
 			}
 		}
 		if(predicate != null) {

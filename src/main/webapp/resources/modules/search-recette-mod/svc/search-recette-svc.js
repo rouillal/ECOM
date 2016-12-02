@@ -1,11 +1,10 @@
-eComBioApp.factory('searchRecetteSvc', [ '$rootScope','categorieSvc','recetteSvc','$window',function($rootScope,categorieSvc,recetteSvc,$window) {
-	var listCategories = categorieSvc.getAllCategories();
-	var listTypesRecette = [{'name':'Apéritif'},{'name':'Entrée'},{'name':'Plat'},{'name':'Dessert'},{'name':'Boisson'}];
-	var listSaison = [{'name':'Printemps'},{'name':'Eté'},{'name':'Automne'},{'name':'Hiver'}];
-	var listComposition = [{'name':'Sans gluten'},{'name':'Sans lactose'},{'name':'Végétalien'},{'name':'Végétarien'}];
+eComBioApp.factory('searchRecetteSvc', [ '$rootScope','typeRecetteSvc','saisonSvc','compositionSvc','recetteSvc','$window',function($rootScope,typeRecetteSvc,saisonSvc,compositionSvc,recetteSvc,$window) {
+	var listTypesRecette = typeRecetteSvc.getAllTypeRecettes();//[{'name':'Apéritif'},{'name':'Entrée'},{'name':'Plat'},{'name':'Dessert'},{'name':'Boisson'}];
+	var listSaison = saisonSvc.getAllSaisons();//[{'name':'Printemps'},{'name':'Eté'},{'name':'Automne'},{'name':'Hiver'}];
+	var listComposition = compositionSvc.getAllCompositions();//[{'name':'Sans gluten'},{'name':'Sans lactose'},{'name':'Végétalien'},{'name':'Végétarien'}];
 	var searchRecetteString ="";
 	var currentPage=0;
-	var listeTris = [{'name':'alpha','libelle':'noms'},{'name':'prixup','libelle':'prix croissants'},{'name':'prixdown','libelle':'prix décroissants'}];
+	var listeTris = [{'name':'alpha','libelle':'noms'},{'name':'diff','libelle':'difficulté'},{'name':'cout','libelle':'coût'}];
 	var currentTriIndex = 0;
 	var isSaison = false;
 	
@@ -17,20 +16,6 @@ eComBioApp.factory('searchRecetteSvc', [ '$rootScope','categorieSvc','recetteSvc
 		return listChoixRet;
 	}
 	
-	var listCategoriesChoix = initListChoix(listCategories);
-	var getListCategories = function() {
-		return listCategories;
-	}
-	var getListCategoriesChoix = function() {
-		return listCategoriesChoix;
-	}
-	
-	var changeListCategoriesChoix = function(listCategoriesChoixChanged) {
-		listCategoriesChoix = listCategoriesChoixChanged;
-		reinitPageDueToNewSearch();
-		recetteSvc.getRecetteBySearchName(searchRecetteString,listCategories,listCategoriesChoix,currentPage,isSaison);
-	}
-	
 	var listTypesRecetteChoix = initListChoix(listTypesRecette);
 	var getListTypesRecette = function() {
 		return listTypesRecette;
@@ -38,8 +23,8 @@ eComBioApp.factory('searchRecetteSvc', [ '$rootScope','categorieSvc','recetteSvc
 	var getListTypesRecetteChoix = function() {
 		return listTypesRecetteChoix;
 	}
-	var changeListTypesRecetteChoix = function(listCategoriesChoixChanged) {
-		listCategoriesChoix = listCategoriesChoixChanged;
+	var changeListTypesRecetteChoix = function(listTypesRecetteChanged) {
+		listCategoriesChoix = listTypesRecetteChanged;
 		reinitPageDueToNewSearch();
 		recetteSvc.getRecetteBySearchName(searchRecetteString,listCategories,listCategoriesChoix,currentPage,isSaison);
 	}
@@ -145,10 +130,22 @@ eComBioApp.factory('searchRecetteSvc', [ '$rootScope','categorieSvc','recetteSvc
 		reinitPageDueToNewSearch();
 	}
 	
-	$rootScope.$on('listCategoriesSupplied', function(event,listCategoriesSupplied) {
-		listCategories = listCategoriesSupplied;
-		listCategoriesChoix = initListChoix(listCategories);
-		$rootScope.$broadcast('listCategoriesCritSupplied');
+	$rootScope.$on('listTypeRecettesSupplied', function(event,listTypeRecettesSupplied) {
+		listTypesRecette = listTypeRecettesSupplied;
+		listTypesRecetteChoix = initListChoix(listTypesRecette);
+		$rootScope.$broadcast('listTypeRecettesCritSupplied');
+	});
+	
+	$rootScope.$on('listSaisonsSupplied', function(event,listSaisonsSupplied) {
+		listSaison = listSaisonsSupplied;
+		listSaisonChoix = initListChoix(listSaison);
+		$rootScope.$broadcast('listSaisonsCritSupplied');
+	});
+	
+	$rootScope.$on('listCompositionsSupplied', function(event,listCompositionsSupplied) {
+		listComposition = listCompositionsSupplied;
+		listCompositionChoix = initListChoix(listComposition);
+		$rootScope.$broadcast('listCompositionsCritSupplied');
 	});
 	
 	return {

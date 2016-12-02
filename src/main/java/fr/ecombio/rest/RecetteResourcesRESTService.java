@@ -38,8 +38,8 @@ public class RecetteResourcesRESTService {
 	@GET
 	@Path("/filter")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Recette> listAllProduits(@DefaultValue("0") @QueryParam("page") int page, @QueryParam("cat") String cat, @QueryParam("saison") String saison, @QueryParam("search") String search) {
-        return repository.findAllOrderedByName(page, cat, saison, search);
+    public List<Recette> listAllRecette(@DefaultValue("0") @QueryParam("page") int page, @QueryParam("cat") String cat, @QueryParam("saison") String saison, @QueryParam("search") String search, @QueryParam("compo") String compo) {
+        return repository.findAllOrderedByName(page, cat, saison, search, compo);
     }
 	
 }
