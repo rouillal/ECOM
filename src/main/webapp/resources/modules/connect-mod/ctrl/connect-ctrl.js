@@ -1,6 +1,6 @@
 eComBioApp.controller('ConnectCtrl', [ '$scope','$window','userInfoSvc', function($scope,$window,userInfoSvc) {
 	$scope.errorMessage='';
-	$scope.connectInfo={'usrmail':'x@adress.com','psw':'A saisir'};
+	$scope.connectInfo={'usrmail':'','psw':''};
 	
 	$scope.isErrorMessage = function() {
 		return $scope.errorMessage != '';
@@ -23,7 +23,7 @@ eComBioApp.controller('ConnectCtrl', [ '$scope','$window','userInfoSvc', functio
 	});
 	
 	$scope.$on('userNotFound', function(event) {
-		$scope.errorMessage = "Connexion refusée.";
+		$scope.errorMessage = "Identifiant et/ou mot de passe incorrect(s).";
 	});
 	
 } ]);

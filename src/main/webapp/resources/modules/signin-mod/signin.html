@@ -12,57 +12,92 @@
 			</div>
 			<div class="modal-body" style="padding: 40px 50px;">
 				<div class="row">
-					<form role="form">
-						<h4 class="ano" ng-show="isErrorMessage()">{{erreurSignin}}</h4>
+				<h4 class="ano" ng-show="isErrorMessage()">{{erreurSignin}}</h4>
+					<form name="formS" novalidate role="form">
 						<div class="col-xs-6" class="form-group">
-							<label for="signinnom"><span
-								class="glyphicon glyphicon-user"></span> Nom</label> <input type="text"
-								class="form-control" ng-model="signinInfo.nom"
-								placeholder="Entrez votre nom">
+							<label><span class="glyphicon glyphicon-user"></span> Nom</label>
+							<input type="text" class="form-control" ng-model="signinInfo.nom"
+								placeholder="Entrez votre nom" name="nom" required="">
+							<div ng-show="formS.$submitted || formS.nom.$touched">
+								<div ng-show="formS.nom.$error.required" class="ano">Veuillez
+									saisir votre nom.</div>
+							</div>
 						</div>
 						<div class="col-xs-6" class="form-group">
-							<label for="signinprenom"><span
-								class="glyphicon glyphicon-user"></span> Prénom</label> <input
-								type="text" class="form-control" ng-model="signinInfo.prenom"
-								placeholder="Entrez votre prénom">
+							<label><span class="glyphicon glyphicon-user"></span>
+								Prénom</label> <input type="text" class="form-control"
+								ng-model="signinInfo.prenom" placeholder="Entrez votre prénom"
+								name="prenom" required="">
+							<div ng-show="formS.$submitted || formS.prenom.$touched">
+								<div ng-show="formS.prenom.$error.required" class="ano">Veuillez
+									saisir votre prénom.</div>
+							</div>
 						</div>
 						<div style="margin-top: 10px;" class="col-xs-12"
 							class="form-group">
-							<label for="signinadr"><span
-								class="glyphicon glyphicon-user"></span> Adresse</label> <input
-								type="text" class="form-control" ng-model="signinInfo.adresse"
-								placeholder="Entrez le n° et libellé de la voie">
+							<label><span class="glyphicon glyphicon-user"></span>
+								Adresse</label> <input type="text" class="form-control"
+								ng-model="signinInfo.adresse"
+								placeholder="Entrez le n° et libellé de la voie" name="adr"
+								required="">
+							<div ng-show="formS.$submitted || formS.adr.$touched">
+								<div ng-show="formS.adr.$error.required" class="ano">Veuillez
+									saisir votre adresse.</div>
+							</div>
 						</div>
 						<div style="margin-top: 10px;" class="col-xs-6" class="form-group">
-							<label for="signincp"><span
-								class="glyphicon glyphicon-user"></span> Code postal</label> <input
-								type="text" class="form-control" ng-model="signinInfo.cp"
-								placeholder="Entrez votre code postal">
+							<label><span class="glyphicon glyphicon-user"></span>
+								Code postal</label> <input type="text" class="form-control"
+								ng-model="signinInfo.cp" placeholder="Entrez votre code postal"
+								name="cp" required="">
+							<div ng-show="formS.$submitted || formS.cp.$touched">
+								<div ng-show="formS.cp.$error.required" class="ano">Veuillez
+									saisir votre code postal.</div>
+							</div>
 						</div>
 						<div style="margin-top: 10px;" class="col-xs-6" class="form-group">
-							<label for="signinville"><span
-								class="glyphicon glyphicon-user"></span> Ville</label> <input
-								type="text" class="form-control" ng-model="signinInfo.ville"
-								placeholder="Entrez votre ville">
+							<label><span class="glyphicon glyphicon-user"></span>
+								Ville</label> <input type="text" class="form-control"
+								ng-model="signinInfo.ville" placeholder="Entrez votre ville"
+								name="ville" required="">
+							<div ng-show="formS.$submitted || formS.ville.$touched">
+								<div ng-show="formS.ville.$error.required" class="ano">Veuillez
+									saisir votre ville.</div>
+							</div>
 						</div>
 						<div style="margin-top: 10px;" class="col-xs-12"
 							class="form-group">
-							<label for="signinmail"><span
-								class="glyphicon glyphicon-envelope"></span> Mail</label> <input
-								type="text" class="form-control" ng-model="signinInfo.mail"
-								placeholder="Entrez votre mail">
+							<label><span class="glyphicon glyphicon-envelope"></span>
+								Mail</label> <input type="email" class="form-control"
+								ng-model="signinInfo.mail" placeholder="Entrez votre mail"
+								name="mail" required="">
+							<div ng-show="formS.$submitted || formS.mail.$touched">
+								<div ng-show="formS.mail.$error.required"></div>
+								<span class="ano" ng-show="formS.mail.$error.required">Veuillez
+									saisir votre adresse mail. </span> <span class="ano"
+									ng-show="formS.mail.$error.email">Veuillez saisir une
+									adresse mail valide.</span>
+							</div>
 						</div>
 						<div style="margin-top: 10px;" class="col-xs-6" class="form-group">
 							<label for="signinpsw"><span
 								class="glyphicon glyphicon-eye-open"></span> Mot de passe</label> <input
-								type="text" class="form-control" ng-model="signinInfo.psw"
-								placeholder="Entrez votre mot de passe">
+								type="password" class="form-control" ng-model="signinInfo.psw"
+								name="psw1" required="" placeholder="Entrez votre mot de passe">
+							<div ng-show="formS.$submitted || formS.psw1.$touched">
+								<div ng-show="formS.psw1.$error.required" class="ano">Veuillez
+									saisir votre mot de passe.</div>
+							</div>
 						</div>
 						<div style="margin-top: 10px;" class="col-xs-6" class="form-group">
 							<label for="signinpsw2"><span
 								class="glyphicon glyphicon-eye-open"></span> Vérification</label> <input
-								type="text" class="form-control" ng-model="signinPswCheck"
-								placeholder="Retapez votre mot de passe">
+								type="password" class="form-control" ng-model="signinPswCheck"
+								placeholder="Retapez votre mot de passe" name="psw2" required="">
+							<div ng-show="formS.$submitted || formS.psw2.$touched">
+								<div ng-show="formS.psw2.$error.required" class="ano">Veuillez
+									saisir votre mot de passe.</div>
+							</div>
 						</div>
 						<button
 							style="background-color: rgb(221, 131, 14); border-radius: 10px; margin-top: 20px;"
