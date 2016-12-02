@@ -75,12 +75,12 @@ public class Article implements Serializable {
 		this.quotite = quotite;
 	}	
 
-	/*public Panier getPanier() {
+	public Panier getPanier() {
 		return panier;
 	}
 
 	public void setPanier(Panier panier) {
 		this.panier = panier;
-	}*/
+	}
 
 }

@@ -100,6 +100,7 @@ public class RegistreRepository {
 		nouveauPanier.setIsRegistred(true);
 		log.log(Level.INFO,"save panier");
 		em.persist(nouveauPanier);
+		em.remove(ancienPanier);
 		log.log(Level.INFO,"ok");
 
 		HistoriqueCommande com = new HistoriqueCommande();

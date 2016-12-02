@@ -64,6 +64,7 @@ public class PanierResourceRESTService {
 				Article a = new Article();
 				a.setProduit(produit);
 				a.setQuotite(article.getQuotite());
+				a.setPanier(panier);
 				ArticleRepository.AjoutArticle(a);
 				// on l'ajoute au panier
 				panier.getArticles().add(a);
@@ -122,6 +123,7 @@ public class PanierResourceRESTService {
 						Article a2 = new Article();
 						a2.setProduit(produit);
 						a2.setQuotite(article.getQuotite());
+						a2.setPanier(panier);
 						ArticleRepository.AjoutArticle(a2);
 						panier.getArticles().add(a2);
 						for (int i =0; i<a2.getQuotite() ; i++) {
