@@ -23,7 +23,7 @@ import fr.ecombio.model.ValidationClient;
 public class ConnectRessourceRESTService {
 
 	Logger logger = java.util.logging.Logger.getLogger("org.hibernate");
-	
+
 	@Inject
 	private fr.ecombio.data.RegistreRepository RegistreRepository;
 
@@ -37,11 +37,16 @@ public class ConnectRessourceRESTService {
 		}
 		return Response.ok(client).build();
 	}
-	
+
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public void registerClient(ValidationClient client) {
-		RegistreRepository.registerClient(client);
+	public String registerClient(ValidationClient client) {
+		try {
+			RegistreRepository.registerClient(client);
+			return "ok";
+		} catch (Exception e) {
+			return "ce profil existe déjà";
+		}
 	}
-	
+
 }

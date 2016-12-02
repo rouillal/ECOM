@@ -1,8 +1,6 @@
 package fr.ecombio.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -12,12 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.swing.Action;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -38,13 +32,13 @@ public class Saison implements Serializable {
     @Column(name = "saison_name")
 	private String name;
 	
-	@OneToMany(mappedBy="saisons", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="saisons", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JsonBackReference
 	private Set<ProduitSaison> produits;
 	
-	@OneToMany(mappedBy="saisons", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="saisons", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JsonBackReference
-	private Set<ProduitSaison> recettes;
+	private Set<RecetteSaison> recettes;
 	
 	public Saison() {
 	}
@@ -67,13 +61,26 @@ public class Saison implements Serializable {
 	}
 
 
-	public Set<ProduitSaison> getRecettes() {
+	public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	public Set<RecetteSaison> getRecettes() {
 		return recettes;
 	}
 
 
-	public void setRecettes(Set<ProduitSaison> recettes) {
+	public void setRecettes(Set<RecetteSaison> recettes) {
 		this.recettes = recettes;
 	}
+
+
+	
 	
 }

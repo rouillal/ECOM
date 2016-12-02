@@ -1,22 +1,17 @@
 package fr.ecombio.data;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 
 import fr.ecombio.model.Article;
 import fr.ecombio.model.Panier;
-import fr.ecombio.model.Produit;
 
 @Stateless
 public class StockManagerRepository {
@@ -77,6 +72,10 @@ public class StockManagerRepository {
 
 	private void initTimer() {
 		TimerTask timertask = new TimerTask() {
+
+			@Inject
+			private PanierRepository Panierrepository2;
+			
 			public long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
 				long diffInMillies = date2.getTime() - date1.getTime();
 				return timeUnit.convert(diffInMillies,TimeUnit.MILLISECONDS);
@@ -84,14 +83,14 @@ public class StockManagerRepository {
 			@Override
 			public void run() {
 				Date today = new Date();
-				if (Panierrepository != null) {
-					List<Panier> paniers = Panierrepository.getAll();
+				if (Panierrepository2 != null) {
+					List<Panier> paniers = Panierrepository2.getAll();
 					for(Panier panier : paniers) {
 						if (!panier.getIsRegistred() && getDateDiff(panier.getDateDerniereModif(),today,TimeUnit.MINUTES) >= 1){
 							// on incrémente le stock
 							incrementeStock(panier);
 							// on supprime le panier
-							Panierrepository.SupprimePanier(panier);
+							Panierrepository2.SupprimePanier(panier);
 							// on envoie un evenement suppression
 							// on l'envoie au moment où le client fait un put et que l'id du panier n'est plus en base
 						}

@@ -1,7 +1,7 @@
 package fr.ecombio.rest;
 
 
-import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -64,6 +64,7 @@ public class PanierResourceRESTService {
 				Article a = new Article();
 				a.setProduit(produit);
 				a.setQuotite(article.getQuotite());
+				a.setPanier(panier);
 				ArticleRepository.AjoutArticle(a);
 				// on l'ajoute au panier
 				panier.getArticles().add(a);
@@ -90,44 +91,72 @@ public class PanierResourceRESTService {
 				// on va chercher le produit correspondant en base
 				Produit produit = ProduitRepository.findById(article.getId());
 				// si le stock est suffisant
-				Article a = panier.getArticle(produit.getId());
-				if (produit.getStock()>=1) {
-					// on met à jour les quantite du panier 
-					if (panier.contains(produit.getId())) {
-						if ( a!= null ){
-							if (a.getQuotite() < article.getQuotite() ) {
+				// on met à jour les quantite du panier 
+				if (panier.contains(produit.getId())) {
+					Article a = panier.getArticle(produit.getId());
+					if ( a!= null ){
+						if (a.getQuotite() < article.getQuotite() ) {
+							if (produit.getStock()>=1) {
 								for (int i =0; i<Math.abs(a.getQuotite() - article.getQuotite()) ; i++) {
 									StockManagerRepository.decrementeStock(panier,a);
 								}
 								a.setQuotite(article.getQuotite());
 								ArticleRepository.updateArticle(a);
-							} else if (a.getQuotite() > article.getQuotite()) {
-								for (int i =0; i<Math.abs(a.getQuotite() - article.getQuotite()) ; i++) {
-									StockManagerRepository.incrementeStock(panier,a);
-								}
-								a.setQuotite(article.getQuotite());
-								ArticleRepository.updateArticle(a);
+							} else {
+								log.log(Level.INFO, "echec pas de stock pour "+produit.getName()+", end transaction");
+								log.log(Level.INFO, "quotité panier "+article.getQuotite());
+								log.log(Level.INFO, "quotité base "+a.getQuotite());
+								return Response.notModified("Le stock de ce produit n'est pas suffisant").build();
 							}
-						}
-					} else {
-						log.log(Level.INFO, "ajout");
+						} else if (a.getQuotite() > article.getQuotite()) {
+							for (int i =0; i<Math.abs(a.getQuotite() - article.getQuotite()) ; i++) {
+								StockManagerRepository.incrementeStock(panier,a);
+							}
+							a.setQuotite(article.getQuotite());
+							ArticleRepository.updateArticle(a);
+						} 
+					}
+				} else {
+					log.log(Level.INFO, panier.toString());
+					if (produit.getStock()>=1) {
+						log.log(Level.INFO, "ajout:"+produit.getName());
 						Article a2 = new Article();
 						a2.setProduit(produit);
 						a2.setQuotite(article.getQuotite());
+						a2.setPanier(panier);
 						ArticleRepository.AjoutArticle(a2);
 						panier.getArticles().add(a2);
 						for (int i =0; i<a2.getQuotite() ; i++) {
 							StockManagerRepository.decrementeStock(panier,a2);
-						}
+						} 
+					} else {								
+						log.log(Level.INFO, "echec pas de stock pour "+produit.getName()+", end transaction");
+						log.log(Level.INFO, "quotité panier "+article.getQuotite());
+						return Response.notModified("Le stock de ce produit n'est pas suffisant").build();
 					}
-					PanierRepository.updatePanier(panier);
-				} else if (panier.contains(produit.getId()) && a.getQuotite() != article.getQuotite()) {
-					log.log(Level.INFO, "echec end transaction");
-					return Response.notModified("Le stock de ce produit n'est pas suffisant").build();
 				}
-				//log.log(Level.INFO, Integer.toString(a.getQuotite()) + Integer.toString(article.getQuotite()));
+			} 
+			// on supprime les articles à supprimer
+			List<Article> toDelete = new LinkedList<Article>();
+			for (Article a : panier.getArticles()){
+				boolean isInCommande = false;
+				for(GestionArticle article : commande) {
+					if (article.getId() == a.getProduit().getId()) {
+						isInCommande = true;
+						break;
+					}
+				}
+				if (!isInCommande) {
+					toDelete.add(a);
+				}
 			}
-			// on va alors décrementer les stocks en base
+			for (Article a : toDelete) {
+				for (int i =0; i<Math.abs(a.getQuotite()) ; i++) {
+					StockManagerRepository.incrementeStock(panier,a);
+				}
+				panier.getArticles().remove(a);
+			}
+			log.log(Level.INFO, "save : " +panier.toString());
 			PanierRepository.updatePanier(panier);
 			return Response.ok().build();
 		} else {

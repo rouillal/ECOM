@@ -7,12 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @SuppressWarnings("serial")
@@ -27,30 +25,40 @@ public class CompositionRecette implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name="recette_id")
-	@JsonManagedReference
-	private Produit recettes;
+    @JsonManagedReference
+	private Recette recettes;
 	
 	@ManyToOne
 	@JoinColumn(name="composition_id")
-	@JsonManagedReference
-	private Saison composition;
+    @JsonManagedReference
+	private Composition compositions;
 
 
-	public Produit getRecettes() {
+	public Recette getRecettes() {
 		return recettes;
 	}
 
-	public void setRecettes(Produit recettes) {
+	public void setRecettes(Recette recettes) {
 		this.recettes = recettes;
 	}
 
-	public Saison getComposition() {
-		return composition;
+	public Composition getCompositions() {
+		return compositions;
 	}
 
-	public void setComposition(Saison composition) {
-		this.composition = composition;
+	public void setCompositions(Composition compositions) {
+		this.compositions = compositions;
 	}
 
+	public Long getId() {
+		return Id;
+	}
 
+	public void setId(Long id) {
+		Id = id;
+	}
+	
+	
+
+	
 }

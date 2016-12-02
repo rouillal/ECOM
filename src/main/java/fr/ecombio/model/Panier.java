@@ -1,12 +1,9 @@
 package fr.ecombio.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -16,7 +13,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -87,7 +83,7 @@ public class Panier implements Serializable {
 	}
 
 	public boolean contains(Long id) {
-		Iterator<Article> i=articles.iterator();
+		Iterator<Article> i=this.articles.iterator();
 		while(i.hasNext()) // tant qu'on a un suivant
 		{
 			if ((i.next()).getProduit().getId() == id) {
@@ -115,5 +111,18 @@ public class Panier implements Serializable {
 
 	public void setIsRegistred(Boolean isRegistred) {
 		this.isRegistred = isRegistred;
+	}
+	
+	@Override
+	public String toString() {
+		String retour = "panier"+this.getId()+" : ";
+		Iterator<Article> i=this.articles.iterator();
+		int k = 1;
+		while(i.hasNext()) // tant qu'on a un suivant
+		{
+			retour+= ("<"+k+":"+i.next().getProduit().getName()+">,");
+			k++;
+		}
+		return retour;
 	}
 }
