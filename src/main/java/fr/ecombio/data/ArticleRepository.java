@@ -11,6 +11,9 @@ public class ArticleRepository {
 
 	@Inject
 	private EntityManager em;
+	
+	@Inject
+	private ProduitRepository ProduitRepository;
 
 	public Article findById(Long id) {
 		return em.find(Article.class, id);
@@ -24,6 +27,7 @@ public class ArticleRepository {
 
 
 	public void updateArticle(Article article) {
+		ProduitRepository.updateProduit(article.getProduit());
 		em.merge(article);
 	}
 }
