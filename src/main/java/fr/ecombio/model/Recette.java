@@ -1,7 +1,6 @@
 package fr.ecombio.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
