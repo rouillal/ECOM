@@ -1,6 +1,8 @@
 package fr.ecombio.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -10,37 +12,37 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.swing.Action;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @SuppressWarnings("serial")
-@Table(name="saison")
+@Table(name="composition")
 @Entity
-public class Saison implements Serializable {
+public class Composition implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "saison_id")
+    @Column(name = "composition_id")
 	private Long id ;
 
 	@Size(min = 1, max = 25)
 	@Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
-    @Column(name = "saison_name")
+    @Column(name = "composition_name")
 	private String name;
 	
-	@OneToMany(mappedBy="saisons", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="composition", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JsonBackReference
-	private Set<ProduitSaison> produits;
+	private Set<CompositionRecette> recettes;
 	
-	@OneToMany(mappedBy="saisons", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JsonBackReference
-	private Set<ProduitSaison> recettes;
-	
-	public Saison() {
+	public Composition() {
 	}
 	
 
@@ -52,22 +54,4 @@ public class Saison implements Serializable {
 		this.name = name;
 	}
 
-	public Set<ProduitSaison> getProduits() {
-		return produits;
-	}
-
-	public void setProduits(Set<ProduitSaison> produits) {
-		this.produits = produits;
-	}
-
-
-	public Set<ProduitSaison> getRecettes() {
-		return recettes;
-	}
-
-
-	public void setRecettes(Set<ProduitSaison> recettes) {
-		this.recettes = recettes;
-	}
-	
 }

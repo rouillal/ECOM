@@ -28,6 +28,7 @@ public class PaiementRESTService {
 		String err = infos.getCommandPaieInfo().verify();
 		if (err!=null || (err!=null && !err.isEmpty())) {
 			return err;
+			//throw new Exception(err);
 		} else {
 			// enregistrer le client et l'historique de la commande
 			RegistreRepository.registerCommande(infos);

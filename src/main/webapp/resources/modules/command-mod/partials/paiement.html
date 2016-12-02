@@ -1,8 +1,7 @@
-<div class="modal fade" id="myModalPaiement" role="dialog"
-	ng-controller="CommandCtrl">
+<div class="modal fade" id="myModalPaiement" role="dialog">
 	<div class="modal-dialog">
 		<!-- Modal content-->
-		<div class="modal-content">
+		<div class="modal-content" ng-show="payerInfoVoir">
 			<div class="modal-header"
 				style="padding: 35px 50px; background-color: #f9f9f9;; color: rgb(221, 131, 14); font-family: Bradley Hand; text-align: center; font-size: 30px;">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -13,6 +12,7 @@
 			<div class="modal-body">
 				<h4 style="text-align: center;">Montant de la transaction :
 					{{montantTotal}}€</h4>
+				<h4 class="ano" ng-show="isErrorMessage()">{{erreurPaiement}}</h4>
 				<div class="form-group">
 					<label for="commandpaienum"> N° de carte : </label> <input
 						type="text" class="form-control" ng-model="commandPaieInfo.num"
@@ -46,6 +46,10 @@
 						et retourner à ma commande</button>
 				</div>
 			</div>
+		</div>
+		<div class="modal-content" ng-show="recapInfoVoir">
+			<div ng-include
+				src="'resources/modules/command-mod/partials/recap.html'"></div>
 		</div>
 	</div>
 </div>

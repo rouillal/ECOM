@@ -13,7 +13,7 @@ eComBioApp
 							.when(
 									'/recette',
 									{
-										templateUrl : 'resources/modules/recette-mod/recette.html',
+										templateUrl : 'resources/modules/recette-catalog-mod/recette.html',
 										controller : 'RecetteCtrl'
 									})
 							.when(

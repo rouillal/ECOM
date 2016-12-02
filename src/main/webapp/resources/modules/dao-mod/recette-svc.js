@@ -35,17 +35,19 @@ eComBioApp.factory('recetteSvc', [
 				
 				restAdress += 'page=' + page;
 				$rootScope.$broadcast('debug', restAdress);
+				//Mock
+				var listRecette = [{'name':'Tofu en bolo','nbPersonnes':4,'tpsPreparation':15,'tpsCuisson':20,'cout':'Bon marché','difficulte':'Très facile','listeIngredients':'<ul><li>1 oignon,</li><li>2 carottes</li></ul>','preparation':'<ul><li>1.</li><li>2.</li><li>3.</li></ul>'},
+				                   {'name':'Tofu2 en bolo','nbPersonnes':4,'tpsPreparation':15,'tpsCuisson':20,'cout':'Bon marché','difficulte':'Très facile','listeIngredients':'1 oignon','preparation':'<ul><li>1.</li><li>2.</li><li>3.</li></ul>'}];
+				var listRecetteJson = angular.toJson(listRecette);
+				//Fin Mock
 				restBackendSvc.getItemsByUrl(restAdress).then(function(data) {
 					var listRecette = data.data;
-					angular.forEach(listRecette, function(recette, key) {
-						recette['quotite']=0;
-						recette['prixTotal']=0;
-					});
 					$rootScope.$broadcast('listRecettesSupplied',listRecette);
 				}, function(reason) {
 					$rootScope.$broadcast('debug', reason);
+					$rootScope.$broadcast('listRecettesSupplied',listRecette);
 					if (reason.status == 404) {
-						$rootScope.$broadcast('listRecettesSupplied', '');
+						//$rootScope.$broadcast('listRecettesSupplied', '');
 					} else {
 						alert('Failed: ' + reason);
 					}
