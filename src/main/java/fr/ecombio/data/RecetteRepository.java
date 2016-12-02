@@ -1,4 +1,5 @@
 package fr.ecombio.data;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -11,6 +12,7 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import fr.ecombio.model.Categorie;
 
 //import org.jboss.logging.Logger;
 
@@ -36,6 +38,8 @@ public class RecetteRepository {
 	public  void AjoutRecette(Recette recette) {
 		em.persist(recette);
 	}
+	
+	List<DefRecette> listRecette;
 	
 	public List<fr.ecombio.model.Recette> findAllOrderedByName(int page, String saison) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -81,10 +85,18 @@ public class RecetteRepository {
 		if(search != null && search != "") {
 			search = search.toLowerCase();
 			String[] recettes = search.split(",");
-				predicate2 = cb.equal(cb.lower(Recette.<String>get("name")), recettes[0]);
-			for (String recette1: recettes) {
-				predicate2 = cb.or(predicate2,cb.equal(cb.lower(Recette.<String>get("name")), recette1));
-			}
+				if (this.listRecette == null) {
+					this.getListRecette();
+				}
+				for (DefRecette d : this.listRecette) {
+					if (d.getName().toLowerCase().contains(search)) {
+						if (predicate2 == null) {
+							predicate2 = cb.equal(Recette.get("id"), d.id);
+						} else {
+							predicate2 = cb.or(predicate2,cb.equal(Recette.get("id"), d.id));
+						}
+					}
+				}
 		}
 		if(saison != null && saison != ""){
 			String[] saisons = saison.split(",");
@@ -111,6 +123,36 @@ public class RecetteRepository {
 		typequery.setFirstResult(page*6);
 		typequery.setMaxResults(6);
 		return typequery.getResultList();
+	}
+
+	private void getListRecette() {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<DefRecette> criteria = cb.createQuery(DefRecette.class);
+		Root<Recette> Recette = criteria.from(Recette.class);
+		criteria.multiselect(Recette.get("id"), Recette.get("name"));
+		this.listRecette = em.createQuery(criteria).getResultList();
+	}
+	
+	private class DefRecette {
+		private Long id;
+		private String name;
+		
+		public DefRecette() {
+			super();
+		}
+		
+		public Long getId() {
+			return this.id;
+		}
+		public void setId(Long id) {
+			this.id = id;
+		}
+		public String getName() {
+			return this.name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
 	}
 
 }
