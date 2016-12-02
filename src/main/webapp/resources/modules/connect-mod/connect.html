@@ -12,30 +12,41 @@
 			</div>
 			<div class="modal-body" style="padding: 40px 50px;">
 				<h4 class="ano" ng-show="isErrorMessage()">{{errorMessage}}</h4>
-				<form role="form">
+				<form name="form" novalidate role="form">
 					<div class="form-group">
-						<label for="connectusrmail"><span
-							class="glyphicon glyphicon-user"></span> E-mail</label> <input
-							type="text" class="form-control" ng-model="connectInfo.usrmail"
-							placeholder="Entrez votre e-mail">
+						<label><span class="glyphicon glyphicon-user"></span>
+							E-mail</label> <input type="email" class="form-control"
+							ng-model="connectInfo.usrmail" placeholder="Entrez votre e-mail"
+							name="mail" required="">
+						<div ng-show="form.$submitted || form.mail.$touched">
+							<div ng-show="form.mail.$error.required"></div>
+							<span class="ano" ng-show="form.mail.$error.required">Veuillez
+								saisir votre adresse mail. </span> <span class="ano"
+								ng-show="form.mail.$error.email">Veuillez saisir une
+								adresse mail valide.</span>
+						</div>
 					</div>
 					<div class="form-group">
-						<label for="connectpsw"><span
-							class="glyphicon glyphicon-eye-open"></span> Mot de passe</label> <input
-							type="text" class="form-control" ng-model="connectInfo.psw"
+						<label><span class="glyphicon glyphicon-eye-open"></span>
+							Mot de passe</label> <input type="password" class="form-control"
+							ng-model="connectInfo.psw" name="psw" required=""
 							placeholder="Entrez votre mot de passe">
+						<div ng-show="form.$submitted || form.psw.$touched">
+							<div ng-show="form.psw.$error.required" class="ano">Veuillez saisir votre
+								mot de passe.</div>
+						</div>
 					</div>
 					<button
 						style="background-color: rgb(221, 131, 14); border-radius: 10px;"
-						type="submit" ng-click="doConnect()"  class="col-xs-12">
+						type="submit" ng-click="doConnect()" class="col-xs-12">
 						<span class="glyphicon glyphicon-off"></span> Me connecter
 					</button>
 				</form>
 			</div>
 			<div class="modal-footer" style="background-color: #f9f9f9;">
 				Pas encore inscrit? <a
-					style="text-decoration: none; color: rgb(221, 131, 14);" data-toggle="modal"
-					data-target="#/signin" id="myBtnSignin">M'inscrire</a>
+					style="text-decoration: none; color: rgb(221, 131, 14);"
+					data-toggle="modal" data-target="#/signin" id="myBtnSignin">M'inscrire</a>
 			</div>
 		</div>
 	</div>
