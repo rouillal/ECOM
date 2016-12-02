@@ -2,6 +2,7 @@ package fr.ecombio.model;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
@@ -63,17 +65,17 @@ public class Recette implements Serializable {
 	@Column(name="recette_preparation")
 	private String preparation;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy="recettes")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="recettes")
 	@JsonBackReference
-    private Set<RecetteProduit> articles;
+    private Set<RecetteProduit> produits;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy="recettes")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="recettes")
 	@JsonBackReference
     private Set<RecetteSaison> saisons;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy="recettes")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="recettes")
 	@JsonBackReference
-    private Set<CompositionRecette> composition;
+    private Set<CompositionRecette> compositions;
 	
 	@ManyToOne
 	@JoinColumn(name="categorierecette_id")
@@ -82,6 +84,7 @@ public class Recette implements Serializable {
 	
 	@Column(name = "recette_filename")
 	private String filename;
+	
 	
 
 	public String getFilename() {
@@ -100,12 +103,13 @@ public class Recette implements Serializable {
 		this.saisons = saisons;
 	}
 
+	@JsonIgnore
 	public Set<CompositionRecette> getComposition() {
-		return composition;
+		return compositions;
 	}
 
 	public void setComposition(Set<CompositionRecette> composition) {
-		this.composition = composition;
+		this.compositions = composition;
 	}
 
 	public CategorieRecette getCategorieRecette() {
@@ -118,6 +122,7 @@ public class Recette implements Serializable {
 
 	public Recette() {
 		super();
+		this.compositions = new HashSet<CompositionRecette>();
 	}
 
 	public Recette(String name, int quantite, int tpsPreparation, int tpsCuisson, int cout, int difficulte,
@@ -205,12 +210,21 @@ public class Recette implements Serializable {
 		this.preparation = preparation;
 	}
 
-	public Set<RecetteProduit> getArticles() {
-		return articles;
+
+	public Set<RecetteProduit> getProduits() {
+		return produits;
 	}
 
-	public void setArticles(Set<RecetteProduit> articles) {
-		this.articles = articles;
+	public void setProduits(Set<RecetteProduit> produits) {
+		this.produits = produits;
+	}
+
+	public Set<CompositionRecette> getCompositions() {
+		return compositions;
+	}
+
+	public void setCompositions(Set<CompositionRecette> compositions) {
+		this.compositions = compositions;
 	}
 	
 	

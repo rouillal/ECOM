@@ -27,30 +27,40 @@ public class CompositionRecette implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name="recette_id")
-	@JsonManagedReference
-	private Produit recettes;
+    @JsonManagedReference
+	private Recette recettes;
 	
 	@ManyToOne
 	@JoinColumn(name="composition_id")
-	@JsonManagedReference
-	private Saison composition;
+    @JsonManagedReference
+	private Composition compositions;
 
 
-	public Produit getRecettes() {
+	public Recette getRecettes() {
 		return recettes;
 	}
 
-	public void setRecettes(Produit recettes) {
+	public void setRecettes(Recette recettes) {
 		this.recettes = recettes;
 	}
 
-	public Saison getComposition() {
-		return composition;
+	public Composition getCompositions() {
+		return compositions;
 	}
 
-	public void setComposition(Saison composition) {
-		this.composition = composition;
+	public void setCompositions(Composition compositions) {
+		this.compositions = compositions;
 	}
 
+	public Long getId() {
+		return Id;
+	}
 
+	public void setId(Long id) {
+		Id = id;
+	}
+	
+	
+
+	
 }

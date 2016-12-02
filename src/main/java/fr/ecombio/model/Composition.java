@@ -38,13 +38,34 @@ public class Composition implements Serializable {
     @Column(name = "composition_name")
 	private String name;
 	
-	@OneToMany(mappedBy="composition", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="compositions", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JsonBackReference
 	private Set<CompositionRecette> recettes;
 	
 	public Composition() {
+		super();
 	}
 	
+
+	public Set<CompositionRecette> getRecettes() {
+		return recettes;
+	}
+
+	public void setRecettes(Set<CompositionRecette> recettes) {
+		this.recettes = recettes;
+	}
+
+
+
+	public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 
 	public String getName() {
 		return name;
