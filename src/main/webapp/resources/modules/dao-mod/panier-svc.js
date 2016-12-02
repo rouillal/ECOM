@@ -108,6 +108,14 @@ eComBioApp.factory('panierSvc', [
 			var getIdPanierServer = function() {
 				return idPanierServer;
 			};
+			
+			var resetPanier = function() {
+				listePanier = [];
+				selectedProduit = '';
+				montantTotal = 0.00;
+				idPanierServer = -1;
+				$rootScope.$broadcast('rafraichirPanier');
+			};
 
 			var getPanierQuantite = function(produit) {
 				var ret = 0;
@@ -131,6 +139,7 @@ eComBioApp.factory('panierSvc', [
 				getIdPanierServer : getIdPanierServer,
 				getPanierQuantite : getPanierQuantite,
 				supprimeArticlePanier : supprimeArticlePanier,
+				resetPanier : resetPanier,
 				getMontantTotal : getMontantTotal
 			};
 		} ]);

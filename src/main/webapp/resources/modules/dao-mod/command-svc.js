@@ -35,7 +35,7 @@ eComBioApp.factory('commandSvc', [ '$rootScope', 'restBackendSvc', '$window','pa
 				restBackendSvc.createItem('paiement', messageServeurJson).then(
 							function(data) {
 								if(data.data == "ok"){
-									$window.alert("go dans recap");
+									panierSvc.resetPanier();
 									$rootScope.$broadcast('recapAEditer');
 								}
 								else {
