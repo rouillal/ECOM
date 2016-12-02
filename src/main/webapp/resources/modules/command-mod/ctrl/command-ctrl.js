@@ -5,9 +5,13 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 	$scope.payerInfoVoir = false;
 	$scope.seeCalend = false;
 	$scope.recapInfoVoir = false;
-	$scope.erreurVoir = false;
 	$scope.erreurPaiement='';
 	$scope.montantTotal = panierSvc.getMontantTotal();
+	
+	$scope.isErrorMessage = function() {
+		return $scope.erreurPaiement != 'e';
+	}
+	
 	//Liste des horaires
 	$scope.listeHoraires=[];
 	for (i = 0; i < 12; i++) {
@@ -67,6 +71,10 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 		$scope.seeCalend = false;
 	}
 	
+	$scope.$on('commandInfoProvided', function(event) {
+		$scope.commandInfo = commandSvc.getCommandInfo();
+	});
+	
 	$scope.$on('recapAEditer', function(event) {
 		$scope.recapInfoVoir = true;
 		$scope.payerInfoVoir = false;
@@ -79,6 +87,6 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 		$window.alert("Problème de paiement : "+ff);
 		$scope.recapInfoVoir = false;
 		$scope.payerInfoVoir = true;
-		$scope.erreurPaiement='Ouie !';
+		$scope.erreurPaiement=message;
 	});
 } ]);

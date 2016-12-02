@@ -12,7 +12,7 @@
 			<div class="modal-body">
 				<h4 style="text-align: center;">Montant de la transaction :
 					{{montantTotal}}€</h4>
-				<h4 ng-show="erreurVoir" style="color:Red;">Erreur : {{erreurPaiement}}</h4>
+				<h4 class="ano" ng-show="isErrorMessage()">{{erreurPaiement}}</h4>
 				<div class="form-group">
 					<label for="commandpaienum"> N° de carte : </label> <input
 						type="text" class="form-control" ng-model="commandPaieInfo.num"

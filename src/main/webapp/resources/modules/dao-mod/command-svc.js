@@ -8,6 +8,16 @@ eComBioApp.factory('commandSvc', [ '$rootScope', 'restBackendSvc', '$window','pa
 				return commandInfo;
 			};
 			
+			var setCommandInfo = function(userInfo) {
+				commandInfo.nom = userInfo.nom;
+				commandInfo.prenom = userInfo.prenom;
+				commandInfo.mail = userInfo.mail;
+				commandInfo.adresse = userInfo.adresse;
+				commandInfo.cp = userInfo.cp;
+				commandInfo.ville = userInfo.ville;
+				$rootScope.$broadcast('commandInfoProvided');
+			};
+			
 			var getCommandPaieInfo = function() {
 				return commandPaieInfo;
 			};
@@ -40,6 +50,7 @@ eComBioApp.factory('commandSvc', [ '$rootScope', 'restBackendSvc', '$window','pa
 
 			return {
 				getCommandInfo : getCommandInfo,
+				setCommandInfo : setCommandInfo,
 				getCommandPaieInfo : getCommandPaieInfo,
 				validePaiement : validePaiement
 			};

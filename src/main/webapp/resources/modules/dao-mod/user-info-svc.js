@@ -1,5 +1,5 @@
-eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window',
-		function($rootScope,restBackendSvc,$window) {
+eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','commandSvc',
+		function($rootScope,restBackendSvc,$window,commandSvc) {
 	
 			var userInfo = {'nom':'Dupont','prenom':'Jean','mail':'dupont@gmail.com','adresse':'17 Rue des Marguerites','cp':'38000','ville':'Grenoble','psw':'xx'};
 			
@@ -10,28 +10,33 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window',
 			var valideSaisieUserInfo = function(userInfoParam) {
 				userInfo = userInfoParam; 
 				var userInfoJson = angular.toJson(userInfo);
-				$window.alert("userInfoParam : "+userInfoJson);
 				restBackendSvc.createItem('connect', userInfoJson).then(
 							function(data) {
-								$window.alert("Bravo, vous êtes inscrit chez nous");
+								var ff = angular.toJson(data.data);
+								$window.alert("Bravo, vous êtes inscrit chez nous"+ff);
+								commandSvc.setCommandInfo(userInfo);
+								$("#myModalSignin").modal('hide');
 							}, function(error) {
 								var errorJson = angular.toJson(error);
-								$rootScope.$broadcast('debug', errorJson);
+								$rootScope.$broadcast('anomalieTechnique', errorJson);
 								$window.alert('Failed: ' + errorJson);
 							});
 			}
 				
 			var retrieveUserInfo = function(mailParam,pswParam) {
 				var restAdress = 'connect?mail='+mailParam+'&psw='+pswParam;
-				$window.alert('restAdress to connect: ' + restAdress);
 				restBackendSvc.getItemsByUrl(restAdress).then(function(data) {
 					userInfo = data.data;
-					$window.alert("Bravo, vous êtes connecté chez nous");
-					$rootScope.$broadcast('userInfoSupplied',userInfo);
+					commandSvc.setCommandInfo(userInfo);
+					$("#myModalConnect").modal('hide');
 				}, function(error) {
-					var errorJson = angular.toJson(error);
-					$rootScope.$broadcast('debug', errorJson);
-					$window.alert('Failed: ' + errorJson);
+					if (error.status == 404) {
+						$rootScope.$broadcast('userNotFound');
+					} else {
+						var errorJson = angular.toJson(error);
+						$rootScope.$broadcast('anomalieTechnique', errorJson);
+						alert('Failed: ' + errorJson);
+					}
 				});
 			};
 			
