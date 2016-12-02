@@ -4,10 +4,6 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import javax.ws.rs.core.Variant;
 
 @SuppressWarnings("serial")
 public class ValidationPaiement implements Serializable{

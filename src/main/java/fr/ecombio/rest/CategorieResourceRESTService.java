@@ -10,9 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import fr.ecombio.data.CategorieRepository;
-import fr.ecombio.data.ProduitRepository;
 import fr.ecombio.model.Categorie;
-import fr.ecombio.model.Produit;
 @Path("/categorie")
 @RequestScoped
 public class CategorieResourceRESTService {

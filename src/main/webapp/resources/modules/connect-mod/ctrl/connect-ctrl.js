@@ -1,5 +1,10 @@
 eComBioApp.controller('ConnectCtrl', [ '$scope','$window','userInfoSvc', function($scope,$window,userInfoSvc) {
+	$scope.errorMessage='';
 	$scope.connectInfo={'usrmail':'x@adress.com','psw':'A saisir'};
+	
+	$scope.isErrorMessage = function() {
+		return $scope.errorMessage != '';
+	}
 	
 	$scope.doConnect = function() {
 		userInfoSvc.retrieveUserInfo($scope.connectInfo.usrmail,$scope.connectInfo.psw);
@@ -16,4 +21,9 @@ eComBioApp.controller('ConnectCtrl', [ '$scope','$window','userInfoSvc', functio
 	        $("#myModalConnect").modal('hide');
 	    });
 	});
+	
+	$scope.$on('userNotFound', function(event) {
+		$scope.errorMessage = "Connexion refusée.";
+	});
+	
 } ]);

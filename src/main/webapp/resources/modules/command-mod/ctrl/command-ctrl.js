@@ -7,6 +7,11 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 	$scope.recapInfoVoir = false;
 	$scope.erreurPaiement='';
 	$scope.montantTotal = panierSvc.getMontantTotal();
+	
+	$scope.isErrorMessage = function() {
+		return $scope.erreurPaiement != 'e';
+	}
+	
 	//Liste des horaires
 	$scope.listeHoraires=[];
 	for (i = 0; i < 12; i++) {
@@ -44,6 +49,12 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 		$scope.payerInfoVoir = true;
 	}
 	
+	$scope.revenirAccueil = function() {
+		$location.path("#/catalog");
+		$scope.payerInfoVoir = false;
+		$scope.recapInfoVoir = false;
+	}
+	
 	$scope.revenirPanier = function() {
 		$location.path("panier");
 	}
@@ -60,6 +71,10 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 		$scope.seeCalend = false;
 	}
 	
+	$scope.$on('commandInfoProvided', function(event) {
+		$scope.commandInfo = commandSvc.getCommandInfo();
+	});
+	
 	$scope.$on('recapAEditer', function(event) {
 		$scope.recapInfoVoir = true;
 		$scope.payerInfoVoir = false;
@@ -67,11 +82,11 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 	});
 	
 	$scope.$on('erreurPaiement', function(event,message) {
+		$scope.erreurVoir = true;
 		var ff = angular.toJson(message);
 		$window.alert("Problème de paiement : "+ff);
 		$scope.recapInfoVoir = false;
 		$scope.payerInfoVoir = true;
-		$scope.erreurPaiement='Ouie !';
+		$scope.erreurPaiement=message;
 	});
-	
 } ]);

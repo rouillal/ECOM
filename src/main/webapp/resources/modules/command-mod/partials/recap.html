@@ -7,14 +7,24 @@
 	</h3>
 </div>
 <div class="modal-body">
-	<div class="col-xs-10">
-		<div class="col-xs-10" style="margin-top: 40px;"></div>
-		<div class="col-xs-2" style="margin-top: 40px;">
-			<button
-				style="background-color: rgb(221, 131, 14); border-radius: 10px;"
-				ng-click="revenirCatalog()">
-				<span>Accéder au catalogue</span>
-			</button>
-		</div>
+	{{commandInfo.prenom}} {{commandInfo.nom}},<br><br> 
+	Votre commande d'un montant de {{montantTotal}} euros a bien été prise en compte et nous vous en
+	remercions.<br><br>
+	<span style="font-weight:bold;">Le {{commandInfo.date}} entre {{listeHoraires[commandInfo.heure].libelle}}h</span>
+	<span ng-show="commandInfo.livDom=='e'">venez retirer votre commande à :<br><br>Bio To Be Alive<br></span>
+	<span ng-show="commandInfo.livDom=='d'">votre commande vous sera livrée à:<br><br></span>
+	
+	{{commandInfo.adresse}}<br>{{commandInfo.cp}} {{commandInfo.ville}}<br><br>
+	
+	L'équipe Bio To Be Alive.
+	
+</div>
+<div class="modal-footer" style="background-color: #f9f9f9;">
+	<div align="center">
+		<button
+			style="background-color: rgb(221, 131, 14); border-radius: 10px;"
+			ng-click="revenirAccueil()" data-dismiss="modal">
+			<span>Accéder au catalogue</span>
+		</button>
 	</div>
 </div>
