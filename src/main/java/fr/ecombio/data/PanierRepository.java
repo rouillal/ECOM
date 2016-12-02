@@ -1,5 +1,8 @@
 package fr.ecombio.data;
+import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -8,15 +11,20 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import fr.ecombio.model.Categorie;
+import fr.ecombio.model.Article;
 import fr.ecombio.model.Panier;
-import fr.ecombio.model.Produit;
 
 @Stateless
 public class PanierRepository {
 	
 	@Inject
 	private EntityManager em;
+	
+	@Inject
+	private ArticleRepository ArticleRepository;
+	
+	//Logger log;
+	Logger log = java.util.logging.Logger.getLogger("org.hibernate");
 
 	public Long AjoutPanier(Panier panier) {
 		em.persist(panier);
@@ -24,10 +32,17 @@ public class PanierRepository {
 	}
 	
 	public Panier findById(Long id) {
-		return em.find(Panier.class, id);
+		Panier p = em.find(Panier.class, id);
+		log.log(Level.INFO, p.toString());
+		return p;
 	}
 
 	public void updatePanier(Panier panier) {
+		Iterator<Article> i=panier.getArticles().iterator();
+		while(i.hasNext()) // tant qu'on a un suivant
+		{
+			ArticleRepository.updateArticle(i.next());
+		}
 		em.merge(panier);
 	}
 

@@ -1,7 +1,6 @@
 package fr.ecombio.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -76,7 +75,6 @@ public class Produit implements Serializable {
     @Column(name = "produit_quantite")
 	private int quantite;
 
-	@NotNull
     @Column(name = "produit_stock")
 	private int stock;
 

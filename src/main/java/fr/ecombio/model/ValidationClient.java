@@ -2,9 +2,6 @@ package fr.ecombio.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.validation.constraints.NotNull;
-
 @SuppressWarnings("serial")
 public class ValidationClient implements Serializable{
 	private String nom;

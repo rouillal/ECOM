@@ -10,13 +10,10 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-//import org.jboss.logging.Logger;
-
 import fr.ecombio.model.Produit;
 import fr.ecombio.model.ProduitSaison;
 import fr.ecombio.model.Saison;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
