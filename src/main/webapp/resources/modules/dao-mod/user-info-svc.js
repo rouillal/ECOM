@@ -23,12 +23,11 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','c
 					$("#myModalSignin").modal('hide');
 				}, function(error) {
 					if (error.status == 403) {
-						//$window.alert('existe deja');
 						$rootScope.$broadcast('userAlreadyExist');
 					} else {
-						var errorJson = angular.toJson(error);
+						/*var errorJson = angular.toJson(error);
 						$rootScope.$broadcast('anomalieTechnique', errorJson);
-						$window.alert('Failed: ' + errorJson);
+						$window.alert('Failed: ' + errorJson);*/
 					}
 				});
 	};

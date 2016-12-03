@@ -43,16 +43,17 @@ eComBioApp.factory('commandSvc', [ '$rootScope', 'restBackendSvc', '$window','pa
 		//$window.alert("messageServeurJson : "+messageServeurJson);
 		restBackendSvc.createItem('paiement', messageServeurJson).then(
 				function(data) {
-					if(data.data == "ok"){
 						panierSvc.resetPanier();
 						$rootScope.$broadcast('recapAEditer');
-					}
-					else {
-						$window.alert("go dans error");
-						$rootScope.$broadcast('erreurPaiement',data.data);
-					}
 				}, function(error) {
-					$rootScope.$broadcast('anomalieTechnique',error);
+					if (error.status == 403) {
+						$window.alert('erreur date');
+						$rootScope.$broadcast('errorDateExpi');
+					} else {
+						/*var errorJson = angular.toJson(error);
+						$rootScope.$broadcast('anomalieTechnique', errorJson);
+						$window.alert('Failed: ' + errorJson);*/
+					}
 				});
 	}
 

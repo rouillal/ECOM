@@ -92,10 +92,11 @@
 					class="form-group">
 					<label>Date de livraison</label> <br> <input
 						type="text" ng-click="seeCalendar()" ng-model="commandInfo.date" name="date" required="" placeholder="Sélectionnez une date">
-					<date-picker on-date-selected="hideCalendar()" ng-show="seeCalend==true" ng-model="commandInfo.date">
+					<date-picker on-date-selected="hideCalendar()" ng-show="seeCalend==true" ng-model="commandInfo.date" format-date="formatDate" parse-date="parseDate">
 					</date-picker>
 					<div ng-show="formC.$submitted || formC.date.$touched">
 						<div ng-show="formC.date.$error.required" class="ano">Sélectionner la date de livraison.</div>
+						
 					</div>
 				</div>
 				<div class="col-sm-6 col-xs-12" style="margin-top: 30px;"
