@@ -1,7 +1,8 @@
 eComBioApp.controller('SigninCtrl', [ '$scope','$window','userInfoSvc', function($scope,$window,userInfoSvc) {
 	$scope.signinInfo = {'nom':'Dupont','prenom':'Jean','mail':'dupont@gmail.com','adresse':'17 Rue des Marguerites','cp':'38000','ville':'Grenoble','psw':'xx'};
-	$scope.signinPswCheck = 'xx2';
+	$scope.signinPswCheck = 'xx';
 	$scope.erreurSignin='';
+	$scope.user = userInfoSvc.getUserInfoPrenom();
 
 	$scope.isErrorMessage = function() {
 		return $scope.erreurSignin != '';
@@ -28,9 +29,13 @@ eComBioApp.controller('SigninCtrl', [ '$scope','$window','userInfoSvc', function
 			$("#myModalSignin").modal('hide');
 		});
 	});
-
-	$scope.$on('erreurSignin', function(event,messageErreur) {
-		$scope.erreurSignin = messageErreur;
+	
+	$scope.$on('userAlreadyExist', function(event) {
+		$scope.erreurSignin = "Ce compte existe déjà.";
+	});
+	
+	$scope.$on('userInfoProvided', function(event) {
+		$scope.user = userInfoSvc.getUserInfoPrenom();
 	});
 
 } ]);

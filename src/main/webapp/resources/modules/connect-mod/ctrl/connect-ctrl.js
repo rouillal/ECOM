@@ -1,6 +1,7 @@
 eComBioApp.controller('ConnectCtrl', [ '$scope','$window','userInfoSvc', function($scope,$window,userInfoSvc) {
 	$scope.errorMessage='';
 	$scope.connectInfo={'usrmail':'','psw':''};
+	$scope.user = userInfoSvc.getUserInfoPrenom();
 	
 	$scope.isErrorMessage = function() {
 		return $scope.errorMessage != '';
@@ -24,6 +25,10 @@ eComBioApp.controller('ConnectCtrl', [ '$scope','$window','userInfoSvc', functio
 	
 	$scope.$on('userNotFound', function(event) {
 		$scope.errorMessage = "Identifiant et/ou mot de passe incorrect(s).";
+	});
+	
+	$scope.$on('userInfoProvided', function(event) {
+		$scope.user = userInfoSvc.getUserInfoPrenom();
 	});
 	
 } ]);
