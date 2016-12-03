@@ -4,6 +4,12 @@
 	height: 125px;
 }
 
+button{
+	border:none; 
+	background-color: Transparent;
+	outline:none;
+}
+
 #ruban{
 	background-image: url(../modules/main-mod/img/fond.jpg);
 	font-family: Bradley Hand;
