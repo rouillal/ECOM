@@ -3,7 +3,7 @@ eComBioApp.factory('recetteSvc', [
 		'restBackendSvc',
 		'$window',
 		function($rootScope, restBackendSvc, $window) {
-			
+			// tri : alpha diff  cout
 			var getRecetteBySearchName = function(searchString, listCategories,
 					listCategoriesChoix,page,saison) {
 				var restAdress = "recette/filter?";
