@@ -89,4 +89,10 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 		$scope.payerInfoVoir = true;
 		$scope.erreurPaiement=message;
 	});
+	
+	$(window).ready(function(){
+	    $("#myBtnAnnulePaiement").click(function(){
+	        $("#myModalPaiement").modal('hide');
+	    });
+	});
 } ]);
