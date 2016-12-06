@@ -19,9 +19,8 @@
 	</div>
 	
 	<div style="color: rgb(221, 131, 14); margin-top:10px; margin-bottom: 10px;" class="col-xs-12">Par saison :</div>
-	<div class="col-xs-12" ng-repeat="saison in listSaisons">
-		<input type="checkbox" ng-model="listSaisonsChoix[$index]"
-			ng-change="changeSaisons()">&nbsp;&nbsp;{{saison.name}}
+	<input type="text" ng-model="searchRecetteIsSaison" ng-change="changeIsSaison()"
+				placeholder="Est de saison" class="form-control input-sm">
 	</div>
 	
 	<div style="color: rgb(221, 131, 14); margin-top:10px; margin-bottom: 10px;" class="col-xs-12">Par composition :</div>

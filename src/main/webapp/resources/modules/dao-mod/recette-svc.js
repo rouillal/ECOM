@@ -4,36 +4,38 @@ eComBioApp.factory('recetteSvc', [
 		'$window',
 		function($rootScope, restBackendSvc, $window) {
 			// tri : alpha diff  cout
-			var getRecetteBySearchName = function(searchString, listCategories,
-					listCategoriesChoix,page,saison) {
+			var getRecetteBySearchName = function(searchString, listTypesRecette,
+					listTypesRecetteChoix,isSaison,listComposition,
+					listCompositionChoix,page) {
 				var restAdress = "recette/filter?";
-				var categoSelected = '';
-				angular.forEach(listCategories, function(categorie, key) {
-					if (listCategoriesChoix[key]) {
-						if (categoSelected != '') {
-							categoSelected += ',';
+				restAdress += 'page=' + page;
+				var typeSelected = '';
+				angular.forEach(listTypesRecette, function(type, key) {
+					if (listTypesRecetteChoix[key]) {
+						if (typeSelected != '') {
+							typeSelected += ',';
 						}
-						categoSelected += categorie.id;
+						typeSelected += type.id;
 					}
 				});
-				if (categoSelected != '') {
-					restAdress += 'cat=' + categoSelected;
+				if (typeSelected != '') {
+					restAdress += 'cat=' + typeSelected;
 				}
-				if (searchString != '') {
-					if (categoSelected != '') {
-						restAdress += '&';
-					}
-					restAdress += 'search=' + searchString;
-				}
-				if ((categoSelected != '') || (searchString != '')) {
-					restAdress += '&';
-				}
-				
-				if (saison) {
+				if (isSaison) {
 					restAdress += 'saison=1&';
 				}
-				
-				restAdress += 'page=' + page;
+				if (searchString != '') {
+					restAdress += '&search=' + searchString;
+				}
+				var compoSelected = '';
+				angular.forEach(listComposRecette, function(compo, key) {
+					if (listComposRecetteChoix[key]) {
+						if (compoSelected != '') {
+							compoSelected += ',';
+						}
+						compoSelected += compo.id;
+					}
+				});
 				$rootScope.$broadcast('debug', restAdress);
 				//Mock
 				var listRecette = [{'name':'Tofu en bolo','nbPersonnes':4,'tpsPreparation':15,'tpsCuisson':20,'cout':'Bon marché','difficulte':'Très facile','listeIngredients':'<ul><li>1 oignon,</li><li>2 carottes</li></ul>','preparation':'<ul><li>1.</li><li>2.</li><li>3.</li></ul>'},

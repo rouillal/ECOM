@@ -35,9 +35,16 @@ eComBioApp.controller('SearchRecetteCtrl', [ '$scope','$window','searchRecetteSv
 		searchRecetteSvc.setSearchString($scope.searchRecetteString);
 	}
 	
-	$scope.$on('listCategoriesCritSupplied', function(event) {
+	$scope.$on('listCategorieRecettesCritSupplied', function(event) {
+		$window.alert('RRK3ww');
 		$scope.listCategories = searchRecetteSvc.getListCategories();
 		$scope.listCategoriesChoix=searchRecetteSvc.getListCategoriesChoix();
+	});
+	
+	$scope.$on('listCompositionsCritSupplied', function(event) {
+		$window.alert('RRK3');
+		$scope.listCompositions = searchRecetteSvc.getListComposition();
+		$scope.listCompositionChoix=searchRecetteSvc.getListCompositionChoix();
 	});
 	
 	$scope.$on('debug', function(event,message) {
