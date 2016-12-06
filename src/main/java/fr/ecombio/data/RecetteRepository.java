@@ -1,4 +1,5 @@
 package fr.ecombio.data;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,17 +13,22 @@ import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import fr.ecombio.model.Article;
 import fr.ecombio.model.Categorie;
 import fr.ecombio.model.Composition;
 import fr.ecombio.model.CompositionRecette;
+import fr.ecombio.model.Panier;
+import fr.ecombio.model.Produit;
 
 //import org.jboss.logging.Logger;
 
 import fr.ecombio.model.Recette;
+import fr.ecombio.model.RecetteProduit;
 import fr.ecombio.model.RecetteSaison;
 import fr.ecombio.model.Saison;
 
@@ -31,7 +37,9 @@ public class RecetteRepository {
 
 	@Inject
 	private EntityManager em;
-	
+
+	@Inject
+	private PanierRepository PanierRepository;
 
 	//Logger log;
 	Logger logger = java.util.logging.Logger.getLogger("org.hibernate");
@@ -86,7 +94,7 @@ public class RecetteRepository {
 		if(cat == null || cat == "") {
 			if(search == null || search == "") {
 				if(compo == null || compo == "")
-				return this.findAllOrderedByName(page, saison);
+					return this.findAllOrderedByName(page, saison);
 			}
 		} else {
 			String[] cats = cat.split(",");
@@ -163,7 +171,7 @@ public class RecetteRepository {
 		List<Tuple> tupleResult = em.createQuery(criteria).getResultList();
 		logger.log(Level.INFO, "Recette : ");
 		for (Tuple t : tupleResult) {
-		    this.listRecette.add(new DefRecette((Long) t.get(0),(String) t.get(1)));
+			this.listRecette.add(new DefRecette((Long) t.get(0),(String) t.get(1)));
 			logger.log(Level.INFO, (String) t.get(1));
 		}
 	}
@@ -175,7 +183,7 @@ public class RecetteRepository {
 		public DefRecette() {
 			super();
 		}
-		
+
 		public DefRecette(Long id, String name) {
 			this.id = id;
 			this.name = name;
@@ -195,4 +203,35 @@ public class RecetteRepository {
 		}
 	}
 
+	public List<Produit> findAllProduitsFromId(int id) {
+
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Produit> criteria = cb.createQuery(Produit.class);
+		Root<RecetteProduit> RecetteProduit = criteria.from(RecetteProduit.class);
+		Join<RecetteProduit, Produit> join1 = RecetteProduit.join("produits");
+		criteria.select(join1);
+		criteria.where(cb.equal(RecetteProduit.get("recettes"), id));
+		return em.createQuery(criteria).getResultList();
+	}
+
+
+	public List<Recette> findAllRecetteFromPanier(Long id) {
+		Panier panier = PanierRepository.findById(id);
+		List<Long> listProduit = new ArrayList<Long> ();
+		for (Article a : panier.getArticles()) {
+			listProduit.add(a.getProduit().getId());
+		}
+
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Recette> criteria = cb.createQuery(Recette.class);
+		Root<Recette> Recette = criteria.from(Recette.class);
+		Join<Recette, RecetteProduit> join1 = Recette.join("produits");
+		Join<RecetteProduit, Produit> join2 = join1.join("produits");
+
+		criteria.select(Recette);
+		Expression<String> exp = join2.get("id");
+		Predicate predicate = exp.in(listProduit);
+		criteria.where(predicate);
+		return em.createQuery(criteria).getResultList();
+	}
 }

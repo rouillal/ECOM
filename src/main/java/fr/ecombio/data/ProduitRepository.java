@@ -38,6 +38,7 @@ public class ProduitRepository {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Produit> criteria = cb.createQuery(Produit.class);
 		Root<Produit> Produit = criteria.from(Produit.class);
+		Predicate predicate = null;
 		criteria.select(Produit);
 		if(tri != null && tri != ""){
 			if(tri.equalsIgnoreCase("alpha")) {
@@ -54,8 +55,14 @@ public class ProduitRepository {
 			String saisonDuMoment = this.getSeason(new Date());
 			Join<Produit, ProduitSaison> join1 = Produit.join("saisons");
 			Join<ProduitSaison, Saison> join2 = join1.join("saisons");
-			criteria.where(cb.equal( cb.lower(join2.<String>get("name")), saisonDuMoment));
+			predicate = cb.equal( cb.lower(join2.<String>get("name")), saisonDuMoment);
 		}
+		if (predicate == null) {
+			predicate = cb.notEqual(Produit.get("stock"), 0);
+		} else {
+			predicate = cb.and(predicate,cb.notEqual(Produit.get("stock"), 0));
+		}
+		criteria.where(predicate);
 		TypedQuery<Produit> typequery = em.createQuery(criteria);
 		typequery.setFirstResult(page*6);
 		typequery.setMaxResults(6);
@@ -79,7 +86,7 @@ public class ProduitRepository {
 		// criteria queries, a new
 		// feature in JPA 2.0
 		// criteria.select(Produit).orderBy(cb.asc(Produit.get(Produit_.name)));
-		criteria.select(Produit).where( cb.equal( Produit.get("categorie").get("name"),cat ));
+		criteria.select(Produit).where( cb.and(cb.equal( Produit.get("categorie").get("name"),cat ), cb.notEqual(Produit.get("stock"), 0)));
 		return em.createQuery(criteria).getResultList();
 	}
 
@@ -127,6 +134,7 @@ public class ProduitRepository {
 			predicate2 = cb.equal( cb.lower(join2.<String>get("name")), saisonDuMoment);
 			predicate = cb.and(predicate,predicate2);
 		}
+		predicate = cb.and(predicate,cb.notEqual(Produit.get("stock"), 0));
 		criteria.where(predicate);
 		if(tri != null && tri != "") {
 			if(tri.equalsIgnoreCase("alpha")) {
@@ -218,6 +226,7 @@ public class ProduitRepository {
 			predicate2 = cb.equal( cb.lower(join2.<String>get("name")), saisonDuMoment);
 			predicate = cb.and(predicate,predicate2);
 		}
+		predicate = cb.and(predicate,cb.notEqual(Produit.get("stock"), 0));
 		criteria.where(predicate);
 		return (long) (Math.ceil((float)em.createQuery(criteria).getSingleResult()/6)) ;
 	}
@@ -227,12 +236,19 @@ public class ProduitRepository {
 		CriteriaQuery<Long> criteria = cb.createQuery(Long.class);
 		Root<Produit> Produit = criteria.from(Produit.class);
 		criteria.select(cb.countDistinct(Produit));
+		Predicate predicate = null ;
 		if( saison == 1 ) {
 			String saisonDuMoment = this.getSeason(new Date());
 			Join<Produit, ProduitSaison> join1 = Produit.join("saisons");
 			Join<ProduitSaison, Saison> join2 = join1.join("saisons");
-			criteria.where(cb.equal( cb.lower(join2.<String>get("name")), saisonDuMoment));
+			predicate = cb.equal( cb.lower(join2.<String>get("name")), saisonDuMoment);
 		}
+		if (predicate == null) {
+			predicate = cb.notEqual(Produit.get("stock"), 0);
+		} else {
+			predicate = cb.and(predicate,cb.notEqual(Produit.get("stock"), 0));
+		}
+		criteria.where(predicate);
 		return (long) (Math.ceil((float)em.createQuery(criteria).getSingleResult()/6)) ;
 	}
 }
