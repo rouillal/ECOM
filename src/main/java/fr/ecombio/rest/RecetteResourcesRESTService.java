@@ -42,5 +42,20 @@ public class RecetteResourcesRESTService {
         return repository.findAllOrderedByName(page, cat, saison, search, compo);
     }
 	
+
+	@GET
+	@Path("/produits")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Produit> listAllProduitFromRecette(@QueryParam("id") int id) {
+		return repository.findAllProduitsFromId(id);
+    }
+	
+	@GET
+	@Path("/panier")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Recette> listAllRecetteFromPanier(@QueryParam("id") Long id) {
+		return repository.findAllRecetteFromPanier(id);
+    }
+	
 }
 
