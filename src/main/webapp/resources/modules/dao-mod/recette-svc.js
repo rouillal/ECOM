@@ -4,25 +4,36 @@ eComBioApp.factory('recetteSvc', [
 		'$window',
 		function($rootScope, restBackendSvc, $window) {
 			// tri : alpha diff  cout
-			var getRecetteBySearchName = function(searchString, listTypesRecette,
-					listTypesRecetteChoix,isSaison,listComposition,
+			var getRecetteBySearchName = function(searchString,listCategoriesRecette,
+					listCategoriesRecetteChoix,listSaisons,
+					listSaisonChoix,listComposition,
 					listCompositionChoix,page) {
 				var restAdress = "recette/filter?";
 				restAdress += 'page=' + page;
-				var typeSelected = '';
-				angular.forEach(listTypesRecette, function(type, key) {
-					if (listTypesRecetteChoix[key]) {
-						if (typeSelected != '') {
-							typeSelected += ',';
+				var categorieSelected = '';
+				angular.forEach(listCategoriesRecette, function(categorie, key) {
+					if (listCategoriesRecetteChoix[key]) {
+						if (categorieSelected != '') {
+							categorieSelected += ',';
 						}
-						typeSelected += type.id;
+						categorieSelected += categorie.id;
 					}
 				});
-				if (typeSelected != '') {
-					restAdress += 'cat=' + typeSelected;
+				if (categorieSelected != '') {
+					restAdress += '&cat=' + categorieSelected;
 				}
-				if (isSaison) {
-					restAdress += 'saison=1&';
+				
+				var saisonSelected = '';
+				angular.forEach(listSaisons, function(saison, key) {
+					if (listSaisonChoix[key]) {
+						if (saisonSelected != '') {
+							saisonSelected += ',';
+						}
+						saisonSelected += saison.id;
+					}
+				});
+				if (saisonSelected != '') {
+					restAdress += '&saison=' + saisonSelected;
 				}
 				if (searchString != '') {
 					restAdress += '&search=' + searchString;
@@ -36,6 +47,9 @@ eComBioApp.factory('recetteSvc', [
 						compoSelected += compo.id;
 					}
 				});
+				if (compoSelected != '') {
+					restAdress += '&compo=' + compoSelected;
+				}
 				$rootScope.$broadcast('debug', restAdress);
 				//Mock
 				var listRecette = [{'name':'Tofu en bolo','nbPersonnes':4,'tpsPreparation':15,'tpsCuisson':20,'cout':'Bon marché','difficulte':'Très facile','listeIngredients':'<ul><li>1 oignon,</li><li>2 carottes</li></ul>','preparation':'<ul><li>1.</li><li>2.</li><li>3.</li></ul>'},

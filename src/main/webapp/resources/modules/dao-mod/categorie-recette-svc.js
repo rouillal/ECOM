@@ -5,21 +5,20 @@ eComBioApp
 						'$rootScope',
 						'restBackendSvc',
 						'$window',
-						function($rootScope, restBackendSvc,$window) {
+						function($rootScope, restBackendSvc, $window) {
 							var getAllCategorieRecettes = function() {
 								restBackendSvc
-											.getItemsByUrl("categorieRecette")
-											.then(
-													function(data) {
-														$windows.alert('555');
-														$rootScope.$broadcast(
-																'listCategorieRecettesSupplied',
-																data.data);
-														$windows.alert('listCategorieRecettesSupplied in the b000000000');
-													});
+										.getItemsByUrl("categorieRecette")
+										.then(
+												function(data) {
+													$rootScope
+															.$broadcast(
+																	'listCategorieRecettesSupplied',
+																	data.data);
+												});
 								return [];
 							}
-							
+
 							return {
 								getAllCategorieRecettes : getAllCategorieRecettes
 							};
