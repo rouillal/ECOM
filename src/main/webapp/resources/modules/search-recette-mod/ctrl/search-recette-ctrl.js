@@ -1,12 +1,8 @@
 eComBioApp.controller('SearchRecetteCtrl', [ '$scope','$window','searchRecetteSvc',function($scope,$window,searchRecetteSvc) {
-	$scope.listCategories = searchRecetteSvc.getListCategories();
-	$scope.listCategoriesChoix=searchRecetteSvc.getListCategoriesChoix();
-	
-	$scope.listTypesRecette = searchRecetteSvc.getListTypesRecette();
-	$scope.listTypesRecetteChoix=searchRecetteSvc.getListTypesRecetteChoix();
-	
+	$scope.listCategoriesRecette = searchRecetteSvc.getListCategoriesRecette();
+	$scope.listCategoriesRecetteChoix=searchRecetteSvc.getListCategoriesRecetteChoix();
 	$scope.listSaisons = searchRecetteSvc.getListSaison();
-	$scope.listSaisonChoix=searchRecetteSvc.getListSaison();
+	$scope.listSaisonChoix=searchRecetteSvc.getListSaisonChoix();
 	
 	$scope.listCompositions = searchRecetteSvc.getListComposition();
 	$scope.listCompositionChoix=searchRecetteSvc.getListCompositionChoix();
@@ -15,16 +11,12 @@ eComBioApp.controller('SearchRecetteCtrl', [ '$scope','$window','searchRecetteSv
 	$scope.debug = 'Url Rest Search à venir';
 	$scope.isSaison = searchRecetteSvc.getIsSaison();
 	
-	$scope.changeRecetteCatego = function() {
-		searchRecetteSvc.changeListCategoriesChoix($scope.listCategoriesChoix);
-	}
-	
-	$scope.changeTypeRecette = function() {
-		//searchRecetteSvc.changeListTypesRecetteChoix($scope.listTypesRecetteChoix);
+	$scope.changeCategorieRecette = function() {
+		searchRecetteSvc.changeListCategoriesRecetteChoix($scope.listCategoriesRecetteChoix);
 	}
 	
 	$scope.changeSaison = function() {
-		searchRecetteSvc.changeSaison($scope.isSaison);
+		//searchRecetteSvc.changeSaison($scope.isSaison);
 	}
 	
 	$scope.changeComposition = function() {
@@ -32,12 +24,22 @@ eComBioApp.controller('SearchRecetteCtrl', [ '$scope','$window','searchRecetteSv
 	}
 	
 	$scope.searchRecetteByName  = function() {
-		searchRecetteSvc.setSearchString($scope.searchRecetteString);
+		//searchRecetteSvc.setSearchString($scope.searchRecetteString);
 	}
 	
-	$scope.$on('listCategoriesCritSupplied', function(event) {
-		$scope.listCategories = searchRecetteSvc.getListCategories();
-		$scope.listCategoriesChoix=searchRecetteSvc.getListCategoriesChoix();
+	$scope.$on('listCategorieRecettesCritSupplied', function(event) {
+		$scope.listCategoriesRecette = searchRecetteSvc.getListCategoriesRecette();
+		$scope.listCategoriesRecetteChoix=searchRecetteSvc.getListCategoriesRecetteChoix();
+	});
+	
+	$scope.$on('listSaisonsCritSupplied', function(event) {
+		$scope.listSaisons = searchRecetteSvc.getListSaison();
+		$scope.listSaisonChoix=searchRecetteSvc.getListSaisonChoix();
+	});
+	
+	$scope.$on('listCompositionsCritSupplied', function(event) {
+		$scope.listCompositions = searchRecetteSvc.getListComposition();
+		$scope.listCompositionChoix=searchRecetteSvc.getListCompositionChoix();
 	});
 	
 	$scope.$on('debug', function(event,message) {

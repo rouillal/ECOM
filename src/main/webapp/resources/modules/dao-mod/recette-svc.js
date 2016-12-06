@@ -4,36 +4,52 @@ eComBioApp.factory('recetteSvc', [
 		'$window',
 		function($rootScope, restBackendSvc, $window) {
 			// tri : alpha diff  cout
-			var getRecetteBySearchName = function(searchString, listCategories,
-					listCategoriesChoix,page,saison) {
+			var getRecetteBySearchName = function(searchString,listCategoriesRecette,
+					listCategoriesRecetteChoix,listSaisons,
+					listSaisonChoix,listComposition,
+					listCompositionChoix,page) {
 				var restAdress = "recette/filter?";
-				var categoSelected = '';
-				angular.forEach(listCategories, function(categorie, key) {
-					if (listCategoriesChoix[key]) {
-						if (categoSelected != '') {
-							categoSelected += ',';
+				restAdress += 'page=' + page;
+				var categorieSelected = '';
+				angular.forEach(listCategoriesRecette, function(categorie, key) {
+					if (listCategoriesRecetteChoix[key]) {
+						if (categorieSelected != '') {
+							categorieSelected += ',';
 						}
-						categoSelected += categorie.id;
+						categorieSelected += categorie.id;
 					}
 				});
-				if (categoSelected != '') {
-					restAdress += 'cat=' + categoSelected;
+				if (categorieSelected != '') {
+					restAdress += '&cat=' + categorieSelected;
+				}
+				
+				var saisonSelected = '';
+				angular.forEach(listSaisons, function(saison, key) {
+					if (listSaisonChoix[key]) {
+						if (saisonSelected != '') {
+							saisonSelected += ',';
+						}
+						saisonSelected += saison.id;
+					}
+				});
+				if (saisonSelected != '') {
+					restAdress += '&saison=' + saisonSelected;
 				}
 				if (searchString != '') {
-					if (categoSelected != '') {
-						restAdress += '&';
+					restAdress += '&search=' + searchString;
+				}
+				var compoSelected = '';
+				angular.forEach(listComposRecette, function(compo, key) {
+					if (listComposRecetteChoix[key]) {
+						if (compoSelected != '') {
+							compoSelected += ',';
+						}
+						compoSelected += compo.id;
 					}
-					restAdress += 'search=' + searchString;
+				});
+				if (compoSelected != '') {
+					restAdress += '&compo=' + compoSelected;
 				}
-				if ((categoSelected != '') || (searchString != '')) {
-					restAdress += '&';
-				}
-				
-				if (saison) {
-					restAdress += 'saison=1&';
-				}
-				
-				restAdress += 'page=' + page;
 				$rootScope.$broadcast('debug', restAdress);
 				//Mock
 				var listRecette = [{'name':'Tofu en bolo','nbPersonnes':4,'tpsPreparation':15,'tpsCuisson':20,'cout':'Bon marché','difficulte':'Très facile','listeIngredients':'<ul><li>1 oignon,</li><li>2 carottes</li></ul>','preparation':'<ul><li>1.</li><li>2.</li><li>3.</li></ul>'},
