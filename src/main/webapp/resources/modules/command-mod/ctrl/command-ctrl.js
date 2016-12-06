@@ -7,9 +7,11 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 	$scope.recapInfoVoir = false;
 	$scope.erreurPaiement='';
 	$scope.montantTotal = panierSvc.getMontantTotal();
+	var date = new Date();
+	$scope.FormDate = ('0' + date.getDate()).slice(-2) + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
 	
 	$scope.isErrorMessage = function() {
-		return $scope.erreurPaiement != 'e';
+		return $scope.erreurPaiement != '';
 	}
 	
 	//Liste des horaires
@@ -27,7 +29,10 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 	for (i = 1; i < 13; i++) {
 	    var moisTmp = new Object();
 	    moisTmp['value'] = i;
-	    moisTmp['libelle'] = ''+i;
+	    if(i<10)
+	    	moisTmp['libelle'] = '0'+i;
+	    else
+	    	moisTmp['libelle'] = ''+i;
 	    $scope.listeMois.push(moisTmp);
 	}
 	//Années pour paiement 
@@ -38,6 +43,22 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 	    anneeTmp['libelle'] = ''+i;
 	    $scope.listeAnnees.push(anneeTmp);
 	}
+	
+	$scope.formatDate = function (date) {
+	    function pad(n) {
+	        return n < 10 ? '0' + n : n;
+	    }
+
+	    return date && pad(date.getDate())
+	        + '/' + pad(date.getMonth() + 1)
+	        + '/' + date.getFullYear();
+	};
+
+	$scope.parseDate = function (s) {
+	    var tokens = /^(\d{2})-(\d{2})-(\d{4})$/.exec(s);
+
+	    return tokens && new Date(tokens[1], tokens[2] - 1, tokens[3]);
+	};
 	
 	$scope.payerInfo = function() {
 		$scope.payerInfoVoir = true;
@@ -71,6 +92,10 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 		$scope.seeCalend = false;
 	}
 	
+	$scope.$on('errorDateExpi', function(event) {
+		$scope.erreurPaiement = "La date d'expiration est dépassée";
+	});
+	
 	$scope.$on('commandInfoProvided', function(event) {
 		$scope.commandInfo = commandSvc.getCommandInfo();
 	});
@@ -88,5 +113,11 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 		$scope.recapInfoVoir = false;
 		$scope.payerInfoVoir = true;
 		$scope.erreurPaiement=message;
+	});
+	
+	$(window).ready(function(){
+	    $("#myBtnAnnulePaiement").click(function(){
+	        $("#myModalPaiement").modal('hide');
+	    });
 	});
 } ]);

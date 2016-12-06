@@ -12,7 +12,7 @@
 			</div>
 			<div class="modal-body" style="padding: 40px 50px;">
 				<div class="row">
-				<h4 class="ano" ng-show="isErrorMessage()">{{erreurSignin}}</h4>
+					<h4 class="ano" align="center" ng-show="isErrorMessage()">{{erreurSignin}}</h4>
 					<form name="formS" novalidate role="form">
 						<div class="col-xs-6" class="form-group">
 							<label><span class="glyphicon glyphicon-user"></span> Nom</label>
@@ -49,10 +49,12 @@
 							<label><span class="glyphicon glyphicon-user"></span>
 								Code postal</label> <input type="text" class="form-control"
 								ng-model="signinInfo.cp" placeholder="Entrez votre code postal"
-								name="cp" required="">
+								name="cp" required="" ng-pattern="/^[0-9]{5}$/">
 							<div ng-show="formS.$submitted || formS.cp.$touched">
 								<div ng-show="formS.cp.$error.required" class="ano">Veuillez
 									saisir votre code postal.</div>
+								<span class="ano" ng-show="formS.cp.$error.pattern">Le
+									code postal n'est pas valide (5 chiffres)</span>
 							</div>
 						</div>
 						<div style="margin-top: 10px;" class="col-xs-6" class="form-group">
@@ -108,10 +110,12 @@
 				</div>
 			</div>
 			<div class="modal-footer" style="background-color: #f9f9f9;">
-				Déjà inscrit(e) ? <a
-					style="text-decoration: none; color: rgb(221, 131, 14);"
-					data-toggle="modal" data-target="#/connect" id="myBtnConnexion">Me
-					connecter</a>
+				Déjà inscrit(e) ?
+				<button
+					style="color: rgb(221, 131, 14); border: none; background-color: Transparent; outline: none;"
+					data-toggle="modal" data-target="#/connect" id="myBtnConnexion">
+					<span>Me connecter</span>
+				</button>
 			</div>
 		</div>
 	</div>

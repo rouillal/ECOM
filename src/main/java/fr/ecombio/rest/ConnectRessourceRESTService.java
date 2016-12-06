@@ -40,12 +40,14 @@ public class ConnectRessourceRESTService {
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public String registerClient(ValidationClient client) {
+	public Response registerClient(ValidationClient client) {
 		try {
 			RegistreRepository.registerClient(client);
-			return "ok";
+			//return "ok";
+			return Response.ok(client).build();
 		} catch (Exception e) {
-			return "ce profil existe déjà";
+			//return "ce profil existe déjà";
+			return Response.status(Status.FORBIDDEN).build();
 		}
 	}
 

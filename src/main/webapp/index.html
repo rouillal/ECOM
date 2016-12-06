@@ -86,28 +86,30 @@
 	<div ng-include src="'resources/modules/signin-mod/signin.html'"></div>
 	<div id="ruban" class="row">
 		<ul class="col-xs-12">
-			<li class="col-md-3"></li>
-			<li class="col-md-1" ng-class="menuIndice == 1 ? 'current':''"><a
-				id="product" ng-click="menuIndice = 1" href="#"> </a></li>
-			<li class="col-md-1" ng-class="menuIndice == 2 ? 'current':''"><a
+			<li class="col-md-3 col-xs-1"></li>
+			<li class="col-md-1 col-xs-5" ng-class="(menuIndice == $location.path()) || (menuIndice == 1) ? 'current':''"><a
+				ng-click="menuIndice = 1" id="product" href="#"> </a></li>
+			<li class="col-md-1 col-xs-5" ng-class="menuIndice == 2 ? 'current':''"><a
 				id="recette" ng-click="menuIndice = 2" href="#/recette"> </a></li>
-			<li class="col-md-3"><img id="logo"
+			<li class="col-md-3 col-xs-12"><img id="logo"
 				src="resources/modules/main-mod/img/logo.png" alt="logo"
 				title="logo" /></li>
-			<li style="margin-top: 25px;" class="col-md-2"><a
+			<li style="margin-top: 25px;" class="col-md-2 col-xs-12">
+				<div style="margin-left:28px;" ng-show="user==''"><button
 				data-toggle="modal" id="myBtnConnect" class="connect"
-				data-target="#/connect"><span>Me Connecter &nbsp;</span></a><a
+				data-target="#/connect"><span>Me Connecter &nbsp;</span></button><button
 				id="myBtnSign" class="menuText" data-toggle="modal"
-				data-target="#/signin"><span>M'inscrire</span></a>
+				data-target="#/signin"><span>M'inscrire</span></button></div>
+				<div ng-show="user!=''" style="margin-left:60px; color: rgb(221, 131, 14); font-family: Times New Roman;">Bienvenue {{user}} !</div>
 				<ul>
-					<li ng-class="menuIndice == 5 ? 'current':''"><a id="basket"
+					<li ng-class="menuIndice == 5 ? 'current':''"><a style="margin-left:17px;" id="basket"
 						ng-click="menuIndice = 5" href="#/panier"></a></li>
 				</ul>
 				<ul>
-					<li><span style="margin-left: 5px; color: rgb(221, 131, 14); font-family: Times New Roman;">Montant : {{montantPanier}} €</span></li>
+					<li><div style="margin-left:20px; color: rgb(221, 131, 14); font-family: Times New Roman;">Montant : {{montantPanier}} €</div></li>
 				</ul>
 			</li>
-			<li class="col-md-2"></li>
+			<li class="col-md-2 col-xs-1"></li>
 		</ul>
 	</div>
 	<div ng-view></div>

@@ -8,6 +8,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.xml.ws.ResponseWrapper;
 
 import fr.ecombio.data.RegistreRepository;
@@ -24,15 +26,15 @@ public class PaiementRESTService {
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	@ResponseWrapper public String validationPaiement(ValidationCommande infos) throws Exception {
+	@ResponseWrapper public Response validationPaiement(ValidationCommande infos) throws Exception {
 		String err = infos.getCommandPaieInfo().verify();
 		if (err!=null || (err!=null && !err.isEmpty())) {
-			return err;
+			return Response.status(Status.FORBIDDEN).build();
 			//throw new Exception(err);
 		} else {
 			// enregistrer le client et l'historique de la commande
 			RegistreRepository.registerCommande(infos);
-			return "OK";
+			return Response.ok(infos).build();
 		}
 	}
 }

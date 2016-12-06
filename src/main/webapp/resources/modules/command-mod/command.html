@@ -8,87 +8,122 @@
 			<hr>
 		</div>
 		<div class="col-xs-10">
-			<div class="col-xs-6" class="form-group">
-				<label for="commandnom"><span
-					class="glyphicon glyphicon-user"></span> Nom</label> <input type="text"
-					class="form-control" ng-model="commandInfo.nom"
-					placeholder="Entrez votre nom">
-			</div>
-			<div class="col-xs-6" class="form-group">
-				<label for="commandprenom"><span
-					class="glyphicon glyphicon-user"></span> Prénom</label> <input type="text"
-					class="form-control" ng-model="commandInfo.prenom"
-					placeholder="Entrez votre prénom">
-			</div>
-			<div style="margin-top: 20px;" class="col-xs-12" class="form-group">
-				<label for="commandmail"><span
-					class="glyphicon glyphicon-envelope"></span> Mail</label> <input
-					type="text" class="form-control" ng-model="commandInfo.mail"
-					placeholder="Entrez votre mail">
-			</div>
-			<div align="center" style="margin-top: 20px;" class="col-xs-12">
-				<form name="form1">
+			<form name="formC" novalidate role="form">
+				<div class="col-xs-6" class="form-group">
+					<label><span class="glyphicon glyphicon-user"></span> Nom</label> <input
+						type="text" class="form-control" ng-model="commandInfo.nom"
+						placeholder="Entrez votre nom" name="nom" required="">
+					<div ng-show="formC.$submitted || formC.nom.$touched">
+						<div ng-show="formC.nom.$error.required" class="ano">Veuillez
+							saisir votre nom.</div>
+					</div>
+				</div>
+				<div class="col-xs-6" class="form-group">
+					<label><span class="glyphicon glyphicon-user"></span>
+						Prénom</label> <input type="text" class="form-control"
+						ng-model="commandInfo.prenom" placeholder="Entrez votre prénom"
+						name="prenom" required="">
+					<div ng-show="formC.$submitted || formC.prenom.$touched">
+						<div ng-show="formC.prenom.$error.required" class="ano">Veuillez
+							saisir votre prénom.</div>
+					</div>
+				</div>
+				<div style="margin-top: 20px;" class="col-xs-12" class="form-group">
+					<label><span class="glyphicon glyphicon-envelope"></span>
+						Mail</label> <input type="email" class="form-control"
+						ng-model="commandInfo.mail" placeholder="Entrez votre mail"
+						name="mail" required="">
+					<div ng-show="formC.$submitted || formC.mail.$touched">
+						<div ng-show="formC.mail.$error.required"></div>
+						<span class="ano" ng-show="formC.mail.$error.required">Veuillez
+							saisir votre adresse mail. </span> <span class="ano"
+							ng-show="formC.mail.$error.email">Veuillez saisir une
+							adresse mail valide.</span>
+					</div>
+				</div>
+				<div align="center" style="margin-top: 20px;" class="col-xs-12">
 					<span>Livraison à :</span> <input type="radio" name="livraison"
-						ng-model="commandInfo.livDom" value="e"> l'entrepôt <input
-						type="radio" name="livraison" ng-model="commandInfo.livDom"
-						value="d"> domicile
-				</form>
-			</div>
-			<div class="col-xs-12" align="center"
-				style="margin-top: 20px; text-align: :center; font-style: italic"
-				ng-show="commandInfo.livDom=='e'">
-				Venez retirer votre commande à :<br> Bio To Be Alive<br>
-				15 Chemin de Taillat<br> 38240 Meylan
-			</div>
-			<div ng-show="commandInfo.livDom=='d'">
-				<div class="col-xs-12" style="margin-top: 20px;" class="form-group">
-					<label for="commandadresse"><span
-						class="glyphicon glyphicon-user"></span> Adresse</label> <input
-						type="text" class="form-control" ng-model="commandInfo.adresse"
-						placeholder="Entrez votre adresse (n°, libellé de la voie)">
+						 value="e" ng-model="commandInfo.livDom"> l'entrepôt <input
+						type="radio" name="livraison"
+						value="d" ng-model="commandInfo.livDom"> domicile
 				</div>
-				<div class="col-xs-6" style="margin-top: 20px;" class="form-group">
-					<label for="commandcp"></span> Code postal</label> <input type="text"
-						class="form-control" ng-model="commandInfo.cp"
-						placeholder="Entrez votre code postal">
+				<div class="col-xs-12" align="center"
+					style="margin-top: 20px; text-align: :center; font-style: italic"
+					ng-show="commandInfo.livDom=='e'">
+					Venez retirer votre commande à :<br> Bio To Be Alive<br>
+					15 Chemin de Taillat<br> 38240 Meylan
 				</div>
-				<div class="col-xs-6" style="margin-top: 20px;" class="form-group">
-					<label for="commandville"> Ville</label> <input type="text"
-						class="form-control" ng-model="commandInfo.ville"
-						placeholder="Entrez votre ville">
+				<div ng-show="commandInfo.livDom=='d'">
+					<div class="col-xs-12" style="margin-top: 20px;" class="form-group">
+						<label><span class="glyphicon glyphicon-user"></span>
+							Adresse</label> <input type="text" class="form-control"
+							ng-model="commandInfo.adresse"
+							placeholder="Entrez votre adresse (n°, libellé de la voie)"
+							name="adr" ng-required="commandInfo.livDom=='d'">
+						<div ng-show="formC.$submitted || formC.adr.$touched">
+							<div ng-show="!formC.adr.$valid" class="ano">Veuillez
+								saisir votre adresse.</div>
+						</div>
+					</div>
+					<div class="col-xs-6" style="margin-top: 20px;" class="form-group">
+						<label><span class="glyphicon glyphicon-user"></span> Code
+							postal</label> <input type="text" class="form-control"
+							ng-model="commandInfo.cp" placeholder="Entrez votre code postal"
+							name="cp" ng-required="commandInfo.livDom=='d'" ng-pattern="/^[0-9]{5}$/">
+						<div ng-show="formC.$submitted || formC.cp.$touched">
+							<div ng-show="!formC.cp.$valid" class="ano">Veuillez
+								saisir votre code postal.</div>
+							<span class="ano" ng-show="formC.cp.$error.pattern">Le
+								code postal n'est pas valide (5 chiffres)</span>
+						</div>
+					</div>
+					<div class="col-xs-6" style="margin-top: 20px;" class="form-group">
+						<label><span class="glyphicon glyphicon-user"></span>
+							Ville</label> <input type="text" class="form-control"
+							ng-model="commandInfo.ville" placeholder="Entrez votre ville"
+							name="ville" ng-required="commandInfo.livDom=='d'">
+						<div ng-show="formC.$submitted || formC.ville.$touched">
+							<div ng-if="!formC.ville.$valid" class="ano">Veuillez
+								saisir votre ville.</div>
+						</div>
+					</div>
 				</div>
-			</div>
-			<div class="col-sm-6 col-xs-12" style="margin-top: 20px;"
-				class="form-group">
-				<label for="commanddate">Date de livraison</label> <br> <input
-					type="text" ng-click="seeCalendar()" ng-model="commandInfo.date">
-				<date-picker ng-show="seeCalend==true" ng-model="commandInfo.date">
-				</date-picker>
-			</div>
-			<div class="col-sm-6 col-xs-12" style="margin-top: 20px;"
-				class="form-group">
-				<label for="commandheure"> Horaire de livraison</label> <br> <select
-					name="horaireSelect" id="horaireSelect"
-					ng-model="commandInfo.heure" ng-click="hideCalendar()">
-					<option ng-repeat="horaire in listeHoraires"
-						value="{{horaire.value}}">{{horaire.libelle}}</option>
-				</select>
-				<!--  &nbsp;&nbsp;{{listeHoraires[commandInfo.heure].libelle}} -->
-			</div>
-			<div class="col-xs-10" style="margin-top: 40px;">
-				<button style="background-color: #f9f9f9; border-radius: 10px;"
-					ng-click="revenirPanier()">
-					<span>Retourner au panier</span>
-				</button>
-			</div>
-			<div class="col-xs-2" style="margin-top: 40px;">
-				<button
-					style="background-color: rgb(221, 131, 14); border-radius: 10px;"
-					ng-click="payerInfo()" data-toggle="modal"
-					data-target="#myModalPaiement">
-					<span>Payer</span>
-				</button>
-			</div>
+				<div class="col-sm-6 col-xs-12" style="margin-top: 30px;"
+					class="form-group">
+					<label>Date de livraison</label> <br> <input
+						type="text" ng-click="seeCalendar()" ng-model="commandInfo.date" name="date" required="" placeholder="Sélectionnez une date">
+					<date-picker on-date-selected="hideCalendar()" ng-show="seeCalend==true" ng-model="commandInfo.date" format-date="formatDate" parse-date="parseDate">
+					</date-picker>
+					<div ng-show="formC.$submitted || formC.date.$touched">
+						<div ng-show="formC.date.$error.required" class="ano">Sélectionner la date de livraison.</div>
+						
+					</div>
+				</div>
+				<div class="col-sm-6 col-xs-12" style="margin-top: 30px;"
+					class="form-group">
+					<label for="commandheure"> Horaire de livraison</label> <br> <select
+						name="horaireSelect" id="horaireSelect"
+						ng-model="commandInfo.heure">
+						<option ng-repeat="horaire in listeHoraires"
+							value="{{horaire.value}}">{{horaire.libelle}}</option>
+					</select>
+					<!--  &nbsp;&nbsp;{{listeHoraires[commandInfo.heure].libelle}} -->
+				</div>
+				<div class="col-xs-10" style="margin-top: 40px;">
+					<button style="background-color: #f9f9f9; border-radius: 10px;"
+						ng-click="revenirPanier()">
+						<span>Retourner au panier</span>
+					</button>
+				</div>
+				<div class="col-xs-2" style="margin-top: 40px;">
+					<button
+						style="background-color: rgb(221, 131, 14); border-radius: 10px;"
+						ng-click="payerInfo()" ng-disabled="formC.$invalid" data-toggle="modal" type="submit"
+						data-target="#myModalPaiement" data-backdrop="static">
+						<span>Payer</span>
+					</button>
+				</div>
+			</form>
 		</div>
 	</div>
 	<br>

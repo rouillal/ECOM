@@ -50,22 +50,9 @@ public class ValidationPaiement implements Serializable{
 	
 	public String verify() {
 		// TODO Auto-generated method stub
-		if (num.length() != 16) {
-			return "num<"+num+">"+GestionErreur.PAIEMENT_NUM_LENGTH;
-			
-		} else if(!this.isInteger(num)) {
-			return "num<"+num+">"+GestionErreur.PAIEMENT_NUM_CHAR;
-			
-		} else if (!this.verifyDate()) {
+		if (!this.verifyDate()) {
 			return "date :"+GestionErreur.PAIEMENT_DATE_PASSE;
-			
-		} else if (codeVerif.length() != 3) {
-			return "code<"+codeVerif+">"+GestionErreur.PAIEMENT_CODE_LENGTH;
-			
-		} else if(!this.isInteger(codeVerif)) {
-			return "code<"+codeVerif+">"+GestionErreur.PAIEMENT_CODE_CHAR;
-			
-		}
+		} 
 		return null;
 	}
 	
