@@ -43,12 +43,6 @@ eComBioApp.factory('searchRecetteSvc', [ '$rootScope','categorieRecetteSvc','sai
 		recetteSvc.getRecetteBySearchName(searchRecetteString,listCategoriesRecette,listCategoriesRecetteChoix,listSaison,listSaisonChoix,listComposition,listCompositionChoix,currentPage);
 	}
 	
-	var changeIsSaison = function() {
-		listSaison,listSaisonChoix = !listSaison,listSaisonChoix;
-		reinitPageDueToNewSearch();
-		recetteSvc.getRecetteBySearchName(searchRecetteString,listCategoriesRecette,listCategoriesRecetteChoix,listSaison,listSaisonChoix,listComposition,listCompositionChoix,currentPage);
-	}
-	
 	var getListComposition = function() {
 		return listComposition;
 	}
@@ -61,26 +55,16 @@ eComBioApp.factory('searchRecetteSvc', [ '$rootScope','categorieRecetteSvc','sai
 		recetteSvc.getRecetteBySearchName(searchRecetteString,listCategoriesRecette,listCategoriesRecetteChoix,listSaison,listSaisonChoix,listComposition,listCompositionChoix,currentPage);
 	}
 	
-	var getIsSaison = function() {
-		return listSaison,listSaisonChoix;
-	}
-	
 	var reinitPageDueToNewSearch = function() {
 		currentPage=0;
 		$rootScope.$broadcast('reinitPageDueToNewSearch',currentPage);
 	}
 	
-	var changeSaison = function(saisonChanged) {
-		isSaison = saisonChanged;
-		reinitPageDueToNewSearch();
-		recetteSvc.getRecetteBySearchName(searchRecetteString,listCategoriesRecette,listCategoriesRecetteChoix,listSaison,listSaisonChoix,listComposition,listCompositionChoix,currentPage);
-	}
-		
-	var getSearchString = function() {
+	var getSearchRecetteString = function() {
 		return searchRecetteString;
 	}
 	
-	var setSearchString = function(newSearchString) {
+	var setSearchRecetteString = function(newSearchString) {
 		if (newSearchString != searchRecetteString) {
 			searchRecetteString = newSearchString;
 			reinitPageDueToNewSearch();
@@ -165,11 +149,8 @@ eComBioApp.factory('searchRecetteSvc', [ '$rootScope','categorieRecetteSvc','sai
 		getListComposition : getListComposition,
 		getListCompositionChoix : getListCompositionChoix,
 		changeListCompositionChoix : changeListCompositionChoix,
-		
-		getIsSaison : getIsSaison,
-		changeSaison : changeSaison,
-		getSearchString : getSearchString,
-		setSearchString : setSearchString,
+		getSearchRecetteString : getSearchRecetteString,
+		setSearchRecetteString : setSearchRecetteString,
 		getRecettesInit : getRecettesInit,
 		getlisteTris : getlisteTris,
 		getCurrentPage : getCurrentPage,

@@ -7,24 +7,23 @@ eComBioApp.controller('SearchRecetteCtrl', [ '$scope','$window','searchRecetteSv
 	$scope.listCompositions = searchRecetteSvc.getListComposition();
 	$scope.listCompositionChoix=searchRecetteSvc.getListCompositionChoix();
 	
-	$scope.searchRecetteString = searchRecetteSvc.getSearchString();
+	$scope.searchRecetteString = searchRecetteSvc.getSearchRecetteString();
 	$scope.debug = 'Url Rest Search à venir';
-	$scope.isSaison = searchRecetteSvc.getIsSaison();
 	
 	$scope.changeCategorieRecette = function() {
 		searchRecetteSvc.changeListCategoriesRecetteChoix($scope.listCategoriesRecetteChoix);
 	}
 	
 	$scope.changeSaison = function() {
-		//searchRecetteSvc.changeSaison($scope.isSaison);
+		searchRecetteSvc.changeListSaisonChoix($scope.listSaisonChoix);
 	}
 	
 	$scope.changeComposition = function() {
-		//searchRecetteSvc.changeListTypesRecetteChoix($scope.listTypesRecetteChoix);
+		searchRecetteSvc.changeListCompositionChoix($scope.listCompositionChoix);
 	}
 	
 	$scope.searchRecetteByName  = function() {
-		//searchRecetteSvc.setSearchString($scope.searchRecetteString);
+		searchRecetteSvc.setSearchRecetteString($scope.searchRecetteString);
 	}
 	
 	$scope.$on('listCategorieRecettesCritSupplied', function(event) {
