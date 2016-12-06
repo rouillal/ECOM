@@ -46,7 +46,6 @@ public class ConnectRessourceRESTService {
 			//return "ok";
 			return Response.ok(client).build();
 		} catch (Exception e) {
-			//return "ce profil existe déjà";
 			return Response.status(Status.FORBIDDEN).build();
 		}
 	}

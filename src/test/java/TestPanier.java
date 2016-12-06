@@ -12,6 +12,8 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 
 import fr.ecombio.data.PanierRepository;
+import fr.ecombio.data.ProduitRepository;
+import fr.ecombio.model.Article;
 import fr.ecombio.model.Panier;
 import fr.ecombio.rest.PanierResourceRESTService;
 
@@ -30,11 +32,30 @@ public class TestPanier {
     Logger log;
     
     @Inject
-    PanierRepository repository;
+    PanierRepository PaRepository;
+   
+    @Inject
+    ProduitRepository PrRepository;
 	
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+		Panier p = new Panier();
+		/*Panier pRes = PaRepository.findById(p.getId());
+		if (pRes != null) {
+			fail("panier existe déjà");
+		}*/
+		Article a = new Article();
+		a.setPanier(p);
+		a.setProduit(PrRepository.findById(1L));
+		p.getArticles().add(a);
+		PaRepository.AjoutPanier(p);
+		Long id = p.getId();
+		
+		Panier pRes =  PaRepository.findById(p.getId());
+		if (pRes == null) {
+			fail("panier non enristré");
+		}
+		
 	}
 
 }

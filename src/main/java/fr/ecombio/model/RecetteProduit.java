@@ -11,6 +11,7 @@ import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -34,6 +35,10 @@ public class RecetteProduit implements Serializable{
 	@JoinColumn(name="recette_id")
 	@JsonManagedReference
 	private Recette recettes;
+	
+	@NotNull
+	@Column(name="recetteproduit_quantite")
+	private int quantite;
 
 	public Long getId() {
 		return Id;
@@ -57,6 +62,22 @@ public class RecetteProduit implements Serializable{
 
 	public void setRecettes(Recette recettes) {
 		this.recettes = recettes;
+	}
+
+	public Produit getProduits() {
+		return produits;
+	}
+
+	public void setProduits(Produit produits) {
+		this.produits = produits;
+	}
+
+	public int getQuantite() {
+		return quantite;
+	}
+
+	public void setQuantite(int quantite) {
+		this.quantite = quantite;
 	}
 	
 	
