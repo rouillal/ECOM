@@ -7,8 +7,8 @@ eComBioApp.factory('recetteSvc', [
 			var getRecetteBySearchName = function(searchString,
 					listCategoriesRecette, listCategoriesRecetteChoix,
 					listSaisons, listSaisonChoix, listComposition,
-					listCompositionChoix, page) {
-				var restAdress = "recette/filter?";
+					listCompositionChoix, page,tri) {
+				var restAdress = "/filter?";
 				restAdress += 'page=' + page;
 				var categorieSelected = '';
 				angular.forEach(listCategoriesRecette,
@@ -50,6 +50,7 @@ eComBioApp.factory('recetteSvc', [
 				if (compoSelected != '') {
 					restAdress += '&compo=' + compoSelected;
 				}
+				restAdress += '&tri=' + tri;
 				$rootScope.$broadcast('debug', restAdress);
 				// Mock
 				/*
@@ -64,7 +65,7 @@ eComBioApp.factory('recetteSvc', [
 				 * var listRecetteJson = angular.toJson(listRecette);
 				 */
 				// Fin Mock
-				restBackendSvc.getItemsByUrl(restAdress).then(function(data) {
+				restBackendSvc.getItemsByUrl('recette'+restAdress).then(function(data) {
 					var listRecette = data.data;
 					$rootScope.$broadcast('listRecettesSupplied', listRecette);
 				}, function(reason) {
@@ -74,6 +75,13 @@ eComBioApp.factory('recetteSvc', [
 					} else {
 						alert('Failed: ' + reason);
 					}
+				});
+				restBackendSvc.getItemsByUrl('recette/page'+restAdress).then(function(data) {
+					var pageMax = data.data;
+					$rootScope.$broadcast('pageMaxRecetteReset',pageMax);
+				}, function(reason) {
+					//$rootScope.$broadcast('debug', reason);
+					//alert('Failed: ' + reason);
 				});
 			}
 
