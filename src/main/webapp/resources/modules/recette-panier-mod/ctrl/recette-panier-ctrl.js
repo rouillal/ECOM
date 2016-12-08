@@ -1,5 +1,11 @@
 eComBioApp.controller('RecettePanierCtrl', [ '$scope','$window','panierSvc',function($scope,$window,panierSvc) {
 	$scope.listeProduitsRecette = [];
+	$scope.selectedProduit='';
+	
+	$scope.selectDetailsProduit = function(selectedProduitParam) {
+		panierSvc.setSelectedProduit(selectedProduitParam);
+		$scope.selectedProduit=selectedProduitParam;
+	}
 	
 	$scope.isMoinsProduitInactif = function(produitSelect) {
 		return !(produitSelect.quotite > 0);
