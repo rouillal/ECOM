@@ -1,7 +1,6 @@
 <div class="modal fade" id="selectedRecetteDisplay" role="dialog"
 	ng-controller="RecetteDetailCtrl">
-	<div class="modal-dialog">
-		<!-- Modal content-->
+	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -13,29 +12,48 @@
 							style="font-size: 25px; font-family: Bradley Hand;">
 							<span style="color: rgb(221, 131, 14);">{{selectedRecette.name}}</span>
 						</div>
-						<div style="margin-top:5px;" class="col-xs-12"><img width="15px" height="15px" src="resources/modules/main-mod/img/clock.png"> Préparation : {{selectedRecette.tpsPreparation}} minutes</div>
-						<div class="col-xs-12"><img width="15px" height="15px" src="resources/modules/main-mod/img/four.png"> Cuisson : {{selectedRecette.tpsCuisson}} minutes</div>
-						<div class="col-xs-12"><img width="15px" height="15px" src="resources/modules/main-mod/img/euro.png"> {{selectedRecette.cout}}</div>
-						<div class="col-xs-12"><img width="15px" height="15px" src="resources/modules/main-mod/img/check.png"> {{selectedRecette.difficulte}}</div>
+						<div style="margin-top: 5px;" class="col-xs-12">
+							<img width="15px" height="15px"
+								src="resources/modules/main-mod/img/clock.png">
+							Préparation : {{selectedRecette.tpsPreparation}} minutes
+						</div>
+						<div class="col-xs-12">
+							<img width="15px" height="15px"
+								src="resources/modules/main-mod/img/four.png"> Cuisson :
+							{{selectedRecette.tpsCuisson}} minutes
+						</div>
+						<div class="col-xs-12">
+							<img width="15px" height="15px"
+								src="resources/modules/main-mod/img/euro.png">
+							{{selectedRecette.cout}}
+						</div>
+						<div class="col-xs-12">
+							<img width="15px" height="15px"
+								src="resources/modules/main-mod/img/check.png">
+							{{selectedRecette.difficulte}}
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="modal-body">
 				<div class="row">
-					<div class="col-xs-6">
-						<span style="color: rgb(221, 131, 14);">Ingrédients :</span>
-						<div ng-bind-html="selectedRecette.listeIngredients | unsafe"></div>
+						<div class="col-xs-6">
+							<span style="color: rgb(221, 131, 14);">Ingrédients :</span>
+							<div ng-bind-html="selectedRecette.listeIngredients | unsafe"></div>
+						</div>
+						<div class="col-xs-6">
+							<div ng-include
+								src="'resources/modules/recette-panier-mod/recette-panier.html'"></div>
+						</div>
 					</div>
-					<div class="col-xs-6"><div ng-include
-				src="'resources/modules/recette-panier-mod/recette-panier.html'"></div></div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12">
-						<span style="color: rgb(221, 131, 14);">Préparation :</span>
-						<div ng-bind-html="selectedRecette.preparation | unsafe"></div>
+					<div class="row">
+						<div class="col-xs-12">
+							<span style="color: rgb(221, 131, 14);">Préparation :</span>
+							<div ng-bind-html="selectedRecette.preparation | unsafe"></div>
+						</div>
 					</div>
-				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
