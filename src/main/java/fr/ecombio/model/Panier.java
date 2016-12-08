@@ -117,12 +117,35 @@ public class Panier implements Serializable {
 	public String toString() {
 		String retour = "panier"+this.getId()+" : ";
 		Iterator<Article> i=this.articles.iterator();
-		int k = 1;
 		while(i.hasNext()) // tant qu'on a un suivant
 		{
-			retour+= ("<"+k+":"+i.next().getProduit().getName()+">,");
-			k++;
+			Article a = i.next();
+			retour+= ("<"+a.getQuotite()+":"+a.getProduit().getName()+">,");
 		}
 		return retour;
+	}
+	
+	public String toStringHTML() {
+		String retour = "Vos produits :\n<center><table>\n";			
+		retour += String.format("<tr style=\"font-weight:bold;\"><td>%s</td><td style=\"text-align:center;\">%s</td><td>%s</td>", "Produit", "Quantite", "Prix à l'unité (€)");
+
+		Iterator<Article> i=this.articles.iterator();
+		while(i.hasNext()) // tant qu'on a un suivant
+		{
+			Article a = i.next();			
+			retour += String.format("<tr><td>%s %s</td><td style=\"text-align:center;\">%s</td><td style=\"text-align:center;\">%s</td>", a.getProduit().getName(), a.getProduit().getVariete(), a.getQuotite(), a.getProduit().getPrix() );
+		}
+		return retour+"\n</table></center><br>";
+	}
+
+	public double getTotal() {
+		double retour = 0;
+		Iterator<Article> i=this.articles.iterator();
+		while(i.hasNext()) // tant qu'on a un suivant
+		{
+			Article a = i.next();
+			retour+= a.getProduit().getPrix()*a.getQuotite();
+		}
+		return Math.round(retour * 100.0) / 100.0;
 	}
 }
