@@ -11,8 +11,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.xml.ws.ResponseWrapper;
-
 import fr.ecombio.data.RegistreRepository;
+import fr.ecombio.data.PanierRepository;
+import fr.ecombio.model.SendEmail;
 import fr.ecombio.model.ValidationCommande;
 
 @Path("/paiement")
@@ -22,7 +23,9 @@ public class PaiementRESTService {
 	Logger log = java.util.logging.Logger.getLogger("org.hibernate");
 	
 	@Inject
-	private RegistreRepository RegistreRepository;
+	private RegistreRepository RegistreRepository;	
+	@Inject
+	private PanierRepository PanierRepository;
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
@@ -32,6 +35,9 @@ public class PaiementRESTService {
 			return Response.status(Status.FORBIDDEN).build();
 			//throw new Exception(err);
 		} else {
+			// envoie d'un mail recap
+			SendEmail sendMail = new SendEmail(PanierRepository);
+			sendMail.send(infos);
 			// enregistrer le client et l'historique de la commande
 			RegistreRepository.registerCommande(infos);
 			return Response.ok(infos).build();
