@@ -46,5 +46,11 @@ eComBioApp.controller('ProductDetailCtrl', [
 				   setTimeout(function () {
 				    $('#tooltip').tooltip('hide');
 				   }, 1000);
-				})
+				});
+			
+			$(window).ready(function(){
+			    $("#myBtnDetailsPdtRecette").click(function(){
+			        $("#selectedProductDisplay").modal();
+			    });
+			});
 		} ]);
