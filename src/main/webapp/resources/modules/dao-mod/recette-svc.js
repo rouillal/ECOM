@@ -82,7 +82,6 @@ eComBioApp.factory('recetteSvc', [
 						.getItemsByUrl("recette/produits?id=" + recetteId)
 						.then(
 								function(data) {
-									$window.alert('Detail recette demande');
 									$rootScope
 											.$broadcast(
 													'detailsRecetteSupplied',
