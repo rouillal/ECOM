@@ -69,7 +69,6 @@ public class RecetteRepository {
 			Join<Recette, RecetteSaison> join1 = Recette.join("saisons");
 			Join<RecetteSaison, Saison> join2 = join1.join("saisons");
 			Predicate predicate = null ;
-			//em.createQuery(criteria).getResultList();
 			predicate = cb.equal( join2.get("id"), Integer.parseInt(saisons[0])) ;
 			for (String saison1 : saisons) {
 				predicate = cb.or(predicate,cb.equal( join2.get("id"), Integer.parseInt(saison1)));
@@ -83,6 +82,10 @@ public class RecetteRepository {
 				criteria.orderBy(cb.asc(Recette.get("difficulte")));
 			} else if(tri.equalsIgnoreCase("cout")) {
 				criteria.orderBy(cb.desc(Recette.get("cout")));
+			} else if(tri.equalsIgnoreCase("preparation")) {
+				criteria.orderBy(cb.desc(Recette.get("tpsPreparation")));
+			} else if(tri.equalsIgnoreCase("cuisson")) {
+				criteria.orderBy(cb.desc(Recette.get("tpsCuisson")));
 			}
 		}
 		TypedQuery<Recette> typequery = em.createQuery(criteria);
@@ -173,6 +176,10 @@ public class RecetteRepository {
 				criteria.orderBy(cb.asc(Recette.get("difficulte")));
 			} else if(tri.equalsIgnoreCase("cout")) {
 				criteria.orderBy(cb.desc(Recette.get("cout")));
+			} else if(tri.equalsIgnoreCase("preparation")) {
+				criteria.orderBy(cb.desc(Recette.get("tpsPreparation")));
+			} else if(tri.equalsIgnoreCase("cuisson")) {
+				criteria.orderBy(cb.desc(Recette.get("tpsCuisson")));
 			}
 		}
 		TypedQuery<Recette> typequery = em.createQuery(criteria);
@@ -251,5 +258,101 @@ public class RecetteRepository {
 		Predicate predicate = exp.in(listProduit);
 		criteria.where(predicate);
 		return em.createQuery(criteria).getResultList();
+	}
+
+	public Long findNumberPage(String cat, String saison, String search, String compo) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Long> criteria = cb.createQuery(Long.class);
+		Root<Recette> Recette = criteria.from(Recette.class);
+		Predicate predicate = null ;
+		Predicate predicate2 = null;
+		criteria.select(cb.countDistinct(Recette));
+
+		if(cat == null || cat == "") {
+			if(search == null || search == "") {
+				if(compo == null || compo == "")
+					return this.findNumberPage(saison);
+			}
+		} else {
+			String[] cats = cat.split(",");
+			predicate = cb.equal( Recette.get("categorieRecette").get("id"), Integer.parseInt(cats[0])) ;
+			for (String cat1 : cats) {
+				predicate = cb.or(predicate,(cb.equal( Recette.get("categorieRecette").get("id"), Integer.parseInt(cat1))));
+			}
+		}
+		if(search != null && search != "") {
+			search = search.toLowerCase();
+			//String[] recettes = search.split(",");
+			if (this.listRecette == null || this.listRecette.isEmpty()) {
+				this.getListRecette();
+			}
+			for (DefRecette d : this.listRecette) {
+				if (d.getName().toLowerCase().contains(search)) {
+					if (predicate2 == null) {
+						predicate2 = cb.equal(Recette.get("id"), d.id);
+					} else {
+						predicate2 = cb.or(predicate2,cb.equal(Recette.get("id"), d.id));
+					}
+				}
+			}
+		}
+		if(saison != null && saison != ""){
+			String[] saisons = saison.split(",");
+			Join<Recette, RecetteSaison> join1 = Recette.join("saisons");
+			Join<RecetteSaison, Saison> join2 = join1.join("saisons");
+			if(predicate == null) {
+				predicate = cb.equal( join2.get("id"), Integer.parseInt(saisons[0])) ;
+			} else {
+				predicate = cb.or(predicate,cb.equal( join2.get("id"), Integer.parseInt(saisons[0]))) ;
+			}
+			for (String saison1 : saisons) {
+				predicate = cb.or(predicate,cb.equal( join2.get("id"), Integer.parseInt(saison1)));
+			}
+		}
+		if(compo != null && compo != "") {
+			String[] compos = compo.split(",");
+			Join<Recette, CompositionRecette> join1 = Recette.join("compositions");
+			Join<CompositionRecette, Composition> join2 = join1.join("compositions");
+			if(predicate == null) {
+				predicate = cb.equal( join2.get("id"), Integer.parseInt(compos[0])) ;
+			} else {
+				predicate = cb.or(predicate,cb.equal( join2.get("id"), Integer.parseInt(compos[0]))) ;
+			}
+			for (String compo1 : compos) {
+				predicate = cb.or(predicate,cb.equal( join2.get("id"), Integer.parseInt(compo1)));
+			}
+		}
+		if(predicate != null) {
+			if(predicate2 != null) {
+				predicate = cb.and(predicate,predicate2);
+			}
+		} else {
+			predicate = predicate2;
+		}
+		if (predicate != null) {
+			criteria.where(predicate);
+		} else {
+			criteria.where(cb.equal(Recette.get("id"), -1));
+		}
+		return (long) (Math.ceil((float)em.createQuery(criteria).getSingleResult()/6)) ;
+	}
+
+	public Long findNumberPage(String saison) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Long> criteria = cb.createQuery(Long.class);
+		Root<Recette> Recette = criteria.from(Recette.class);
+		criteria.select(cb.countDistinct(Recette));
+		Predicate predicate = null ;
+		if (saison != null) {
+			String[] saisons = saison.split(",");
+			Join<Recette, RecetteSaison> join1 = Recette.join("saisons");
+			Join<RecetteSaison, Saison> join2 = join1.join("saisons");
+			predicate = cb.equal( join2.get("id"), Integer.parseInt(saisons[0])) ;
+			for (String saison1 : saisons) {
+				predicate = cb.or(predicate,cb.equal( join2.get("id"), Integer.parseInt(saison1)));
+			}
+			criteria.where(predicate);
+		}
+		return (long) (Math.ceil((float)em.createQuery(criteria).getSingleResult()/6)) ;
 	}
 }

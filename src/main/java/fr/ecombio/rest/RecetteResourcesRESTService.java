@@ -36,6 +36,13 @@ public class RecetteResourcesRESTService {
 	}
 	
 	@GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Recette> listAllProduits(@DefaultValue("0") @QueryParam("page") int page, @QueryParam("tri") String tri, @QueryParam("saison") String saison) {
+        return repository.findAllOrderedByName(page, tri, saison);
+    }
+
+	
+	@GET
 	@Path("/filter")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Recette> listAllRecette(@DefaultValue("0") @QueryParam("page") int page, @QueryParam("cat") String cat, @QueryParam("saison") String saison, @QueryParam("search") String search, @QueryParam("compo") String compo, @QueryParam("tri") String tri) {
@@ -55,6 +62,20 @@ public class RecetteResourcesRESTService {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Recette> listAllRecetteFromPanier(@QueryParam("id") Long id) {
 		return repository.findAllRecetteFromPanier(id);
+    }
+	
+	@GET
+	@Path("/page/filter")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Long NumberPage(@QueryParam("cat") String cat, @QueryParam("saison") String saison, @QueryParam("search") String search, @QueryParam("compo") String compo, @QueryParam("tri") String tri) {
+        return repository.findNumberPage(cat, saison, search, compo);
+    }
+	
+	@GET
+	@Path("/page")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Long NumberPage(@QueryParam("saison") String saison) {
+        return repository.findNumberPage(saison);
     }
 	
 }
