@@ -32,6 +32,7 @@ eComBioApp.factory('searchProductSvc', [ '$rootScope','categorieSvc','productSvc
 		currentPage=0;
 		$rootScope.$broadcast('reinitPageDueToNewSearch',currentPage);
 	}
+	
 	var doSearch = function() {
 		productSvc.getProductBySearchName(searchProductString,listCategories,listCategoriesChoix,currentPage,isSaison,currentTri.name);
 	}

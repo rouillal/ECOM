@@ -55,7 +55,7 @@ eComBioApp.factory('productSvc', [
 				});
 				restBackendSvc.getItemsByUrl('produit/page'+restAdress).then(function(data) {
 					var pageMax = data.data;
-					$rootScope.$broadcast('pageMaxReset',pageMax);
+					$rootScope.$broadcast('pageMaxProduitReset',pageMax);
 				}, function(reason) {
 					$rootScope.$broadcast('debug', reason);
 					alert('Failed: ' + reason);
