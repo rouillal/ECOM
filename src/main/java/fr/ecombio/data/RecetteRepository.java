@@ -59,7 +59,7 @@ public class RecetteRepository {
 
 	List<DefRecette> listRecette = new LinkedList<DefRecette>();
 
-	public List<fr.ecombio.model.Recette> findAllOrderedByName(int page, String saison) {
+	public List<fr.ecombio.model.Recette> findAllOrderedByName(int page, String saison, String tri) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Recette> criteria = cb.createQuery(Recette.class);
 		Root<Recette> Recette = criteria.from(Recette.class);
@@ -76,6 +76,15 @@ public class RecetteRepository {
 			}
 			criteria.where(predicate);
 		}
+		if(tri != null && tri != ""){
+			if(tri.equalsIgnoreCase("alpha")) {
+				criteria.orderBy(cb.asc(Recette.get("name")));
+			} else if(tri.equalsIgnoreCase("diff")) {
+				criteria.orderBy(cb.asc(Recette.get("difficulte")));
+			} else if(tri.equalsIgnoreCase("cout")) {
+				criteria.orderBy(cb.desc(Recette.get("cout")));
+			}
+		}
 		TypedQuery<Recette> typequery = em.createQuery(criteria);
 		typequery.setFirstResult(page*6);
 		typequery.setMaxResults(6);
@@ -83,7 +92,7 @@ public class RecetteRepository {
 
 	}
 
-	public List<Recette> findAllOrderedByName(int page, String cat, String saison, String search, String compo) {
+	public List<Recette> findAllOrderedByName(int page, String cat, String saison, String search, String compo, String tri) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Recette> criteria = cb.createQuery(Recette.class);
 		Root<Recette> Recette = criteria.from(Recette.class);
@@ -94,7 +103,7 @@ public class RecetteRepository {
 		if(cat == null || cat == "") {
 			if(search == null || search == "") {
 				if(compo == null || compo == "")
-					return this.findAllOrderedByName(page, saison);
+					return this.findAllOrderedByName(page, saison, tri);
 			}
 		} else {
 			String[] cats = cat.split(",");
@@ -156,6 +165,15 @@ public class RecetteRepository {
 			criteria.where(predicate);
 		} else {
 			criteria.where(cb.equal(Recette.get("id"), -1));
+		}
+		if(tri != null && tri != ""){
+			if(tri.equalsIgnoreCase("alpha")) {
+				criteria.orderBy(cb.asc(Recette.get("name")));
+			} else if(tri.equalsIgnoreCase("diff")) {
+				criteria.orderBy(cb.asc(Recette.get("difficulte")));
+			} else if(tri.equalsIgnoreCase("cout")) {
+				criteria.orderBy(cb.desc(Recette.get("cout")));
+			}
 		}
 		TypedQuery<Recette> typequery = em.createQuery(criteria);
 		typequery.setFirstResult(page*6);
