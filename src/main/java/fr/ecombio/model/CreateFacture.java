@@ -10,12 +10,21 @@ import com.itextpdf.text.pdf.*;
 
 
 public class CreateFacture {
-	private static String FILE = "/home/apollinaire/Documents/UJF/M2/ECOM/Facture.pdf";
-	private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
-			Font.BOLD);
-	private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,
-			Font.BOLD);
+	String dir;
+	private static String FILE;
 	
+	private static Font catFont;
+	private static Font smallBold;
+	
+	public CreateFacture() {
+		dir = System.getProperty("user.dir");
+		FILE = dir+"/Facture.pdf";
+		System.out.println(FILE);
+		catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
+				Font.BOLD);
+		smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,
+				Font.BOLD);
+	}
 
 
 	public String getFile(ValidationCommande infos, Panier panier) throws FileNotFoundException, DocumentException {
