@@ -3,6 +3,7 @@ eComBioApp.controller('RecetteDetailCtrl', [
 		'$window',
 		'panierSvc',
 		function($scope, $window, panierSvc) {
+			$scope.selectedRecette='';
 			$scope.selectedProduitPanier = '';
 			$scope.panierQuantite = 0;
 			$scope.panierPrixQt = 0;
@@ -57,7 +58,7 @@ eComBioApp.controller('RecetteDetailCtrl', [
 				panierSvc.changeProduit($scope.selectedProduitPanier,
 						$scope.panierQuantite + 1);
 			};
-
+			
 			$scope.$on('selectedProduitChange', function(event,
 					newSelectedProduit, qt ) {
 				$scope.selectedProduitPanier = newSelectedProduit;
@@ -74,4 +75,8 @@ eComBioApp.controller('RecetteDetailCtrl', [
 			    $('#tooltip').tooltip('hide');
 			   }, 1000);
 			})
+
+			$scope.$on('selectDetailsRecetteProvided', function(event,newSelectedRecette) {
+				$scope.selectedRecette=newSelectedRecette;
+			});
 		} ]);

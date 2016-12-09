@@ -11,9 +11,9 @@ eComBioApp.controller('ProductDetailRecetteCtrl', [
 				return !($scope.panierQuantite > 0);
 			};
 			
-			$scope.moinsProduit = function() {
+			$scope.moinsProduitRecette = function() {
 				if ($scope.panierQuantite > 0) {
-					panierSvc.changeProduit($scope.selectedProduitPanier,
+					panierSvc.changeProduit($scope.selectedProduitRecette,
 							$scope.panierQuantite - 1);
 				} else {
 					$scope.panierQuantite = 0;
@@ -25,8 +25,8 @@ eComBioApp.controller('ProductDetailRecetteCtrl', [
 				return false;
 			};
 
-			$scope.plusProduit = function() {
-				panierSvc.changeProduit($scope.selectedProduitPanier,
+			$scope.plusProduitRecette = function() {
+				panierSvc.changeProduit($scope.selectedProduitRecette,
 						$scope.panierQuantite + 1);
 			};
 
