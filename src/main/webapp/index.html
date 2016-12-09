@@ -66,7 +66,9 @@
 <script type="text/javascript"
 	src="resources/modules/product-catalog-mod/ctrl/product-detail-ctrl.js"></script>
 <script type="text/javascript"
-	src="resources/modules/recette-catalog-mod/ctrl/recette-detail-ctrl.js"></script>	
+	src="resources/modules/recette-catalog-mod/ctrl/recette-detail-ctrl.js"></script>
+<script type="text/javascript"
+	src="resources/modules/recette-catalog-mod/ctrl/product-detail-recette-ctrl.js"></script>	
 <script type="text/javascript"
 	src="resources/modules/recette-catalog-mod/ctrl/recette-ctrl.js"></script>
 <script type="text/javascript"
@@ -86,7 +88,10 @@
 <body ng-controller="MainCtrl">
 	<div ng-include src="'resources/modules/connect-mod/connect.html'"></div>
 	<div ng-include src="'resources/modules/signin-mod/signin.html'"></div>
-	
+	<div ng-include
+			src="'resources/modules/recette-catalog-mod/partials/selectedRecetteDisplay.html'"></div>
+	<div ng-include
+			src="'resources/modules/recette-catalog-mod/partials/selectedProductDisplayRecette.html'"></div>
 	<div id="ruban" class="row">
 		<ul class="col-xs-12">
 			<li class="col-md-3 col-xs-1"></li>

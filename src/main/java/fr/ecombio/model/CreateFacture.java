@@ -10,12 +10,29 @@ import com.itextpdf.text.pdf.*;
 
 
 public class CreateFacture {
+<<<<<<< HEAD
 	private static String FILE = "/Users/lorrie/Desktop/Facture.pdf";
 	private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
 			Font.BOLD);
 	private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,
 			Font.BOLD);
+=======
+	String dir;
+	private static String FILE;
+>>>>>>> branch 'dev' of https://github.com/rouillal/ECOM.git
 	
+	private static Font catFont;
+	private static Font smallBold;
+	
+	public CreateFacture() {
+		dir = System.getProperty("user.dir");
+		FILE = dir+"/Facture.pdf";
+		System.out.println(FILE);
+		catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
+				Font.BOLD);
+		smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,
+				Font.BOLD);
+	}
 
 
 	public String getFile(ValidationCommande infos, Panier panier) throws FileNotFoundException, DocumentException {
