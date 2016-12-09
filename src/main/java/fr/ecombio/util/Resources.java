@@ -6,6 +6,7 @@ import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 
 /**
  * This class uses CDI to alias Java EE resources, such as the persistence context, to CDI beans
@@ -22,8 +23,12 @@ import javax.persistence.PersistenceContext;
 public class Resources {
 
     @Produces
-    @PersistenceContext
+    @PersistenceContext(unitName = "primary")
     private EntityManager em;
+    
+   /* @Produces
+    @PersistenceContext(unitName = "read-unit")
+    private EntityManager em2;*/
 
     @Produces
     public Logger produceLog(InjectionPoint injectionPoint) {
