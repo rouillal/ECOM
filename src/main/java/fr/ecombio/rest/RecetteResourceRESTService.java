@@ -13,35 +13,70 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import fr.ecombio.data.RecetteRepository;
+import fr.ecombio.model.Client;
 import fr.ecombio.model.Produit;
 import fr.ecombio.model.Recette;
+import fr.ecombio.model.ValidationClient;
 
 
 /**
- * JAX-RS Example
- * <p/>
- * This class produces a RESTful service to read/write the contents of the Produits table.
+ * <p>
+ * Permet un service RESTful read/write pour les recettes
+ * 
+ * @see Recette
+ * @see Produits
+ * @see RecetteRepository
+ *
  */
 @Path("/recette")
 @RequestScoped
-public class RecetteResourcesRESTService {
+public class RecetteResourceRESTService {
 
+	/**
+	 * @see RecetteRepository
+	 */
 	@Inject
     private RecetteRepository repository;
 	
+	/**
+	 * Ajout d'une recette en base
+	 * @param recette recette
+	 * 
+	 * @see Recette
+	 */
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public void AjoutRecette(Recette recette){
 		repository.AjoutRecette(recette);
 	}
 	
+	/**
+	 * Recherche des recettes selon une selection
+	 * @param page page courante pour la pagination
+	 * @param tri selection plus precise
+	 * @param saison selection par saison
+	 * @return liste de recettes
+	 * 
+	 * @see Recette
+	 */
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Recette> listAllProduits(@DefaultValue("0") @QueryParam("page") int page, @QueryParam("tri") String tri, @QueryParam("saison") String saison) {
+    public List<Recette> listAllRecette(@DefaultValue("0") @QueryParam("page") int page, @QueryParam("tri") String tri, @QueryParam("saison") String saison) {
         return repository.findAllOrderedByName(page, tri, saison);
     }
 
-	
+	/**
+	 * Recherche des recettes selon une selection
+	 * @param page page courante pour la pagination
+	 * @param cat recherche par type de recette
+	 * @param saison selection par saison
+	 * @param search recherche par mot clef
+	 * @param compo recherche par type de regime
+	 * @param tri selection plus precise
+	 * @return liste de recettes
+	 * 
+	 * @see Recette
+	 */
 	@GET
 	@Path("/filter")
     @Produces(MediaType.APPLICATION_JSON)
@@ -49,7 +84,13 @@ public class RecetteResourcesRESTService {
         return repository.findAllOrderedByName(page, cat, saison, search, compo, tri);
     }
 	
-
+	/**
+	 * Recherche de produit d'une recette
+	 * @param id identifiant de la recette
+	 * @return liste de produits
+	 * 
+	 * @see Produits
+	 */
 	@GET
 	@Path("/produits")
     @Produces(MediaType.APPLICATION_JSON)
@@ -57,13 +98,31 @@ public class RecetteResourcesRESTService {
 		return repository.findAllProduitsFromId(id);
     }
 	
+	/**
+	 * Recherche de recette par rapport aux produits d'un panier
+	 * @param id identifiant du panier
+	 * @return liste de recettes
+	 * 
+	 * @see Recette
+	 */
 	@GET
 	@Path("/panier")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Recette> listAllRecetteFromPanier(@QueryParam("id") Long id) {
 		return repository.findAllRecetteFromPanier(id);
     }
-	
+
+	/**
+	 * Recherche du nombre de page selon une selection
+	 * @param cat recherche par type de recette
+	 * @param saison selection par saison
+	 * @param search recherche par mot clef
+	 * @param compo recherche par type de regime
+	 * @param tri selection plus precise
+	 * @return nombre de page
+	 * 
+	 * @see Recette
+	 */
 	@GET
 	@Path("/page/filter")
     @Produces(MediaType.APPLICATION_JSON)
@@ -71,6 +130,12 @@ public class RecetteResourcesRESTService {
         return repository.findNumberPage(cat, saison, search, compo);
     }
 	
+	/**
+	 * Recherche du nombre de page selon une selection
+	 * @param saison selection par saison
+	 * @return nombre de page
+	 * 
+	 */
 	@GET
 	@Path("/page")
     @Produces(MediaType.APPLICATION_JSON)

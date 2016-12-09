@@ -21,35 +21,69 @@ import javax.xml.ws.ResponseWrapper;
 import fr.ecombio.data.PanierRepository;
 import fr.ecombio.data.ArticleRepository;
 import fr.ecombio.data.ProduitRepository;
+import fr.ecombio.data.RegistreRepository;
 import fr.ecombio.data.StockManagerRepository;
 import fr.ecombio.model.Article;
 import fr.ecombio.model.GestionArticle;
 import fr.ecombio.model.Panier;
 import fr.ecombio.model.Produit;
+import fr.ecombio.model.SendEmail;
+import fr.ecombio.model.ValidationCommande;
 
+/**
+ * <p>
+ * Permet un service RESTful read/write pour le panier
+ * 
+ * @see ArticleRepository
+ * @see ProduitRepository
+ * @see PanierRepository
+ * @see StockManagerRepository
+ * @see GestionArticle
+ * @see Panier
+ * @see Produit
+ * @see Article
+ *
+ */
 @Path("/panier")
 @RequestScoped
 public class PanierResourceRESTService {
 
+	/**
+	 * @see PanierRepository
+	 */
 	@Inject
 	private PanierRepository PanierRepository;
 
+	/**
+	 * @see ProduitRepository
+	 */
 	@Inject
 	private ProduitRepository ProduitRepository;
 
+	/**
+	 * @see ArticleRepository
+	 */
 	@Inject
 	private ArticleRepository ArticleRepository;
 
+	/**
+	 * @see StockManagerRepository
+	 */
 	@Inject
 	private StockManagerRepository StockManagerRepository;
 
 	//Logger log;
 	Logger log = java.util.logging.Logger.getLogger("org.hibernate");
 
-	/*objet en JSon
-	 * {
-	 * 		{id1:,qte1},{id2,qte2},...
-	 * }
+	/**
+	 * Creation du panier
+	 * @param commande mon panier
+	 * @return id du panier cree ou erreur
+	 * 
+	 * @see GestionArticle
+	 * @see Panier
+	 * @see Produit
+	 * @see Article
 	 */
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
@@ -78,6 +112,17 @@ public class PanierResourceRESTService {
 		return Response.ok(PanierID).build();
 	}
 
+	/**
+	 * Mise a jour du panier
+	 * @param id identifiant du panier
+	 * @param commande mon panier
+	 * @return ok ou erreur
+	 * 
+	 * @see GestionArticle
+	 * @see Panier
+	 * @see Produit
+	 * @see Article
+	 */
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	@ResponseWrapper public Response createUpdatePanier(@QueryParam("id") Long id, GestionArticle[] commande){

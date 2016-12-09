@@ -55,14 +55,6 @@ public class RecetteProduit implements Serializable{
 	@JoinColumn(name="recette_id")
 	@JsonManagedReference
 	private Recette recettes;
-	
-	/**
-	 * non utilise pour le moment
-	 * quantite du produit dans la recette
-	 */
-	@NotNull
-	@Column(name="recetteproduit_quantite")
-	private int quantite;
 
 	public Long getId() {
 		return Id;
@@ -94,14 +86,6 @@ public class RecetteProduit implements Serializable{
 
 	public void setProduits(Produit produits) {
 		this.produits = produits;
-	}
-
-	public int getQuantite() {
-		return quantite;
-	}
-
-	public void setQuantite(int quantite) {
-		this.quantite = quantite;
 	}
 	
 	

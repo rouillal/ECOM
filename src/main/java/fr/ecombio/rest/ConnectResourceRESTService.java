@@ -15,18 +15,41 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.xml.ws.ResponseWrapper;
 
+import fr.ecombio.data.CompositionRepository;
 import fr.ecombio.model.Client;
+import fr.ecombio.model.Composition;
 import fr.ecombio.model.ValidationClient;
 
+/**
+ * <p>
+ * Permet un service RESTful read/write pour la connection
+ * 
+ * @see Client
+ * @see RegistreRepository
+ * @see ValidationClient
+ *
+ */
 @Path("/connect")
 @RequestScoped
-public class ConnectRessourceRESTService {
+public class ConnectResourceRESTService {
 
 	Logger logger = java.util.logging.Logger.getLogger("org.hibernate");
 
+	/**
+	 * @see RegistreRepository
+	 */
 	@Inject
 	private fr.ecombio.data.RegistreRepository RegistreRepository;
 
+	/**
+	 * authentification du client
+	 * @param mail login
+	 * @param psw mot de passe
+	 * @return Client si authentification ok erreur sinon
+	 * @throws Exception
+	 * 
+	 * @see Client
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@ResponseWrapper public Response registerClient( @QueryParam("mail") String mail, @QueryParam("psw") String psw) throws Exception {
@@ -38,6 +61,13 @@ public class ConnectRessourceRESTService {
 		return Response.ok(client).build();
 	}
 
+	/**
+	 * Enregistrement du client en base
+	 * @param client infos sur le client
+	 * @return le client si il n'existait pas déjà, erreur sinon
+	 * 
+	 * @see ValidationClient
+	 */
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response registerClient(ValidationClient client) {
