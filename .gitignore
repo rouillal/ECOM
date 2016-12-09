@@ -7,3 +7,4 @@ bin/*
 .factorypath
 .tern-project
 README.md
+src/main/java/fr/ecombio/rest/ImageProviderService.java

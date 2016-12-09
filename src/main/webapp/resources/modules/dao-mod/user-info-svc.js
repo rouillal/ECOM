@@ -1,7 +1,7 @@
 eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','commandSvc',
                                     function($rootScope,restBackendSvc,$window,commandSvc) {
 
-	var userInfo = {'nom':'','prenom':'','mail':'dupont@gmail.com','adresse':'17 Rue des Marguerites','cp':'38000','ville':'Grenoble','psw':'xx'};
+	var userInfo = {'nom':'','prenom':'','mail':'biotobealive@gmail.com','adresse':'17 Rue des Marguerites','cp':'38000','ville':'Grenoble','psw':'xx'};
 
 	var getUserInfo = function() {
 		return userInfo;
