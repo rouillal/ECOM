@@ -17,6 +17,8 @@ import javax.mail.internet.*;
 import com.itextpdf.text.DocumentException;
 
 import javax.inject.Inject;
+import javax.jws.WebMethod;
+import javax.jws.WebService;
 
 import fr.ecombio.data.PanierRepository;
 
@@ -30,7 +32,7 @@ public class SendEmail {
 		this.PanierRepository = PanierRepository;
 	}
 
-	public void send(ValidationCommande infos) {
+	public synchronized void send(ValidationCommande infos) {
 
 		// Recipient's email ID needs to be mentioned.
 		String to = "biotobealive@gmail.com";
