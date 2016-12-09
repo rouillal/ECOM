@@ -3,6 +3,10 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','c
 
 	var userInfo = {'nom':'','prenom':'','mail':'biotobealive@gmail.com','adresse':'17 Rue des Marguerites','cp':'38000','ville':'Grenoble','psw':'xx'};
 
+	var getInfoInit = function() {
+		return userInfo;
+	};
+	
 	var getUserInfo = function() {
 		return userInfo;
 	};
