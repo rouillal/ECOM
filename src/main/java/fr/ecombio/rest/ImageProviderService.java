@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
         urlPatterns = "/image",
         initParams =
         {
-            @WebInitParam(name = "saveDir", value = "C:\\tempEcom\\"),
+            @WebInitParam(name = "saveDir", value = "/Users/lorrie/Desktop/images/"),
             @WebInitParam(name = "filenameParamName", value = "name")
         }
 )

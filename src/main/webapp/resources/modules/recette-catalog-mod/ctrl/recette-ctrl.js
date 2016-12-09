@@ -25,7 +25,7 @@ eComBioApp.controller('RecetteCtrl', [ '$scope','$window','searchRecetteSvc','re
 	}
 	
 	$scope.listeDifficult=[];
-	for (i = 0; i < 3; i++) {
+	for (i = 0; i < 4; i++) {
 		var DiffTmp = new Object();
 		coutTmp['value'] = i;
 		if (i==0)

@@ -21,7 +21,7 @@ eComBioApp.controller('RecetteDetailCtrl', [
 			}
 			
 			$scope.listeDifficult=[];
-			for (i = 0; i < 3; i++) {
+			for (i = 0; i < 4; i++) {
 				var DiffTmp = new Object();
 				coutTmp['value'] = i;
 				if (i==0)
@@ -64,4 +64,14 @@ eComBioApp.controller('RecetteDetailCtrl', [
 				$scope.panierQuantite = qt;
 				$scope.panierPrixQt = Math.round(qt * newSelectedProduit.prix*100)/100;
 			});
+			
+			$(document).ready(function(){
+				$('#tooltip').tooltip({title: "Ajouté", trigger: "click"}); 
+		});
+		
+		$('#tooltip').on('shown.bs.tooltip', function () {
+			   setTimeout(function () {
+			    $('#tooltip').tooltip('hide');
+			   }, 1000);
+			})
 		} ]);
