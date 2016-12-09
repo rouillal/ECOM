@@ -13,23 +13,49 @@ import javax.inject.Inject;
 import fr.ecombio.model.Article;
 import fr.ecombio.model.Panier;
 
+/**
+ * <p>
+ * Permet une gestion des stocks optimiste :
+ * <ul>
+ * 	<li>decrement/increment du stock lorsqu'un utilisateur ajoute/suprime un produit au panier</li>
+ * 	<li>increment du stock lorsqu'un panier a atteint un time-out d'inactivite</li>
+ *  </ul>
+ * </p>
+ * 
+ * @see ProduitRepository
+ * @see PanierRepository
+ *
+ */
 @Stateless
 public class StockManagerRepository {
 
 	private static boolean isInit = false;
 
+	/**
+	 * default cstor.
+	 */
 	public StockManagerRepository() {
 		if (!isInit) {
 			initTimer();
 		}
 	}
 
+	/**
+	 * @see ProduitRepository
+	 */
 	@Inject
 	private ProduitRepository Produitrepository;
 
+	/**
+	 * @see PanierRepository
+	 */
 	@Inject
 	private PanierRepository Panierrepository;
 
+	/**
+	 * increment du stock lorsqu'un panier a atteint un time-out d'inactivité
+	 * @param panier
+	 */
 	public void incrementeStock(Panier panier) {
 		Iterator<Article> i=panier.getArticles().iterator();
 		while(i.hasNext()) // tant qu'on a un suivant
@@ -39,14 +65,18 @@ public class StockManagerRepository {
 			Produitrepository.updateProduit(valeur.getProduit());
 		}
 	}
-	
 
-	public void incrementeStock(Panier panier, Article a) {
+	/**
+	 * incremente le stock correspondant a un produit
+	 * @param panier
+	 * @param article
+	 */
+	public void incrementeStock(Panier panier, Article article) {
 		Iterator<Article> i=panier.getArticles().iterator();
 		while(i.hasNext()) // tant qu'on a un suivant
 		{
 			Article valeur = i.next();
-			if (valeur.getId() == a.getId()){
+			if (valeur.getId() == article.getId()){
 				valeur.getProduit().setStock(valeur.getProduit().getStock()+1);
 				Produitrepository.updateProduit(valeur.getProduit());
 			}
@@ -55,13 +85,18 @@ public class StockManagerRepository {
 		Panierrepository.updatePanier(panier);
 	}
 
-	public void decrementeStock(Panier panier, Article a) {
+	/**
+	 * decremente le stock correspondant à un produit
+	 * @param panier
+	 * @param article
+	 */
+	public void decrementeStock(Panier panier, Article article) {
 
 		Iterator<Article> i=panier.getArticles().iterator();
 		while(i.hasNext()) // tant qu'on a un suivant
 		{
 			Article valeur = i.next();
-			if (valeur.getId() == a.getId()){
+			if (valeur.getId() == article.getId()){
 				valeur.getProduit().setStock(valeur.getProduit().getStock()-1);
 				Produitrepository.updateProduit(valeur.getProduit());
 			}
@@ -70,12 +105,17 @@ public class StockManagerRepository {
 		Panierrepository.updatePanier(panier);
 	}
 
+	/**
+	 * Tache qui tourne sur le serveur:
+	 *   Elle supprime un panier au bou d'un time out d'inactivite,
+	 *   de maniere à liberer les stocks.
+	 */
 	private void initTimer() {
 		TimerTask timertask = new TimerTask() {
 
 			@Inject
 			private PanierRepository Panierrepository2;
-			
+
 			public long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
 				long diffInMillies = date2.getTime() - date1.getTime();
 				return timeUnit.convert(diffInMillies,TimeUnit.MILLISECONDS);

@@ -13,21 +13,41 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+/**
+ * <p>
+ * Association saison produit :
+ * </p>
+ * 
+ * @see Produit
+ * @see Saison
+ *
+ */
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "produitsaison")
 public class ProduitSaison implements Serializable{
 
+	/**
+	 * identifiant
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="produitsaison_id")
 	private Long Id;
 	
+	/**
+	 * produit associe
+	 * @see Produit
+	 */
 	@ManyToOne
 	@JoinColumn(name="produit_id")
 	@JsonManagedReference
 	private Produit produits;
 	
+	/**
+	 * saison associee
+	 * @see Saison
+	 */
 	@ManyToOne
 	@JoinColumn(name="saison_id")
 	@JsonManagedReference

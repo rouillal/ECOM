@@ -11,6 +11,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.xml.ws.ResponseWrapper;
+import javax.xml.ws.WebServiceRef;
+
 import fr.ecombio.data.RegistreRepository;
 import fr.ecombio.data.PanierRepository;
 import fr.ecombio.model.SendEmail;
@@ -26,7 +28,7 @@ public class PaiementRESTService {
 	private RegistreRepository RegistreRepository;	
 	@Inject
 	private PanierRepository PanierRepository;
-
+	
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@ResponseWrapper public Response validationPaiement(ValidationCommande infos) throws Exception {

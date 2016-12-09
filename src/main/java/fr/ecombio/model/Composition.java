@@ -23,25 +23,46 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+/**
+ * <p>
+ * Description d'une composition (regime) :
+ * </p>
+ * 
+ * @see CompositionRecette
+ *
+ */
 @SuppressWarnings("serial")
 @Table(name="composition")
 @Entity
 public class Composition implements Serializable {
 
+	/**
+	 * identifiant
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "composition_id")
 	private Long id ;
 
+	/**
+	 * nom
+	 */
 	@Size(min = 1, max = 25)
 	@Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
     @Column(name = "composition_name")
 	private String name;
 	
+	/**
+	 * recette associee
+	 * @see CompositionRecette
+	 */
 	@OneToMany(mappedBy="compositions", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JsonBackReference
 	private Set<CompositionRecette> recettes;
 	
+	/**
+	 * default cstor.
+	 */
 	public Composition() {
 		super();
 	}

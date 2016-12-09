@@ -2,10 +2,29 @@ package fr.ecombio.model;
 
 import java.io.Serializable;
 
+/**
+ * <p>
+ * Classe pour serialiser des donnes d'une commande :
+ * <ul>
+ * <li>id du panier</li>
+ * <li>infos sur la commande</li>
+ * <li>infos sur le paiement</li>
+ * </ul>
+ * </p>
+ * 
+ * @see GestionCommande
+ * @see ValidationPaiement
+ */
 @SuppressWarnings("serial")
 public class ValidationCommande implements Serializable{
 	private Long idPanier;
+	/**
+	 * @see GestionCommande
+	 */
 	private GestionCommande commandInfo;
+	/**
+	 * @see ValidationPaiement
+	 */
 	private ValidationPaiement commandPaieInfo;
 	
 	public Long getIdPanier() {

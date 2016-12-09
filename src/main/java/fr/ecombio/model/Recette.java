@@ -15,67 +15,115 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 /**
+ * <p>
+ * Description d'une recette :
+ * </p>
  * 
- * Classe représentant une recette
+ * @see RecetteProduit
+ * @see RecetteSaison
+ * @see CompositionRecette
+ * @see CategorieRecette
  *
  */
-
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "recette")
 public class Recette implements Serializable {
 	
+	/**
+	 * identifiant
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "recette_id")
 	private Long id;
 	
+	/**
+	 * nom
+	 */
 	@NotNull
 	@Size(min = 1, max = 25)
 	@Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
     @Column(name = "recette_name")
 	private String name;
 	
+	/**
+	 * nombre de personne
+	 */
 	@NotNull
     @Column(name = "recette_personne")
 	private int quantite;
 
+	/**
+	 * temps de preparation
+	 */
 	@NotNull
 	@Column(name="recette_tpsprepa")
 	private int tpsPreparation;
 	
+	/**
+	 * temps de cuisson
+	 */
 	@NotNull
 	@Column(name="recette_tpscuisson")
 	private int tpsCuisson;
 	
+	/**
+	 * cout de la recette
+	 */
 	@NotNull
 	@Column(name="recette_cout")
 	private int cout;
 	
+	/**
+	 * difficulte de la recette
+	 */
 	@NotNull
 	@Column(name="recette_difficulte")
 	private int difficulte;
 	
+	/**
+	 * liste des ingredients
+	 */
 	@NotNull
 	@Column(name="recette_listeingredients")
 	private String listeIngredients;
 	
+	/**
+	 * description de la preparation
+	 */
 	@NotNull
 	@Column(name="recette_preparation")
 	private String preparation;
 	
+	/**
+	 * liste des produits contenus dans la recette
+	 * @see RecetteProduit
+	 */
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="recettes")
 	@JsonBackReference
     private Set<RecetteProduit> produits;
 	
+	/**
+	 * liste des saisons associees a la recette
+	 * @see RecetteSaison
+	 */
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="recettes")
 	@JsonBackReference
     private Set<RecetteSaison> saisons;
 	
+	/**
+	 * liste des regimes associes a la recette
+	 * @see CompositionRecette
+	 */
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="recettes")
 	@JsonBackReference
     private Set<CompositionRecette> compositions;
 	
+	/**
+	 * liste des categorie de la recette
+	 * @see CategorieRecette
+	 */
 	@ManyToOne
 	@JoinColumn(name="categorierecette_id")
     @JsonManagedReference

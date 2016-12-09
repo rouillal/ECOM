@@ -6,7 +6,11 @@ import java.util.Properties;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
-
+/**
+ * <p>
+ * Gestion du cryptage du mot de passe en base
+ * </p>
+ */
 public class MyCryptoConverter {
 
 	private static String ALGORITHM = null;
@@ -28,6 +32,11 @@ public class MyCryptoConverter {
 		KEY = ((String) properties.get(secret_property_key)).getBytes();
 	}
 
+	/**
+	 * crypter une donnee
+	 * @param sensitive a crypter
+	 * @return la chaine crypte
+	 */
 	public static String encrypt(String sensitive) {
 		Key key = new SecretKeySpec(KEY, "AES");
 		try {
@@ -41,6 +50,11 @@ public class MyCryptoConverter {
 		}
 	}
 
+	/**
+	 * decrypter une donne
+	 * @param sensitive a decrypter
+	 * @return la chaine a decrypter
+	 */
 	public static String decrypt(String sensitive) {
 		Key key = new SecretKeySpec(KEY, "AES");
 		try {

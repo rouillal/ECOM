@@ -17,29 +17,55 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+/**
+ * <p>
+ * Description d'une saison :
+ * </p>
+ * 
+ * @see ProduitSaison
+ * @see RecetteSaison
+ *
+ */
 @SuppressWarnings("serial")
 @Table(name="saison")
 @Entity
 public class Saison implements Serializable {
 
+	/**
+	 * identifiant
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "saison_id")
 	private Long id ;
 
+	/**
+	 * nom
+	 */
 	@Size(min = 1, max = 25)
 	@Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
     @Column(name = "saison_name")
 	private String name;
 	
+	/**
+	 * produits associés
+	 * @see ProduitSaison
+	 */
 	@OneToMany(mappedBy="saisons", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JsonBackReference
 	private Set<ProduitSaison> produits;
 	
+	/**
+	 * recettes associees
+	 * @see RecetteSaison
+	 */
 	@OneToMany(mappedBy="saisons", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JsonBackReference
 	private Set<RecetteSaison> recettes;
 	
+	/**
+	 * default cstor.
+	 */
 	public Saison() {
 	}
 	

@@ -2,6 +2,21 @@ package fr.ecombio.model;
 
 import java.io.Serializable;
 
+/**
+ * <p>
+ * Classe pour serialiser des donnes sur la commande :
+ * <ul>
+ * <li>nom</li>
+ * <li>prenom</li>
+ * <li>mail</li>
+ * <li>livDom : si livraison a l'entrepot ou a domicile</li>
+ * <li>cp : code postal</li>
+ * <li>ville</li>
+ * <li>date de livraison</li>
+ * <li>heure de livraison</li>
+ * </ul>
+ * </p>
+ */
 @SuppressWarnings("serial")
 public class GestionCommande implements Serializable{
 	
