@@ -2,11 +2,12 @@ eComBioApp.factory('panierSvc', [
 		'$rootScope',
 		'restBackendSvc',
 		'$window',
-		function($rootScope, restBackendSvc, $window) {
-			var listePanier = [];
+		'cookieStoreSvc',
+		function($rootScope, restBackendSvc, $window,cookieStoreSvc) {
+			var listePanier = cookieStoreSvc.getStoredLocalItem('panier');
 			var selectedProduit = '';
 			var montantTotal = 0.00;
-			var idPanierServer = -1;
+			var idPanierServer = cookieStoreSvc.getStoredLocalString('idPanierServer');
 
 			var setSelectedProduit = function(newSelectedProduit) {
 				selectedProduit = newSelectedProduit;
@@ -86,11 +87,13 @@ eComBioApp.factory('panierSvc', [
 						montantTotal += price;
 					}
 				}
+				cookieStoreSvc.storeLocalItem('panier',listePanier);
 				var panierJson = prepareMessageServeur();
 				if (idPanierServer < 0) {
 					restBackendSvc.createItem('panier', panierJson).then(
 							function(data) {
 								idPanierServer = data.data;
+								cookieStoreSvc.storeLocalString('idPanierServer',idPanierServer);
 							});
 				} else {
 					var urlUpdate = 'panier?id='+idPanierServer;

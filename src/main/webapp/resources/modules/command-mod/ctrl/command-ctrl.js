@@ -108,8 +108,6 @@ eComBioApp.controller('CommandCtrl', [ '$scope', '$location','$window','commandS
 	
 	$scope.$on('erreurPaiement', function(event,message) {
 		$scope.erreurVoir = true;
-		var ff = angular.toJson(message);
-		$window.alert("Problème de paiement : "+ff);
 		$scope.recapInfoVoir = false;
 		$scope.payerInfoVoir = true;
 		$scope.erreurPaiement=message;
