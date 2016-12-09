@@ -10,7 +10,7 @@ import com.itextpdf.text.pdf.*;
 
 
 public class CreateFacture {
-	private static String FILE = "/home/apollinaire/Documents/UJF/M2/ECOM/Facture.pdf";
+	private static String FILE = "/Users/lorrie/Desktop/Facture.pdf";
 	private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
 			Font.BOLD);
 	private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,
