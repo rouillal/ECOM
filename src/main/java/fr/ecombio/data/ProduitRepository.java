@@ -306,4 +306,3 @@ public class ProduitRepository {
 		return (long) (Math.ceil((float)em.createQuery(criteria).getSingleResult()/6)) ;
 	}
 }
-
