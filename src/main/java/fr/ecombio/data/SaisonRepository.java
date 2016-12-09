@@ -11,16 +11,47 @@ import javax.persistence.criteria.Root;
 
 import fr.ecombio.model.Saison;
 
+/**
+ * <p>
+ * Permet une gestion des saisons :
+ * <ul>
+ * 	<li>faire des requetes de select</li>
+ * 	<li>ajouter une saison en base</li>
+ *  </ul>
+ * </p>
+ * 
+ * @see EntityManager
+ * @see Saison
+ *
+ */
 @Stateless
 public class SaisonRepository {
 
+	/**
+	 * pour gerer l'aspect transactionnel
+	 * 
+	 * @see EntityManager
+	 */
 	@Inject
 	private EntityManager em;
 
+	/**
+	 * Recherche d'une saison par id
+	 * @param id
+	 * @return la saison correspondante
+	 * 
+	 * @see Saison
+	 */
 	public Saison findById(Long id) {
 		return em.find(Saison.class, id);
 	}
 
+	/**
+	 * Recherche de toutes les saisons
+	 * @return la liste des saison
+	 * 
+	 * @see Saison
+	 */
 	public List<Saison> findAllOrderedByName() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Saison> criteria = cb.createQuery(Saison.class);
@@ -29,8 +60,12 @@ public class SaisonRepository {
 		return em.createQuery(criteria).getResultList();
 	}
 	
-
-	public  void AjoutCategorie(Saison cat) {
-		em.persist(cat);
+	/**
+	 * Ajout d'une saison
+	 * 
+	 * @see Saison
+	 */
+	public  void AjoutSaison(Saison saison) {
+		em.persist(saison);
 	}
 }

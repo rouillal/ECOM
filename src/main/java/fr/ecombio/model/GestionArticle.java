@@ -1,5 +1,14 @@
 package fr.ecombio.model;
 
+/**
+ * <p>
+ * Classe pour serialiser des donnes sur un article :
+ * <ul>
+ * <li>son id</li>
+ * <li>quantite</li>
+ * </ul>
+ * </p>
+ */
 public class GestionArticle {
 	private Long id;
 

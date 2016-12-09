@@ -24,14 +24,35 @@ import fr.ecombio.data.PanierRepository;
 
 import javax.activation.*;
 
+/**
+ * <p>
+ * Gestion de l'envoie d'un mail de confiramtion d'achat
+ * en y associant une facture
+ * </p>
+ *
+ * @see PanierRepository
+ * @see CreateFacture
+ */
 public class SendEmail {
 
+	/**
+	 * repository qui gere les requetes en base
+	 * @see PanierRepository
+	 */
 	PanierRepository PanierRepository;
 
+	/**
+	 * cstor.
+	 * @param PanierRepository repository qui gere les requete en base
+	 */
 	public SendEmail(PanierRepository PanierRepository) {
 		this.PanierRepository = PanierRepository;
 	}
 
+	/**
+	 * envoie un mail de confirmation
+	 * @param infos informations de la commande
+	 */
 	public synchronized void send(ValidationCommande infos) {
 
 		// Recipient's email ID needs to be mentioned.

@@ -32,12 +32,34 @@ import fr.ecombio.model.RecetteProduit;
 import fr.ecombio.model.RecetteSaison;
 import fr.ecombio.model.Saison;
 
+/**
+ * <p>
+ * Permet une gestion des recettes :
+ * <ul>
+ * 	<li>faire des requêtes de select</li>
+ * 	<li>ajouter une saison en base</li>
+ *  </ul>
+ * </p>
+ * 
+ * @see EntityManager
+ * @see Recette
+ * @see PanierRepository
+ *
+ */
 @Stateless
 public class RecetteRepository {
 
+	/**
+	 * pour gérer l'aspect transactionnel
+	 * 
+	 * @see EntityManager
+	 */
 	@Inject
 	private EntityManager em;
 
+	/**
+	 * @see PanierRepository
+	 */
 	@Inject
 	private PanierRepository PanierRepository;
 
@@ -46,20 +68,30 @@ public class RecetteRepository {
 
 	/**
 	 * 
-	 * @param id
+	 * @param id identificateur de la recette
 	 * @return Recette
 	 */
 	public Recette findById(Long id) {
 		return em.find(Recette.class, id);
 	}
 
+	/**
+	 * @param recette la recette
+	 */
 	public  void AjoutRecette(Recette recette) {
 		em.persist(recette);
 	}
 
-	List<DefRecette> listRecette = new LinkedList<DefRecette>();
+	private List<DefRecette> listRecette = new LinkedList<DefRecette>();
 
-	public List<fr.ecombio.model.Recette> findAllOrderedByName(int page, String saison, String tri) {
+	/**
+	 * 
+	 * @param page numéro de la page, pour la pagination
+	 * @param saison saisons associées à la recette
+	 * @param tri alpha,name,difficulte,cout,tpsPreparation,tpsCuisson
+	 * @return liste de recettes
+	 */
+	public List<Recette> findAllOrderedByName(int page, String saison, String tri) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Recette> criteria = cb.createQuery(Recette.class);
 		Root<Recette> Recette = criteria.from(Recette.class);
@@ -95,6 +127,16 @@ public class RecetteRepository {
 
 	}
 
+	/**
+	 * 
+	 * @param page numéro de la page, pour la pagination
+	 * @param cat catégorie de la recette
+	 * @param saison saisons associées à la recette
+	 * @param search recherche par nom de recette
+	 * @param compo type de la recette (vegetarien ...)
+	 * @param tri alpha,name,difficulte,cout,tpsPreparation,tpsCuisson
+	 * @return liste de recettes
+	 */
 	public List<Recette> findAllOrderedByName(int page, String cat, String saison, String search, String compo, String tri) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Recette> criteria = cb.createQuery(Recette.class);
@@ -228,6 +270,11 @@ public class RecetteRepository {
 		}
 	}
 
+	/**
+	 * Recherche de la liste des produits contenus dans une recette
+	 * @param id identifiant de la recette
+	 * @return liste des produits de la recette
+	 */
 	public List<Produit> findAllProduitsFromId(int id) {
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -239,7 +286,11 @@ public class RecetteRepository {
 		return em.createQuery(criteria).getResultList();
 	}
 
-
+	/**
+	 * Recherche des recettes contenant un produit
+	 * @param id identifiant du produit
+	 * @return liste des recettes
+	 */
 	public List<Recette> findAllRecetteFromPanier(Long id) {
 		Panier panier = PanierRepository.findById(id);
 		List<Long> listProduit = new ArrayList<Long> ();
@@ -253,11 +304,11 @@ public class RecetteRepository {
 		Join<Recette, RecetteProduit> join1 = Recette.join("produits");
 		Join<RecetteProduit, Produit> join2 = join1.join("produits");
 
-		criteria.select(Recette);
+		criteria.select(Recette).distinct(true);
 		Expression<String> exp = join2.get("id");
 		Predicate predicate = exp.in(listProduit);
 		criteria.where(predicate);
-		return em.createQuery(criteria).getResultList();
+		return em.createQuery(criteria).setMaxResults(15).getResultList();
 	}
 
 	public Long findNumberPage(String cat, String saison, String search, String compo) {
@@ -337,6 +388,11 @@ public class RecetteRepository {
 		return (long) (Math.ceil((float)em.createQuery(criteria).getSingleResult()/6)) ;
 	}
 
+	/**
+	 * Recherche du nombre de recette par saison divisé par 6
+	 * @param saison la saison selectionnée
+	 * @return nombre de page
+	 */
 	public Long findNumberPage(String saison) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Long> criteria = cb.createQuery(Long.class);

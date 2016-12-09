@@ -5,6 +5,17 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * <p>
+ * Classe pour serialiser des donnes sur le paiement :
+ * <ul>
+ * <li>num de la carte</li>
+ * <li>mois</li>
+ * <li>annee</li>
+ * <li>code de verification a trois chiffres</li>
+ * </ul>
+ * </p>
+ */
 @SuppressWarnings("serial")
 public class ValidationPaiement implements Serializable{
 	private String num;
@@ -48,6 +59,10 @@ public class ValidationPaiement implements Serializable{
 		this.codeVerif = codeVerif.replace("\n", "");
 	}
 	
+	/**
+	 * verification si les donnees ne sont par erronnees
+	 * @return erreur si il y a, null sinon
+	 */
 	public String verify() {
 		// TODO Auto-generated method stub
 		if (!this.verifyDate()) {

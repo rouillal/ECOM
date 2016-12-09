@@ -10,17 +10,45 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import fr.ecombio.model.Categorie;
+import fr.ecombio.model.Produit;
 
+/**
+ * <p>
+ * Permet une gestion des categorie :
+ * <ul>
+ * 	<li>faire des requetes de select</li>
+ * 	<li>ajouter une saison en base</li>
+ *  </ul>
+ * </p>
+ * 
+ * @see EntityManager
+ * @see Categorie
+ *
+ */
 @Stateless
 public class CategorieRepository {
 
+	/**
+	 * pour gerer l'aspect transactionnel
+	 * 
+	 * @see EntityManager
+	 */
 	@Inject
 	private EntityManager em;
 
+	/**
+	 * Recherche d'une categorie par son identifiant
+	 * @param id identificateur de la categorie
+	 * @return la categorie
+	 */
 	public Categorie findById(Long id) {
 		return em.find(Categorie.class, id);
 	}
 
+	/**
+	 * Recherche de l'ensemble des categories
+	 * @return liste des categories
+	 */
 	public List<Categorie> findAllOrderedByName() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Categorie> criteria = cb.createQuery(Categorie.class);
@@ -32,8 +60,12 @@ public class CategorieRepository {
 		criteria.select(Categorie).orderBy(cb.asc(Categorie.get("name")));
 		return em.createQuery(criteria).getResultList();
 	}
-	
 
+
+	/**
+	 * Persitence d'une categorie
+	 * @param cat categorie
+	 */
 	public  void AjoutCategorie(Categorie cat) {
 		em.persist(cat);
 	}

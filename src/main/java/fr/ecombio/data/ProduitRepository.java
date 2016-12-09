@@ -12,28 +12,53 @@ import javax.persistence.criteria.Root;
 
 import fr.ecombio.model.Produit;
 import fr.ecombio.model.ProduitSaison;
+import fr.ecombio.model.Recette;
 import fr.ecombio.model.Saison;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-
+/**
+ * <p>
+ * Permet une gestion des produits :
+ * <ul>
+ * 	<li>faire des requetes de select</li>
+ * 	<li>ajouter une saison en base</li>
+ *  </ul>
+ * </p>
+ * 
+ * @see EntityManager
+ * @see Produit
+ *
+ */
 @Stateless
 public class ProduitRepository {
 
+	/**
+	 * pour gerer l'aspect transactionnel
+	 * 
+	 * @see EntityManager
+	 */
 	@Inject
 	private EntityManager em;
 
 	/**
-	 * 
-	 * @param id
-	 * @return Produit
+	 * Recherche d'un produit
+	 * @param id identifiant du produit
+	 * @return Produit produit associe
 	 */
 	public Produit findById(Long id) {
 		return em.find(Produit.class, id);
 	}
 
+	/**
+	 * 
+	 * @param page numero de la page voulu
+	 * @param tri selection plus précise
+	 * @param saison selection par saison
+	 * @return
+	 */
 	public List<Produit> findAllOrderedByName(int page, String tri, int saison) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Produit> criteria = cb.createQuery(Produit.class);
@@ -69,14 +94,18 @@ public class ProduitRepository {
 		return typequery.getResultList();
 	}
 	
+	/**
+	 * Ajout d'un produit
+	 * @param prod Produit a ajouter
+	 */
 	public  void AjoutProduit(Produit prod) {
 		em.persist(prod);
 	}
 	
 	/**
-	 * 
-	 * @param cat
-	 * @return
+	 * Recherche des produits selon categorie donnee
+	 * @param cat categorie
+	 * @return liste de produits
 	 */
 	public List<Produit> findCatOrderedByName(String cat) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -90,6 +119,15 @@ public class ProduitRepository {
 		return em.createQuery(criteria).getResultList();
 	}
 
+	/**
+	 * 
+	 * @param cat categorie
+	 * @param search recherche par nom
+	 * @param page page courante
+	 * @param tri selection plus précise
+	 * @param saison selection par saison
+	 * @return liste de produits
+	 */
 	public List<Produit> findCatOrderedByName(String cat, String search, int page, String tri, int saison) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Produit> criteria = cb.createQuery(Produit.class);
@@ -151,6 +189,10 @@ public class ProduitRepository {
 		return typequery.getResultList();
 	}
 
+	/**
+	 * mise a jour du produit
+	 * @param p produit
+	 */
 	public void updateProduit(Produit p) {
 		em.merge(p);
 	}	
@@ -182,6 +224,13 @@ public class ProduitRepository {
 	      }
 	}
 
+	/**
+	 * Recherche du nombre de pages total
+	 * @param cat categorie
+	 * @param search recherche par nom
+	 * @param saison selection par saison
+	 * @return nombre de pages
+	 */
 	public Long findNumberPage(String cat, String search, int saison) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Long> criteria = cb.createQuery(Long.class);
@@ -231,6 +280,11 @@ public class ProduitRepository {
 		return (long) (Math.ceil((float)em.createQuery(criteria).getSingleResult()/6)) ;
 	}
 
+	/**
+	 * Recherche du nombre de pages total
+	 * @param saison selection par saison
+	 * @return nombre de pages
+	 */
 	public Long findNumberPage(int saison) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Long> criteria = cb.createQuery(Long.class);

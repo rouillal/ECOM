@@ -8,14 +8,22 @@ import java.util.Iterator;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 
-
+/**
+ * <p>
+ * Gestion de la creation d'une facture en pdf
+ * </p>
+ *
+ * @see SendEmail
+ * @see ValidationCommande
+ * @see Panier
+ */
 public class CreateFacture {
 	String dir;
 	private static String FILE;
-	
+
 	private static Font catFont;
 	private static Font smallBold;
-	
+
 	public CreateFacture() {
 		dir = System.getProperty("user.dir");
 		FILE = dir+"/Facture.pdf";
@@ -27,6 +35,17 @@ public class CreateFacture {
 	}
 
 
+	/**
+	 * Methode de retour de la facture en pdf
+	 * @param infos infos sur la commande
+	 * @param panier panier associe
+	 * @return nom du fichier
+	 * @throws FileNotFoundException
+	 * @throws DocumentException
+	 * 
+	 * @see ValidationCommande
+	 * @see Panier
+	 */
 	public String getFile(ValidationCommande infos, Panier panier) throws FileNotFoundException, DocumentException {
 		Document document = new Document();
 		PdfWriter.getInstance(document, new FileOutputStream(FILE));
@@ -68,7 +87,7 @@ public class CreateFacture {
 						infos.getCommandInfo().getPrenom(),
 						infos.getCommandInfo().getMail(),
 						infos.getCommandInfo().getVille()),
-smallBold);
+				smallBold);
 		preface.add(p);
 
 		document.add(preface);
@@ -102,11 +121,6 @@ smallBold);
 	private static void createTable(Paragraph subCatPart, Panier panier)
 			throws BadElementException {
 		PdfPTable table = new PdfPTable(3);
-
-		// t.setBorderColor(BaseColor.GRAY);
-		// t.setPadding(4);
-		// t.setSpacing(4);
-		// t.setBorderWidth(1);
 
 		PdfPCell c1 = new PdfPCell(new Phrase("Produit"));
 		c1.setHorizontalAlignment(Element.ALIGN_CENTER);

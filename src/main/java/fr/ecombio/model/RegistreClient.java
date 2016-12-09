@@ -13,24 +13,44 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+/**
+ * <p>
+ * Enregistrement d'un client avec un login et mot de passe
+ * </p>
+ *
+ * @see Client
+ */
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "registreclient")
 public class RegistreClient implements Serializable {
 	
+	/**
+	 * identifiant
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "registreclient_id")
 	private Long id;
 	
+	/**
+	 * mail = login
+	 */
 	@NotNull
 	@Column(unique = true)
 	private String mail;
 	
+	/**
+	 * mot de passe
+	 */
 	@NotNull
 	private String mdp;
 	
 
+	/**
+	 * client associe
+	 * @see Client
+	 */
 	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="client_id")
 	private Client client;

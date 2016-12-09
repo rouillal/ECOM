@@ -18,34 +18,60 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+/**
+ * <p>
+ * Description d'un panier :
+ * </p>
+ * 
+ * @see Article
+ *
+ */
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "panier")
 public class Panier implements Serializable {
 
-	// identification de la session
+	/**
+	 * identifiant
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "panier_id")
 	private Long id;
 
-	//private Map<Long,Article> articles = new HashMap<Long,Article>(); 
-	
+	/**
+	 * liste d'articles contenus
+	 * @see Article
+	 */
 	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.REMOVE, mappedBy="panier")
 	@JsonBackReference
     @Column(name = "panier_articles")
 	private Set<Article> articles;
     
-	
+	/**
+	 * derniere date de modification du panier
+	 * pour detecter l'inacivite d'une session
+	 */
 	Date dateDerniereModif = new Date();
 	
+	/**
+	 * false : panier en cours d'utilisation
+	 * true : panier persistant pour l'historique des commandes
+	 */
 	Boolean isRegistred = false;
 	
+	/**
+	 * default cstor.
+	 */
 	public Panier() {
 		super();
 		this.articles = new HashSet<Article>();
 	}
 
+	/**
+	 * cstor.
+	 * @param commande
+	 */
     public Panier(Set<Article> commande) {
 		this.setArticles(commande);
 	}
