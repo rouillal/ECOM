@@ -4,6 +4,8 @@ eComBioApp.factory('recetteSvc', [
 		'$window',
 		function($rootScope, restBackendSvc, $window) {
 			// tri : alpha diff cout
+			var selectedRecette;
+			
 			var getRecetteBySearchName = function(searchString,
 					listCategoriesRecette, listCategoriesRecetteChoix,
 					listSaisons, listSaisonChoix, listComposition,
@@ -106,6 +108,11 @@ eComBioApp.factory('recetteSvc', [
 								});
 			}
 
+			var setSelectDetailsRecette = function(selectedRecetteParam) {
+				selectedRecette=selectedRecetteParam;
+				$rootScope.$broadcast('selectDetailsRecetteProvided', selectedRecette);
+			}
+			
 			var createRecette = function(recette) {
 				restBackendSvc.createItem(recette).then(function(data) {
 					// inform with message
@@ -127,6 +134,7 @@ eComBioApp.factory('recetteSvc', [
 
 			return {
 				getRecetteBySearchName : getRecetteBySearchName,
-				getDetailsRecette : getDetailsRecette
+				getDetailsRecette : getDetailsRecette,
+				setSelectDetailsRecette : setSelectDetailsRecette
 			};
 		} ]);
