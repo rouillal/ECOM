@@ -17,19 +17,43 @@ import fr.ecombio.model.HistoriqueCommande;
 import fr.ecombio.model.MyCryptoConverter;
 import fr.ecombio.model.Panier;
 import fr.ecombio.model.RegistreClient;
+import fr.ecombio.model.Saison;
 import fr.ecombio.model.ValidationClient;
 import fr.ecombio.model.ValidationCommande;
 
-
+/**
+ * <p>
+ * Permet une gestion des clients :
+ * <ul>
+ * 	<li>faire des requetes de select</li>
+ * 	<li>ajouter en base</li>
+ *  </ul>
+ * </p>
+ * 
+ * @see EntityManager
+ * @see RegistreClient
+ * @see Client
+ *
+ */
 @Stateless
 public class RegistreRepository {
 
+	/**
+	 * pour gerer l'aspect transactionnel
+	 * 
+	 * @see EntityManager
+	 */
 	@Inject
 	private EntityManager em;
 
 	Logger log = java.util.logging.Logger.getLogger("org.hibernate");
 
-
+	/**
+	 * Recherche d'un client avec ses identifiants
+	 * @param mail login du client
+	 * @param mdp mot de passe
+	 * @return le client
+	 */
 	public Client findClientByMailAndMdp(String mail, String mdp) {
 		String encryptedPwd = MyCryptoConverter.encrypt(mdp);
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -43,6 +67,11 @@ public class RegistreRepository {
 		return res.get(0).getClient();
 	}
 
+	/**
+	 * Recherche d'un client avec son mail
+	 * @param mail login du client
+	 * @return le client
+	 */
 	public Client findClientByMail(String mail) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Client> criteria = cb.createQuery(Client.class);
@@ -55,22 +84,34 @@ public class RegistreRepository {
 		return res.get(0);
 	}
 
-	public void registerClient(ValidationClient vc) {
+	/**
+	 * Enregistrement du client
+	 * @param infos informations 
+	 */
+	public void registerClient(ValidationClient infos) {
 		Client client = new Client();
-		client.setNom(vc.getNom());
-		client.setPrenom(vc.getPrenom());
-		client.setMail(vc.getMail());
-		client.setAdresse(vc.getAdresse());
-		client.setCp(vc.getCp());
-		client.setVille(vc.getVille());
+		client.setNom(infos.getNom());
+		client.setPrenom(infos.getPrenom());
+		client.setMail(infos.getMail());
+		client.setAdresse(infos.getAdresse());
+		client.setCp(infos.getCp());
+		client.setVille(infos.getVille());
 		em.persist(client);
 		RegistreClient reg = new RegistreClient();
 		reg.setClient(client);
-		reg.setMail(vc.getMail());
-		reg.setMdp(vc.getPsw());
+		reg.setMail(infos.getMail());
+		reg.setMdp(infos.getPsw());
 		em.persist(reg);
 	}
 
+	/**
+	 * Enregistrement du'une commande:
+	 * <ul>
+	 * <li>enregistrement du client</li>
+	 * <li>enregistrement du panier associe</li>
+	 * </ul>
+	 * @param infos infos de la commande
+	 */
 	public void registerCommande(ValidationCommande infos) {
 		log.log(Level.INFO,"debut enregistrement commande");
 		// on regarde si le client existe en base de donnee

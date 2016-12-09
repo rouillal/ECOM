@@ -22,6 +22,21 @@ eComBioApp.factory('panierSvc', [
 			var getListePanier = function() {
 				return listePanier;
 			};
+			
+			var getSuggestedRecette = function(pageSuggestedRecette) {
+				var urlSuggestedRecette = 'recette/panier?id='+idPanierServer+'&page='+pageSuggestedRecette;
+				restBackendSvc.getItemsByUrl(urlSuggestedRecette).then(function(data) {
+					var listRecette = data.data;
+					$rootScope.$broadcast('listSuggestedRecettesSupplied', listRecette);
+				}, function(reason) {
+					$rootScope.$broadcast('debug', reason);
+					if (reason.status == 404) {
+						$rootScope.$broadcast('listRecettesSupplied', '');
+					} else {
+						alert('Failed: ' + reason);
+					}
+				});
+			};
 
 			var supprimeArticlePanier = function(ligne) {
 				montantTotal = 0.00;
@@ -135,6 +150,7 @@ eComBioApp.factory('panierSvc', [
 				setSelectedProduit : setSelectedProduit,
 				getSelectedProduit : getSelectedProduit,
 				getListePanier : getListePanier,
+				getSuggestedRecette : getSuggestedRecette,
 				changeProduit : changeProduit,
 				getIdPanierServer : getIdPanierServer,
 				getPanierQuantite : getPanierQuantite,

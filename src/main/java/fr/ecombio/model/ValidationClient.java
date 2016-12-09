@@ -2,6 +2,20 @@ package fr.ecombio.model;
 
 import java.io.Serializable;
 
+/**
+ * <p>
+ * Classe pour serialiser des donnes sur le client :
+ * <ul>
+ * <li>nom</li>
+ * <li>prenom</li>
+ * <li>mail</li>
+ * <li>adresse</li>
+ * <li>code postal</li>
+ * <li>ville</li>
+ * <li>mot de passe</li>
+ * </ul>
+ * </p>
+ */
 @SuppressWarnings("serial")
 public class ValidationClient implements Serializable{
 	private String nom;
