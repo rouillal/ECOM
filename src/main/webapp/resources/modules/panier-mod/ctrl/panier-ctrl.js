@@ -1,5 +1,5 @@
-eComBioApp.controller('PanierCtrl', [ '$scope', '$location', 'panierSvc',
-		function($scope, $location, panierSvc) {
+eComBioApp.controller('PanierCtrl', [ '$scope', '$location','$window','panierSvc',
+		function($scope, $location,$window,panierSvc) {
 			$scope.listePanier = panierSvc.getListePanier();
 			$scope.montantTotal = panierSvc.getMontantTotal();
 
