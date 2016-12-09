@@ -14,6 +14,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.ecombio.data.PanierRepository;
+import fr.ecombio.data.RegistreRepository;
+import fr.ecombio.model.SendEmail;
+import fr.ecombio.model.ValidationCommande;
+
+/**
+ * <p>
+ * Permet un service web pour acceder a l'image d'un produit
+ *
+ */
 @SuppressWarnings("serial")
 @WebServlet(
         urlPatterns = "/image",
@@ -27,6 +37,9 @@ public class ImageProviderService extends HttpServlet implements ServletContextL
 	//Directory path where the files are stored
 	private String fileDirName;
 
+	/**
+	 * requete de l'image en http
+	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		String saveDir = getInitParameter("saveDir");

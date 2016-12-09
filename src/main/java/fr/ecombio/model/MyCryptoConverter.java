@@ -10,6 +10,7 @@ import javax.crypto.spec.SecretKeySpec;
  * <p>
  * Gestion du cryptage du mot de passe en base
  * </p>
+ * Methode AES : Advanced Encryption Standard
  */
 public class MyCryptoConverter {
 
