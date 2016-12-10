@@ -8,6 +8,9 @@ eComBioApp.factory('panierSvc', [
 			var selectedProduit = '';
 			var montantTotal = 0.00;
 			var idPanierServer = cookieStoreSvc.getStoredLocalString('idPanierServer');
+			if (idPanierServer=='') {
+				idPanierServer=-1;
+			}
 
 			var setSelectedProduit = function(newSelectedProduit) {
 				selectedProduit = newSelectedProduit;
@@ -77,6 +80,7 @@ eComBioApp.factory('panierSvc', [
 						}
 						montantTotal += ligneArticle.prixTotal;
 					});
+					var infoJson = angular.toJson(produitAChanger);
 					if (ligne == '') {
 						//Le produit à changer n'a pas été trouvé dans la liste, il faut le créer
 						var ligneTmp = produitAChanger;
