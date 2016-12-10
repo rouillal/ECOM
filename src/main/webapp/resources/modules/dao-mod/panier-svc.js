@@ -165,6 +165,7 @@ eComBioApp.factory('panierSvc', [
 				getSelectedProduit : getSelectedProduit,
 				getListePanier : getListePanier,
 				getSuggestedRecette : getSuggestedRecette,
+				getDetailsRecette : getDetailsRecette,
 				changeProduit : changeProduit,
 				getIdPanierServer : getIdPanierServer,
 				getPanierQuantite : getPanierQuantite,
