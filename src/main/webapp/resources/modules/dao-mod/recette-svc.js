@@ -2,7 +2,8 @@ eComBioApp.factory('recetteSvc', [
 		'$rootScope',
 		'restBackendSvc',
 		'$window',
-		function($rootScope, restBackendSvc, $window) {
+		'imgProviderSvc',
+		function($rootScope, restBackendSvc, $window,imgProviderSvc) {
 			// tri : alpha diff cout
 			var selectedRecette;
 			
