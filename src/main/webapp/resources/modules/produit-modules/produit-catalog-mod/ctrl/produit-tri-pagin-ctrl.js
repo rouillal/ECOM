@@ -36,6 +36,11 @@ eComBioApp.controller('ProduitTriPaginCtrl', [
 				$scope.currentPage = newCurrentPage;
 			});
 			
+			$scope.$on('changePageCurrent', function(event,
+					newCurrentPage) {
+				$scope.currentPage = newCurrentPage;
+			});
+			
 			$scope.$on('pageMaxProduitReset', function(event,
 					newPageMax) {
 				$scope.pageMax = newPageMax;

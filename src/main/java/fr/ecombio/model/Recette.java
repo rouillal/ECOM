@@ -92,7 +92,7 @@ public class Recette implements Serializable {
 	 * description de la preparation
 	 */
 	@NotNull
-	@Column(name="recette_preparation")
+	@Column(name="recette_preparation", length=100000)
 	private String preparation;
 	
 	/**

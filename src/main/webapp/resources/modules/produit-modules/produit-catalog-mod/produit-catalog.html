@@ -9,18 +9,21 @@
 		<div ng-include
 			src="'resources/modules/produit-modules/produit-detail-mod/selected-produit-display.html'"></div>
 		<div ng-repeat="produit in listProduits">
-			<div style="text-align: center;" class="col-md-4 col-sm-6 col-xs-12" ng-click="selectDetailsProduit(produit)"
-				data-toggle="modal" data-target="#selectedProductDisplay">
+			<div style="text-align: center;" class="col-md-4 col-sm-6 col-xs-12"
+				ng-click="selectDetailsProduit(produit)" data-toggle="modal"
+				data-target="#selectedProductDisplay">
 				<div style="margin-top: 50px;" class="col-xs-12">{{produit.name}}
 					{{produit.variete}}</div>
 				<div class="col-xs-12">
-					<img width="250px" height="250px"
-						ng-src="{{produit.url}}">
+					<img width="250px" height="250px" ng-src="{{produit.url}}">
 				</div>
-				<div style="font-size:15px; font-weight:bold;" class="col-xs-12">{{produit.prix}}€ -
-					{{produit.quantite}} {{produit.unite}}</div>
+				<div style="font-size: 15px; font-weight: bold;" class="col-xs-12">{{produit.prix}}€
+					- {{produit.quantite}} {{produit.unite}}</div>
 			</div>
 		</div>
+		<div style="margin-top: 50px;" class="col-xs-12"></div>
+		<div ng-include
+			src="'resources/modules/produit-modules/produit-catalog-mod/partials/pied-produit-page.html'"></div>
 		<div style="margin-top: 50px;" class="col-xs-12"></div>
 	</div>
 </div>

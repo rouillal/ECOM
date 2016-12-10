@@ -36,6 +36,11 @@ eComBioApp.controller('RecetteTriPaginCtrl', [
 				$scope.currentPage = newCurrentPage;
 			});
 			
+			$scope.$on('changePageCurrent', function(event,
+					newCurrentPage) {
+				$scope.currentPage = newCurrentPage;
+			});
+			
 			$scope.$on('pageMaxRecetteReset', function(event,
 					newPageMax) {
 				$scope.pageMax = newPageMax;
