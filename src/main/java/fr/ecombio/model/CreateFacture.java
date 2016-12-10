@@ -123,22 +123,24 @@ public class CreateFacture {
 		// add a table
 		createTable(catPart, panier);
 
+		addEmptyLine(catPart, 1);
 		// now add all this to the document
 		document.add(catPart);
 
+		
 		// Next section
 		anchor = new Anchor();
 		// Next section
 		Double total = panier.getTotal();
-		document.add(getTable("Total HT",":",total+" €"));
+		document.add(getTable("Total  HT",":",total+" €", catFont));
 		Double tva = Math.round(total*5.5) / 100.0;
-		document.add(getTable("TVA 5.5%",":",tva+" €"));
+		document.add(getTable("TVA    5.5%",":",tva+" €", smallBold));
 		Double tt =  Math.round((total+tva)*100.0) / 100.0;
-		document.add(getTable("Total TTC",":",tt+" €"));
+		document.add(getTable("Total  TTC",":",tt+" €", catFont));
 
 	}
 	
-	private static Element getTable(String string, String string2, String string3) throws DocumentException {
+	private static Element getTable(String string, String string2, String string3, Font catFont2) throws DocumentException {
 		PdfPTable table = new PdfPTable(4);
 		table.setHorizontalAlignment(Element.ALIGN_RIGHT);
 		table.setTotalWidth(255);
@@ -146,15 +148,15 @@ public class CreateFacture {
 		table.setWidths(widths);
 		table.setLockedWidth(true);
 		//table.setWidthPercentage(100);
-		table.addCell(getCell(string, PdfPCell.ALIGN_LEFT));
-		table.addCell(getCell(string2, PdfPCell.ALIGN_CENTER));
-		table.addCell(getCell(string3, PdfPCell.ALIGN_RIGHT));
-		table.addCell(getCell("", PdfPCell.ALIGN_RIGHT));
+		table.addCell(getCell(string, PdfPCell.ALIGN_LEFT, catFont2));
+		table.addCell(getCell(string2, PdfPCell.ALIGN_CENTER, catFont2));
+		table.addCell(getCell(string3, PdfPCell.ALIGN_RIGHT, catFont2));
+		table.addCell(getCell("", PdfPCell.ALIGN_RIGHT, catFont2));
 		return table;
 	}
 
-	public static PdfPCell getCell(String text, int alignment) {
-	    PdfPCell cell = new PdfPCell(new Phrase(text,catFont));
+	public static PdfPCell getCell(String text, int alignment, Font catFont2) {
+	    PdfPCell cell = new PdfPCell(new Phrase(text,catFont2));
 	    cell.setPadding(0);
 	    cell.setHorizontalAlignment(alignment);
 	    cell.setBorder(PdfPCell.NO_BORDER);
@@ -162,29 +164,62 @@ public class CreateFacture {
 	}
 	
 	private static void createTable(Paragraph subCatPart, Panier panier)
-			throws BadElementException {
+			throws DocumentException {
 		PdfPTable table = new PdfPTable(3);
+		table.setTotalWidth(450);
+		float[] widths = new float[] {240f, 105f, 105f};
+		table.setWidths(widths);
+		table.setLockedWidth(true);
 
-		PdfPCell c1 = new PdfPCell(new Phrase("Produit"));
+		PdfPCell c1 = new PdfPCell(new Phrase(""));
+		c1.setVerticalAlignment(Element.ALIGN_TOP);
 		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+	    c1.setBorder(PdfPCell.NO_BORDER);
+	    c1.setBackgroundColor(BaseColor.WHITE);
 		table.addCell(c1);
 
 		c1 = new PdfPCell(new Phrase("Quantité"));
+		c1.setVerticalAlignment(Element.ALIGN_TOP);
 		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+	    c1.setBorder(PdfPCell.NO_BORDER);
+	    c1.setBackgroundColor(BaseColor.LIGHT_GRAY);
 		table.addCell(c1);
 
 		c1 = new PdfPCell(new Phrase("Prix à l'unité (€)"));
+		c1.setVerticalAlignment(Element.ALIGN_TOP);
 		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+	    c1.setBorder(PdfPCell.NO_BORDER);
+	    c1.setBackgroundColor(BaseColor.LIGHT_GRAY);
 		table.addCell(c1);
 		table.setHeaderRows(1);
-		double retour = 0;
+		int k = 0;
 		Iterator<Article> i=panier.getArticles().iterator();
 		while(i.hasNext()) // tant qu'on a un suivant
 		{
+			k++;
+			BaseColor color = BaseColor.WHITE;
+			if (k == 2){
+				color = new BaseColor(0.9f,0.9f,0.9f);
+				k=k-2;
+			}
 			Article a = i.next();
-			table.addCell(a.getProduit().getName() +" "+a.getProduit().getVariete() );
-			table.addCell(Integer.toString(a.getQuotite()));
-			table.addCell(Double.toString(Math.round(a.getProduit().getPrix() * 100.0) / 100.0));
+			c1 = new PdfPCell(new Phrase(a.getProduit().getName() +" "+a.getProduit().getVariete() ));
+		    c1.setBackgroundColor(color);
+			c1.setVerticalAlignment(Element.ALIGN_CENTER);
+		    c1.setBorder(PdfPCell.NO_BORDER);
+			table.addCell(c1);
+			c1 = new PdfPCell(new Phrase(Integer.toString(a.getQuotite())));
+			c1.setBackgroundColor(color);
+			c1.setVerticalAlignment(Element.ALIGN_CENTER);
+			c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+		    c1.setBorder(PdfPCell.NO_BORDER);
+			table.addCell(c1);
+			c1 = new PdfPCell(new Phrase(Double.toString(Math.round(a.getProduit().getPrix() * 100.0) / 100.0)));
+			c1.setBackgroundColor(color);
+			c1.setVerticalAlignment(Element.ALIGN_CENTER);
+			c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+		    c1.setBorder(PdfPCell.NO_BORDER);
+			table.addCell(c1);
 		}
 		subCatPart.add(table);
 
