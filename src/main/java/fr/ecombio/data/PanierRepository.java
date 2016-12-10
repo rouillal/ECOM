@@ -67,7 +67,6 @@ public class PanierRepository {
 	 */
 	public Panier findById(Long id) {
 		Panier p = em.find(Panier.class, id);
-		log.log(Level.INFO, p.toString());
 		return p;
 	}
 
