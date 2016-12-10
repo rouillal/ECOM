@@ -1,16 +1,16 @@
 eComBioApp.controller('RecetteTriPaginCtrl', [
 		'$scope',
 		'$window',
-		'searchRecetteSvc',
-		function($scope, $window, searchRecetteSvc) {
+		'recetteSearchSvc',
+		function($scope, $window, recetteSearchSvc) {
 			$scope.pageMax=0;
-			$scope.listeTris = searchRecetteSvc.getlisteTris();
-			$scope.currentPage = searchRecetteSvc.getCurrentPage();
-			$scope.currentTri = searchRecetteSvc
+			$scope.listeTris = recetteSearchSvc.getlisteTris();
+			$scope.currentPage = recetteSearchSvc.getCurrentPage();
+			$scope.currentTri = recetteSearchSvc
 					.getCurrentTri();
 			
 			$scope.$watch('currentTri', function() {
-				searchRecetteSvc.setCurrentTri($scope.currentTri);
+				recetteSearchSvc.setCurrentTri($scope.currentTri);
 			});
 
 			$scope.isPagedownActive = function() {
@@ -18,12 +18,12 @@ eComBioApp.controller('RecetteTriPaginCtrl', [
 			};
 
 			$scope.pagedown = function() {
-				$scope.currentPage = searchRecetteSvc.pagedown();
+				$scope.currentPage = recetteSearchSvc.pagedown();
 			};
 
 			$scope.pageup = function() {
 				if($scope.currentPage < ($scope.pageMax-1)){
-					$scope.currentPage = searchRecetteSvc.pageup();
+					$scope.currentPage = recetteSearchSvc.pageup();
 				}
 			};
 			

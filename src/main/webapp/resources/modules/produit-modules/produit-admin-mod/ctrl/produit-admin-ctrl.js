@@ -1,4 +1,4 @@
-eComBioApp.controller('ProductAdminCtrl', [ '$scope', '$location','$window','userInfoSvc','productSvc',
+eComBioApp.controller('ProduitAdminCtrl', [ '$scope', '$location','$window','userInfoSvc','productSvc',
 		function($scope, $location,$window,userInfoSvc,productSvc) {
 	
 	$scope.visuMode='tt';

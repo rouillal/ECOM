@@ -1,4 +1,4 @@
-eComBioApp.controller('ProductCatalogCtrl', [ '$scope','$window','searchProductSvc','panierSvc',function($scope,$window,searchProductSvc,panierSvc) {
+eComBioApp.controller('ProduitCatalogCtrl', [ '$scope','$window','searchProductSvc','panierSvc',function($scope,$window,searchProductSvc,panierSvc) {
 	$scope.listProduits = searchProductSvc.getProductsInit();
 	$scope.selectedProduit='';
 	

@@ -1,4 +1,4 @@
-eComBioApp.factory('searchRecetteSvc', [ '$rootScope','categorieRecetteSvc','saisonSvc','compositionSvc','recetteSvc','$window',function($rootScope,categorieRecetteSvc,saisonSvc,compositionSvc,recetteSvc,$window) {
+eComBioApp.factory('recetteSearchSvc', [ '$rootScope','categorieRecetteSvc','saisonSvc','compositionSvc','recetteSvc','$window',function($rootScope,categorieRecetteSvc,saisonSvc,compositionSvc,recetteSvc,$window) {
 	var listCategoriesRecette = categorieRecetteSvc.getAllCategorieRecettes();
 	var listSaison = saisonSvc.getAllSaisons();
 	var listComposition = compositionSvc.getAllCompositions();

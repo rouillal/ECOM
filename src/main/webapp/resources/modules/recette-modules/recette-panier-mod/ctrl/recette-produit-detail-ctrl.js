@@ -1,9 +1,9 @@
-eComBioApp.controller('ProductDetailCtrl', [
+eComBioApp.controller('RecetteProduitDetailCtrl', [
 		'$scope',
 		'$window',
 		'panierSvc',
 		function($scope, $window, panierSvc) {
-			$scope.selectedProduitDetail = '';
+			$scope.selectedProduitRecette = panierSvc.getSelectedProduit();
 			$scope.panierQuantite = 0;
 			$scope.panierPrixQt = 0;
 
@@ -11,9 +11,9 @@ eComBioApp.controller('ProductDetailCtrl', [
 				return !($scope.panierQuantite > 0);
 			};
 			
-			$scope.moinsProduitDetail = function() {
+			$scope.moinsProduitRecette = function() {
 				if ($scope.panierQuantite > 0) {
-					panierSvc.changeProduit($scope.selectedProduitDetail,
+					panierSvc.changeProduit($scope.selectedProduitRecette,
 							$scope.panierQuantite - 1);
 				} else {
 					$scope.panierQuantite = 0;
@@ -25,14 +25,14 @@ eComBioApp.controller('ProductDetailCtrl', [
 				return false;
 			};
 
-			$scope.plusProduitDetail = function() {
-				panierSvc.changeProduit($scope.selectedProduitDetail,
+			$scope.plusProduitRecette = function() {
+				panierSvc.changeProduit($scope.selectedProduitRecette,
 						$scope.panierQuantite + 1);
 			};
 
 			$scope.$on('selectedProduitChange', function(event,
 					newSelectedProduit, qt ) {
-				$scope.selectedProduitDetail = newSelectedProduit;
+				$scope.selectedProduitRecette = newSelectedProduit;
 				$scope.panierQuantite = qt;
 				$scope.panierPrixQt = Math.round(qt * newSelectedProduit.prix*100)/100;
 			});

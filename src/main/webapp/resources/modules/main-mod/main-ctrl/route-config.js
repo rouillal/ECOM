@@ -8,13 +8,13 @@ eComBioApp
 									'/catalog',
 									{
 										templateUrl : 'resources/modules/produit-modules/produit-catalog-mod/produit-catalog.html',
-										controller : 'ProductCatalogCtrl'
+										controller : 'ProduitCatalogCtrl'
 									})
 							.when(
 									'/recette',
 									{
-										templateUrl : 'resources/modules/recette-catalog-mod/recette-catalog.html',
-										controller : 'RecetteCtrl'
+										templateUrl : 'resources/modules/recette-modules/recette-catalog-mod/recette-catalog.html',
+										controller : 'RecetteCatalogCtrl'
 									})
 							.when(
 									'/panier',
