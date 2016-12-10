@@ -1,6 +1,5 @@
 package fr.ecombio.data;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,7 +18,6 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import fr.ecombio.model.Article;
-import fr.ecombio.model.Categorie;
 import fr.ecombio.model.Composition;
 import fr.ecombio.model.CompositionRecette;
 import fr.ecombio.model.Panier;

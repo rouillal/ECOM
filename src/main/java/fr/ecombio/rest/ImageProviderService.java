@@ -14,11 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.ecombio.data.PanierRepository;
-import fr.ecombio.data.RegistreRepository;
-import fr.ecombio.model.SendEmail;
-import fr.ecombio.model.ValidationCommande;
-
 /**
  * <p>
  * Permet un service web pour acceder a l'image d'un produit

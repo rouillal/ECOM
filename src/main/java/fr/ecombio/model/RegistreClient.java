@@ -2,6 +2,7 @@ package fr.ecombio.model;
 
 import java.io.Serializable;
 
+import javax.jdo.annotations.Index;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -38,6 +39,7 @@ public class RegistreClient implements Serializable {
 	 */
 	@NotNull
 	@Column(unique = true)
+	@Index(name = "mail")
 	private String mail;
 	
 	/**

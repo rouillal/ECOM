@@ -3,6 +3,7 @@ package fr.ecombio.model;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.jdo.annotations.Index;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -40,6 +41,7 @@ public class Produit implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="categorie_id")
     @JsonManagedReference
+	@Index(name = "cat")
 	private Categorie categorie;
 	
 	/**

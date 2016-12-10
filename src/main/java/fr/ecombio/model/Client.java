@@ -2,6 +2,7 @@ package fr.ecombio.model;
 
 import java.io.Serializable;
 
+import javax.jdo.annotations.Index;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -48,6 +49,7 @@ public class Client implements Serializable {
 	 */
 	@NotNull
 	@Column(name = "client_mail")
+	@Index(name = "mail2")
 	private String mail;
 
 	/**
