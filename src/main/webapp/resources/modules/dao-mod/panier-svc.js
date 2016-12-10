@@ -6,7 +6,7 @@ eComBioApp.factory('panierSvc', [
 		function($rootScope, restBackendSvc, $window,cookieStoreSvc) {
 			var listePanier = cookieStoreSvc.getStoredLocalItem('panier');
 			var selectedProduit = '';
-			var montantTotal = 0.00;
+			var montantTotal = cookieStoreSvc.getStoredLocalString('montantTotal');
 			var idPanierServer = cookieStoreSvc.getStoredLocalString('idPanierServer');
 			if (idPanierServer=='') {
 				idPanierServer=-1;
@@ -51,6 +51,8 @@ eComBioApp.factory('panierSvc', [
 						montantTotal += ligneArticle.prixTotal;
 					}
 				});
+				cookieStoreSvc.storeLocalItem('panier',listePanier);
+				cookieStoreSvc.storeLocalString('montantTotal',montantTotal);
 				$rootScope.$broadcast('rafraichirPanier');
 			};
 			
@@ -92,6 +94,8 @@ eComBioApp.factory('panierSvc', [
 					}
 				}
 				cookieStoreSvc.storeLocalItem('panier',listePanier);
+				cookieStoreSvc.storeLocalString('montantTotal',montantTotal);
+				montantTotal
 				var panierJson = prepareMessageServeur();
 				if (idPanierServer < 0) {
 					restBackendSvc.createItem('panier', panierJson).then(
@@ -136,6 +140,9 @@ eComBioApp.factory('panierSvc', [
 				selectedProduit = '';
 				montantTotal = 0.00;
 				idPanierServer = -1;
+				cookieStoreSvc.storeLocalItem('panier',listePanier);
+				cookieStoreSvc.storeLocalString('idPanierServer',idPanierServer);
+				cookieStoreSvc.storeLocalString('montantTotal',montantTotal);
 				$rootScope.$broadcast('rafraichirPanier');
 			};
 
