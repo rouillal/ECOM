@@ -31,7 +31,6 @@ public class Recette implements Serializable {
 	private Long id;
 	
 	@NotNull
-	@Size(min = 1, max = 25)
 	@Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
     @Column(name = "recette_name")
 	private String name;
