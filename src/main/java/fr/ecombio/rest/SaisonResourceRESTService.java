@@ -43,6 +43,7 @@ public class SaisonResourceRESTService {
 	 * @return liste des saisons
 	 * 
 	 * @see Saison
+	 * @see SaisonRepository#findAllOrderedByName()
 	 */
 	@GET
     @Produces(MediaType.APPLICATION_JSON)

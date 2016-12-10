@@ -230,7 +230,7 @@ public class RecetteRepository {
 		return typequery.getResultList();
 	}
 
-	private void getListRecette() {
+	private synchronized void getListRecette() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Tuple> criteria = cb.createTupleQuery();
 		Root<Recette> Recette = criteria.from(Recette.class);

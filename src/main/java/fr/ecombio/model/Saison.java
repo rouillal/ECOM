@@ -68,45 +68,63 @@ public class Saison implements Serializable {
 	 */
 	public Saison() {
 	}
-	
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Set<ProduitSaison> getProduits() {
-		return produits;
-	}
-
-	public void setProduits(Set<ProduitSaison> produits) {
-		this.produits = produits;
-	}
-
-
+	/**
+	 * @return the id
+	 */
 	public Long getId() {
 		return id;
 	}
 
-
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
 
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the produits
+	 */
+	public Set<ProduitSaison> getProduits() {
+		return produits;
+	}
+
+	/**
+	 * @param produits the produits to set
+	 */
+	public void setProduits(Set<ProduitSaison> produits) {
+		this.produits = produits;
+	}
+
+	/**
+	 * @return the recettes
+	 */
 	public Set<RecetteSaison> getRecettes() {
 		return recettes;
 	}
 
-
+	/**
+	 * @param recettes the recettes to set
+	 */
 	public void setRecettes(Set<RecetteSaison> recettes) {
 		this.recettes = recettes;
 	}
-
-
 	
+
 	
 }

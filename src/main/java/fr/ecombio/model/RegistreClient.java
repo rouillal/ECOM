@@ -55,34 +55,63 @@ public class RegistreClient implements Serializable {
 	@JoinColumn(name="client_id")
 	private Client client;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getMail() {
-		return mail;
-	}
-
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
-
+	
+	/**
+	 * @return the decrypted password
+	 * @see MyCryptoConverter
+	 * @see MyCryptoConverter#decrypt(String)
+	 */
 	public String getMdp() {
 		return MyCryptoConverter.decrypt(mdp);
 	}
 
+	/**
+	 * @param mdp the password to encrypt
+	 * @see MyCryptoConverter
+	 * @see MyCryptoConverter#encrypt(String)
+	 */
 	public void setMdp(String mdp) {
 		this.mdp = MyCryptoConverter.encrypt(mdp);
 	}
 
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the mail
+	 */
+	public String getMail() {
+		return mail;
+	}
+
+	/**
+	 * @param mail the mail to set
+	 */
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	/**
+	 * @return the client
+	 */
 	public Client getClient() {
 		return client;
 	}
 
+	/**
+	 * @param client the client to set
+	 */
 	public void setClient(Client client) {
 		this.client = client;
 	}

@@ -56,38 +56,46 @@ public class RecetteProduit implements Serializable{
 	@JsonManagedReference
 	private Recette recettes;
 
+	/**
+	 * @return the id
+	 */
 	public Long getId() {
 		return Id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(Long id) {
 		Id = id;
 	}
 
-	public Produit getArticles() {
-		return produits;
-	}
-
-	public void setArticles(Produit produits) {
-		this.produits = produits;
-	}
-
-	public Recette getRecettes() {
-		return recettes;
-	}
-
-	public void setRecettes(Recette recettes) {
-		this.recettes = recettes;
-	}
-
+	/**
+	 * @return the produits
+	 */
 	public Produit getProduits() {
 		return produits;
 	}
 
+	/**
+	 * @param produits the produits to set
+	 */
 	public void setProduits(Produit produits) {
 		this.produits = produits;
 	}
-	
-	
+
+	/**
+	 * @return the recettes
+	 */
+	public Recette getRecettes() {
+		return recettes;
+	}
+
+	/**
+	 * @param recettes the recettes to set
+	 */
+	public void setRecettes(Recette recettes) {
+		this.recettes = recettes;
+	}
 
 }

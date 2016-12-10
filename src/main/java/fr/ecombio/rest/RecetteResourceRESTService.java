@@ -43,6 +43,7 @@ public class RecetteResourceRESTService {
 	 * @param recette recette
 	 * 
 	 * @see Recette
+	 * @see RecetteRepository#AjoutRecette(Recette)
 	 */
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
@@ -58,6 +59,7 @@ public class RecetteResourceRESTService {
 	 * @return liste de recettes
 	 * 
 	 * @see Recette
+	 * @see RecetteRepository#findAllOrderedByName(int, String, String)
 	 */
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -76,6 +78,7 @@ public class RecetteResourceRESTService {
 	 * @return liste de recettes
 	 * 
 	 * @see Recette
+	 * @see RecetteRepository#findAllOrderedByName(int, String, String, String, String, String)
 	 */
 	@GET
 	@Path("/filter")
@@ -90,6 +93,7 @@ public class RecetteResourceRESTService {
 	 * @return liste de produits
 	 * 
 	 * @see Produits
+	 * @see RecetteRepository#findAllProduitsFromId(int)
 	 */
 	@GET
 	@Path("/produits")
@@ -104,6 +108,7 @@ public class RecetteResourceRESTService {
 	 * @return liste de recettes
 	 * 
 	 * @see Recette
+	 * @see RecetteRepository#findAllRecetteFromPanier(Long)
 	 */
 	@GET
 	@Path("/panier")
@@ -121,7 +126,7 @@ public class RecetteResourceRESTService {
 	 * @param tri selection plus precise
 	 * @return nombre de page
 	 * 
-	 * @see Recette
+	 * @see RecetteRepository#findNumberPage(String, String, String, String)
 	 */
 	@GET
 	@Path("/page/filter")
@@ -135,6 +140,7 @@ public class RecetteResourceRESTService {
 	 * @param saison selection par saison
 	 * @return nombre de page
 	 * 
+	 * @see RecetteRepository#findNumberPage(String)
 	 */
 	@GET
 	@Path("/page")

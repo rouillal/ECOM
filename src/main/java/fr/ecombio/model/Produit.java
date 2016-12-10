@@ -185,142 +185,243 @@ public class Produit implements Serializable {
 	@NotNull
 	@Column(name = "produit_proteines")
 	private int proteines;
-	
-	public String getVariete() {
-		return variete;
-	}
 
-	public void setVariete(String variete) {
-		this.variete = variete;
-	}
-
-	public float getPrix() {
-		return prix;
-	}
-
-	public void setPrix(float prix) {
-		this.prix = prix;
-	}
-
-	public String getProvenance() {
-		return provenance;
-	}
-
-	public void setProvenance(String provenance) {
-		this.provenance = provenance;
-	}
-
-	public String getDateCueillette() {
-		return dateCueillette;
-	}
-
-	public void setDateCueillette(String dateCueillette) {
-		this.dateCueillette = dateCueillette;
-	}
-
+	/**
+	 * @return the id
+	 */
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
+	/**
+	 * @return the categorie
+	 */
 	public Categorie getCategorie() {
 		return categorie;
 	}
 
+	/**
+	 * @param categorie the categorie to set
+	 */
 	public void setCategorie(Categorie categorie) {
 		this.categorie = categorie;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public String getUnite() {
-		return unite;
-	}
-
-	public void setUnite(String unite) {
-		this.unite = unite;
-	}
-	
-	public int getQuantite() {
-		return quantite;
-	}
-
-	public void setQuantite(int quantite) {
-		this.quantite = quantite;
-	}
-
-	public int getStock() {
-		return stock;
-	}
-
-	public void setStock(int stock) {
-		this.stock = stock;
-	}
-
+	/**
+	 * @return the saisons
+	 */
 	public Set<ProduitSaison> getSaisons() {
 		return saisons;
 	}
 
+	/**
+	 * @param saisons the saisons to set
+	 */
 	public void setSaisons(Set<ProduitSaison> saisons) {
 		this.saisons = saisons;
 	}
 
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the variete
+	 */
+	public String getVariete() {
+		return variete;
+	}
+
+	/**
+	 * @param variete the variete to set
+	 */
+	public void setVariete(String variete) {
+		this.variete = variete;
+	}
+
+	/**
+	 * @return the unite
+	 */
+	public String getUnite() {
+		return unite;
+	}
+
+	/**
+	 * @param unite the unite to set
+	 */
+	public void setUnite(String unite) {
+		this.unite = unite;
+	}
+
+	/**
+	 * @return the quantite
+	 */
+	public int getQuantite() {
+		return quantite;
+	}
+
+	/**
+	 * @param quantite the quantite to set
+	 */
+	public void setQuantite(int quantite) {
+		this.quantite = quantite;
+	}
+
+	/**
+	 * @return the stock
+	 */
+	public int getStock() {
+		return stock;
+	}
+
+	/**
+	 * @param stock the stock to set
+	 */
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
+	/**
+	 * @return the prix
+	 */
+	public float getPrix() {
+		return prix;
+	}
+
+	/**
+	 * @param prix the prix to set
+	 */
+	public void setPrix(float prix) {
+		this.prix = prix;
+	}
+
+	/**
+	 * @return the filename
+	 */
 	public String getFilename() {
 		return filename;
 	}
 
+	/**
+	 * @param filename the filename to set
+	 */
 	public void setFilename(String filename) {
 		this.filename = filename;
 	}
 
+	/**
+	 * @return the provenance
+	 */
+	public String getProvenance() {
+		return provenance;
+	}
+
+	/**
+	 * @param provenance the provenance to set
+	 */
+	public void setProvenance(String provenance) {
+		this.provenance = provenance;
+	}
+
+	/**
+	 * @return the dateCueillette
+	 */
+	public String getDateCueillette() {
+		return dateCueillette;
+	}
+
+	/**
+	 * @param dateCueillette the dateCueillette to set
+	 */
+	public void setDateCueillette(String dateCueillette) {
+		this.dateCueillette = dateCueillette;
+	}
+
+	/**
+	 * @return the dureeConservation
+	 */
 	public int getDureeConservation() {
 		return dureeConservation;
 	}
 
+	/**
+	 * @param dureeConservation the dureeConservation to set
+	 */
 	public void setDureeConservation(int dureeConservation) {
 		this.dureeConservation = dureeConservation;
 	}
 
+	/**
+	 * @return the calories
+	 */
 	public int getCalories() {
 		return calories;
 	}
 
+	/**
+	 * @param calories the calories to set
+	 */
 	public void setCalories(int calories) {
 		this.calories = calories;
 	}
 
+	/**
+	 * @return the glucides
+	 */
 	public int getGlucides() {
 		return glucides;
 	}
 
+	/**
+	 * @param glucides the glucides to set
+	 */
 	public void setGlucides(int glucides) {
 		this.glucides = glucides;
 	}
 
+	/**
+	 * @return the fibres
+	 */
 	public int getFibres() {
 		return fibres;
 	}
 
+	/**
+	 * @param fibres the fibres to set
+	 */
 	public void setFibres(int fibres) {
 		this.fibres = fibres;
 	}
 
+	/**
+	 * @return the proteines
+	 */
 	public int getProteines() {
 		return proteines;
 	}
 
+	/**
+	 * @param proteines the proteines to set
+	 */
 	public void setProteines(int proteines) {
 		this.proteines = proteines;
 	}
-
 
 }

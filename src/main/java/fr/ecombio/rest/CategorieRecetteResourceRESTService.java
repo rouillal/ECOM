@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import fr.ecombio.model.CategorieRecette;
 import fr.ecombio.model.Produit;
 import fr.ecombio.data.CategorieRecetteRepository;
+import fr.ecombio.data.CategorieRepository;
 
 /**
  * <p>
@@ -36,6 +37,7 @@ public class CategorieRecetteResourceRESTService {
 	/**
 	 * @see CategorieRecette
 	 * @return liste des categories
+	 * @see CategorieRecetteRepository#findAllOrderedByName()
 	 */
 	@GET
     @Produces(MediaType.APPLICATION_JSON)

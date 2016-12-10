@@ -56,6 +56,7 @@ public class PaiementRESTService {
 	 * 
 	 * @see ValidationCommande
 	 * @see SendEmail
+	 * @see SendEmail#send(ValidationCommande)
 	 */
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)

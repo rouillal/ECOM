@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.xml.ws.ResponseWrapper;
 
+import fr.ecombio.data.RegistreRepository;
 import fr.ecombio.data.CompositionRepository;
 import fr.ecombio.model.Client;
 import fr.ecombio.model.Composition;
@@ -39,7 +40,7 @@ public class ConnectResourceRESTService {
 	 * @see RegistreRepository
 	 */
 	@Inject
-	private fr.ecombio.data.RegistreRepository RegistreRepository;
+	private RegistreRepository RegistreRepository;
 
 	/**
 	 * authentification du client
@@ -49,6 +50,7 @@ public class ConnectResourceRESTService {
 	 * @throws Exception
 	 * 
 	 * @see Client
+	 * @see RegistreRepository#findClientByMailAndMdp(String, String)
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -67,6 +69,7 @@ public class ConnectResourceRESTService {
 	 * @return le client si il n'existait pas déjà, erreur sinon
 	 * 
 	 * @see ValidationClient
+	 * @see RegistreRepository#registerClient(ValidationClient)
 	 */
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)

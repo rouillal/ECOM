@@ -84,6 +84,11 @@ public class PanierResourceRESTService {
 	 * @see Panier
 	 * @see Produit
 	 * @see Article
+	 * @see PanierRepository#AjoutPanier(Panier)
+	 * @see PanierRepository#updatePanier(Panier)
+	 * @see ProduitRepository#findById(Long)
+	 * @see ArticleRepository#AjoutArticle(Article)
+	 * @see StockManagerRepository#decrementeStock(Panier, Article)
 	 */
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
@@ -122,6 +127,13 @@ public class PanierResourceRESTService {
 	 * @see Panier
 	 * @see Produit
 	 * @see Article
+	 * @see PanierRepository#findById(Long)
+	 * @see PanierRepository#updatePanier(Panier)
+	 * @see ProduitRepository#findById(Long)
+	 * @see ArticleRepository#AjoutArticle(Article)
+	 * @see ArticleRepository#updateArticle(Article)
+	 * @see StockManagerRepository#decrementeStock(Panier, Article)
+	 * @see StockManagerRepository#incrementeStock(Panier,Article)
 	 */
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
@@ -137,30 +149,28 @@ public class PanierResourceRESTService {
 				Produit produit = ProduitRepository.findById(article.getId());
 				// si le stock est suffisant
 				// on met à jour les quantite du panier 
-				if (panier.contains(produit.getId())) {
-					Article a = panier.getArticle(produit.getId());
-					if ( a!= null ){
-						if (a.getQuotite() < article.getQuotite() ) {
-							if (produit.getStock()>=1) {
-								for (int i =0; i<Math.abs(a.getQuotite() - article.getQuotite()) ; i++) {
-									StockManagerRepository.decrementeStock(panier,a);
-								}
-								a.setQuotite(article.getQuotite());
-								ArticleRepository.updateArticle(a);
-							} else {
-								log.log(Level.INFO, "echec pas de stock pour "+produit.getName()+", end transaction");
-								log.log(Level.INFO, "quotité panier "+article.getQuotite());
-								log.log(Level.INFO, "quotité base "+a.getQuotite());
-								return Response.notModified("Le stock de ce produit n'est pas suffisant").build();
-							}
-						} else if (a.getQuotite() > article.getQuotite()) {
+				Article a = panier.getArticle(produit.getId());
+				if (a!=null) {
+					if (a.getQuotite() < article.getQuotite() ) {
+						if (produit.getStock()>=1) {
 							for (int i =0; i<Math.abs(a.getQuotite() - article.getQuotite()) ; i++) {
-								StockManagerRepository.incrementeStock(panier,a);
+								StockManagerRepository.decrementeStock(panier,a);
 							}
 							a.setQuotite(article.getQuotite());
 							ArticleRepository.updateArticle(a);
-						} 
-					}
+						} else {
+							log.log(Level.INFO, "echec pas de stock pour "+produit.getName()+", end transaction");
+							log.log(Level.INFO, "quotité panier "+article.getQuotite());
+							log.log(Level.INFO, "quotité base "+a.getQuotite());
+							return Response.notModified("Le stock de ce produit n'est pas suffisant").build();
+						}
+					} else if (a.getQuotite() > article.getQuotite()) {
+						for (int i =0; i<Math.abs(a.getQuotite() - article.getQuotite()) ; i++) {
+							StockManagerRepository.incrementeStock(panier,a);
+						}
+						a.setQuotite(article.getQuotite());
+						ArticleRepository.updateArticle(a);
+					} 
 				} else {
 					log.log(Level.INFO, panier.toString());
 					if (produit.getStock()>=1) {

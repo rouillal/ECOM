@@ -85,34 +85,58 @@ public class Article implements Serializable {
 		this.quotite = quotite;
 	}
 
+	/**
+	 * @return the id
+	 */
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return the produit
+	 */
 	public Produit getProduit() {
 		return produit;
 	}
 
+	/**
+	 * @param produit the produit to set
+	 */
 	public void setProduit(Produit produit) {
 		this.produit = produit;
 	}
 
+	/**
+	 * @return the quotite
+	 */
 	public int getQuotite() {
 		return quotite;
 	}
 
+	/**
+	 * @param quotite the quotite to set
+	 */
 	public void setQuotite(int quotite) {
 		this.quotite = quotite;
-	}	
+	}
 
+	/**
+	 * @return the panier
+	 */
 	public Panier getPanier() {
 		return panier;
 	}
 
+	/**
+	 * @param panier the panier to set
+	 */
 	public void setPanier(Panier panier) {
 		this.panier = panier;
 	}

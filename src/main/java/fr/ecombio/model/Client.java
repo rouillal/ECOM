@@ -77,55 +77,115 @@ public class Client implements Serializable {
 	 * </ul>
 	 */
 	private String typeClient = "c";
-	
+
+	/**
+	 * @return the id
+	 */
 	public Long getId() {
 		return id;
 	}
-	
+
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+	/**
+	 * @return the nom
+	 */
 	public String getNom() {
 		return nom;
 	}
+
+	/**
+	 * @param nom the nom to set
+	 */
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
+
+	/**
+	 * @return the prenom
+	 */
 	public String getPrenom() {
 		return prenom;
 	}
+
+	/**
+	 * @param prenom the prenom to set
+	 */
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
+
+	/**
+	 * @return the mail
+	 */
 	public String getMail() {
 		return mail;
 	}
+
+	/**
+	 * @param mail the mail to set
+	 */
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
+
+	/**
+	 * @return the adresse
+	 */
 	public String getAdresse() {
 		return adresse;
 	}
+
+	/**
+	 * @param adresse the adresse to set
+	 */
 	public void setAdresse(String adresse) {
 		this.adresse = adresse;
 	}
+
+	/**
+	 * @return the cp
+	 */
 	public String getCp() {
 		return cp;
 	}
+
+	/**
+	 * @param cp the cp to set
+	 */
 	public void setCp(String cp) {
 		this.cp = cp;
 	}
+
+	/**
+	 * @return the ville
+	 */
 	public String getVille() {
 		return ville;
 	}
+
+	/**
+	 * @param ville the ville to set
+	 */
 	public void setVille(String ville) {
 		this.ville = ville;
 	}
 
+	/**
+	 * @return the typeClient
+	 */
 	public String getTypeClient() {
 		return typeClient;
 	}
 
+	/**
+	 * @param typeClient the typeClient to set
+	 */
 	public void setTypeClient(String typeClient) {
 		this.typeClient = typeClient;
 	}

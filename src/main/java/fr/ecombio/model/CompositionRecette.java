@@ -53,32 +53,48 @@ public class CompositionRecette implements Serializable{
     @JsonManagedReference
 	private Composition compositions;
 
-
-	public Recette getRecettes() {
-		return recettes;
-	}
-
-	public void setRecettes(Recette recettes) {
-		this.recettes = recettes;
-	}
-
-	public Composition getCompositions() {
-		return compositions;
-	}
-
-	public void setCompositions(Composition compositions) {
-		this.compositions = compositions;
-	}
-
+	/**
+	 * @return the id
+	 */
 	public Long getId() {
 		return Id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(Long id) {
 		Id = id;
 	}
-	
-	
+
+	/**
+	 * @return the recettes
+	 */
+	public Recette getRecettes() {
+		return recettes;
+	}
+
+	/**
+	 * @param recettes the recettes to set
+	 */
+	public void setRecettes(Recette recettes) {
+		this.recettes = recettes;
+	}
+
+	/**
+	 * @return the compositions
+	 */
+	public Composition getCompositions() {
+		return compositions;
+	}
+
+	/**
+	 * @param compositions the compositions to set
+	 */
+	public void setCompositions(Composition compositions) {
+		this.compositions = compositions;
+	}
+
 
 	
 }
