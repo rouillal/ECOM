@@ -69,6 +69,9 @@ eComBioApp.factory('recetteSvc', [
 				// Fin Mock
 				restBackendSvc.getItemsByUrl('recette'+restAdress).then(function(data) {
 					var listRecette = data.data;
+					angular.forEach(listRecette, function(recette, key) {
+						recette['url']=imgProviderSvc.getImage(recette.filename);
+					});
 					$rootScope.$broadcast('listRecettesSupplied', listRecette);
 				}, function(reason) {
 					$rootScope.$broadcast('debug', reason);
@@ -92,10 +95,12 @@ eComBioApp.factory('recetteSvc', [
 						.getItemsByUrl("recette/produits?id=" + recetteId)
 						.then(
 								function(data) {
+									var recette = data.data;
+									recette['url']=imgProviderSvc.getImage(recette.filename);
 									$rootScope
 											.$broadcast(
 													'detailsRecetteSupplied',
-													data.data);
+													recette);
 								},
 								function(reason) {
 									$rootScope.$broadcast('debug', reason);
