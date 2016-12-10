@@ -299,6 +299,9 @@ public class RecetteRepository {
 	 */
 	public List<Recette> findAllRecetteFromPanier(Long id) {
 		Panier panier = PanierRepository.findById(id);
+		if (panier == null) {
+			return new ArrayList<Recette>();
+		}
 		List<Long> listProduit = new ArrayList<Long> ();
 		for (Article a : panier.getArticles()) {
 			listProduit.add(a.getProduit().getId());

@@ -111,10 +111,6 @@ public class ProduitRepository {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Produit> criteria = cb.createQuery(Produit.class);
 		Root<Produit> Produit = criteria.from(Produit.class);
-		// Swap criteria statements if you would like to try out type-safe
-		// criteria queries, a new
-		// feature in JPA 2.0
-		// criteria.select(Produit).orderBy(cb.asc(Produit.get(Produit_.name)));
 		criteria.select(Produit).where( cb.and(cb.equal( Produit.get("categorie").get("name"),cat ), cb.notEqual(Produit.get("stock"), 0)));
 		return em.createQuery(criteria).getResultList();
 	}
