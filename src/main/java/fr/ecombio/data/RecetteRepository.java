@@ -164,13 +164,13 @@ public class RecetteRepository {
 				this.getListRecette();
 			}
 			for (DefRecette d : this.listRecette) {
-				if (d.getName().toLowerCase().contains(search)) {
+				if (d.getName().toLowerCase().contains(search) || d.getIngredients().toLowerCase().contains(search)) {
 					if (predicate2 == null) {
 						predicate2 = cb.equal(Recette.get("id"), d.id);
 					} else {
 						predicate2 = cb.or(predicate2,cb.equal(Recette.get("id"), d.id));
 					}
-				}
+				} 
 			}
 		}
 		if(saison != null && saison != ""){
@@ -234,11 +234,11 @@ public class RecetteRepository {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Tuple> criteria = cb.createTupleQuery();
 		Root<Recette> Recette = criteria.from(Recette.class);
-		criteria.multiselect(Recette.get("id"), Recette.get("name"));
+		criteria.multiselect(Recette.get("id"), Recette.get("name"), Recette.get("listeIngredients"));
 		List<Tuple> tupleResult = em.createQuery(criteria).getResultList();
 		logger.log(Level.INFO, "Recette : ");
 		for (Tuple t : tupleResult) {
-			this.listRecette.add(new DefRecette((Long) t.get(0),(String) t.get(1)));
+			this.listRecette.add(new DefRecette((Long) t.get(0),(String) t.get(1), (String) t.get(2)));
 			logger.log(Level.INFO, (String) t.get(1));
 		}
 	}
@@ -246,14 +246,16 @@ public class RecetteRepository {
 	public class DefRecette {
 		private Long id;
 		private String name;
+		private String ingredients;
 
 		public DefRecette() {
 			super();
 		}
 
-		public DefRecette(Long id, String name) {
+		public DefRecette(Long id, String name, String ingredients) {
 			this.id = id;
 			this.name = name;
+			this.ingredients = ingredients;
 		}
 
 		public Long getId() {
@@ -267,6 +269,12 @@ public class RecetteRepository {
 		}
 		public void setName(String name) {
 			this.name = name;
+		}
+		public String getIngredients() {
+			return this.ingredients;
+		}
+		public void setIngredients(String ingredients) {
+			this.ingredients = ingredients;
 		}
 	}
 
