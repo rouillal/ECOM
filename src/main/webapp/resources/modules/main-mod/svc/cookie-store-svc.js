@@ -11,7 +11,11 @@ eComBioApp.factory('cookieStoreSvc', [ '$rootScope','$window','$cookies',
 	
 	var getStoredLocalString = function(name) {
 		//$window.alert("from : "+name+" value : "+$cookies.get(name));
-		return $cookies.get(name);
+		var ret=$cookies.get(name);
+		if (typeof ret == 'undefined') {
+			ret = '';
+		}
+		return ret;
 	}
 	
 	var storeLocalItem = function(name,info) {
@@ -27,6 +31,9 @@ eComBioApp.factory('cookieStoreSvc', [ '$rootScope','$window','$cookies',
 		//$window.alert("from : "+name+" value : "+$cookies.get(name));
 		var objetJson = $cookies.get(name);
 		var ret = angular.fromJson(objetJson);
+		if (typeof ret == 'undefined') {
+			ret = [];
+		}
 		return ret;
 	}
 

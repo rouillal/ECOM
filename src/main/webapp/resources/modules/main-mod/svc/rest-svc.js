@@ -39,7 +39,6 @@ eComBioApp.factory('restBackendSvc', [
 			
 			function createItem(url, body) {
 				var urlTmp = backandGlobalUrlRoot + url;
-				//$window.alert('hhelo');
 				var request = $http({
 					method : 'POST',
 					data : body,

@@ -3,7 +3,7 @@ eComBioApp.controller('ProductDetailCtrl', [
 		'$window',
 		'panierSvc',
 		function($scope, $window, panierSvc) {
-			$scope.selectedProduitPanier = '';
+			$scope.selectedProduitDetail = '';
 			$scope.panierQuantite = 0;
 			$scope.panierPrixQt = 0;
 
@@ -11,9 +11,9 @@ eComBioApp.controller('ProductDetailCtrl', [
 				return !($scope.panierQuantite > 0);
 			};
 			
-			$scope.moinsProduit = function() {
+			$scope.moinsProduitDetail = function() {
 				if ($scope.panierQuantite > 0) {
-					panierSvc.changeProduit($scope.selectedProduitPanier,
+					panierSvc.changeProduit($scope.selectedProduitDetail,
 							$scope.panierQuantite - 1);
 				} else {
 					$scope.panierQuantite = 0;
@@ -25,14 +25,14 @@ eComBioApp.controller('ProductDetailCtrl', [
 				return false;
 			};
 
-			$scope.plusProduit = function() {
-				panierSvc.changeProduit($scope.selectedProduitPanier,
+			$scope.plusProduitDetail = function() {
+				panierSvc.changeProduit($scope.selectedProduitDetail,
 						$scope.panierQuantite + 1);
 			};
 
 			$scope.$on('selectedProduitChange', function(event,
 					newSelectedProduit, qt ) {
-				$scope.selectedProduitPanier = newSelectedProduit;
+				$scope.selectedProduitDetail = newSelectedProduit;
 				$scope.panierQuantite = qt;
 				$scope.panierPrixQt = Math.round(qt * newSelectedProduit.prix*100)/100;
 			});

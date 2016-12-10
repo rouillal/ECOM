@@ -7,7 +7,7 @@ eComBioApp
 							.when(
 									'/catalog',
 									{
-										templateUrl : 'resources/modules/product-catalog-mod/product-catalog.html',
+										templateUrl : 'resources/modules/produit-modules/produit-catalog-mod/produit-catalog.html',
 										controller : 'ProductCatalogCtrl'
 									})
 							.when(
