@@ -5,7 +5,7 @@ eComBioApp
 				function($routeProvider, $locationProvider) {
 					$routeProvider
 							.when(
-									'/catalog',
+									'/catalogue',
 									{
 										templateUrl : 'resources/modules/produit-modules/produit-catalog-mod/produit-catalog.html',
 										controller : 'ProduitCatalogCtrl'
@@ -23,10 +23,16 @@ eComBioApp
 										controller : 'PanierCtrl'
 									})
 							.when(
-									'/command',
+									'/commande',
 									{
-										templateUrl : 'resources/modules/command-mod/command.html',
-										controller : 'CommandCtrl'
+										templateUrl : 'resources/modules/commande-modules/commande-crea-mod/commande-crea.html',
+										controller : 'CommandeCreaCtrl'
+									})
+							.when(
+									'/gestion',
+									{
+										templateUrl : 'resources/modules/commande-modules/commande-admin-mod/commande-admin.html',
+										controller : 'CommandeAdminCtrl'
 									})
 							.when(
 									'/signin',
@@ -40,7 +46,7 @@ eComBioApp
 										templateUrl : 'resources/modules/connect-mod/connect.html',
 										controller : 'ConnectCtrl'
 									}).otherwise({
-								redirectTo : '/catalog'
+								redirectTo : '/catalogue'
 							});
 
 					$locationProvider.html5Mode(false);

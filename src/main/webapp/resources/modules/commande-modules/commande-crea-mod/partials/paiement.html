@@ -1,0 +1,72 @@
+<div class="modal fade" id="myModalPaiement" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content" ng-show="payerInfoVoir">
+			<div class="modal-header"
+				style="padding: 35px 50px; background-color: #f9f9f9;; color: rgb(221, 131, 14); font-family: Bradley Hand; text-align: center; font-size: 30px;">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h3>
+					<span class="glyphicon glyphicon-lock"></span> Paiement
+				</h3>
+			</div>
+			<div class="modal-body">
+				<h4 style="text-align: center;">Montant de la transaction :
+					{{montantTotal}}€</h4>
+				<h4 class="ano" align="center" ng-show="isErrorMessage()">{{erreurPaiement}}</h4>
+				<form name="formP" novalidate role="form">
+					<div class="form-group">
+						<label> N° de carte : </label> <input
+							type="text" class="form-control" ng-model="commandPaieInfo.num"
+							placeholder="Entrez votre numéro de carte bancaire" name="numCB"
+							required="" ng-pattern="/^[0-9]{16}$/">
+						<div ng-show="formP.$submitted || formP.numCB.$touched">
+							<div ng-show="formP.numCB.$error.required" class="ano">Veuillez
+								saisir votre numéro de carte bancaire.</div>
+							<span class="ano" ng-show="formP.numCB.$error.pattern">Le
+								numéro de carte bancaire n'est pas valide (16 chiffres)</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label> Expire fin : </label> <select
+							name="moisSelect" id="moisSelect" ng-model="commandPaieInfo.mois">
+							<option ng-repeat="mois in listeMois" value="{{mois.value}}">{{mois.libelle}}</option>
+						</select> <select name="anneeSelect" id="anneeSelect"
+							ng-model="commandPaieInfo.annee">
+							<option ng-repeat="annee in listeAnnees" value="{{annee.value}}">{{annee.libelle}}</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label> Cryptogramme visuel</label> <input
+							type="text" class="form-control"
+							ng-model="commandPaieInfo.codeVerif"
+							placeholder="Saisir le cryptogramme visuel" name="numCrypto"
+							required="" ng-pattern="/^[0-9]{3}$/">
+						<div ng-show="formP.$submitted || formP.numCrypto.$touched">
+							<div ng-show="formP.numCrypto.$error.required" class="ano">Veuillez
+								saisir le cryptogramme.</div>
+							<span class="ano" ng-show="formP.numCrypto.$error.pattern">Le
+								crytogramme n'est pas valide (3 chiffres)</span>
+						</div>
+					</div>
+					<div align="center">
+						<button
+							style="background-color: rgb(221, 131, 14); border-radius: 10px;"
+							ng-click="validationCmd()" type="submit" ng-disabled="formP.$invalid">Valider</button>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer" style="background-color: #f9f9f9;">
+				<div align="center">
+					<button type="button" id="myBtnAnnulePaiement"
+						style="background-color: #f9f9f9; border-radius: 10px;">Annuler
+						et retourner à ma commande</button>
+				</div>
+			</div>
+
+		</div>
+		<div class="modal-content" ng-show="recapInfoVoir">
+			<div ng-include
+				src="'resources/modules/commande-modules/commande-crea-mod/partials/recap.html'"></div>
+		</div>
+	</div>
+</div>
