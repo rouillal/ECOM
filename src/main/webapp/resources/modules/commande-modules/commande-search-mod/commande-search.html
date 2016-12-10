@@ -1,0 +1,25 @@
+<div style="margin-top: 20px;" ng-controller="SearchCommandeCtrl">
+	<div class="col-xs-10" class="form-group"
+		ng-controller="SearchCommandeCtrl">
+		<div class="input-group input-group-sm icon-addon addon-sm">
+			<input type="text" ng-model="searchCommandeString"
+				placeholder="Rechercher un produit" class="form-control input-sm">
+			<span class="input-group-btn">
+				<button ng-click="searchCommandeByName()" class="btn btn-inverse">
+					<span style="color: rgb(221, 131, 14);"
+						class="glyphicon glyphicon-search"></span>
+				</button>
+			</span>
+		</div>
+	</div>
+	<div style="color: rgb(221, 131, 14); margin-top:10px; margin-bottom: 10px;" class="col-xs-12">Catégories :</div>
+	<div class="col-xs-12" ng-repeat="categorie in listCategories">
+		<input type="checkbox" ng-model="listCategoriesChoix[$index]"
+			ng-change="changeCommandeCatego()">&nbsp;&nbsp;{{categorie.name}}
+	</div>
+	<div class="col-xs-12">
+		<input type="checkbox" ng-model="isSaison"
+			ng-change="changeSaison()">&nbsp;&nbsp;Commandes de saison
+	</div>
+	<h6 class="col-xs-12">Debug:{{debug}}</h6>
+</div>

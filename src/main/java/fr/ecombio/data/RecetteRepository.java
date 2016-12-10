@@ -1,6 +1,5 @@
 package fr.ecombio.data;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,7 +18,6 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import fr.ecombio.model.Article;
-import fr.ecombio.model.Categorie;
 import fr.ecombio.model.Composition;
 import fr.ecombio.model.CompositionRecette;
 import fr.ecombio.model.Panier;
@@ -32,12 +30,34 @@ import fr.ecombio.model.RecetteProduit;
 import fr.ecombio.model.RecetteSaison;
 import fr.ecombio.model.Saison;
 
+/**
+ * <p>
+ * Permet une gestion des recettes :
+ * <ul>
+ * 	<li>faire des requêtes de select</li>
+ * 	<li>ajouter une saison en base</li>
+ *  </ul>
+ * </p>
+ * 
+ * @see EntityManager
+ * @see Recette
+ * @see PanierRepository
+ *
+ */
 @Stateless
 public class RecetteRepository {
 
+	/**
+	 * pour gérer l'aspect transactionnel
+	 * 
+	 * @see EntityManager
+	 */
 	@Inject
 	private EntityManager em;
 
+	/**
+	 * @see PanierRepository
+	 */
 	@Inject
 	private PanierRepository PanierRepository;
 
@@ -46,20 +66,30 @@ public class RecetteRepository {
 
 	/**
 	 * 
-	 * @param id
+	 * @param id identificateur de la recette
 	 * @return Recette
 	 */
 	public Recette findById(Long id) {
 		return em.find(Recette.class, id);
 	}
 
+	/**
+	 * @param recette la recette
+	 */
 	public  void AjoutRecette(Recette recette) {
 		em.persist(recette);
 	}
 
-	List<DefRecette> listRecette = new LinkedList<DefRecette>();
+	private List<DefRecette> listRecette = new LinkedList<DefRecette>();
 
-	public List<fr.ecombio.model.Recette> findAllOrderedByName(int page, String saison, String tri) {
+	/**
+	 * 
+	 * @param page numéro de la page, pour la pagination
+	 * @param saison saisons associées à la recette
+	 * @param tri alpha,name,difficulte,cout,tpsPreparation,tpsCuisson
+	 * @return liste de recettes
+	 */
+	public List<Recette> findAllOrderedByName(int page, String saison, String tri) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Recette> criteria = cb.createQuery(Recette.class);
 		Root<Recette> Recette = criteria.from(Recette.class);
@@ -95,6 +125,16 @@ public class RecetteRepository {
 
 	}
 
+	/**
+	 * 
+	 * @param page numéro de la page, pour la pagination
+	 * @param cat catégorie de la recette
+	 * @param saison saisons associées à la recette
+	 * @param search recherche par nom de recette
+	 * @param compo type de la recette (vegetarien ...)
+	 * @param tri alpha,name,difficulte,cout,tpsPreparation,tpsCuisson
+	 * @return liste de recettes
+	 */
 	public List<Recette> findAllOrderedByName(int page, String cat, String saison, String search, String compo, String tri) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Recette> criteria = cb.createQuery(Recette.class);
@@ -122,13 +162,13 @@ public class RecetteRepository {
 				this.getListRecette();
 			}
 			for (DefRecette d : this.listRecette) {
-				if (d.getName().toLowerCase().contains(search)) {
+				if (d.getName().toLowerCase().contains(search) || d.getIngredients().toLowerCase().contains(search)) {
 					if (predicate2 == null) {
 						predicate2 = cb.equal(Recette.get("id"), d.id);
 					} else {
 						predicate2 = cb.or(predicate2,cb.equal(Recette.get("id"), d.id));
 					}
-				}
+				} 
 			}
 		}
 		if(saison != null && saison != ""){
@@ -188,15 +228,15 @@ public class RecetteRepository {
 		return typequery.getResultList();
 	}
 
-	private void getListRecette() {
+	private synchronized void getListRecette() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Tuple> criteria = cb.createTupleQuery();
 		Root<Recette> Recette = criteria.from(Recette.class);
-		criteria.multiselect(Recette.get("id"), Recette.get("name"));
+		criteria.multiselect(Recette.get("id"), Recette.get("name"), Recette.get("listeIngredients"));
 		List<Tuple> tupleResult = em.createQuery(criteria).getResultList();
 		logger.log(Level.INFO, "Recette : ");
 		for (Tuple t : tupleResult) {
-			this.listRecette.add(new DefRecette((Long) t.get(0),(String) t.get(1)));
+			this.listRecette.add(new DefRecette((Long) t.get(0),(String) t.get(1), (String) t.get(2)));
 			logger.log(Level.INFO, (String) t.get(1));
 		}
 	}
@@ -204,14 +244,16 @@ public class RecetteRepository {
 	public class DefRecette {
 		private Long id;
 		private String name;
+		private String ingredients;
 
 		public DefRecette() {
 			super();
 		}
 
-		public DefRecette(Long id, String name) {
+		public DefRecette(Long id, String name, String ingredients) {
 			this.id = id;
 			this.name = name;
+			this.ingredients = ingredients;
 		}
 
 		public Long getId() {
@@ -226,8 +268,19 @@ public class RecetteRepository {
 		public void setName(String name) {
 			this.name = name;
 		}
+		public String getIngredients() {
+			return this.ingredients;
+		}
+		public void setIngredients(String ingredients) {
+			this.ingredients = ingredients;
+		}
 	}
 
+	/**
+	 * Recherche de la liste des produits contenus dans une recette
+	 * @param id identifiant de la recette
+	 * @return liste des produits de la recette
+	 */
 	public List<Produit> findAllProduitsFromId(int id) {
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -239,7 +292,11 @@ public class RecetteRepository {
 		return em.createQuery(criteria).getResultList();
 	}
 
-
+	/**
+	 * Recherche des recettes contenant un produit
+	 * @param id identifiant du produit
+	 * @return liste des recettes
+	 */
 	public List<Recette> findAllRecetteFromPanier(Long id) {
 		Panier panier = PanierRepository.findById(id);
 		List<Long> listProduit = new ArrayList<Long> ();
@@ -253,11 +310,11 @@ public class RecetteRepository {
 		Join<Recette, RecetteProduit> join1 = Recette.join("produits");
 		Join<RecetteProduit, Produit> join2 = join1.join("produits");
 
-		criteria.select(Recette);
+		criteria.select(Recette).distinct(true);
 		Expression<String> exp = join2.get("id");
 		Predicate predicate = exp.in(listProduit);
 		criteria.where(predicate);
-		return em.createQuery(criteria).getResultList();
+		return em.createQuery(criteria).setMaxResults(15).getResultList();
 	}
 
 	public Long findNumberPage(String cat, String saison, String search, String compo) {
@@ -337,6 +394,11 @@ public class RecetteRepository {
 		return (long) (Math.ceil((float)em.createQuery(criteria).getSingleResult()/6)) ;
 	}
 
+	/**
+	 * Recherche du nombre de recette par saison divisé par 6
+	 * @param saison la saison selectionnée
+	 * @return nombre de page
+	 */
 	public Long findNumberPage(String saison) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Long> criteria = cb.createQuery(Long.class);

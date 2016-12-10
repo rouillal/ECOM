@@ -11,22 +11,53 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.xml.ws.ResponseWrapper;
+import javax.xml.ws.WebServiceRef;
+
 import fr.ecombio.data.RegistreRepository;
 import fr.ecombio.data.PanierRepository;
+import fr.ecombio.model.Client;
 import fr.ecombio.model.SendEmail;
+import fr.ecombio.model.ValidationClient;
 import fr.ecombio.model.ValidationCommande;
 
+/**
+ * <p>
+ * Permet un service RESTful read/write pour le paiement
+ * 
+ * @see ValidationCommande
+ * @see RegistreRepository
+ * @see PanierRepository
+ * @see SendEmail
+ *
+ */
 @Path("/paiement")
 @RequestScoped
 public class PaiementRESTService {
 	
 	Logger log = java.util.logging.Logger.getLogger("org.hibernate");
 	
+	/**
+	 * @see RegistreRepository
+	 */
 	@Inject
 	private RegistreRepository RegistreRepository;	
+	
+	/**
+	 * @see PanierRepository
+	 */
 	@Inject
 	private PanierRepository PanierRepository;
-
+	
+	/**
+	 * Verification des donnees de paiement
+	 * @param infos informations de paiement
+	 * @returnok ou erreur
+	 * @throws Exception
+	 * 
+	 * @see ValidationCommande
+	 * @see SendEmail
+	 * @see SendEmail#send(ValidationCommande)
+	 */
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@ResponseWrapper public Response validationPaiement(ValidationCommande infos) throws Exception {

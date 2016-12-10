@@ -1,0 +1,173 @@
+<div class="col-xs-12" style="margin-top: 20px;"
+	ng-controller="ProduitAdminCtrl">
+	<div class="row" ng-show="isAdmin()">
+		<button class="btn" ng-click="createMode()">
+			<span style="color: rgb(221, 131, 14);"
+				class="glyphicon glyphicon-pencil"></span>
+		</button>
+		<div class="col-xs-12" ng-show="hasItemToEdit()">
+			<form name="formS" novalidate role="form">
+				<div class="col-xs-6" class="form-group">
+					<label><span class="glyphicon glyphicon-pencil"></span> Nom</label>
+					<input type="text" class="form-control"
+						ng-model="editedProduct.name" placeholder="Entrez votre nom"
+						name="nom" required="">
+					<div ng-show="formS.$submitted || formS.nom.$touched">
+						<div ng-show="formS.nom.$error.required" class="ano">Veuillez
+							saisir le nom.</div>
+					</div>
+				</div>
+				<div class="col-xs-6" class="form-group">
+					<label><span class="glyphicon glyphicon-pencil"></span>
+						Variété</label> <input type="text" class="form-control"
+						ng-model="editedProduct.variete" placeholder="Entrez la variété"
+						name="variete" required="">
+					<div ng-show="formS.$submitted || formS.variete.$touched">
+						<div ng-show="formS.variete.$error.required" class="ano">Veuillez
+							saisir la variété.</div>
+					</div>
+				</div>
+				<div style="margin-top: 10px;" class="col-xs-6" class="form-group">
+					<label><span class="glyphicon glyphicon-pencil"></span>Unité</label>
+					<input type="text" class="form-control"
+						ng-model="editedProduct.unite" placeholder="Entrez l'unité"
+						name="unite" required="">
+					<div ng-show="formS.$submitted || formS.unite.$touched">
+						<div ng-show="formS.unite.$error.required" class="ano">Veuillez
+							saisir l'unité.</div>
+					</div>
+				</div>
+				<div style="margin-top: 10px;" class="col-xs-6" class="form-group">
+					<label><span class="glyphicon glyphicon-pencil"></span>
+						Quantité</label> <input type="number" class="form-control"
+						ng-model="editedProduct.quantite" placeholder="Entrez la quantité"
+						name="quantite" required="">
+					<div ng-show="formS.$submitted || formS.quantite.$touched">
+						<div ng-show="formS.quantite.$error.required" class="ano">Veuillez
+							saisir la quantité.</div>
+					</div>
+				</div>
+				<div style="margin-top: 10px;" class="col-xs-6" class="form-group">
+					<label><span class="glyphicon glyphicon-pencil"></span>
+						Stock</label> <input type="number" class="form-control"
+						ng-model="editedProduct.stock" placeholder="Entrez le stock"
+						name="stock" required="">
+					<div ng-show="formS.$submitted || formS.stock.$touched">
+						<div ng-show="formS.stock.$error.required" class="ano">Veuillez
+							saisir le stock.</div>
+					</div>
+				</div>
+				<div style="margin-top: 10px;" class="col-xs-6" class="form-group">
+					<label><span class="glyphicon glyphicon-pencil"></span>
+						Prix</label> <input type="number" class="form-control"
+						ng-model="editedProduct.prix" placeholder="Entrez le prix"
+						name="prix" required="">
+					<div ng-show="formS.$submitted || formS.prix.$touched">
+						<div ng-show="formS.prix.$error.required" class="ano">Veuillez
+							saisir le prix.</div>
+					</div>
+				</div>
+				<div style="margin-top: 10px;" class="col-xs-6" class="form-group">
+					<label><span class="glyphicon glyphicon-pencil"></span> Nom
+						de fichier</label> <input type="text" class="form-control"
+						ng-model="editedProduct.filename"
+						placeholder="Entrez le nom de fichier" name="filename" required="">
+					<div ng-show="formS.$submitted || formS.filename.$touched">
+						<div ng-show="formS.filename.$error.required" class="ano">Veuillez
+							saisir le nom de fichier.</div>
+					</div>
+				</div>
+				<div style="margin-top: 10px;" class="col-xs-12" class="form-group">
+					<label><span class="glyphicon glyphicon-envelope"></span>
+						Provenance</label> <input type="email" class="form-control"
+						ng-model="editedProduct.provenance"
+						placeholder="Entrez la provenance" name="provenance" required="">
+					<div ng-show="formS.$submitted || formS.provenance.$touched">
+						<div ng-show="formS.provenance.$error.required"></div>
+						<span class="ano" ng-show="formS.provenance.$error.required">Veuillez
+							saisir la provenance. </span>
+					</div>
+				</div>
+				<div style="margin-top: 10px;" class="col-xs-6" class="form-group">
+					<label><span class="glyphicon glyphicon-pencil"></span>Date
+						de cueillette</label> <input type="date" class="form-control"
+						ng-model="editedProduct.dateCueillette" name="dateCueillette"
+						required="" placeholder="saisir la date de cueillette">
+					<div ng-show="formS.$submitted || formS.dateCueillette.$touched">
+						<div ng-show="formS.dateCueillette.$error.required" class="ano">Veuillez
+							saisir la date de cueillette.</div>
+					</div>
+				</div>
+				<div style="margin-top: 10px;" class="col-xs-6" class="form-group">
+					<label><span class="glyphicon glyphicon-pencil"></span>
+						Durée de conservation</label> <input type="number" class="form-control"
+						ng-model="editedProduct.dureeConservation"
+						placeholder="Entrez la durée de conservation"
+						name="dureeConservation" required="">
+					<div ng-show="formS.$submitted || formS.dureeConservation.$touched">
+						<div ng-show="formS.dureeConservation.$error.required" class="ano">Veuillez
+							saisir la durée de conservation.</div>
+					</div>
+				</div>
+				<div style="margin-top: 10px;" class="col-xs-6" class="form-group">
+					<label><span class="glyphicon glyphicon-pencil"></span>
+						Quantité de calories</label> <input type="number" class="form-control"
+						ng-model="editedProduct.calories"
+						placeholder="Entrez la quantité de calories" name="calories"
+						required="">
+					<div ng-show="formS.$submitted || formS.calories.$touched">
+						<div ng-show="formS.calories.$error.required" class="ano">Veuillez
+							saisir la quantité de calories.</div>
+					</div>
+				</div>
+				<div style="margin-top: 10px;" class="col-xs-6" class="form-group">
+					<label><span class="glyphicon glyphicon-pencil"></span>
+						Quantité de glucides</label> <input type="number" class="form-control"
+						ng-model="editedProduct.glucides"
+						placeholder="Entrez la quantité de glucides" name="glucides"
+						required="">
+					<div ng-show="formS.$submitted || formS.glucides.$touched">
+						<div ng-show="formS.glucides.$error.required" class="ano">Veuillez
+							saisir la quantité de glucides.</div>
+					</div>
+				</div>
+				<div style="margin-top: 10px;" class="col-xs-6" class="form-group">
+					<label><span class="glyphicon glyphicon-pencil"></span>
+						Quantité de fibres</label> <input type="number" class="form-control"
+						ng-model="editedProduct.fibres"
+						placeholder="Entrez la quantité de fibres" name="fibres"
+						required="">
+					<div ng-show="formS.$submitted || formS.fibres.$touched">
+						<div ng-show="formS.fibres.$error.required" class="ano">Veuillez
+							saisir la quantité de fibres.</div>
+					</div>
+				</div>
+				<div style="margin-top: 10px;" class="col-xs-6" class="form-group">
+					<label><span class="glyphicon glyphicon-pencil"></span>
+						Quantité de proteines</label> <input type="number" class="form-control"
+						ng-model="editedProduct.proteines"
+						placeholder="Entrez la quantité de proteines" name="proteines"
+						required="">
+					<div ng-show="formS.$submitted || formS.proteines.$touched">
+						<div ng-show="formS.proteines.$error.required" class="ano">Veuillez
+							saisir la quantité de proteines.</div>
+					</div>
+				</div>
+				<button
+					style="background-color: rgb(221, 131, 14); border-radius: 10px; margin-top: 20px;"
+					type="submit" ng-click="doCreate()"
+					class="col-xs-12"
+					ng-show="isCreate()">
+					<span class="glyphicon glyphicon-off"></span> Création du produit
+				</button>
+				<button
+					style="background-color: rgb(221, 131, 14); border-radius: 10px; margin-top: 20px;"
+					type="submit" ng-click="doUpdate()"
+					ng-disabled="formS.$invalid" class="col-xs-12"
+					ng-show="isUpdate()">
+					<span class="glyphicon glyphicon-off"></span> Mise à jour du produit
+				</button>
+			</form>
+		</div>
+	</div>
+</div>

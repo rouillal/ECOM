@@ -1,0 +1,33 @@
+<div style="margin-top: 20px;" ng-controller="RecetteSearchCtrl">
+	<div class="col-xs-10" class="form-group">
+		<div class="input-group input-group-sm icon-addon addon-sm">
+			<input type="text" ng-model="searchRecetteString"
+				placeholder="Rechercher par ingrédient/recette" class="form-control input-sm">
+			<span class="input-group-btn">
+				<button ng-click="searchRecetteByName()" class="btn btn-inverse">
+					<span style="color: rgb(221, 131, 14);"
+						class="glyphicon glyphicon-search"></span>
+				</button>
+			</span>
+		</div>
+	</div>
+	<div style="color: rgb(221, 131, 14); margin-top:10px; margin-bottom: 10px;" class="col-xs-12">Par type de recette:</div>
+	<div class="col-xs-12" ng-repeat="categorieRecette in listCategoriesRecette">
+		<input type="checkbox" ng-model="listCategoriesRecetteChoix[$index]"
+			ng-change="changeCategorieRecette()">&nbsp;&nbsp;{{categorieRecette.name}}
+	</div>
+	
+	<div style="color: rgb(221, 131, 14); margin-top:10px; margin-bottom: 10px;" class="col-xs-12">Par saison:</div>
+	<div class="col-xs-12" ng-repeat="saison in listSaisons">
+		<input type="checkbox" ng-model="listSaisonChoix[$index]"
+			ng-change="changeSaison()">&nbsp;&nbsp;{{saison.name}}
+	</div>
+	
+	<div style="color: rgb(221, 131, 14); margin-top:10px; margin-bottom: 10px;" class="col-xs-12">Par composition :</div>
+	<div class="col-xs-12" ng-repeat="composition in listCompositions">
+		<input type="checkbox" ng-model="listCompositionChoix[$index]"
+			ng-change="changeComposition()">&nbsp;&nbsp;{{composition.name}}
+	</div>
+
+	<h6 class="col-xs-12">Debug:{{debug}}</h6>
+</div>

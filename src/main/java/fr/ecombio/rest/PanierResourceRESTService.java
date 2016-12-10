@@ -21,35 +21,74 @@ import javax.xml.ws.ResponseWrapper;
 import fr.ecombio.data.PanierRepository;
 import fr.ecombio.data.ArticleRepository;
 import fr.ecombio.data.ProduitRepository;
+import fr.ecombio.data.RegistreRepository;
 import fr.ecombio.data.StockManagerRepository;
 import fr.ecombio.model.Article;
 import fr.ecombio.model.GestionArticle;
 import fr.ecombio.model.Panier;
 import fr.ecombio.model.Produit;
+import fr.ecombio.model.SendEmail;
+import fr.ecombio.model.ValidationCommande;
 
+/**
+ * <p>
+ * Permet un service RESTful read/write pour le panier
+ * 
+ * @see ArticleRepository
+ * @see ProduitRepository
+ * @see PanierRepository
+ * @see StockManagerRepository
+ * @see GestionArticle
+ * @see Panier
+ * @see Produit
+ * @see Article
+ *
+ */
 @Path("/panier")
 @RequestScoped
 public class PanierResourceRESTService {
 
+	/**
+	 * @see PanierRepository
+	 */
 	@Inject
 	private PanierRepository PanierRepository;
 
+	/**
+	 * @see ProduitRepository
+	 */
 	@Inject
 	private ProduitRepository ProduitRepository;
 
+	/**
+	 * @see ArticleRepository
+	 */
 	@Inject
 	private ArticleRepository ArticleRepository;
 
+	/**
+	 * @see StockManagerRepository
+	 */
 	@Inject
 	private StockManagerRepository StockManagerRepository;
 
 	//Logger log;
 	Logger log = java.util.logging.Logger.getLogger("org.hibernate");
 
-	/*objet en JSon
-	 * {
-	 * 		{id1:,qte1},{id2,qte2},...
-	 * }
+	/**
+	 * Creation du panier
+	 * @param commande mon panier
+	 * @return id du panier cree ou erreur
+	 * 
+	 * @see GestionArticle
+	 * @see Panier
+	 * @see Produit
+	 * @see Article
+	 * @see PanierRepository#AjoutPanier(Panier)
+	 * @see PanierRepository#updatePanier(Panier)
+	 * @see ProduitRepository#findById(Long)
+	 * @see ArticleRepository#AjoutArticle(Article)
+	 * @see StockManagerRepository#decrementeStock(Panier, Article)
 	 */
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
@@ -78,6 +117,24 @@ public class PanierResourceRESTService {
 		return Response.ok(PanierID).build();
 	}
 
+	/**
+	 * Mise a jour du panier
+	 * @param id identifiant du panier
+	 * @param commande mon panier
+	 * @return ok ou erreur
+	 * 
+	 * @see GestionArticle
+	 * @see Panier
+	 * @see Produit
+	 * @see Article
+	 * @see PanierRepository#findById(Long)
+	 * @see PanierRepository#updatePanier(Panier)
+	 * @see ProduitRepository#findById(Long)
+	 * @see ArticleRepository#AjoutArticle(Article)
+	 * @see ArticleRepository#updateArticle(Article)
+	 * @see StockManagerRepository#decrementeStock(Panier, Article)
+	 * @see StockManagerRepository#incrementeStock(Panier,Article)
+	 */
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	@ResponseWrapper public Response createUpdatePanier(@QueryParam("id") Long id, GestionArticle[] commande){
@@ -92,30 +149,28 @@ public class PanierResourceRESTService {
 				Produit produit = ProduitRepository.findById(article.getId());
 				// si le stock est suffisant
 				// on met à jour les quantite du panier 
-				if (panier.contains(produit.getId())) {
-					Article a = panier.getArticle(produit.getId());
-					if ( a!= null ){
-						if (a.getQuotite() < article.getQuotite() ) {
-							if (produit.getStock()>=1) {
-								for (int i =0; i<Math.abs(a.getQuotite() - article.getQuotite()) ; i++) {
-									StockManagerRepository.decrementeStock(panier,a);
-								}
-								a.setQuotite(article.getQuotite());
-								ArticleRepository.updateArticle(a);
-							} else {
-								log.log(Level.INFO, "echec pas de stock pour "+produit.getName()+", end transaction");
-								log.log(Level.INFO, "quotité panier "+article.getQuotite());
-								log.log(Level.INFO, "quotité base "+a.getQuotite());
-								return Response.notModified("Le stock de ce produit n'est pas suffisant").build();
-							}
-						} else if (a.getQuotite() > article.getQuotite()) {
+				Article a = panier.getArticle(produit.getId());
+				if (a!=null) {
+					if (a.getQuotite() < article.getQuotite() ) {
+						if (produit.getStock()>=1) {
 							for (int i =0; i<Math.abs(a.getQuotite() - article.getQuotite()) ; i++) {
-								StockManagerRepository.incrementeStock(panier,a);
+								StockManagerRepository.decrementeStock(panier,a);
 							}
 							a.setQuotite(article.getQuotite());
 							ArticleRepository.updateArticle(a);
-						} 
-					}
+						} else {
+							log.log(Level.INFO, "echec pas de stock pour "+produit.getName()+", end transaction");
+							log.log(Level.INFO, "quotité panier "+article.getQuotite());
+							log.log(Level.INFO, "quotité base "+a.getQuotite());
+							return Response.notModified("Le stock de ce produit n'est pas suffisant").build();
+						}
+					} else if (a.getQuotite() > article.getQuotite()) {
+						for (int i =0; i<Math.abs(a.getQuotite() - article.getQuotite()) ; i++) {
+							StockManagerRepository.incrementeStock(panier,a);
+						}
+						a.setQuotite(article.getQuotite());
+						ArticleRepository.updateArticle(a);
+					} 
 				} else {
 					log.log(Level.INFO, panier.toString());
 					if (produit.getStock()>=1) {

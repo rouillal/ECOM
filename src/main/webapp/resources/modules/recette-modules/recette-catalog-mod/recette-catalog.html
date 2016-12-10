@@ -1,0 +1,29 @@
+<div class="row">
+	<div class="col-xs-12 col-sm-3" ng-include
+		src="'resources/modules/recette-modules/recette-search-mod/recette-search.html'"></div>		
+	
+	<div class="col-xs-12 col-sm-9">
+		<div ng-include
+			src="'resources/modules/recette-modules/recette-catalog-mod/partials/header-recette-tri-page.html'"></div>
+	
+		<div ng-repeat="recette in listRecettes">
+			<div class="col-md-4 col-sm-6 col-xs-12"
+				ng-click="selectDetailsRecette(recette)"
+				data-target="#selectedRecetteDisplay"
+				data-toggle="modal">
+				<div style="text-align: center; margin-top: 50px;" class="col-xs-12">{{recette.name}}</div>
+				<div align="center" class="col-xs-12">
+					<img width="250px" height="250px" ng-src="{{recette.url}}">
+				</div>
+				<div class="col-xs-1"></div>
+				<div class="col-xs-10">
+					<div class="col-xs-12"><img width="15px" height="15px" src="resources/modules/main-mod/img/clock.png"> Préparation : {{recette.tpsPreparation}} minutes</div>
+					<div class="col-xs-12"><img width="15px" height="15px" src="resources/modules/main-mod/img/four.png"> Cuisson : {{recette.tpsCuisson}} minutes</div>
+					<div class="col-xs-12"><img width="15px" height="15px" src="resources/modules/main-mod/img/euro.png"> {{listeCout[recette.cout].libelle}}</div>
+					<div class="col-xs-12"><img width="15px" height="15px" src="resources/modules/main-mod/img/check.png"> {{listeDifficult[recette.difficulte].libelle}}</div>
+				</div>
+				<div class="col-xs-1"></div>
+			</div>
+		</div>
+	</div>
+</div>

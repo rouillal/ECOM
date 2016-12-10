@@ -1,5 +1,5 @@
-eComBioApp.controller('PanierCtrl', [ '$scope', '$location', 'panierSvc',
-		function($scope, $location, panierSvc) {
+eComBioApp.controller('PanierCtrl', [ '$scope', '$location','$window','panierSvc',
+		function($scope, $location,$window,panierSvc) {
 			$scope.listePanier = panierSvc.getListePanier();
 			$scope.montantTotal = panierSvc.getMontantTotal();
 
@@ -40,11 +40,11 @@ eComBioApp.controller('PanierCtrl', [ '$scope', '$location', 'panierSvc',
 			}
 			
 			$scope.revenirCatalog = function() {
-				$location.path("#/catalog");
+				$location.path("#/catalogue");
 			}
 			
 			$scope.passerCmd = function() {
-				$location.path("command");
+				$location.path("commande");
 			}
 
 			$scope.$on('rafraichirPanier', function(event) {

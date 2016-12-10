@@ -2,7 +2,11 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','c
                                     function($rootScope,restBackendSvc,$window,commandSvc) {
 
 	var userInfo = {'nom':'','prenom':'','mail':'biotobealive@gmail.com','adresse':'17 Rue des Marguerites','cp':'38000','ville':'Grenoble','psw':'xx'};
-
+	
+	var getInfoInit = function() {
+		return userInfo;
+	};
+	
 	var getUserInfo = function() {
 		return userInfo;
 	};
@@ -49,11 +53,21 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','c
 			}
 		});
 	};
+	
+	var isAdmin = function() {
+		return true;
+	};
+	
+	var isGestio = function() {
+		return true;
+	};
 
 	return {
 		getUserInfo : getUserInfo,
 		valideSaisieUserInfo : valideSaisieUserInfo,
 		retrieveUserInfo : retrieveUserInfo,
-		getUserInfoPrenom : getUserInfoPrenom
+		getUserInfoPrenom : getUserInfoPrenom,
+		isAdmin : isAdmin,
+		isGestio : isGestio
 	};
 } ]);
