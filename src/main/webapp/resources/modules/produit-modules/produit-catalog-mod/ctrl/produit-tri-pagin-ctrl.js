@@ -1,4 +1,4 @@
-eComBioApp.controller('ProductTriPaginCtrl', [
+eComBioApp.controller('ProduitTriPaginCtrl', [
 		'$scope',
 		'$window',
 		'searchProductSvc',
