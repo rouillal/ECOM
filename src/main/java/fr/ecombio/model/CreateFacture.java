@@ -132,15 +132,15 @@ public class CreateFacture {
 		anchor = new Anchor();
 		// Next section
 		Double total = panier.getTotal();
-		document.add(getTable("Total HT",":",total+" €"));
+		document.add(getTable("Total  HT",":",total+" €", catFont));
 		Double tva = Math.round(total*5.5) / 100.0;
-		document.add(getTable("TVA 5.5%",":",tva+" €"));
+		document.add(getTable("TVA    5.5%",":",tva+" €", smallBold));
 		Double tt =  Math.round((total+tva)*100.0) / 100.0;
-		document.add(getTable("Total TTC",":",tt+" €"));
+		document.add(getTable("Total  TTC",":",tt+" €", catFont));
 
 	}
 	
-	private static Element getTable(String string, String string2, String string3) throws DocumentException {
+	private static Element getTable(String string, String string2, String string3, Font catFont2) throws DocumentException {
 		PdfPTable table = new PdfPTable(4);
 		table.setHorizontalAlignment(Element.ALIGN_RIGHT);
 		table.setTotalWidth(255);
@@ -148,15 +148,15 @@ public class CreateFacture {
 		table.setWidths(widths);
 		table.setLockedWidth(true);
 		//table.setWidthPercentage(100);
-		table.addCell(getCell(string, PdfPCell.ALIGN_LEFT));
-		table.addCell(getCell(string2, PdfPCell.ALIGN_CENTER));
-		table.addCell(getCell(string3, PdfPCell.ALIGN_RIGHT));
-		table.addCell(getCell("", PdfPCell.ALIGN_RIGHT));
+		table.addCell(getCell(string, PdfPCell.ALIGN_LEFT, catFont2));
+		table.addCell(getCell(string2, PdfPCell.ALIGN_CENTER, catFont2));
+		table.addCell(getCell(string3, PdfPCell.ALIGN_RIGHT, catFont2));
+		table.addCell(getCell("", PdfPCell.ALIGN_RIGHT, catFont2));
 		return table;
 	}
 
-	public static PdfPCell getCell(String text, int alignment) {
-	    PdfPCell cell = new PdfPCell(new Phrase(text,catFont));
+	public static PdfPCell getCell(String text, int alignment, Font catFont2) {
+	    PdfPCell cell = new PdfPCell(new Phrase(text,catFont2));
 	    cell.setPadding(0);
 	    cell.setHorizontalAlignment(alignment);
 	    cell.setBorder(PdfPCell.NO_BORDER);
@@ -175,7 +175,7 @@ public class CreateFacture {
 		c1.setVerticalAlignment(Element.ALIGN_TOP);
 		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
 	    c1.setBorder(PdfPCell.NO_BORDER);
-	    c1.setBackgroundColor(BaseColor.LIGHT_GRAY);
+	    c1.setBackgroundColor(BaseColor.WHITE);
 		table.addCell(c1);
 
 		c1 = new PdfPCell(new Phrase("Quantité"));
