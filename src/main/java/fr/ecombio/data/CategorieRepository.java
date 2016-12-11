@@ -17,7 +17,7 @@ import fr.ecombio.model.Produit;
  * Permet une gestion des categorie :
  * <ul>
  * 	<li>faire des requetes de select</li>
- * 	<li>ajouter une saison en base</li>
+ * 	<li>ajouter une categorie en base</li>
  *  </ul>
  * </p>
  * 

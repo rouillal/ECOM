@@ -17,7 +17,7 @@ import fr.ecombio.model.CategorieRecette;
  * Permet une gestion des categories des recettes :
  * <ul>
  * 	<li>faire des requetes de select</li>
- * 	<li>ajouter une saison en base</li>
+ * 	<li>ajouter une CategorieRecette en base</li>
  *  </ul>
  * </p>
  * 

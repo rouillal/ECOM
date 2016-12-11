@@ -24,7 +24,7 @@ import java.util.List;
  * Permet une gestion des produits :
  * <ul>
  * 	<li>faire des requetes de select</li>
- * 	<li>ajouter une saison en base</li>
+ * 	<li>ajouter un produit en base</li>
  *  </ul>
  * </p>
  * 

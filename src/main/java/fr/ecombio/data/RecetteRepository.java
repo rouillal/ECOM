@@ -35,7 +35,7 @@ import fr.ecombio.model.Saison;
  * Permet une gestion des recettes :
  * <ul>
  * 	<li>faire des requêtes de select</li>
- * 	<li>ajouter une saison en base</li>
+ * 	<li>ajouter un produit en base</li>
  *  </ul>
  * </p>
  * 

@@ -20,7 +20,7 @@ import fr.ecombio.model.Produit;
  * Permet une gestion du panier :
  * <ul>
  * 	<li>faire des requetes de select</li>
- * 	<li>ajouter une saison en base</li>
+ * 	<li>ajouter un panier en base</li>
  *  </ul>
  * </p>
  * 

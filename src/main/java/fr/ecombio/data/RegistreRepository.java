@@ -117,7 +117,7 @@ public class RegistreRepository {
 		// on regarde si le client existe en base de donnee
 		Client client = this.findClientByMail(infos.getCommandInfo().getMail());
 		log.log(Level.INFO,"get client");
-		if (client == null) {
+		if (client == null ) {
 			log.log(Level.INFO,"client null");
 			client = new Client();
 			client.setNom(infos.getCommandInfo().getNom());
