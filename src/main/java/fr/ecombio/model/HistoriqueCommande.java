@@ -2,6 +2,7 @@ package fr.ecombio.model;
 
 import java.io.Serializable;
 
+import javax.jdo.annotations.Index;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -37,7 +38,7 @@ public class HistoriqueCommande implements Serializable {
 	 * client associe
 	 * @see Client
 	 */
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="client_id")
 	private Client client;
 
@@ -45,13 +46,20 @@ public class HistoriqueCommande implements Serializable {
 	 * panier associe
 	 * @see Panier
 	 */
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="panier_id")
 	private Panier panier;
 	
 	/**
+	 * true : la commande a ete livree
+	 * false : sinon
+	 */
+	private boolean isDelivred = false;
+	
+	/**
 	 * date de la commande
 	 */
+	@Index(name="commande")
 	private String date;
 	
 	/**
@@ -127,6 +135,20 @@ public class HistoriqueCommande implements Serializable {
 	 */
 	public void setHeure(String heure) {
 		this.heure = heure;
+	}
+
+	/**
+	 * @return the isDelivred
+	 */
+	public boolean isDelivred() {
+		return isDelivred;
+	}
+
+	/**
+	 * @param isDelivred the isDelivred to set
+	 */
+	public void setDelivred(boolean isDelivred) {
+		this.isDelivred = isDelivred;
 	}
 
 }

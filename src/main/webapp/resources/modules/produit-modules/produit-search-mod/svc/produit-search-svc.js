@@ -89,6 +89,7 @@ eComBioApp.factory('searchProductSvc', [ '$rootScope','categorieSvc','productSvc
 			currentPage -= 1;
 			doSearch();
 		}
+		$rootScope.$broadcast('changePageCurrent',currentPage);
 		return currentPage;
 	}
 	
@@ -97,6 +98,7 @@ eComBioApp.factory('searchProductSvc', [ '$rootScope','categorieSvc','productSvc
 			currentPage += 1;
 			doSearch();
 		}
+		$rootScope.$broadcast('changePageCurrent',currentPage);
 		return currentPage;
 	}
 	

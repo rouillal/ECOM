@@ -35,7 +35,7 @@ import fr.ecombio.model.Saison;
  * Permet une gestion des recettes :
  * <ul>
  * 	<li>faire des requêtes de select</li>
- * 	<li>ajouter une saison en base</li>
+ * 	<li>ajouter un produit en base</li>
  *  </ul>
  * </p>
  * 
@@ -299,6 +299,9 @@ public class RecetteRepository {
 	 */
 	public List<Recette> findAllRecetteFromPanier(Long id) {
 		Panier panier = PanierRepository.findById(id);
+		if (panier == null) {
+			return new ArrayList<Recette>();
+		}
 		List<Long> listProduit = new ArrayList<Long> ();
 		for (Article a : panier.getArticles()) {
 			listProduit.add(a.getProduit().getId());

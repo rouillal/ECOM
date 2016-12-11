@@ -12,6 +12,7 @@ import javax.inject.Inject;
 
 import fr.ecombio.model.Article;
 import fr.ecombio.model.Panier;
+import fr.ecombio.model.Produit;
 
 /**
  * <p>
@@ -103,6 +104,28 @@ public class StockManagerRepository {
 		}
 		panier.setDateDerniereModif(new Date());
 		Panierrepository.updatePanier(panier);
+	}
+
+
+
+	/**
+	 * Incremente le stock du produit
+	 * @param id identifiant du produit
+	 */
+	public void incrementeStock(Long id) {
+		Produit p = Produitrepository.findById(id);
+		p.setStock(p.getStock()+1);
+		Produitrepository.updateProduit(p);
+	}
+
+	/**
+	 * Decremente le stock du produit
+	 * @param id identifiant du produit
+	 */
+	public void decrementeStock(Long id) {
+		Produit p = Produitrepository.findById(id);
+		p.setStock(p.getStock()-1);
+		Produitrepository.updateProduit(p);
 	}
 
 	/**

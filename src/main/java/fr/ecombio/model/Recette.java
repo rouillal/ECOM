@@ -42,7 +42,6 @@ public class Recette implements Serializable {
 	 * nom
 	 */
 	@NotNull
-	@Size(min = 1, max = 25)
 	@Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
     @Column(name = "recette_name")
 	private String name;
@@ -93,7 +92,7 @@ public class Recette implements Serializable {
 	 * description de la preparation
 	 */
 	@NotNull
-	@Column(name="recette_preparation")
+	@Column(name="recette_preparation", length=100000)
 	private String preparation;
 	
 	/**
