@@ -85,7 +85,7 @@ public class Recette implements Serializable {
 	 * liste des ingredients
 	 */
 	@NotNull
-	@Column(name="recette_listeingredients")
+	@Column(name="recette_listeingredients", length=100000)
 	private String listeIngredients;
 	
 	/**
