@@ -23,7 +23,7 @@ eComBioApp.controller('ProduitAdminCtrl', [ '$scope', '$location','$window','use
 	}
 	
 	$scope.hasItemToEdit = function() {
-		return ($scope.visuMode=='C');
+		return ($scope.isCreate()||$scope.isUpdate());
 	}
 	
 	$scope.doCreate = function() {
@@ -37,5 +37,10 @@ eComBioApp.controller('ProduitAdminCtrl', [ '$scope', '$location','$window','use
 	
 	$scope.$on('listProductsSupplied', function(event,listProduitSupplied) {
 		//$scope.editedProduct = listProduitSupplied;
+	});
+	
+	$scope.$on('updateProductToEdit', function(event,updateProductToEdit) {
+		$scope.editedProduct=updateProductToEdit;
+		$scope.visuMode='U';
 	});
 } ]);
