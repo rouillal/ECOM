@@ -3,19 +3,16 @@
 		src="'resources/modules/commande-modules/commande-search-mod/commande-search.html'"></div>
 	<div class="col-xs-12 col-sm-9">
 		<div ng-include
-			src="'resources/modules/commande-modules/commande-admin-mod/commande-admin.html'"></div>
-		<div ng-include
 			src="'resources/modules/commande-modules/commande-detail-mod/commande-selected-display.html'"></div>
 		<div ng-repeat="commande in listCommandes">
-			<div style="text-align: center;" class="col-md-4 col-sm-6 col-xs-12" ng-click="selectDetailsCommande(commande)"
-				data-toggle="modal" data-target="#selectedCommandeDisplay">
-				<div style="margin-top: 50px;" class="col-xs-12">{{commande.name}}
-					{{commande.variete}}</div>
-				<div class="col-xs-12">
-					<img width="250px" height="250px"
-						ng-src="{{commande.url}}">
-				</div>
-				<div style="font-size:15px; font-weight:bold;" class="col-xs-12">{{commande.id}}</div>
+			<div style="text-align: center;" class="col-xs-12" ng-click="selectDetailsCommande(commande)"
+				data-toggle="modal" data-target="#selectedCommandeAdminDisplay">
+				<div style="font-size:15px; font-weight:bold;">{{commande.nom}}&nbsp;{{commande.prenom}}&nbsp;{{commande.prenom}}
+					</div>
+				<div style="font-size:13px;">{{commande.livDom}}&nbsp;{{commande.cp}}&nbsp;{{commande.ville}}
+					</div>
+				<div style="font-size:13px;">{{commande.date}}&nbsp;{{commande.heure}}
+					</div>
 			</div>
 		</div>
 		<div style="margin-top: 50px;" class="col-xs-12"></div>

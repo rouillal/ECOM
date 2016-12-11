@@ -1,4 +1,4 @@
-<div class="modal fade" id="selectedProductDisplay" role="dialog"
+<div class="modal fade" id="selectedCommandeAdminDisplay" role="dialog"
 	ng-controller="CommandeDetailCtrl">
 	<div class="modal-dialog">
 		<!-- Modal content-->
@@ -37,19 +37,12 @@
 				</div>
 			</div>
 			<div class="modal-body">
-				<ul>
-					<li>Provenance : {{selectedCommandeDetail.provenance}}</li>
-					<li>Date de production : {{selectedCommandeDetail.dateCueillette}}</li>
-					<li>Durée de conservation: {{selectedCommandeDetail.dureeConservation}} jours</li>
-					<li>Informations nutritionnelles (100g) :
-						<ul>
-							<li>Calories : {{selectedCommandeDetail.calories}} kcal</li>
-							<li>Glucides : {{selectedCommandeDetail.glucides}} g</li>
-							<li>Protéines : {{selectedCommandeDetail.proteines}} g</li>
-							<li>Fibres : {{selectedCommandeDetail.fibres}} g</li>
-						</ul>
-					</li>
-				</ul>
+				<div style="font-size:15px; font-weight:bold;">{{selectedCommandeDetail.nom}}&nbsp;{{selectedCommandeDetail.prenom}}&nbsp;{{selectedCommandeDetail.prenom}}
+					</div>
+				<div style="font-size:13px;">{{selectedCommandeDetail.livDom}}&nbsp;{{selectedCommandeDetail.cp}}&nbsp;{{selectedCommandeDetail.ville}}
+					</div>
+				<div style="font-size:13px;">{{selectedCommandeDetail.date}}&nbsp;{{selectedCommandeDetail.heure}}
+					</div>
 			</div>
 		</div>
 	</div>

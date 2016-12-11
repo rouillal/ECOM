@@ -1,26 +1,15 @@
-eComBioApp.controller('CommandeSearchCtrl', [ '$scope','$window','searchCommandeSvc',function($scope,$window,searchCommandeSvc) {
-	$scope.listCategories = searchCommandeSvc.getListCategories();
-	$scope.listCategoriesChoix=searchCommandeSvc.getListCategoriesChoix();
-	$scope.searchCommandeString = searchCommandeSvc.getSearchString();
-	$scope.debug = 'Url Rest Search à venir';
-	$scope.isSaison = searchCommandeSvc.getIsSaison();
+eComBioApp.controller('CommandeSearchCtrl', [ '$scope','$window','commandeSearchSvc',function($scope,$window,commandeSearchSvc) {
+	$scope.searchCommandeDate = commandeSearchSvc.getDateLivraison();
+	$scope.debug = 'Url2 Rest Search à venir';
 	
-	$scope.changeCommandeCatego = function() {
-		searchCommandeSvc.changeListCategoriesChoix($scope.listCategoriesChoix);
+	$scope.searchCommandeByDate  = function() {
+		commandeSearchSvc.changeDateLivraison($scope.searchCommandeDate);
 	}
 	
-	$scope.changeSaison = function() {
-		searchCommandeSvc.changeSaison($scope.isSaison);
-	}
-	
-	$scope.searchCommandeByName  = function() {
-		searchCommandeSvc.setSearchString($scope.searchCommandeString);
-	}
-	
-	$scope.$on('listCategoriesCritSupplied', function(event) {
+	/*$scope.$on('listCategoriesCritSupplied', function(event) {
 		$scope.listCategories = searchCommandeSvc.getListCategories();
 		$scope.listCategoriesChoix=searchCommandeSvc.getListCategoriesChoix();
-	});
+	});*/
 	
 	$scope.$on('debug', function(event,message) {
 		$scope.debug = message;

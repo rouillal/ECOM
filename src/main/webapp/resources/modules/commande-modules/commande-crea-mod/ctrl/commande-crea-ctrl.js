@@ -1,7 +1,7 @@
-eComBioApp.controller('CommandeCreaCtrl', [ '$scope', '$location','$window','commandSvc','panierSvc',
-		function($scope, $location,$window,commandSvc,panierSvc) {
-	$scope.commandInfo = commandSvc.getCommandInfo();
-	$scope.commandPaieInfo = commandSvc.getCommandPaieInfo();
+eComBioApp.controller('CommandeCreaCtrl', [ '$scope', '$location','$window','commandeSvc','panierSvc',
+		function($scope, $location,$window,commandeSvc,panierSvc) {
+	$scope.commandInfo = commandeSvc.getCommandInfo();
+	$scope.commandPaieInfo = commandeSvc.getCommandPaieInfo();
 	$scope.payerInfoVoir = false;
 	$scope.seeCalend = false;
 	$scope.recapInfoVoir = false;
@@ -81,7 +81,7 @@ eComBioApp.controller('CommandeCreaCtrl', [ '$scope', '$location','$window','com
 	}
 	
 	$scope.validationCmd = function(){
-		commandSvc.validePaiement();
+		commandeSvc.validePaiement();
 	}
 	
 	$scope.seeCalendar = function(){
@@ -97,7 +97,7 @@ eComBioApp.controller('CommandeCreaCtrl', [ '$scope', '$location','$window','com
 	});
 	
 	$scope.$on('commandInfoProvided', function(event) {
-		$scope.commandInfo = commandSvc.getCommandInfo();
+		$scope.commandInfo = commandeSvc.getCommandInfo();
 	});
 	
 	$scope.$on('recapAEditer', function(event) {
