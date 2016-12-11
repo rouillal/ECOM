@@ -1,20 +1,27 @@
 <div class="row">
+<h4>listCommandes:{{listCommandes}}</h4>
 	<div class="col-xs-12 col-sm-3" ng-include
 		src="'resources/modules/commande-modules/commande-search-mod/commande-search.html'"></div>
 	<div class="col-xs-12 col-sm-9">
 		<div ng-include
 			src="'resources/modules/commande-modules/commande-detail-mod/commande-selected-display.html'"></div>
-		<div ng-repeat="commande in listCommandes">
-			<div style="text-align: center;" class="col-xs-12" ng-click="selectDetailsCommande(commande)"
-				data-toggle="modal" data-target="#selectedCommandeAdminDisplay">
-				<div style="font-size:15px; font-weight:bold;">{{commande.nom}}&nbsp;{{commande.prenom}}&nbsp;{{commande.prenom}}
-					</div>
-				<div style="font-size:13px;">{{commande.livDom}}&nbsp;{{commande.cp}}&nbsp;{{commande.ville}}
-					</div>
-				<div style="font-size:13px;">{{commande.date}}&nbsp;{{commande.heure}}
-					</div>
+		<div ng-repeat="commande in listCommandes" class="row">
+			<div style="text-align: center;" class="col-xs-10"
+				ng-click="selectDetailsCommande(commande)" data-toggle="modal"
+				data-target="#selectedCommandeAdminDisplay">
+				<div style="font-size: 15px; font-weight: bold;">{{commande.client.nom}}&nbsp;{{commande.client.prenom}}&nbsp;{{commande.client.prenom}}
+				</div>
+				<div style="font-size: 13px;">{{commande.client.adresse}}&nbsp;{{commande.client.cp}}&nbsp;{{commande.client.ville}}
+				</div>
+				<div style="font-size: 13px;">{{commande.date}}&nbsp;{{commande.heure}}
+					&nbsp;&nbsp;{{categorie.name}}</div>
+			</div>
+			<div style="text-align: center;" class="col-xs-1">
+				<input type="checkbox" ng-model="commande.delivred"
+					ng-change="changeLivraisonStatut(commande)">
 			</div>
 		</div>
+
 		<div style="margin-top: 50px;" class="col-xs-12"></div>
 	</div>
 </div>
