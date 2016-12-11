@@ -3,6 +3,7 @@ eComBioApp.factory('commandeSvc', [ '$rootScope', 'restBackendSvc', '$window','p
 
 	var commandInfo = {'nom':'','prenom':'','mail':'','livDom':'e','adresse':'','cp':'','ville':'','date':'','heure':'5'};
 	var commandPaieInfo = {'num':'1234567891234567','mois':'5','annee':'2017','codeVerif':'789'};
+	var selectedCommande = '';
 
 	var getCommandInfo = function() {
 		return commandInfo;
@@ -76,12 +77,37 @@ eComBioApp.factory('commandeSvc', [ '$rootScope', 'restBackendSvc', '$window','p
 			}
 		});
 	}
+	
+	var setSelectedCommande = function(selectedCommandeParam) {
+		selectedCommande=selectedCommandeParam;
+		$rootScope.$broadcast('selectDetailsCommandeProvided', selectedCommande);
+	}
+	
+	var changeLivraisonStatut= function(commandeChanged) {
+		//var infoJson = angular.toJson(commandeChanged);
+		var restAdress = "admin/commande?livree="+commandeChanged.delivred;
+		restAdress += '&id=' + commandeChanged.id;
+		$rootScope.$broadcast('debug', restAdress);
+		restBackendSvc.updateItem(restAdress,commandeChanged).then(function(data) {
+			//$rootScope.$broadcast('listCommandesSupplied',listCommandes);
+			$window.alert('modif livree MAJ serveur');
+		}, function(reason) {
+			$rootScope.$broadcast('debug', reason);
+			if (reason.status == 404) {
+				$rootScope.$broadcast('listCommandesSupplied', '');
+			} else {
+				alert('Failed: ' + reason);
+			}
+		});
+	}
 
 	return {
 		getCommandInfo : getCommandInfo,
 		setCommandInfo : setCommandInfo,
 		getCommandPaieInfo : getCommandPaieInfo,
 		validePaiement : validePaiement,
-		getCommandesByDateLivraison : getCommandesByDateLivraison
+		getCommandesByDateLivraison : getCommandesByDateLivraison,
+		setSelectedCommande : setSelectedCommande,
+		changeLivraisonStatut : changeLivraisonStatut
 	};
 } ]);

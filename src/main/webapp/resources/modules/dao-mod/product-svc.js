@@ -71,6 +71,10 @@ eComBioApp.factory('productSvc', [
 				});
 			}
 
+			var updateProductToEdit = function(updateProductToEdit) {
+				$rootScope.$broadcast('updateProductToEdit',updateProductToEdit);
+			}
+			
 			var updateProduct = function(product) {
 				var messageServeurJson = angular.toJson(product);
 				$window.alert('Update produit !'+messageServeurJson);
@@ -90,6 +94,7 @@ eComBioApp.factory('productSvc', [
 			return {
 				getProductBySearchName : getProductBySearchName,
 				createProduct : createProduct,
+				updateProductToEdit : updateProductToEdit,
 				updateProduct : updateProduct,
 				removeItem : removeItem
 			};
