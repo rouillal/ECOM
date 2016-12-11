@@ -5,38 +5,10 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<div class="row">
-					<img class="col-xs-4" width="150px" height="150px"
-						ng-src="{{selectedCommande.url}}">
-					<div class="col-xs-8"
-						style="text-align: center; margin-top: 25px; font-size: 25px; font-family: Bradley Hand;"><span style="color: rgb(221, 131, 14);">{{selectedCommandeDetail.name}}
-						{{selectedCommandeDetail.variete}}</span> - {{selectedCommandeDetail.quantite}} {{selectedCommandeDetail.unite}}</div>
-					<div class="col-xs-4" style="margin-top: 20px; text-align: center;">Ajouter
-						au panier :</div>
-					<div class="col-xs-1" style="margin-top: 15px;">
-						<button class="btn" ng-click="moinsCommandeDetail()"
-							ng-disabled="isMoinsCommandeInactif()">
-							<span style="color: rgb(221, 131, 14);"
-								class="glyphicon glyphicon-minus"></span>
-						</button>
-					</div>
-					<div class="col-xs-1" style="margin-left:15px; margin-top:19px; text-align:center" ng-model="panierQuantite">{{panierQuantite}}
-					</div>
-					<div class="col-xs-1" style="margin-top: 15px;">
-						<button class="btn" ng-click="plusCommandeDetail()"
-							ng-disabled="isPlusCommandeInactif()" id=tooltip>
-							<span style="color: rgb(221, 131, 14);"
-								class="glyphicon glyphicon-plus"></span>
-						</button>
-					</div>
-					<div class="col-xs-8" style="text-align: center; margin-top: 20px;">
-						Prix à l'unité : {{selectedCommandeDetail.prix}} € - <span
-							style="color: rgb(221, 131, 14);">Prix à payer :
-							{{panierPrixQt}} €</span>
-					</div>
-				</div>
+				
 			</div>
 			<div class="modal-body">
+			<h1>selectedCommandeDetail:{{selectedCommandeDetail}}</h1>
 				<div style="font-size:15px; font-weight:bold;">{{selectedCommandeDetail.nom}}&nbsp;{{selectedCommandeDetail.prenom}}&nbsp;{{selectedCommandeDetail.prenom}}
 					</div>
 				<div style="font-size:13px;">{{selectedCommandeDetail.livDom}}&nbsp;{{selectedCommandeDetail.cp}}&nbsp;{{selectedCommandeDetail.ville}}

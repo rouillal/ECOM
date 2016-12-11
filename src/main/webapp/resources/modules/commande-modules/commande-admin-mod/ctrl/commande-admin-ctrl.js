@@ -5,7 +5,7 @@ eComBioApp.controller('CommandeAdminCtrl', [ '$scope','$window','commandeSearchS
 	$scope.selectedCommande='';
 	
 	$scope.selectDetailsCommande = function(selectedCommandeParam) {
-		////commandeSvc.setSelectedCommande(selectedCommandeParam);
+		commandeSvc.setSelectedCommande(selectedCommandeParam);
 		$scope.selectedCommande=selectedCommandeParam;
 	}
 	

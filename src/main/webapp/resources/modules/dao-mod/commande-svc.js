@@ -3,6 +3,7 @@ eComBioApp.factory('commandeSvc', [ '$rootScope', 'restBackendSvc', '$window','p
 
 	var commandInfo = {'nom':'','prenom':'','mail':'','livDom':'e','adresse':'','cp':'','ville':'','date':'','heure':'5'};
 	var commandPaieInfo = {'num':'1234567891234567','mois':'5','annee':'2017','codeVerif':'789'};
+	var selectedCommande = '';
 
 	var getCommandInfo = function() {
 		return commandInfo;
@@ -77,6 +78,11 @@ eComBioApp.factory('commandeSvc', [ '$rootScope', 'restBackendSvc', '$window','p
 		});
 	}
 	
+	var setSelectedCommande = function(selectedCommandeParam) {
+		selectedCommande=selectedCommandeParam;
+		$rootScope.$broadcast('selectDetailsCommandeProvided', selectedCommande);
+	}
+	
 	var changeLivraisonStatut= function(commandeChanged) {
 		//var infoJson = angular.toJson(commandeChanged);
 		var restAdress = "admin/commande?livree="+commandeChanged.delivred;
@@ -101,6 +107,7 @@ eComBioApp.factory('commandeSvc', [ '$rootScope', 'restBackendSvc', '$window','p
 		getCommandPaieInfo : getCommandPaieInfo,
 		validePaiement : validePaiement,
 		getCommandesByDateLivraison : getCommandesByDateLivraison,
+		setSelectedCommande : setSelectedCommande,
 		changeLivraisonStatut : changeLivraisonStatut
 	};
 } ]);
