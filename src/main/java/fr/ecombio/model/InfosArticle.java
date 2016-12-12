@@ -14,17 +14,21 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class InfosArticle implements Serializable {
 private String name;
+private int quotite;
 private int quantite;
+private String unite;
 
 
 /**
  * @param name
  * @param quantite
  */
-public InfosArticle(String name, String variete, int quantite) {
+public InfosArticle(String name, String variete, int quantite, int quotite, String unite) {
 	super();
 	this.name = name +" "+ variete;
 	this.quantite = quantite;
+	this.quotite = quotite;
+	this.unite = unite;
 }
 /**
  * 
