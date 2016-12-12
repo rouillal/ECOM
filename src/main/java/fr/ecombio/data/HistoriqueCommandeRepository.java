@@ -2,6 +2,7 @@ package fr.ecombio.data;
 
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -27,6 +28,7 @@ import fr.ecombio.model.Produit;
  * @see HistoriqueCommande
  *
  */
+@Stateless
 public class HistoriqueCommandeRepository {
 
 	/**
@@ -128,8 +130,10 @@ public class HistoriqueCommandeRepository {
 	 */
 	public void setCommandeDelivred(boolean isDelivred, Long id) {
 		HistoriqueCommande commande = this.findById(id);
-		commande.setDelivred(isDelivred);
-		em.merge(commande);
+		if(commande != null){
+			commande.setDelivred(isDelivred);
+			em.merge(commande);
+		}
 	}
 
 }

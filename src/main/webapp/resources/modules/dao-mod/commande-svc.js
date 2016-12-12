@@ -102,12 +102,11 @@ eComBioApp.factory('commandeSvc', [ '$rootScope', 'restBackendSvc', '$window','p
 	
 	var changeLivraisonStatut= function(commandeChanged) {
 		//var infoJson = angular.toJson(commandeChanged);
-		var restAdress = "admin/commande?livree="+commandeChanged.delivred;
+		var restAdress = "admin/commande?livree="+boolToInt(commandeChanged.delivred);
 		restAdress += '&id=' + commandeChanged.id;
 		$rootScope.$broadcast('debug', restAdress);
 		restBackendSvc.updateItem(restAdress,commandeChanged).then(function(data) {
-			//$rootScope.$broadcast('listCommandesSupplied',listCommandes);
-			$window.alert('modif livree MAJ serveur');
+			
 		}, function(reason) {
 			if (reason.status == 404) {
 				$rootScope.$broadcast('listCommandesSupplied', '');
