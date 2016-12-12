@@ -11,6 +11,30 @@ eComBioApp.controller('CommandeSearchCtrl', [ '$scope','$window','commandeSearch
 		$scope.listCategoriesChoix=searchCommandeSvc.getListCategoriesChoix();
 	});*/
 	
+	$scope.formatDate = function (date) {
+	    function pad(n) {
+	        return n < 10 ? '0' + n : n;
+	    }
+
+	    return date && pad(date.getDate())
+	        + '/' + pad(date.getMonth() + 1)
+	        + '/' + date.getFullYear();
+	};
+
+	$scope.parseDate = function (s) {
+	    var tokens = /^(\d{2})-(\d{2})-(\d{4})$/.exec(s);
+
+	    return tokens && new Date(tokens[1], tokens[2] - 1, tokens[3]);
+	};
+	
+	$scope.seeCalendar = function(){
+		$scope.seeCalend = true;
+	}
+	
+	$scope.hideCalendar = function(){
+		$scope.seeCalend = false;
+	}
+	
 	$scope.$on('debug', function(event,message) {
 		$scope.debug = message;
 	});
