@@ -3,7 +3,8 @@ eComBioApp.factory('panierSvc', [
 		'restBackendSvc',
 		'$window',
 		'cookieStoreSvc',
-		function($rootScope, restBackendSvc, $window,cookieStoreSvc) {
+		'imgProviderSvc',
+		function($rootScope, restBackendSvc, $window,cookieStoreSvc,imgProviderSvc) {
 			var listePanier = cookieStoreSvc.getStoredLocalItem('panier');
 			var selectedProduit = '';
 			var montantTotal = cookieStoreSvc.getStoredLocalString('montantTotal');
@@ -31,6 +32,9 @@ eComBioApp.factory('panierSvc', [
 				var urlSuggestedRecette = 'recette/panier?id='+idPanierServer+'&page='+pageSuggestedRecette;
 				restBackendSvc.getItemsByUrl(urlSuggestedRecette).then(function(data) {
 					var listRecette = data.data;
+					angular.forEach(listRecette, function(recette, key) {
+						recette['url']=imgProviderSvc.getImage(recette.filename);
+					});
 					$rootScope.$broadcast('listSuggestedRecettesSupplied', listRecette);
 				}, function(reason) {
 					$rootScope.$broadcast('debug', reason);
