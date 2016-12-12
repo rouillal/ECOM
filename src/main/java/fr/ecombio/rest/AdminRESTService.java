@@ -73,8 +73,24 @@ public class AdminRESTService {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/commande")
-	public List<HistoriqueCommande> getHistoriqueCommandefromDate(@QueryParam("date") String date) {
-		return HistoriqueCommandeRepository.getHistoFromDate(date);
+	public List<HistoriqueCommande> getHistoriqueCommandefromDate(@QueryParam("date") String date, @QueryParam("ent") int ent, @QueryParam("dom") int dom, @QueryParam("page") int page) {
+		boolean e = (ent == 1);
+		boolean d = (dom == 1);
+		return HistoriqueCommandeRepository.getHistoFromDate(date,e,d,page);
+	}
+	/**
+	 * @see HistoriqueCommandeRepository
+	 * @param date jour que l'on souhaite voir
+	 * @return commandes du jour
+	 * @see HistoriqueCommandeRepository#getHistoFromDate(String)
+	 */
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/commande/page")
+	public Long getHistoriqueCommandefromDate(@QueryParam("date") String date, @QueryParam("ent") int ent, @QueryParam("dom") int dom) {
+		boolean e = (ent == 1);
+		boolean d = (dom == 1);
+		return HistoriqueCommandeRepository.getNbPageHisto(date,e,d);
 	}
 
 	/**
