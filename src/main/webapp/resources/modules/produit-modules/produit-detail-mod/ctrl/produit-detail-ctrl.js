@@ -6,6 +6,7 @@ eComBioApp.controller('ProduitDetailCtrl', [
 			$scope.selectedProduitDetail = '';
 			$scope.panierQuantite = 0;
 			$scope.panierPrixQt = 0;
+			//$scope.stockInsuff = false;
 
 			$scope.isMoinsProduitInactif = function() {
 				return !($scope.panierQuantite > 0);
@@ -36,6 +37,11 @@ eComBioApp.controller('ProduitDetailCtrl', [
 				$scope.panierQuantite = qt;
 				$scope.panierPrixQt = Math.round(qt * newSelectedProduit.prix*100)/100;
 			});
+			
+			/*
+			$scope.$on('StockInsuffisant', function(event) {
+				$scope.stockInsuff = true;
+			});*/
 			
 			
 			$(document).ready(function(){

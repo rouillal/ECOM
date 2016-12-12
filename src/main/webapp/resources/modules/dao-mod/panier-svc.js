@@ -99,7 +99,6 @@ eComBioApp.factory('panierSvc', [
 				}
 				cookieStoreSvc.storeLocalItem('panier',listePanier);
 				cookieStoreSvc.storeLocalString('montantTotal',montantTotal);
-				montantTotal
 				var panierJson = prepareMessageServeur();
 				if (idPanierServer < 0) {
 					restBackendSvc.createItem('panier', panierJson).then(
@@ -114,15 +113,17 @@ eComBioApp.factory('panierSvc', [
 					}, function(error) {
 						var errorJson = angular.toJson(error);
 						if (error.status == 304) {
+							montantTotal = 0;
 							angular.forEach(listePanier, function(ligneArticle, key) {
 								if (produitAChanger.id == ligneArticle.id) {
 									ligneArticle.quotite = quantite-1;
-									ligneArticle.prixTotal = Math.round(quantite-1 * ligneArticle.prix*100)/100;
+									ligneArticle.prixTotal = Math.round((quantite-1) * ligneArticle.prix*100)/100;
 									ligne = ligneArticle;
 								}
 								montantTotal += ligneArticle.prixTotal;
 							});
 							$rootScope.$broadcast('rafraichirPanier');
+							$rootScope.$broadcast('StockInsuffisant');
 							$rootScope.$broadcast('anomalieTechnique', "Plus de stock");
 							$window.alert("Votre produit n'est plus en stock");
 						} else if (error.status == 404) {
@@ -172,6 +173,24 @@ eComBioApp.factory('panierSvc', [
 			var getMontantTotal = function() {
 				return Math.round(montantTotal*100)/100;
 			};
+			
+			var getPanierCommande = function(idPanierCommande) {
+				var urlPanierCommande = 'panier?id='+idPanierCommande;
+				$window.alert('RRR0_'+urlPanierCommande);
+				restBackendSvc.getItemsByUrl(urlPanierCommande).then(function(data) {
+					var listPanierCommande = data.data;
+					var listPanierCommandeJson = angular.toJson(listPanierCommande);
+					$window.alert('RRR0888_'+listPanierCommandeJson);
+					$rootScope.$broadcast('listPanierCommandeSupplied', listPanierCommande);
+				}, function(reason) {
+					$rootScope.$broadcast('debug', reason);
+					if (reason.status == 404) {
+						$rootScope.$broadcast('listPanierCommandeSupplied', '');
+					} else {
+						alert('Failed: ' + reason);
+					}
+				});
+			}
 
 			return {
 				setSelectedProduit : setSelectedProduit,
@@ -183,6 +202,7 @@ eComBioApp.factory('panierSvc', [
 				getPanierQuantite : getPanierQuantite,
 				supprimeArticlePanier : supprimeArticlePanier,
 				resetPanier : resetPanier,
-				getMontantTotal : getMontantTotal
+				getMontantTotal : getMontantTotal,
+				getPanierCommande : getPanierCommande
 			};
 		} ]);

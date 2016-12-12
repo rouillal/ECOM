@@ -4,7 +4,8 @@ eComBioApp.controller('CommandeAdminCtrl', [
 		'commandeSearchSvc',
 		'commandeSvc',
 		'userInfoSvc',
-		function($scope, $window, commandeSearchSvc, commandeSvc, userInfoSvc) {
+		'panierSvc',
+		function($scope, $window, commandeSearchSvc, commandeSvc, userInfoSvc,panierSvc) {
 			$scope.listCommandes = commandeSearchSvc.getCommandesInit();
 			/*
 			 * [{'nom':'DD','prenom':'es','mail':'f@o','livDom':'e','adresse':'89
@@ -32,6 +33,8 @@ eComBioApp.controller('CommandeAdminCtrl', [
 			$scope.selectDetailsCommande = function(selectedCommandeParam) {
 				commandeSvc.setSelectedCommande(selectedCommandeParam);
 				$scope.selectedCommande = selectedCommandeParam;
+				$window.alert('RRR55');
+				panierSvc.getPanierCommande(selectedCommandeParam.panier.id);
 			}
 
 			$scope.changeLivraisonStatut = function(selectedCommandeParam) {
