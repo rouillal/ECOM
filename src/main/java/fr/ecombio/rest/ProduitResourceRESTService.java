@@ -63,7 +63,7 @@ public class ProduitResourceRESTService {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public void ajoutProduit(GestionProduit prod){
-		Produit p = repository.addProduitFromGestionProduit(prod);
+		repository.addProduitFromGestionProduit(prod);
 	}
 	
 	/**
