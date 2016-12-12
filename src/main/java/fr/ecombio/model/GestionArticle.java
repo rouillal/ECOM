@@ -14,20 +14,33 @@ public class GestionArticle {
 
 	private int quotite;
 
-
+	/**
+	 * @return the id
+	 */
 	public Long getId() {
 		return id;
 	}
 
-	public void setId(Long produit_id) {
-		this.id = produit_id;
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
 	}
 
+	/**
+	 * @return the quotite
+	 */
 	public int getQuotite() {
 		return quotite;
 	}
 
+	/**
+	 * @param quotite the quotite to set
+	 */
 	public void setQuotite(int quotite) {
 		this.quotite = quotite;
 	}
+
+
 }

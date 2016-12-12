@@ -1,8 +1,8 @@
-eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','commandSvc',
-                                    function($rootScope,restBackendSvc,$window,commandSvc) {
+eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','commandeSvc',
+                                    function($rootScope,restBackendSvc,$window,commandeSvc) {
 
 	var userInfo = {'nom':'','prenom':'','mail':'biotobealive@gmail.com','adresse':'17 Rue des Marguerites','cp':'38000','ville':'Grenoble','psw':'xx'};
-
+	
 	var getInfoInit = function() {
 		return userInfo;
 	};
@@ -22,7 +22,7 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','c
 				function(data) {
 					//var ff = angular.toJson(data.data);
 					//$window.alert("Bravo, vous êtes inscrit chez nous"+ff);
-					commandSvc.setCommandInfo(userInfo);
+					commandeSvc.setCommandInfo(userInfo);
 					$rootScope.$broadcast('userInfoProvided');
 					$("#myModalSignin").modal('hide');
 				}, function(error) {
@@ -40,7 +40,8 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','c
 		var restAdress = 'connect?mail='+mailParam+'&psw='+pswParam;
 		restBackendSvc.getItemsByUrl(restAdress).then(function(data) {
 			userInfo = data.data;
-			commandSvc.setCommandInfo(userInfo);
+			commandeSvc.setCommandInfo(userInfo);
+			$rootScope.$broadcast('userConnectionChanged');
 			$("#myModalConnect").modal('hide');
 			$rootScope.$broadcast('userInfoProvided');
 		}, function(error) {
@@ -53,11 +54,21 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','c
 			}
 		});
 	};
+	
+	var isAdmin = function() {
+		return userInfo.nom=='Dupont';
+	};
+	
+	var isGestion = function() {
+		return userInfo.nom=='Dupont';
+	};
 
 	return {
 		getUserInfo : getUserInfo,
 		valideSaisieUserInfo : valideSaisieUserInfo,
 		retrieveUserInfo : retrieveUserInfo,
-		getUserInfoPrenom : getUserInfoPrenom
+		getUserInfoPrenom : getUserInfoPrenom,
+		isAdmin : isAdmin,
+		isGestion : isGestion
 	};
 } ]);

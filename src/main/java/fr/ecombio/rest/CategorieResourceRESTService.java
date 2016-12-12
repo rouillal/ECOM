@@ -37,6 +37,7 @@ public class CategorieResourceRESTService {
 	 * @return liste des categories
 	 * 
 	 * @see Categorie
+	 * @see CategorieRepository#findAllOrderedByName()
 	 */
 	@GET
     @Produces(MediaType.APPLICATION_JSON)

@@ -13,7 +13,7 @@ import fr.ecombio.model.Categorie;
  * Permet une gestion des articles :
  * <ul>
  * 	<li>faire des requetes de select</li>
- * 	<li>ajouter une saison en base</li>
+ * 	<li>ajouter un article en base</li>
  *  </ul>
  * </p>
  * 

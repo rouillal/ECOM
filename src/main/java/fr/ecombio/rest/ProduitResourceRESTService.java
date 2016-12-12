@@ -43,6 +43,7 @@ public class ProduitResourceRESTService {
 	 * @return liste de produits
 	 * 
 	 * @see Produit
+	 * @see ProduitRepository#findAllOrderedByName(int, String, int)
 	 */
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -55,6 +56,7 @@ public class ProduitResourceRESTService {
 	 * @param prod produit a ajouter
 	 * 
 	 * @see Produit
+	 * @see ProduitRepository#AjoutProduit(Produit)
 	 */
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
@@ -72,6 +74,7 @@ public class ProduitResourceRESTService {
 	 * @return liste de produits
 	 * 
 	 * @see Produit
+	 * @see ProduitRepository#findCatOrderedByName(String, String, int, String, int)
 	 */
 	@GET
 	@Path("/filter")
@@ -87,6 +90,8 @@ public class ProduitResourceRESTService {
 	 * @param search recherche par mot clef
 	 * @param saison selection par saison
 	 * @return nombre de pages
+	 * 
+	 * @see ProduitRepository#findNumberPage(String, String, int)
 	 */
 	@GET
 	@Path("/page/filter")
@@ -99,6 +104,8 @@ public class ProduitResourceRESTService {
 	 * Recherche du nombre de page selon une selection
 	 * @param saison selection par saison
 	 * @return nombre de pages
+	 * 
+	 * @see ProduitRepository#findNumberPage(int)
 	 */
 	@GET
 	@Path("/page")

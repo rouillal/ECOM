@@ -2,11 +2,15 @@ eComBioApp.factory('panierSvc', [
 		'$rootScope',
 		'restBackendSvc',
 		'$window',
-		function($rootScope, restBackendSvc, $window) {
-			var listePanier = [];
+		'cookieStoreSvc',
+		function($rootScope, restBackendSvc, $window,cookieStoreSvc) {
+			var listePanier = cookieStoreSvc.getStoredLocalItem('panier');
 			var selectedProduit = '';
-			var montantTotal = 0.00;
-			var idPanierServer = -1;
+			var montantTotal = cookieStoreSvc.getStoredLocalString('montantTotal');
+			var idPanierServer = cookieStoreSvc.getStoredLocalString('idPanierServer');
+			if (idPanierServer=='') {
+				idPanierServer=-1;
+			}
 
 			var setSelectedProduit = function(newSelectedProduit) {
 				selectedProduit = newSelectedProduit;
@@ -47,6 +51,8 @@ eComBioApp.factory('panierSvc', [
 						montantTotal += ligneArticle.prixTotal;
 					}
 				});
+				cookieStoreSvc.storeLocalItem('panier',listePanier);
+				cookieStoreSvc.storeLocalString('montantTotal',montantTotal);
 				$rootScope.$broadcast('rafraichirPanier');
 			};
 			
@@ -76,6 +82,7 @@ eComBioApp.factory('panierSvc', [
 						}
 						montantTotal += ligneArticle.prixTotal;
 					});
+					var infoJson = angular.toJson(produitAChanger);
 					if (ligne == '') {
 						//Le produit à changer n'a pas été trouvé dans la liste, il faut le créer
 						var ligneTmp = produitAChanger;
@@ -86,11 +93,15 @@ eComBioApp.factory('panierSvc', [
 						montantTotal += price;
 					}
 				}
+				cookieStoreSvc.storeLocalItem('panier',listePanier);
+				cookieStoreSvc.storeLocalString('montantTotal',montantTotal);
+				montantTotal
 				var panierJson = prepareMessageServeur();
 				if (idPanierServer < 0) {
 					restBackendSvc.createItem('panier', panierJson).then(
 							function(data) {
 								idPanierServer = data.data;
+								cookieStoreSvc.storeLocalString('idPanierServer',idPanierServer);
 							});
 				} else {
 					var urlUpdate = 'panier?id='+idPanierServer;
@@ -129,6 +140,9 @@ eComBioApp.factory('panierSvc', [
 				selectedProduit = '';
 				montantTotal = 0.00;
 				idPanierServer = -1;
+				cookieStoreSvc.storeLocalItem('panier',listePanier);
+				cookieStoreSvc.storeLocalString('idPanierServer',idPanierServer);
+				cookieStoreSvc.storeLocalString('montantTotal',montantTotal);
 				$rootScope.$broadcast('rafraichirPanier');
 			};
 

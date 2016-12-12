@@ -63,14 +63,24 @@ eComBioApp.factory('productSvc', [
 			}
 
 			var createProduct = function(product) {
-				restBackendSvc.createItem(product).then(function(data) {
+				var messageServeurJson = angular.toJson(product);
+				$window.alert('Create produit !'+messageServeurJson);
+				restBackendSvc.createItem('produit',messageServeurJson).then(function(data) {
 					//inform with message
+					$window.alert('Create produit ok');
 				});
 			}
 
+			var updateProductToEdit = function(updateProductToEdit) {
+				$rootScope.$broadcast('updateProductToEdit',updateProductToEdit);
+			}
+			
 			var updateProduct = function(product) {
-				restBackendSvc.updateItem(product).then(function(data) {
+				var messageServeurJson = angular.toJson(product);
+				$window.alert('Update produit !'+messageServeurJson);
+				restBackendSvc.updateItem(messageServeurJson).then(function(data) {
 					//inform with message
+					$window.alert('Update produit ok');
 				});
 			}
 
@@ -82,6 +92,10 @@ eComBioApp.factory('productSvc', [
 			}
 
 			return {
-				getProductBySearchName : getProductBySearchName
+				getProductBySearchName : getProductBySearchName,
+				createProduct : createProduct,
+				updateProductToEdit : updateProductToEdit,
+				updateProduct : updateProduct,
+				removeItem : removeItem
 			};
 		} ]);

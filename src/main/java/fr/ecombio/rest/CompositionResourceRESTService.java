@@ -35,6 +35,8 @@ public class CompositionResourceRESTService {
 	/**
 	 * Recherche de la liste des compositions
 	 * @return liste des compostions
+	 * 
+	 * @see CompositionRepository#findAllOrderedByName()
 	 */
 	@GET
     @Produces(MediaType.APPLICATION_JSON)

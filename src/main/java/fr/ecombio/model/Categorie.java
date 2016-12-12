@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
 
+import javax.jdo.annotations.Index;
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -39,6 +40,7 @@ public class Categorie implements Serializable {
 	@Size(min = 1, max = 25)
 	@Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
     @Column(name = "categorie_name")
+	@Index(name = "name")
 	private String name;
 	
 	/**
@@ -54,16 +56,12 @@ public class Categorie implements Serializable {
 	 */
 	public Categorie() {
 	}
-	
-	
-	public Long getId() {
-		return id;
-	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
 
+	/**
+	 * @param name
+	 * @param produits
+	 */
 	public Categorie(String name, Set<Produit> produits) {
 		super();
 		this.name = name;
@@ -71,26 +69,55 @@ public class Categorie implements Serializable {
 	}
 
 
+	/**
+	 * @param name
+	 */
 	public Categorie(String name) {
 		super();
 		this.name = name;
 	}
 
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * @param name the name to set
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public Collection<Produit> getProduits() {
+
+	/**
+	 * @return the produits
+	 */
+	public Set<Produit> getProduits() {
 		return produits;
 	}
 
+	/**
+	 * @param produits the produits to set
+	 */
 	public void setProduits(Set<Produit> produits) {
 		this.produits = produits;
 	}
-	
-	
+
 }

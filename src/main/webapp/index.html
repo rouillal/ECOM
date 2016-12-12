@@ -22,13 +22,19 @@
 <script type="text/javascript" src="resources/jsext/bootstrap.min.js"></script>
 <script type="text/javascript"
 	src="resources/jsext/angular-sanitize.min.js"></script>
+<script type="text/javascript"
+	src="resources/jsext/angular-cookies.min.js"></script>
 <script>
-	var eComBioApp = angular.module('eComBio', [ 'ngRoute','ngSanitize','mp.datePicker']);
+	var eComBioApp = angular.module('eComBio', [ 'ngRoute','ngSanitize','mp.datePicker','ngCookies']);
 </script>
 <script type="text/javascript"
-	src="resources/modules/main-mod/rest-svc/img-provider-svc.js"></script>
+	src="resources/modules/main-mod/svc/img-provider-svc.js"></script>
 <script type="text/javascript"
-	src="resources/modules/main-mod/rest-svc/rest-svc.js"></script>
+	src="resources/modules/main-mod/svc/cookie-store-svc.js"></script>
+<script type="text/javascript"
+	src="resources/modules/main-mod/svc/rest-svc.js"></script>
+<script type="text/javascript"
+	src="resources/modules/main-mod/svc/rest-svc.js"></script>
 <script type="text/javascript"
 	src="resources/modules/dao-mod/user-info-svc.js"></script>
 <script type="text/javascript"
@@ -44,39 +50,51 @@
 <script type="text/javascript"
 	src="resources/modules/dao-mod/panier-svc.js"></script>
 <script type="text/javascript"
-	src="resources/modules/dao-mod/command-svc.js"></script>
+	src="resources/modules/dao-mod/commande-svc.js"></script>
 <script type="text/javascript"
 	src="resources/modules/dao-mod/recette-svc.js"></script>
 <script type="text/javascript"
-	src="resources/modules/search-product-mod/svc/search-product-svc.js"></script>
+	src="resources/modules/produit-modules/produit-search-mod/svc/produit-search-svc.js"></script>
 <script type="text/javascript"
-	src="resources/modules/search-recette-mod/svc/search-recette-svc.js"></script>
+	src="resources/modules/recette-modules/recette-search-mod/svc/recette-search-svc.js"></script>
 <script type="text/javascript"
-	src="resources/modules/search-product-mod/ctrl/search-product-ctrl.js"></script>
+	src="resources/modules/commande-modules/commande-search-mod/svc/commande-search-svc.js"></script>
 <script type="text/javascript"
-	src="resources/modules/search-recette-mod/ctrl/search-recette-ctrl.js"></script>
+	src="resources/modules/produit-modules/produit-search-mod/ctrl/produit-search-ctrl.js"></script>
 <script type="text/javascript"
-	src="resources/modules/recette-panier-mod/ctrl/recette-panier-ctrl.js"></script>		
+	src="resources/modules/recette-modules/recette-search-mod/ctrl/recette-search-ctrl.js"></script>
 <script type="text/javascript"
-	src="resources/modules/product-catalog-mod/ctrl/product-catalog-ctrl.js"></script>
+	src="resources/modules/commande-modules/commande-search-mod/ctrl/commande-search-ctrl.js"></script>
 <script type="text/javascript"
-	src="resources/modules/product-catalog-mod/ctrl/product-tri-pagin-ctrl.js"></script>
+	src="resources/modules/recette-modules/recette-panier-mod/ctrl/recette-panier-ctrl.js"></script>		
 <script type="text/javascript"
-	src="resources/modules/recette-catalog-mod/ctrl/recette-tri-pagin-ctrl.js"></script>
+	src="resources/modules/produit-modules/produit-catalog-mod/ctrl/produit-catalog-ctrl.js"></script>
 <script type="text/javascript"
-	src="resources/modules/product-catalog-mod/ctrl/product-detail-ctrl.js"></script>
+	src="resources/modules/produit-modules/produit-catalog-mod/ctrl/produit-tri-pagin-ctrl.js"></script>
 <script type="text/javascript"
-	src="resources/modules/recette-catalog-mod/ctrl/recette-detail-ctrl.js"></script>
+	src="resources/modules/recette-modules/recette-catalog-mod/ctrl/recette-tri-pagin-ctrl.js"></script>
 <script type="text/javascript"
-	src="resources/modules/recette-catalog-mod/ctrl/product-detail-recette-ctrl.js"></script>	
+	src="resources/modules/commande-modules/commande-admin-mod/ctrl/commande-tri-pagin-ctrl.js"></script>
 <script type="text/javascript"
-	src="resources/modules/recette-catalog-mod/ctrl/recette-ctrl.js"></script>
+	src="resources/modules/commande-modules/commande-admin-mod/ctrl/commande-admin-ctrl.js"></script>
+<script type="text/javascript"
+	src="resources/modules/produit-modules/produit-admin-mod/ctrl/produit-admin-ctrl.js"></script>
+<script type="text/javascript"
+	src="resources/modules/produit-modules/produit-detail-mod/ctrl/produit-detail-ctrl.js"></script>
+<script type="text/javascript"
+	src="resources/modules/recette-modules/recette-detail-mod/ctrl/recette-detail-ctrl.js"></script>
+<script type="text/javascript"
+	src="resources/modules/commande-modules/commande-detail-mod/ctrl/commande-detail-ctrl.js"></script>
+<script type="text/javascript"
+	src="resources/modules/recette-modules/recette-panier-mod/ctrl/recette-produit-detail-ctrl.js"></script>	
+<script type="text/javascript"
+	src="resources/modules/recette-modules/recette-catalog-mod/ctrl/recette-catalog-ctrl.js"></script>
 <script type="text/javascript"
 	src="resources/modules/panier-mod/ctrl/recette-suggested-ctrl.js"></script>
 <script type="text/javascript"
 	src="resources/modules/panier-mod/ctrl/panier-ctrl.js"></script>
 <script type="text/javascript"
-	src="resources/modules/command-mod/ctrl/command-ctrl.js"></script>
+	src="resources/modules/commande-modules/commande-crea-mod/ctrl/commande-crea-ctrl.js"></script>
 <script type="text/javascript"
 	src="resources/modules/connect-mod/ctrl/connect-ctrl.js"></script>
 <script type="text/javascript"
@@ -91,9 +109,9 @@
 	<div ng-include src="'resources/modules/connect-mod/connect.html'"></div>
 	<div ng-include src="'resources/modules/signin-mod/signin.html'"></div>
 	<div ng-include
-			src="'resources/modules/recette-catalog-mod/partials/selectedRecetteDisplay.html'"></div>
+			src="'resources/modules/recette-modules/recette-detail-mod/selected-recette-display.html'"></div>
 	<div ng-include
-			src="'resources/modules/recette-catalog-mod/partials/selectedProductDisplayRecette.html'"></div>
+			src="'resources/modules/recette-modules/recette-panier-mod/partials/selected-product-display-recette.html'"></div>
 	<div id="ruban" class="row">
 		<ul class="col-xs-12">
 			<li class="col-md-3 col-xs-1"></li>
@@ -109,7 +127,8 @@
 				data-toggle="modal" id="myBtnConnect" class="connect"
 				data-target="#/connect"><span>Me Connecter &nbsp;</span></button><button
 				id="myBtnSign" class="menuText" data-toggle="modal"
-				data-target="#/signin"><span>M'inscrire</span></button></div>
+				data-target="#/signin"><span>M'inscrire</span></button><a
+				id="gestion" href="#/gestion">Gestion commandes &nbsp;</a></div>
 				<div ng-show="user!=''" style="margin-left:60px; color: rgb(221, 131, 14); font-family: Times New Roman;">Bienvenue {{user}} !</div>
 				<ul>
 					<li ng-class="menuIndice == 5 ? 'current':''"><a style="margin-left:17px;" id="basket"

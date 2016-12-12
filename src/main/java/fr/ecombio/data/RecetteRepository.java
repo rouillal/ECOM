@@ -1,6 +1,5 @@
 package fr.ecombio.data;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,7 +18,6 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import fr.ecombio.model.Article;
-import fr.ecombio.model.Categorie;
 import fr.ecombio.model.Composition;
 import fr.ecombio.model.CompositionRecette;
 import fr.ecombio.model.Panier;
@@ -37,7 +35,7 @@ import fr.ecombio.model.Saison;
  * Permet une gestion des recettes :
  * <ul>
  * 	<li>faire des requêtes de select</li>
- * 	<li>ajouter une saison en base</li>
+ * 	<li>ajouter un produit en base</li>
  *  </ul>
  * </p>
  * 
@@ -164,13 +162,13 @@ public class RecetteRepository {
 				this.getListRecette();
 			}
 			for (DefRecette d : this.listRecette) {
-				if (d.getName().toLowerCase().contains(search)) {
+				if (d.getName().toLowerCase().contains(search) || d.getIngredients().toLowerCase().contains(search)) {
 					if (predicate2 == null) {
 						predicate2 = cb.equal(Recette.get("id"), d.id);
 					} else {
 						predicate2 = cb.or(predicate2,cb.equal(Recette.get("id"), d.id));
 					}
-				}
+				} 
 			}
 		}
 		if(saison != null && saison != ""){
@@ -230,15 +228,15 @@ public class RecetteRepository {
 		return typequery.getResultList();
 	}
 
-	private void getListRecette() {
+	private synchronized void getListRecette() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Tuple> criteria = cb.createTupleQuery();
 		Root<Recette> Recette = criteria.from(Recette.class);
-		criteria.multiselect(Recette.get("id"), Recette.get("name"));
+		criteria.multiselect(Recette.get("id"), Recette.get("name"), Recette.get("listeIngredients"));
 		List<Tuple> tupleResult = em.createQuery(criteria).getResultList();
 		logger.log(Level.INFO, "Recette : ");
 		for (Tuple t : tupleResult) {
-			this.listRecette.add(new DefRecette((Long) t.get(0),(String) t.get(1)));
+			this.listRecette.add(new DefRecette((Long) t.get(0),(String) t.get(1), (String) t.get(2)));
 			logger.log(Level.INFO, (String) t.get(1));
 		}
 	}
@@ -246,14 +244,16 @@ public class RecetteRepository {
 	public class DefRecette {
 		private Long id;
 		private String name;
+		private String ingredients;
 
 		public DefRecette() {
 			super();
 		}
 
-		public DefRecette(Long id, String name) {
+		public DefRecette(Long id, String name, String ingredients) {
 			this.id = id;
 			this.name = name;
+			this.ingredients = ingredients;
 		}
 
 		public Long getId() {
@@ -267,6 +267,12 @@ public class RecetteRepository {
 		}
 		public void setName(String name) {
 			this.name = name;
+		}
+		public String getIngredients() {
+			return this.ingredients;
+		}
+		public void setIngredients(String ingredients) {
+			this.ingredients = ingredients;
 		}
 	}
 
@@ -293,6 +299,9 @@ public class RecetteRepository {
 	 */
 	public List<Recette> findAllRecetteFromPanier(Long id) {
 		Panier panier = PanierRepository.findById(id);
+		if (panier == null) {
+			return new ArrayList<Recette>();
+		}
 		List<Long> listProduit = new ArrayList<Long> ();
 		for (Article a : panier.getArticles()) {
 			listProduit.add(a.getProduit().getId());

@@ -53,19 +53,46 @@ public class ProduitSaison implements Serializable{
 	@JsonManagedReference
 	private Saison saisons;
 
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return Id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		Id = id;
+	}
+
+	/**
+	 * @return the produits
+	 */
 	public Produit getProduits() {
 		return produits;
 	}
 
+	/**
+	 * @param produits the produits to set
+	 */
 	public void setProduits(Produit produits) {
 		this.produits = produits;
 	}
 
+	/**
+	 * @return the saisons
+	 */
 	public Saison getSaisons() {
 		return saisons;
 	}
 
+	/**
+	 * @param saisons the saisons to set
+	 */
 	public void setSaisons(Saison saisons) {
 		this.saisons = saisons;
 	}
+
 }

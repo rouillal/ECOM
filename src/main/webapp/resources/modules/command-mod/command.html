@@ -91,13 +91,16 @@
 				<div class="col-sm-6 col-xs-12" style="margin-top: 30px;"
 					class="form-group">
 					<label>Date de livraison</label> <br> <input
-						type="text" ng-click="seeCalendar()" ng-model="commandInfo.date" name="date" required="" placeholder="Sélectionnez une date" data-uk-datepicker="{language:'fr', startDate:'1d', daysOfWeekDisable:'0,6'} ">
+						type="text" ng-click="seeCalendar()" ng-model="commandInfo.date" name="date" required="" min="09/12/2016" placeholder="Sélectionnez une date">
 					<date-picker on-date-selected="hideCalendar()" ng-show="seeCalend==true" ng-model="commandInfo.date" format-date="formatDate" parse-date="parseDate">
 					</date-picker>
 					<div ng-show="formC.$submitted || formC.date.$touched">
 						<div ng-show="formC.date.$error.required" class="ano">Sélectionner la date de livraison.</div>
 						
 					</div>
+					<tt>value = {{commandInfo.date | date: "dd/MM/yyyy"}}</tt><br/>
+    <tt>formC.date.$valid = {{formC.date.$valid}}</tt><br/>
+    <tt>formC.date.$error = {{formC.date.$error}}</tt><br/>
 				</div>
 				<div class="col-sm-6 col-xs-12" style="margin-top: 30px;"
 					class="form-group">

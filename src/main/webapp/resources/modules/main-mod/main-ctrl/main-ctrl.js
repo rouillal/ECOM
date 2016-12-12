@@ -1,5 +1,5 @@
-eComBioApp.controller('MainCtrl', [ '$scope', '$window','productSvc','categorieSvc','panierSvc', 'userInfoSvc',
-                                    function($scope, $window,productSvc,categorieSvc,panierSvc,userInfoSvc) {
+eComBioApp.controller('MainCtrl', [ '$scope', '$window','productSvc','categorieSvc','panierSvc', 'userInfoSvc','cookieStoreSvc',
+                                    function($scope, $window,productSvc,categorieSvc,panierSvc,userInfoSvc,cookieStoreSvc) {
 	$scope.montantPanier = panierSvc.getMontantTotal();
 	$scope.user = userInfoSvc.getUserInfoPrenom();
 	$scope.anomalieTechnique = "";

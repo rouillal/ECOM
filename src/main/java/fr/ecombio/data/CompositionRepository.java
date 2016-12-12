@@ -17,7 +17,7 @@ import fr.ecombio.model.Produit;
  * Permet une gestion des compostion :
  * <ul>
  * 	<li>faire des requetes de select</li>
- * 	<li>ajouter une saison en base</li>
+ * 	<li>ajouter une composition en base</li>
  *  </ul>
  * </p>
  * 
