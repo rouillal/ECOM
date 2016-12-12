@@ -9,7 +9,6 @@
 			<hr>
 		</div>
 		<div class="col-xs-10">
-		<h1>{{listCommandes}}</h1>
 			<div class="col-xs-12" ng-include
 				src="'resources/modules/commande-modules/commande-search-mod/commande-search.html'"></div>
 			<div class="col-xs-12">
@@ -29,9 +28,9 @@
 							data-target="#selectedCommandeAdminDisplay">{{commande.client.nom}}</td>
 							<td ng-click="selectDetailsCommande(commande)" data-toggle="modal"
 							data-target="#selectedCommandeAdminDisplay">{{commande.client.prenom}}</td>
-							<td ng-show="livDom!='d'" ng-click="selectDetailsCommande(commande)" data-toggle="modal"
+							<td ng-show="commande.livDom=='d'" ng-click="selectDetailsCommande(commande)" data-toggle="modal"
 							data-target="#selectedCommandeAdminDisplay">{{commande.client.adresse}}<br>{{commande.client.cp}}&nbsp;{{commande.client.ville}}</td>
-							<td ng-show="livDom!='e'" ng-click="selectDetailsCommande(commande)" data-toggle="modal"
+							<td ng-show="commande.livDom=='e'" ng-click="selectDetailsCommande(commande)" data-toggle="modal"
 							data-target="#selectedCommandeAdminDisplay">Entrepôt</td>
 							<td ng-click="selectDetailsCommande(commande)" data-toggle="modal"
 							data-target="#selectedCommandeAdminDisplay">{{commande.date}}</td>

@@ -32,7 +32,6 @@ eComBioApp.controller('CommandeAdminCtrl', [
 			$scope.selectDetailsCommande = function(selectedCommandeParam) {
 				commandeSvc.setSelectedCommande(selectedCommandeParam);
 				$scope.selectedCommande = selectedCommandeParam;
-				$window.alert($scope.selectedCommande.client.adresse);
 			}
 
 			$scope.changeLivraisonStatut = function(selectedCommandeParam) {
