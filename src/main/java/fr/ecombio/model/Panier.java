@@ -116,7 +116,7 @@ public class Panier implements Serializable {
 	 */
 	public String toStringHTML() {
 		String retour = "Vos produits :\n<center><table>\n";			
-		retour += String.format("<tr style=\"font-weight:bold;\"><td>%s</td><td style=\"text-align:center;\">%s</td><td>%s</td>", "Produit", "Quantite", "Prix à l'unité (€)");
+		retour += String.format("<tr style=\"font-weight:bold;\"><td>%s</td><td style=\"text-align:center;\">%s</td><td>%s</td>", "Produit", "Quantite", "Prix unitaire (€)");
 
 		Iterator<Article> i=this.articles.iterator();
 		while(i.hasNext()) // tant qu'on a un suivant
