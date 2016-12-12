@@ -337,7 +337,7 @@ public class ProduitRepository {
 
 		Produit produit = new Produit(c, p.getName(), p.getVariete(), p.getUnite(), p.getQuantite(), p.getStock(), p.getPrix(),
 				p.getFilename(), p.getProvenance(), p.getDateCueillette(), p.getDureeConservation(), p.getCalories(), p.getGlucides(), p.getFibres(), p.getProteines());
-
+		em.persist(produit);
 		HashSet<ProduitSaison> saisons= new HashSet<ProduitSaison>();
 		for (Long i =1L; i<=4L; i++) {
 			Saison s = SaisonRepository.findById(i);
@@ -348,6 +348,7 @@ public class ProduitRepository {
 			saisons.add(saison);
 		}
 		produit.setSaisons(saisons);
+		em.merge(produit);
 		return produit;
 	}
 }
