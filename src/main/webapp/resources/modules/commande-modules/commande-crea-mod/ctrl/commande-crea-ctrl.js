@@ -5,6 +5,7 @@ eComBioApp.controller('CommandeCreaCtrl', [ '$scope', '$location','$window','com
 	$scope.payerInfoVoir = false;
 	$scope.seeCalend = false;
 	$scope.recapInfoVoir = false;
+	$scope.load = false;
 	$scope.erreurPaiement='';
 	$scope.montantTotal = panierSvc.getMontantTotal();
 	var date = new Date();
@@ -12,6 +13,10 @@ eComBioApp.controller('CommandeCreaCtrl', [ '$scope', '$location','$window','com
 	
 	$scope.isErrorMessage = function() {
 		return $scope.erreurPaiement != '';
+	}
+	
+	$scope.isLoading = function() {
+		return $scope.load == true;
 	}
 	
 	//Liste des horaires
@@ -82,6 +87,7 @@ eComBioApp.controller('CommandeCreaCtrl', [ '$scope', '$location','$window','com
 	
 	$scope.validationCmd = function(){
 		commandeSvc.validePaiement();
+		$scope.load=true;
 	}
 	
 	$scope.seeCalendar = function(){
@@ -111,6 +117,7 @@ eComBioApp.controller('CommandeCreaCtrl', [ '$scope', '$location','$window','com
 		$scope.recapInfoVoir = false;
 		$scope.payerInfoVoir = true;
 		$scope.erreurPaiement=message;
+		$scope.load=false;
 	});
 	
 	$(window).ready(function(){
