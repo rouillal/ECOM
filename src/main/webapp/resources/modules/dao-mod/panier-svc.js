@@ -113,15 +113,17 @@ eComBioApp.factory('panierSvc', [
 					}, function(error) {
 						var errorJson = angular.toJson(error);
 						if (error.status == 304) {
+							montantTotal = 0;
 							angular.forEach(listePanier, function(ligneArticle, key) {
 								if (produitAChanger.id == ligneArticle.id) {
 									ligneArticle.quotite = quantite-1;
-									ligneArticle.prixTotal = Math.round(quantite-1 * ligneArticle.prix*100)/100;
+									ligneArticle.prixTotal = Math.round((quantite-1) * ligneArticle.prix*100)/100;
 									ligne = ligneArticle;
 								}
 								montantTotal += ligneArticle.prixTotal;
 							});
 							$rootScope.$broadcast('rafraichirPanier');
+							$rootScope.$broadcast('StockInsuffisant');
 							$rootScope.$broadcast('anomalieTechnique', "Plus de stock");
 							$window.alert("Votre produit n'est plus en stock");
 						} else if (error.status == 404) {
