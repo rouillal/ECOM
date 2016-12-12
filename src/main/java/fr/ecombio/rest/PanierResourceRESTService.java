@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -75,6 +76,17 @@ public class PanierResourceRESTService {
 	//Logger log;
 	Logger log = java.util.logging.Logger.getLogger("org.hibernate");
 
+	/**
+	 * Recherche d'un panier
+	 * @param id identifiant du panier
+	 * @return
+	 */
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@ResponseWrapper public Panier getPanierFromId(@QueryParam("id") Long id) {
+		return PanierRepository.findById(id);
+	}
+	
 	/**
 	 * Creation du panier
 	 * @param commande mon panier

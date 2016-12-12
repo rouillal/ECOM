@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import fr.ecombio.data.CategorieRecetteRepository;
 import fr.ecombio.data.ProduitRepository;
 import fr.ecombio.model.CategorieRecette;
+import fr.ecombio.model.GestionProduit;
 import fr.ecombio.model.Produit;
 
 
@@ -57,12 +58,12 @@ public class ProduitResourceRESTService {
 	 * @param prod produit a ajouter
 	 * 
 	 * @see Produit
-	 * @see ProduitRepository#AjoutProduit(Produit)
+	 * @see ProduitRepository#addProduitFromGestionProduit(Produit)
 	 */
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public void ajoutProduit(Produit prod){
-		repository.AjoutProduit(prod);
+	public void ajoutProduit(GestionProduit prod){
+		Produit p = repository.addProduitFromGestionProduit(prod);
 	}
 	
 	/**
@@ -70,12 +71,12 @@ public class ProduitResourceRESTService {
 	 * @param prod produit à modifier
 	 * 
 	 * @see Produit
-	 * @see ProduitRepository#updateProduit(Produit)
+	 * @see ProduitRepository#updateProduitFromGestionProduit(Produit)
 	 */
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
-	public void updateProduit(Produit prod) {
-		repository.updateProduit(prod);
+	public void updateProduit(GestionProduit prod) {
+		repository.updateProduitFromGestionProduit(prod);
 	}
 	
 	/**

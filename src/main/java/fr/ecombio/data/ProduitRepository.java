@@ -10,6 +10,8 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import fr.ecombio.model.Categorie;
+import fr.ecombio.model.GestionProduit;
 import fr.ecombio.model.Produit;
 import fr.ecombio.model.ProduitSaison;
 import fr.ecombio.model.Recette;
@@ -17,7 +19,10 @@ import fr.ecombio.model.Saison;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Set;
 
 /**
  * <p>
@@ -29,6 +34,8 @@ import java.util.List;
  * </p>
  * 
  * @see EntityManager
+ * @see CategorieRepository
+ * @see SaisonRepository
  * @see Produit
  *
  */
@@ -42,6 +49,18 @@ public class ProduitRepository {
 	 */
 	@Inject
 	private EntityManager em;
+
+	/**
+	 * @see CategorieRepository
+	 */
+	@Inject
+	private CategorieRepository CategorieRepository;
+
+	/**
+	 * @see SaisonRepository
+	 */
+	@Inject
+	private SaisonRepository SaisonRepository;
 
 	/**
 	 * Recherche d'un produit
@@ -93,7 +112,7 @@ public class ProduitRepository {
 		typequery.setMaxResults(6);
 		return typequery.getResultList();
 	}
-	
+
 	/**
 	 * Ajout d'un produit
 	 * @param prod Produit a ajouter
@@ -101,7 +120,7 @@ public class ProduitRepository {
 	public  void AjoutProduit(Produit prod) {
 		em.persist(prod);
 	}
-	
+
 	/**
 	 * Recherche des produits selon categorie donnee
 	 * @param cat categorie
@@ -131,7 +150,7 @@ public class ProduitRepository {
 		Predicate predicate = null ;
 		Predicate predicate2 = null;
 		criteria.select(Produit);
-		
+
 		if(cat == null || cat == "") {
 			if(search == null || search == "") {
 				return this.findAllOrderedByName(page, tri, saison);
@@ -147,8 +166,8 @@ public class ProduitRepository {
 		if(search != null && search != "") {
 			search = search.toLowerCase();
 			String[] prods = search.split(",");
-				predicate2 = cb.equal(cb.lower(Produit.<String>get("name")), prods[0]);
-				predicate2 = cb.or(predicate2,(cb.equal(cb.lower(Produit.<String>get("variete")), prods[0])));
+			predicate2 = cb.equal(cb.lower(Produit.<String>get("name")), prods[0]);
+			predicate2 = cb.or(predicate2,(cb.equal(cb.lower(Produit.<String>get("variete")), prods[0])));
 			for (String prod1 : prods) {
 				predicate2 = cb.and(predicate2, cb.or((cb.equal(cb.lower(Produit.<String>get("name")), prod1)),
 						(cb.equal(cb.lower(Produit.<String>get("variete")), prod1))));
@@ -192,32 +211,32 @@ public class ProduitRepository {
 	public void updateProduit(Produit p) {
 		em.merge(p);
 	}	
-	
+
 	private String getSeason(Date today) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(today);
-	    switch(cal.get(Calendar.MONTH)) {
-	          case 12:
-	                return "hiver";
-	          case 1:
-	                return "hiver";
-	          case 2:
-	                return "hiver";
-	          case 3:
-	                return "printemps";
-	          case 4:
-	                return "printemps";
-	          case 5:
-	                return "printemps";
-	          case 6:
-	                return "ete";
-	          case 7:
-	                return "ete";
-	          case 8:
-	                return "ete";
-	          default:
-	                return "automne";
-	      }
+		switch(cal.get(Calendar.MONTH)) {
+		case 12:
+			return "hiver";
+		case 1:
+			return "hiver";
+		case 2:
+			return "hiver";
+		case 3:
+			return "printemps";
+		case 4:
+			return "printemps";
+		case 5:
+			return "printemps";
+		case 6:
+			return "ete";
+		case 7:
+			return "ete";
+		case 8:
+			return "ete";
+		default:
+			return "automne";
+		}
 	}
 
 	/**
@@ -234,7 +253,7 @@ public class ProduitRepository {
 		Predicate predicate = null ;
 		Predicate predicate2 = null;
 		criteria.select(cb.countDistinct(Produit));
-		
+
 		if(cat == null || cat == "") {
 			if(search == null || search == "") {
 				return this.findNumberPage(saison);
@@ -250,8 +269,8 @@ public class ProduitRepository {
 		if(search != null && search != "") {
 			search = search.toLowerCase();
 			String[] prods = search.split(",");
-				predicate2 = cb.equal(cb.lower(Produit.<String>get("name")), prods[0]);
-				predicate2 = cb.or(predicate2,(cb.equal(cb.lower(Produit.<String>get("variete")), prods[0])));
+			predicate2 = cb.equal(cb.lower(Produit.<String>get("name")), prods[0]);
+			predicate2 = cb.or(predicate2,(cb.equal(cb.lower(Produit.<String>get("variete")), prods[0])));
 			for (String prod1 : prods) {
 				predicate2 = cb.and(predicate2, cb.or((cb.equal(cb.lower(Produit.<String>get("name")), prod1)),
 						(cb.equal(cb.lower(Produit.<String>get("variete")), prod1))));
@@ -300,5 +319,35 @@ public class ProduitRepository {
 		}
 		criteria.where(predicate);
 		return (long) (Math.ceil((float)em.createQuery(criteria).getSingleResult()/6)) ;
+	}
+	
+	public void updateProduitFromGestionProduit(GestionProduit p) {
+		Produit produit;
+		if (p.getId()>0L) {
+			produit = this.findById(p.getId());
+			produit.modifyProduit(p);
+			em.merge(produit);
+		} else {
+			throw new NoSuchElementException();
+		}
+	}
+
+	public Produit addProduitFromGestionProduit(GestionProduit p) {
+		Categorie c = CategorieRepository.findById(p.getCategorie().getId());
+
+		Produit produit = new Produit(c, p.getName(), p.getVariete(), p.getUnite(), p.getQuantite(), p.getStock(), p.getPrix(),
+				p.getFilename(), p.getProvenance(), p.getDateCueillette(), p.getDureeConservation(), p.getCalories(), p.getGlucides(), p.getFibres(), p.getProteines());
+
+		HashSet<ProduitSaison> saisons= new HashSet<ProduitSaison>();
+		for (Long i =1L; i<=4L; i++) {
+			Saison s = SaisonRepository.findById(i);
+			ProduitSaison saison = new ProduitSaison(s);
+			em.persist(saison);
+			saison.setProduits(produit);
+			s.getProduits().add(saison);
+			saisons.add(saison);
+		}
+		produit.setSaisons(saisons);
+		return produit;
 	}
 }
