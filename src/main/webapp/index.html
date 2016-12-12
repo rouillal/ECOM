@@ -121,7 +121,7 @@
 	<div id="ruban" class="row">
 		<ul class="col-xs-12">
 			<li class="col-md-2 col-xs-1"></li>
-			<li class="col-md-1 col-xs-5" ng-class="menuIndice == 6 ? 'current':''"><a
+			<li class="col-md-1 col-xs-5" ng-class="menuIndice == 6 ? 'current':''" ng-show="isAdmin"><a
 				ng-click="menuIndice = 6" id="gestion" href="#/gestion""> </a></li>
 			<li class="col-md-1 col-xs-5" ng-class="(menuIndice == $location.path()) || (menuIndice == 1) ? 'current':''"><a
 				ng-click="menuIndice = 1" id="product" href="#"> </a></li>
@@ -148,6 +148,7 @@
 			<li class="col-md-2 col-xs-1"></li>
 		</ul>
 	</div>
+	<h1>userInfo:{{userInfo}}</h1>
 	<div ng-view></div>
 	<h1 ng-show="anomalieTechnique != ''">anomalieTechnique :
 		{{anomalieTechnique}}</h1>

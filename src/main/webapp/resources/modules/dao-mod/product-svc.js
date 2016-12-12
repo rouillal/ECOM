@@ -6,7 +6,7 @@ eComBioApp.factory('productSvc', [
 		function($rootScope, restBackendSvc, $window,imgProviderSvc) {
 			
 			var getEmptyItem = function() {
-				var emptyItem = {"categorie":{"id":1,"name":"Fruits"},"name":'O',"variete":'',"unite":'',"quantite":0,"stock":0,"prix":0.0,"filename":'',"provenance":'',"dateCueillette":"16/12/2016","dureeConservation":0,"calories":0,"glucides":9,"fibres":2,"proteines":1};
+				var emptyItem = {"categorie":{"id":1,"name":"Fruits"},"name":'O',"variete":'',"unite":'',"quantite":0,"stock":0,"prix":0.0,"filename":'',"provenance":'',"dateCueillette":'',"dureeConservation":0,"calories":0,"glucides":9,"fibres":2,"proteines":1};
 				return emptyItem;
 			}
 			
@@ -69,7 +69,7 @@ eComBioApp.factory('productSvc', [
 
 			var createProduct = function(product) {
 				var messageServeurJson = angular.toJson(product);
-				$window.alert('Create produit !'+messageServeurJson);
+				//$window.alert('Create produit !'+messageServeurJson);
 				restBackendSvc.createItem('produit',messageServeurJson).then(function(data) {
 					//inform with message
 					$window.alert('Create produit ok');
@@ -99,7 +99,7 @@ eComBioApp.factory('productSvc', [
 				productServeur.fibres=productUpdatedParam.fibres;
 				productServeur.proteines=productUpdatedParam.proteines;
 				var messageServeurJson = angular.toJson(productServeur);
-				$window.alert('Update produit !'+messageServeurJson);
+				//$window.alert('Update produit !'+messageServeurJson);
 				restBackendSvc.updateItem('produit',messageServeurJson).then(function(data) {
 					//inform with message
 					$window.alert('Update produit ok');
