@@ -1,7 +1,7 @@
 eComBioApp.controller('ProduitAdminCtrl', [ '$scope', '$location','$window','userInfoSvc','productSvc',
 		function($scope, $location,$window,userInfoSvc,productSvc) {
 	
-	$scope.visuMode='tt';
+	$scope.visuMode='N';
 	
 	$scope.editedProduct={"categorie":{"id":1,"name":"Fruits"},"name":"Abricot","variete":"Orangé de Provence bio","unite":"g","quantite":2000,"stock":22,"prix":5.2,"filename":"AbricotOrange","provenance":"La Ferme des Marmottes","dateCueillette":"16/12/2016","dureeConservation":4,"calories":49,"glucides":9,"fibres":2,"proteines":1,"url":"http://localhost:8080/ECOM/image?name=AbricotOrange"};
 	
@@ -24,6 +24,14 @@ eComBioApp.controller('ProduitAdminCtrl', [ '$scope', '$location','$window','use
 	
 	$scope.hasItemToEdit = function() {
 		return ($scope.isCreate()||$scope.isUpdate());
+	}
+	
+	$scope.isCloseDisplay = function() {
+		return ($scope.isCreate()||$scope.isUpdate());
+	}
+	
+	$scope.closeToNormal = function() {
+		$scope.visuMode='N';
 	}
 	
 	$scope.doCreate = function() {
