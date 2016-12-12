@@ -8,6 +8,8 @@ import java.util.Iterator;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 
+import fr.ecombio.util.Resources;
+
 /**
  * <p>
  * Gestion de la creation d'une facture en pdf
@@ -20,7 +22,7 @@ import com.itextpdf.text.pdf.*;
 public class CreateFacture {
 	String dir;
 	private static String FILE;
-
+	private static Image image;
 	private static Font catFont;
 	private static Font titleFont;
 	private static Font smallBold;
@@ -28,6 +30,11 @@ public class CreateFacture {
 	public CreateFacture() {
 		dir = System.getProperty("user.dir");
 		FILE = dir+"/Facture.pdf";
+		try {
+			image = Resources.getLogo();
+		} catch (Exception e) {
+			image = null;
+		}
 		System.out.println(FILE);
 		titleFont = new Font(Font.FontFamily.TIMES_ROMAN, 22,
 				Font.BOLD);
@@ -58,6 +65,9 @@ public class CreateFacture {
 		PdfWriter.getInstance(document, new FileOutputStream(FILE));
 		document.open();
 		addMetaData(document);
+		if (image != null) {
+			document.add(image);
+		}
 		addTitlePage(document, infos);
 		addContent(document, panier);
 		document.close();
