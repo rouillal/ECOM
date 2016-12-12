@@ -1,34 +1,26 @@
 <div class="col-xs-12" style="margin-top: 20px;"
 	ng-controller="RecetteSuggestedCtrl">
-	<div class="row" ng-show="suggestedRecetteExist()">
+	<div ng-show="suggestedRecetteExist()">
 		<div
 			style="font-size: 18px; font-family: Bradley Hand; margin-top: 50px; color: rgb(221, 131, 14)"
 			class="col-xs-12">Nous vous suggérons les recettes:</div>
 		<div class="col-xs-1">
-			<button class="btn" ng-click="pageLeft()"
-				ng-show="isPageLeftsuggestedRecette()">
-				<span style="color: rgb(221, 131, 14);"
-					class="glyphicon glyphicon-chevron-left"></span>
-			</button>
+			<div class="carousel-inner"></div>
 		</div>
-		<div ng-repeat="recette in listSuggestedRecettes">
-			<div class="col-sm-3 col-xs-12"
-				ng-click="selectDetailsRecette(recette)"
-				data-target="#selectedRecetteDisplay" data-toggle="modal">
-				<div style="text-align: center; margin-top: 25px; font-size: 12px"
-					class="col-xs-12">{{recette.name}}</div>
-				<div align="center" class="col-xs-12">
-					<img width="233px" height="127px" ng-src="{{recette.url}}">
+		
+		<slick class="col-xs-9" autoplaySpeed=4000 autoplay=true slides-to-show=3 slides-to-scroll=3
+			ng-if="suggestedRecetteExist()">
+			<div ng-repeat="recette in listSuggestedRecettes">
+				<div ng-click="selectDetailsRecette(recette)"
+					data-target="#selectedRecetteDisplay" data-toggle="modal">
+					<div style="text-align: center; margin-top: 25px; font-size: 12px"
+						class="col-xs-12" ng-bind-html="recette.name | unsafe"></div>
+					<div align="center" class="col-xs-12">
+						<img width="233px" height="127px" ng-src="{{recette.url}}">
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="col-xs-1">
-			<button class="btn" ng-click="pageRight()"
-				ng-show="isPageRightsuggestedRecette()">
-				<span style="color: rgb(221, 131, 14);"
-					class="glyphicon glyphicon-chevron-right"></span>
-			</button>
-		</div>
+		</slick>
 		<div class="col-xs-12" style="margin-top: 40px;"></div>
 	</div>
 </div>
