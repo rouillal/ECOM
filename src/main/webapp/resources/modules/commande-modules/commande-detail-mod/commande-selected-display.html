@@ -11,6 +11,7 @@
 					{{listeHoraires[selectedCommandeDetail.heure].libelle}}h</div>
 			</div>
 			<div class="modal-body">
+				<h4>listePanier:{{listePanier}}</h4>
 				<div>Client :
 					{{selectedCommandeDetail.client.nom}}&nbsp;{{selectedCommandeDetail.client.prenom}}</div>
 				<div ng-show="selectedCommandeDetail.livDom=='e'">Livraison :

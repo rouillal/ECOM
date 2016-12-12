@@ -173,10 +173,12 @@ eComBioApp.factory('panierSvc', [
 			};
 			
 			var getPanierCommande = function(idPanierCommande) {
-				$window.alert('RRR0');
 				var urlPanierCommande = 'panier?id='+idPanierCommande;
+				$window.alert('RRR0_'+urlPanierCommande);
 				restBackendSvc.getItemsByUrl(urlPanierCommande).then(function(data) {
 					var listPanierCommande = data.data;
+					var listPanierCommandeJson = angular.toJson(listPanierCommande);
+					$window.alert('RRR0888_'+listPanierCommandeJson);
 					$rootScope.$broadcast('listPanierCommandeSupplied', listPanierCommande);
 				}, function(reason) {
 					$rootScope.$broadcast('debug', reason);
