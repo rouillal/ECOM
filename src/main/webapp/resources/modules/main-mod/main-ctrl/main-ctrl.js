@@ -3,6 +3,7 @@ eComBioApp.controller('MainCtrl', [ '$scope', '$window','productSvc','categorieS
 	$scope.montantPanier = panierSvc.getMontantTotal();
 	$scope.user = userInfoSvc.getUserInfoPrenom();
 	$scope.anomalieTechnique = "";
+	$scope.userInfo=userInfoSvc.getUserInfo();
 	
 	$scope.$on('rafraichirPanier', function(event) {
 		$scope.montantPanier = panierSvc.getMontantTotal();
@@ -10,6 +11,7 @@ eComBioApp.controller('MainCtrl', [ '$scope', '$window','productSvc','categorieS
 	
 	$scope.$on('userInfoProvided', function(event) {
 		$scope.user = userInfoSvc.getUserInfoPrenom();
+		$scope.userInfo=userInfoSvc.getUserInfo();
 	});
 
 	$scope.$on('anomalieTechnique', function(event, msg) {
