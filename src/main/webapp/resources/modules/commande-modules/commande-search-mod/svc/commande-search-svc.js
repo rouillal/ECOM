@@ -1,5 +1,6 @@
 eComBioApp.factory('commandeSearchSvc', [ '$rootScope','$window','commandeSvc',function($rootScope,$window,commandeSvc) {
-	var searchDateLivraison='15/12/2016'; // Mettre date du jour !!!
+	var date = new Date();
+	var searchDateLivraison = ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();
 	var currentPage=0;
 	var listeTris = [{'name':'alpha','libelle':'Noms'}];
 	var currentTri = {'name':'alpha','libelle':'Noms'};

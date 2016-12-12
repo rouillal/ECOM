@@ -2,8 +2,7 @@
 	<form name="formCS" novalidate role="form">
 		<div align="center" class="col-xs-12" style="margin-top: 30px;"
 			class="form-group">
-			<label>Rechercher les commandes par date :
-				{{searchCommandeDate}}</label> <br> <input type="text"
+			<label>Rechercher les commandes par date :</label> <br> <input type="text"
 				ng-click="seeCalendar()" ng-model="searchCommandeDate" name="date"
 				required="" placeholder="Sélectionnez une date">
 				<button ng-click="searchCommandeByDate()" class="btn btn-inverse">
@@ -20,5 +19,5 @@
 			</div>
 		</div>
 	</form>
-	<h6 class="col-xs-12">Debug:{{debug}}</h6>
+	<!--  <h6 class="col-xs-12">Debug:{{debug}}</h6>-->
 </div>
