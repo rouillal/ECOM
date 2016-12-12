@@ -131,7 +131,7 @@ public class CreateFacture {
 		// Next section
 		anchor = new Anchor();
 		// Next section
-		Double total = panier.getTotal();
+		Double total = Math.round(panier.getTotal()/1.055 * 100.0)/100.0;
 		document.add(getTable("Total  HT",":",total+" €", catFont));
 		Double tva = Math.round(total*5.5) / 100.0;
 		document.add(getTable("TVA    5.5%",":",tva+" €", smallBold));
@@ -165,9 +165,9 @@ public class CreateFacture {
 	
 	private static void createTable(Paragraph subCatPart, Panier panier)
 			throws DocumentException {
-		PdfPTable table = new PdfPTable(3);
+		PdfPTable table = new PdfPTable(4);
 		table.setTotalWidth(450);
-		float[] widths = new float[] {240f, 105f, 105f};
+		float[] widths = new float[] {220f, 50f, 80f, 100f};
 		table.setWidths(widths);
 		table.setLockedWidth(true);
 
@@ -185,7 +185,14 @@ public class CreateFacture {
 	    c1.setBackgroundColor(BaseColor.LIGHT_GRAY);
 		table.addCell(c1);
 
-		c1 = new PdfPCell(new Phrase("Prix à l'unité (€)"));
+		c1 = new PdfPCell(new Phrase("Prix unitaire HT (€)"));
+		c1.setVerticalAlignment(Element.ALIGN_TOP);
+		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+	    c1.setBorder(PdfPCell.NO_BORDER);
+	    c1.setBackgroundColor(BaseColor.LIGHT_GRAY);
+		table.addCell(c1);
+		
+		c1 = new PdfPCell(new Phrase("Prix total HT (€)"));
 		c1.setVerticalAlignment(Element.ALIGN_TOP);
 		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
 	    c1.setBorder(PdfPCell.NO_BORDER);
@@ -214,7 +221,13 @@ public class CreateFacture {
 			c1.setHorizontalAlignment(Element.ALIGN_CENTER);
 		    c1.setBorder(PdfPCell.NO_BORDER);
 			table.addCell(c1);
-			c1 = new PdfPCell(new Phrase(Double.toString(Math.round(a.getProduit().getPrix() * 100.0) / 100.0)));
+			c1 = new PdfPCell(new Phrase(Double.toString(Math.round(a.getProduit().getPrix()/1.055 * 100.0) / 100.0)));
+			c1.setBackgroundColor(color);
+			c1.setVerticalAlignment(Element.ALIGN_CENTER);
+			c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+		    c1.setBorder(PdfPCell.NO_BORDER);
+			table.addCell(c1);
+			c1 = new PdfPCell(new Phrase(Double.toString((Math.round(a.getProduit().getPrix()/1.055 * 100.0)/ 100.0) *a.getQuotite())));
 			c1.setBackgroundColor(color);
 			c1.setVerticalAlignment(Element.ALIGN_CENTER);
 			c1.setHorizontalAlignment(Element.ALIGN_CENTER);

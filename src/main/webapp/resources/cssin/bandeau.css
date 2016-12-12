@@ -48,6 +48,22 @@ button{
 	background: url(../modules/main-mod/img/panierSelected.png);
 }
 
+#ruban #gestion{
+	margin-top: 40px;
+	width : 78px;
+    height : 69px;
+    display : block;
+	background: url(../modules/main-mod/img/gestionCmd.png); 
+}
+
+#ruban #gestion:hover {
+	background: url(../modules/main-mod/img/GestionCmdC.png);
+}
+
+#ruban .current #gestion{
+	background: url(../modules/main-mod/img/GestionCmdC.png);
+}
+
 #ruban #product{
 	margin-top: 25px;
 	width : 78px;

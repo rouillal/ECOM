@@ -120,7 +120,9 @@
 			src="'resources/modules/recette-modules/recette-panier-mod/partials/selected-product-display-recette.html'"></div>
 	<div id="ruban" class="row">
 		<ul class="col-xs-12">
-			<li class="col-md-3 col-xs-1"></li>
+			<li class="col-md-2 col-xs-1"></li>
+			<li class="col-md-1 col-xs-5" ng-class="menuIndice == 6 ? 'current':''"><a
+				ng-click="menuIndice = 6" id="gestion" href="#/gestion""> </a></li>
 			<li class="col-md-1 col-xs-5" ng-class="(menuIndice == $location.path()) || (menuIndice == 1) ? 'current':''"><a
 				ng-click="menuIndice = 1" id="product" href="#"> </a></li>
 			<li class="col-md-1 col-xs-5" ng-class="menuIndice == 2 ? 'current':''"><a
@@ -133,8 +135,7 @@
 				data-toggle="modal" id="myBtnConnect" class="connect"
 				data-target="#/connect"><span>Me Connecter &nbsp;</span></button><button
 				id="myBtnSign" class="menuText" data-toggle="modal"
-				data-target="#/signin"><span>M'inscrire</span></button><a
-				id="gestion" href="#/gestion">Gestion commandes &nbsp;</a></div>
+				data-target="#/signin"><span>M'inscrire</span></button></div>
 				<div ng-show="user!=''" style="margin-left:60px; color: rgb(221, 131, 14); font-family: Times New Roman;">Bienvenue {{user}} !</div>
 				<ul>
 					<li ng-class="menuIndice == 5 ? 'current':''"><a style="margin-left:17px;" id="basket"
