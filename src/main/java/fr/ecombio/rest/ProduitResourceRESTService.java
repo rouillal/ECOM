@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -60,8 +61,21 @@ public class ProduitResourceRESTService {
 	 */
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public void AjoutProduit(Produit prod){
+	public void ajoutProduit(Produit prod){
 		repository.AjoutProduit(prod);
+	}
+	
+	/**
+	 * Mise a jour d'un produit
+	 * @param prod produit à modifier
+	 * 
+	 * @see Produit
+	 * @see ProduitRepository#updateProduit(Produit)
+	 */
+	@PUT
+	@Produces(MediaType.APPLICATION_JSON)
+	public void updateProduit(Produit prod) {
+		repository.updateProduit(prod);
 	}
 	
 	/**
