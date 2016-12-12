@@ -38,10 +38,10 @@ eComBioApp.controller('ProduitDetailCtrl', [
 				$scope.panierPrixQt = Math.round(qt * newSelectedProduit.prix*100)/100;
 			});
 			
-			/*
+			
 			$scope.$on('StockInsuffisant', function(event) {
-				$scope.stockInsuff = true;
-			});*/
+				$scope.panierQuantite = $scope.panierQuantite - 1 ;
+			});
 			
 			
 			$(document).ready(function(){
