@@ -53,6 +53,14 @@ public class ProduitSaison implements Serializable{
 	@JsonManagedReference
 	private Saison saisons;
 
+	public ProduitSaison() {
+		super();
+	}
+
+	public ProduitSaison(Saison s) {
+		this.saisons = s;
+	}
+
 	/**
 	 * @return the id
 	 */

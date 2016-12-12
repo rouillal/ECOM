@@ -3,7 +3,7 @@ eComBioApp.controller('ProduitAdminCtrl', [ '$scope', '$location','$window','use
 	
 	$scope.visuMode='N';
 	
-	$scope.editedProduct={"categorie":{"id":1,"name":"Fruits"},"name":"Abricot","variete":"Orangé de Provence bio","unite":"g","quantite":2000,"stock":22,"prix":5.2,"filename":"AbricotOrange","provenance":"La Ferme des Marmottes","dateCueillette":"16/12/2016","dureeConservation":4,"calories":49,"glucides":9,"fibres":2,"proteines":1,"url":"http://localhost:8080/ECOM/image?name=AbricotOrange"};
+	$scope.editedProduct=productSvc.getEmptyItem();
 	
 	$scope.isAdmin = function() {
 		//return true;

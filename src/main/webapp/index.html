@@ -13,8 +13,14 @@
 	href="resources/cssin/custom.css" />
 <link rel="stylesheet" type="text/css"
 	href="resources/cssin/bandeau.css" />
+<link rel="stylesheet" href="resources/cssext/slick.css" />
+<link rel="stylesheet" href="resources/cssext/slick-theme.css" />
 <script type="text/javascript" src="resources/jsext/angular.min.js"></script>
 <script type="text/javascript" src="resources/jsext/jquery.min.js"></script>
+<script type="text/javascript" src="resources/jsext/angular.js"></script>
+<script type="text/javascript" src="resources/jsext/jquery.js"></script>
+<script src="resources/jsext/slick.js"></script>
+<script src="resources/jsext/slick2.js"></script>
 <script type="text/javascript"
 	src="resources/jsext/angular-date-picker.js"></script>
 <script type="text/javascript"
@@ -25,7 +31,7 @@
 <script type="text/javascript"
 	src="resources/jsext/angular-cookies.min.js"></script>
 <script>
-	var eComBioApp = angular.module('eComBio', [ 'ngRoute','ngSanitize','mp.datePicker','ngCookies']);
+	var eComBioApp = angular.module('eComBio', [ 'ngRoute','ngSanitize','mp.datePicker','ngCookies','slick']);
 </script>
 <script type="text/javascript"
 	src="resources/modules/main-mod/svc/img-provider-svc.js"></script>
@@ -114,7 +120,9 @@
 			src="'resources/modules/recette-modules/recette-panier-mod/partials/selected-product-display-recette.html'"></div>
 	<div id="ruban" class="row">
 		<ul class="col-xs-12">
-			<li class="col-md-3 col-xs-1"></li>
+			<li class="col-md-2 col-xs-1"></li>
+			<li class="col-md-1 col-xs-5" ng-class="menuIndice == 6 ? 'current':''" ng-show="isAdmin"><a
+				ng-click="menuIndice = 6" id="gestion" href="#/gestion""> </a></li>
 			<li class="col-md-1 col-xs-5" ng-class="(menuIndice == $location.path()) || (menuIndice == 1) ? 'current':''"><a
 				ng-click="menuIndice = 1" id="product" href="#"> </a></li>
 			<li class="col-md-1 col-xs-5" ng-class="menuIndice == 2 ? 'current':''"><a
@@ -127,8 +135,7 @@
 				data-toggle="modal" id="myBtnConnect" class="connect"
 				data-target="#/connect"><span>Me Connecter &nbsp;</span></button><button
 				id="myBtnSign" class="menuText" data-toggle="modal"
-				data-target="#/signin"><span>M'inscrire</span></button><a
-				id="gestion" href="#/gestion">Gestion commandes &nbsp;</a></div>
+				data-target="#/signin"><span>M'inscrire</span></button></div>
 				<div ng-show="user!=''" style="margin-left:60px; color: rgb(221, 131, 14); font-family: Times New Roman;">Bienvenue {{user}} !</div>
 				<ul>
 					<li ng-class="menuIndice == 5 ? 'current':''"><a style="margin-left:17px;" id="basket"

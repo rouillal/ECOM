@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -25,6 +26,7 @@ import fr.ecombio.data.RegistreRepository;
 import fr.ecombio.data.StockManagerRepository;
 import fr.ecombio.model.Article;
 import fr.ecombio.model.GestionArticle;
+import fr.ecombio.model.InfosArticle;
 import fr.ecombio.model.Panier;
 import fr.ecombio.model.Produit;
 import fr.ecombio.model.SendEmail;
@@ -74,6 +76,24 @@ public class PanierResourceRESTService {
 
 	//Logger log;
 	Logger log = java.util.logging.Logger.getLogger("org.hibernate");
+
+	/**
+	 * Recherche d'un panier
+	 * @param id identifiant du panier
+	 * @return
+	 */
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@ResponseWrapper public List<InfosArticle> getPanierFromId(@QueryParam("id") Long id) {
+		Panier p = PanierRepository.findById(id);
+		List<InfosArticle> retour = new LinkedList<InfosArticle>();
+		if (p != null) {
+			for (Article a : p.getArticles()) {
+				retour.add(new InfosArticle(a.getProduit().getName(), a.getProduit().getVariete(), a.getProduit().getQuantite(), a.getQuotite(),  a.getProduit().getUnite()));
+			}
+		}
+		return retour;
+	}
 
 	/**
 	 * Creation du panier

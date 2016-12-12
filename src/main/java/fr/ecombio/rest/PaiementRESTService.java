@@ -66,6 +66,7 @@ public class PaiementRESTService {
 			return Response.status(Status.FORBIDDEN).build();
 			//throw new Exception(err);
 		} else {
+			Logger.getGlobal().info("send mail");
 			// envoie d'un mail recap
 			SendEmail sendMail = new SendEmail(PanierRepository);
 			sendMail.send(infos);

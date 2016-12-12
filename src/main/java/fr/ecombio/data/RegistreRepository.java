@@ -96,6 +96,9 @@ public class RegistreRepository {
 		client.setAdresse(infos.getAdresse());
 		client.setCp(infos.getCp());
 		client.setVille(infos.getVille());
+		if (infos.getMail().equals("biotobealive@gmail.com")) {
+			client.setTypeClient("a");
+		}
 		em.persist(client);
 		RegistreClient reg = new RegistreClient();
 		reg.setClient(client);
@@ -149,6 +152,7 @@ public class RegistreRepository {
 		com.setHeure(infos.getCommandInfo().getHeure());
 		com.setClient(client);
 		com.setPanier(nouveauPanier);
+		com.setLivDom(infos.getCommandInfo().getLivDom());
 		em.persist(com);
 	}
 }

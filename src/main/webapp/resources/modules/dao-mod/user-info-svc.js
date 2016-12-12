@@ -1,7 +1,8 @@
 eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','commandeSvc',
                                     function($rootScope,restBackendSvc,$window,commandeSvc) {
 
-	var userInfo = {'nom':'','prenom':'','mail':'biotobealive@gmail.com','adresse':'17 Rue des Marguerites','cp':'38000','ville':'Grenoble','psw':'xx'};
+	var userInfo = {'nom':'','prenom':'','mail':'biotobealive@gmail.com','adresse':'17 Rue des Marguerites','cp':'38000','ville':'Grenoble','psw':'xx','typeClient':'n'};
+	var userInfoToPersist = {'nom':'','prenom':'','mail':'','adresse':'','cp':'','ville':'','psw':''};
 	
 	var getInfoInit = function() {
 		return userInfo;
@@ -16,14 +17,19 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','c
 	};
 
 	var valideSaisieUserInfo = function(userInfoParam) {
-		userInfo = userInfoParam; 
-		var userInfoJson = angular.toJson(userInfo);
+		userInfoToPersist.nom=userInfoParam.nom;
+		userInfoToPersist.prenom=userInfoParam.prenom;
+		userInfoToPersist.mail=userInfoParam.mail;
+		userInfoToPersist.adresse=userInfoParam.adresse;
+		userInfoToPersist.cp=userInfoParam.cp;
+		userInfoToPersist.ville=userInfoParam.ville;
+		userInfoToPersist.psw=userInfoParam.psw;
+		var userInfoJson = angular.toJson(userInfoToPersist);
 		restBackendSvc.createItem('connect', userInfoJson).then(
 				function(data) {
-					//var ff = angular.toJson(data.data);
-					//$window.alert("Bravo, vous êtes inscrit chez nous"+ff);
+					var userInfo = angular.toJson(data.data);
 					commandeSvc.setCommandInfo(userInfo);
-					$rootScope.$broadcast('userInfoProvided');
+					$rootScope.$broadcast('userConnectionChanged');
 					$("#myModalSignin").modal('hide');
 				}, function(error) {
 					if (error.status == 403) {
@@ -43,7 +49,6 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','c
 			commandeSvc.setCommandInfo(userInfo);
 			$rootScope.$broadcast('userConnectionChanged');
 			$("#myModalConnect").modal('hide');
-			$rootScope.$broadcast('userInfoProvided');
 		}, function(error) {
 			if (error.status == 404) {
 				$rootScope.$broadcast('userNotFound');
@@ -56,11 +61,11 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','c
 	};
 	
 	var isAdmin = function() {
-		return userInfo.nom=='Dupont';
+		return userInfo.typeClient=='a';
 	};
 	
 	var isGestion = function() {
-		return userInfo.nom=='Dupont';
+		return userInfo.typeClient=='a'||userInfo.typeClient=='g';
 	};
 
 	return {

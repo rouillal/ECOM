@@ -5,17 +5,26 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				
+				<div
+					style="text-align: center; margin-top: 25px; font-size: 25px; color: rgb(221, 131, 14);">Commande
+					pour le {{selectedCommandeDetail.date}} de
+					{{listeHoraires[selectedCommandeDetail.heure].libelle}}h</div>
 			</div>
 			<div class="modal-body">
-			<h1>selectedCommandeDetail:{{selectedCommandeDetail}}</h1>
-				<div style="font-size:15px; font-weight:bold;">{{selectedCommandeDetail.nom}}&nbsp;{{selectedCommandeDetail.prenom}}&nbsp;{{selectedCommandeDetail.prenom}}
-					</div>
-				<div style="font-size:13px;">{{selectedCommandeDetail.livDom}}&nbsp;{{selectedCommandeDetail.cp}}&nbsp;{{selectedCommandeDetail.ville}}
-					</div>
-				<div style="font-size:13px;">{{selectedCommandeDetail.date}}&nbsp;{{selectedCommandeDetail.heure}}
-					</div>
+				<div>Client :
+					{{selectedCommandeDetail.client.nom}}&nbsp;{{selectedCommandeDetail.client.prenom}}</div>
+				<div ng-show="selectedCommandeDetail.livDom=='e'">Livraison :
+					Entrepôt</div>
+				<div ng-show="selectedCommandeDetail.livDom=='d'">Livraison :
+					{{selectedCommandeDetail.client.adresse}} -
+					{{selectedCommandeDetail.client.cp}}
+					{{selectedCommandeDetail.client.ville}}</div>
+				<div>Produits commandés :</div>
+				<div style="margin-top: 20px;"
+					ng-repeat="ligne in listePanier">
+					<div>{{ligne.name}} {{ligne.variete}}:
+						{{ligne.quantite}} {{ligne.unite}} x{{ligne.quotite}}</div>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>

@@ -1,5 +1,8 @@
 eComBioApp.factory('commandeSearchSvc', [ '$rootScope','$window','commandeSvc',function($rootScope,$window,commandeSvc) {
-	var searchDateLivraison='15/12/2016'; // Mettre date du jour !!!
+	var date = new Date();
+	var searchDateLivraison = ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();
+	var searchEnt=true;
+	var searchDom=true;
 	var currentPage=0;
 	var listeTris = [{'name':'alpha','libelle':'Noms'}];
 	var currentTri = {'name':'alpha','libelle':'Noms'};
@@ -10,7 +13,7 @@ eComBioApp.factory('commandeSearchSvc', [ '$rootScope','$window','commandeSvc',f
 	}
 	
 	var doSearch = function() {
-		commandeSvc.getCommandesByDateLivraison(searchDateLivraison,currentPage,currentTri.name);
+		commandeSvc.getCommandesByDateLivraison(searchDateLivraison,searchEnt,searchDom,currentPage,currentTri.name);
 	}
 	
 	var changeDateLivraison = function(dateLivraisonChanged) {
@@ -20,6 +23,24 @@ eComBioApp.factory('commandeSearchSvc', [ '$rootScope','$window','commandeSvc',f
 		
 	var getDateLivraison = function() {
 		return searchDateLivraison;
+	}
+	
+	var changeSearchEnt = function(searchEntChanged) {
+		searchEnt = searchEntChanged;
+		doSearch();
+	}
+		
+	var getSearchEnt = function() {
+		return searchEnt;
+	}
+	
+	var changeSearchDom = function(searchDomChanged) {
+		searchDom = searchDomChanged;
+		doSearch();
+	}
+		
+	var getSearchDom = function() {
+		return searchDom;
 	}
 	
 	var getCommandesInit = function() {
@@ -74,6 +95,10 @@ eComBioApp.factory('commandeSearchSvc', [ '$rootScope','$window','commandeSvc',f
 	return {
 		changeDateLivraison : changeDateLivraison,
 		getDateLivraison : getDateLivraison,
+		changeSearchEnt : changeSearchEnt,
+		getSearchEnt : getSearchEnt,
+		changeSearchDom : changeSearchDom,
+		getSearchDom : getSearchDom,
 		getCommandesInit : getCommandesInit,
 		getlisteTris : getlisteTris,
 		getCurrentPage : getCurrentPage,
