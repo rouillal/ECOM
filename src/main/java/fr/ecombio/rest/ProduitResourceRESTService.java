@@ -12,9 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import fr.ecombio.data.CategorieRecetteRepository;
 import fr.ecombio.data.ProduitRepository;
-import fr.ecombio.model.CategorieRecette;
 import fr.ecombio.model.GestionProduit;
 import fr.ecombio.model.Produit;
 

@@ -22,15 +22,12 @@ import javax.xml.ws.ResponseWrapper;
 import fr.ecombio.data.PanierRepository;
 import fr.ecombio.data.ArticleRepository;
 import fr.ecombio.data.ProduitRepository;
-import fr.ecombio.data.RegistreRepository;
 import fr.ecombio.data.StockManagerRepository;
 import fr.ecombio.model.Article;
 import fr.ecombio.model.GestionArticle;
 import fr.ecombio.model.InfosArticle;
 import fr.ecombio.model.Panier;
 import fr.ecombio.model.Produit;
-import fr.ecombio.model.SendEmail;
-import fr.ecombio.model.ValidationCommande;
 
 /**
  * <p>

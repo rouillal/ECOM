@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -12,9 +11,7 @@ import javax.ws.rs.core.MediaType;
 
 
 import fr.ecombio.model.CategorieRecette;
-import fr.ecombio.model.Produit;
 import fr.ecombio.data.CategorieRecetteRepository;
-import fr.ecombio.data.CategorieRepository;
 
 /**
  * <p>

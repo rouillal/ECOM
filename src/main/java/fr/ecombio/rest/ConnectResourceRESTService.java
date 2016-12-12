@@ -16,9 +16,7 @@ import javax.ws.rs.core.Response.Status;
 import javax.xml.ws.ResponseWrapper;
 
 import fr.ecombio.data.RegistreRepository;
-import fr.ecombio.data.CompositionRepository;
 import fr.ecombio.model.Client;
-import fr.ecombio.model.Composition;
 import fr.ecombio.model.ValidationClient;
 
 /**

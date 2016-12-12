@@ -18,7 +18,6 @@ import fr.ecombio.model.HistoriqueCommande;
 import fr.ecombio.model.MyCryptoConverter;
 import fr.ecombio.model.Panier;
 import fr.ecombio.model.RegistreClient;
-import fr.ecombio.model.Saison;
 import fr.ecombio.model.ValidationClient;
 import fr.ecombio.model.ValidationCommande;
 

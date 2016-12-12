@@ -11,13 +11,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.xml.ws.ResponseWrapper;
-import javax.xml.ws.WebServiceRef;
 
 import fr.ecombio.data.RegistreRepository;
 import fr.ecombio.data.PanierRepository;
-import fr.ecombio.model.Client;
 import fr.ecombio.model.SendEmail;
-import fr.ecombio.model.ValidationClient;
 import fr.ecombio.model.ValidationCommande;
 
 /**

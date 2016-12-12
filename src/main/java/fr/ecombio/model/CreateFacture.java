@@ -255,7 +255,7 @@ public class CreateFacture {
 	}
 	
 	private static Long sequence = 54L;
-	@SuppressWarnings("deprecation")
+	
 	private static String getNum() {
 		// TODO Auto-generated method stub
 		sequence++;

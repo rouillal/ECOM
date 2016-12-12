@@ -5,7 +5,6 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import fr.ecombio.model.Article;
-import fr.ecombio.model.Categorie;
 
 
 /**

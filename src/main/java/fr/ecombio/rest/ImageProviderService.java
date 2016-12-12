@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 )
 public class ImageProviderService extends HttpServlet implements ServletContextListener {
 	//Directory path where the files are stored
-	private String fileDirName;
+	//private String fileDirName;
 
 	/**
 	 * requete de l'image en http
