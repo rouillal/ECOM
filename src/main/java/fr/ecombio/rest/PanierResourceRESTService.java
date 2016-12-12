@@ -26,6 +26,7 @@ import fr.ecombio.data.RegistreRepository;
 import fr.ecombio.data.StockManagerRepository;
 import fr.ecombio.model.Article;
 import fr.ecombio.model.GestionArticle;
+import fr.ecombio.model.InfosArticle;
 import fr.ecombio.model.Panier;
 import fr.ecombio.model.Produit;
 import fr.ecombio.model.SendEmail;
@@ -83,10 +84,17 @@ public class PanierResourceRESTService {
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@ResponseWrapper public Panier getPanierFromId(@QueryParam("id") Long id) {
-		return PanierRepository.findById(id);
+	@ResponseWrapper public List<InfosArticle> getPanierFromId(@QueryParam("id") Long id) {
+		Panier p = PanierRepository.findById(id);
+		List<InfosArticle> retour = new LinkedList<InfosArticle>();
+		if (p != null) {
+			for (Article a : p.getArticles()) {
+				retour.add(new InfosArticle(a.getProduit().getName(), a.getProduit().getVariete(), a.getQuotite()));
+			}
+		}
+		return retour;
 	}
-	
+
 	/**
 	 * Creation du panier
 	 * @param commande mon panier
