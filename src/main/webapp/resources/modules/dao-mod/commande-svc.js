@@ -57,11 +57,13 @@ eComBioApp.factory('commandeSvc', [ '$rootScope', 'restBackendSvc', '$window','p
 				});
 	}
 	
-	var getCommandesByDateLivraison = function(searchDateLivraison,page,tri) {
+	var getCommandesByDateLivraison = function(searchDateLivraison,searchEnt,searchDom,page,tri) {
 		var restAdress = "?";//"/filter?";
 		if (searchDateLivraison != '') {
 			restAdress += 'date=' + searchDateLivraison;
 		}
+		restAdress += '&ent=' + searchEnt;
+		restAdress += '&dom=' + searchDom;
 		restAdress += '&page=' + page;
 		//restAdress += '&tri=' + tri;
 		$rootScope.$broadcast('debug', restAdress);
