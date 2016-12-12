@@ -1,6 +1,6 @@
 eComBioApp.controller('ConnectCtrl', [ '$scope','$window','userInfoSvc', function($scope,$window,userInfoSvc) {
 	$scope.errorMessage='';
-	$scope.connectInfo={'usrmail':'dupont@gmail.com','psw':'xx'};
+	$scope.connectInfo={'usrmail':'biotobealive@gmail.com','psw':'xx'};
 	$scope.user = userInfoSvc.getUserInfoPrenom();
 	
 	$scope.isErrorMessage = function() {
@@ -27,7 +27,7 @@ eComBioApp.controller('ConnectCtrl', [ '$scope','$window','userInfoSvc', functio
 		$scope.errorMessage = "Identifiant et/ou mot de passe incorrect(s).";
 	});
 	
-	$scope.$on('userInfoProvided', function(event) {
+	$scope.$on('userConnectionChanged', function(event) {
 		$scope.user = userInfoSvc.getUserInfoPrenom();
 	});
 	

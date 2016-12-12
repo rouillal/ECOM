@@ -48,7 +48,7 @@ public class Produit implements Serializable {
 	 * Association de saisons
 	 * @see ProduitSaison
 	 */
-	@OneToMany(fetch = FetchType.LAZY, mappedBy="produits")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL ,mappedBy="produits")
 	@JsonBackReference
     private Set<ProduitSaison> saisons;
 	
@@ -83,6 +83,45 @@ public class Produit implements Serializable {
 		this.filename = filename;
 		this.provenance = provenance;
 		this.dateCueillette = dateCueillette;
+	}
+
+	/**
+	 * @param categorie
+	 * @param saisons
+	 * @param name
+	 * @param variete
+	 * @param unite
+	 * @param quantite
+	 * @param stock
+	 * @param prix
+	 * @param filename
+	 * @param provenance
+	 * @param dateCueillette
+	 * @param dureeConservation
+	 * @param calories
+	 * @param glucides
+	 * @param fibres
+	 * @param proteines
+	 */
+	public Produit(Categorie categorie, String name, String variete, String unite,
+			int quantite, int stock, float prix, String filename, String provenance, String dateCueillette,
+			int dureeConservation, int calories, int glucides, int fibres, int proteines) {
+		super();
+		this.categorie = categorie;
+		this.name = name;
+		this.variete = variete;
+		this.unite = unite;
+		this.quantite = quantite;
+		this.stock = stock;
+		this.prix = prix;
+		this.filename = filename;
+		this.provenance = provenance;
+		this.dateCueillette = dateCueillette;
+		this.dureeConservation = dureeConservation;
+		this.calories = calories;
+		this.glucides = glucides;
+		this.fibres = fibres;
+		this.proteines = proteines;
 	}
 
 	/**
@@ -424,6 +463,57 @@ public class Produit implements Serializable {
 	 */
 	public void setProteines(int proteines) {
 		this.proteines = proteines;
+	}
+
+	/**
+	 * Mise a jour d'un produit
+	 * @param p nouveau produit
+	 * 
+	 * @see GestionProduit
+	 */
+	public void modifyProduit(GestionProduit p) {
+		if (this.calories != p.getCalories()) {
+			this.calories = p.getCalories();
+		}
+		if (!this.dateCueillette.equals(this.getDateCueillette())) {
+			this.dateCueillette = this.getDateCueillette();
+		}
+		if (this.dureeConservation != p.getDureeConservation()) {
+			this.dureeConservation = p.getDureeConservation();
+		}
+		if (this.fibres != p.getFibres()) {
+			this.fibres = p.getFibres();
+		}
+		if (!this.filename.equals(p.getFilename())) {
+			this.filename = p.getFilename();
+		}
+		if (this.glucides != p.getGlucides()) {
+			this.glucides = p.getGlucides();
+		}
+		if (!this.name.equals(p.getName())) {
+			this.name = p.getName();
+		}
+		if (this.prix != p.getPrix()) {
+			this.prix = p.getPrix();
+		}
+		if (this.proteines != p.getProteines()) {
+			this.proteines = p.getProteines();
+		}
+		if (!this.provenance.equals(p.getProvenance())) {
+			this.provenance = p.getProvenance();
+		}
+		if (this.quantite != p.getQuantite()) {
+			this.quantite = p.getQuantite();
+		}
+		if (this.stock != p.getStock()) {
+			this.stock = p.getStock();
+		}
+		if (!this.unite.equals(p.getUnite())) {
+			this.unite = p.getUnite();
+		}
+		if (!this.variete.equals(p.getVariete())) {
+			this.variete = p.getVariete();
+		}
 	}
 
 }
