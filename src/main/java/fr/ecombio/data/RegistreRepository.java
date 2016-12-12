@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import fr.ecombio.model.Article;
 import fr.ecombio.model.Client;
 import fr.ecombio.model.HistoriqueCommande;
 import fr.ecombio.model.MyCryptoConverter;
@@ -145,6 +146,10 @@ public class RegistreRepository {
 		log.log(Level.INFO,"save panier");
 		em.persist(nouveauPanier);
 		em.remove(ancienPanier);
+		for (Article a : nouveauPanier.getArticles()) {
+			a.setPanier(nouveauPanier);
+			em.merge(a);
+		}
 		log.log(Level.INFO,"ok");
 
 		HistoriqueCommande com = new HistoriqueCommande();

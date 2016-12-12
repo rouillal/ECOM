@@ -43,7 +43,7 @@ public class Panier implements Serializable {
 	 * liste d'articles contenus
 	 * @see Article
 	 */
-	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.REMOVE, mappedBy="panier")
+	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.MERGE, mappedBy="panier")
 	@JsonBackReference
     @Column(name = "panier_articles")
 	private Set<Article> articles;

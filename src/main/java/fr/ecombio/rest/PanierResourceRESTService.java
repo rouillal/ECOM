@@ -88,6 +88,7 @@ public class PanierResourceRESTService {
 		Panier p = PanierRepository.findById(id);
 		List<InfosArticle> retour = new LinkedList<InfosArticle>();
 		if (p != null) {
+			this.log.info(p.toString());
 			for (Article a : p.getArticles()) {
 				retour.add(new InfosArticle(a.getProduit().getName(), a.getProduit().getVariete(), a.getProduit().getQuantite(), a.getQuotite(),  a.getProduit().getUnite()));
 			}
