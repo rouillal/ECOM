@@ -15,10 +15,6 @@ eComBioApp.controller('CommandeCreaCtrl', [ '$scope', '$location','$window','com
 		return $scope.erreurPaiement != '';
 	}
 	
-	$scope.isLoading = function() {
-		return $scope.load == true;
-	}
-	
 	//Liste des horaires
 	$scope.listeHoraires=[];
 	for (i = 0; i < 12; i++) {
