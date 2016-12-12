@@ -41,6 +41,7 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','c
 		restBackendSvc.getItemsByUrl(restAdress).then(function(data) {
 			userInfo = data.data;
 			commandeSvc.setCommandInfo(userInfo);
+			$rootScope.$broadcast('userConnectionChanged');
 			$("#myModalConnect").modal('hide');
 			$rootScope.$broadcast('userInfoProvided');
 		}, function(error) {
@@ -55,11 +56,11 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','c
 	};
 	
 	var isAdmin = function() {
-		return true;
+		return userInfo.nom=='Dupont';
 	};
 	
-	var isGestio = function() {
-		return true;
+	var isGestion = function() {
+		return userInfo.nom=='Dupont';
 	};
 
 	return {
@@ -68,6 +69,6 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','c
 		retrieveUserInfo : retrieveUserInfo,
 		getUserInfoPrenom : getUserInfoPrenom,
 		isAdmin : isAdmin,
-		isGestio : isGestio
+		isGestion : isGestion
 	};
 } ]);
