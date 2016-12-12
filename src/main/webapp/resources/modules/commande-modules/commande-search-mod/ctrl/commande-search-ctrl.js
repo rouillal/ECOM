@@ -1,10 +1,24 @@
 eComBioApp.controller('CommandeSearchCtrl', [ '$scope','$window','commandeSearchSvc',function($scope,$window,commandeSearchSvc) {
 	$scope.searchCommandeDate = commandeSearchSvc.getDateLivraison();
+	$scope.searchEnt = commandeSearchSvc.getSearchEnt();
+	$scope.searchDom = commandeSearchSvc.getSearchDom();
 	$scope.debug = 'Url2 Rest Search à venir';
 	
 	$scope.searchCommandeByDate  = function() {
 		commandeSearchSvc.changeDateLivraison($scope.searchCommandeDate);
 	}
+	
+	$scope.$watch('searchCommandeDate', function() {
+		commandeSearchSvc.changeDateLivraison($scope.searchCommandeDate);
+	});
+	
+	$scope.$watch('searchEnt', function() {
+		commandeSearchSvc.changeSearchEnt($scope.searchEnt);
+	});
+	
+	$scope.$watch('searchDom', function() {
+		commandeSearchSvc.changeSearchDom($scope.searchDom);
+	});
 	
 	/*$scope.$on('listCategoriesCritSupplied', function(event) {
 		$scope.listCategories = searchCommandeSvc.getListCategories();

@@ -18,9 +18,9 @@ eComBioApp.controller('ConnectCtrl', [ '$scope','$window','userInfoSvc', functio
 	    $("#myBtnConnexion").click(function(){
 	        $("#myModalConnect").modal();
 	    });
-	    //$("#myBtnSignin").click(function(){
-	      //  $("#myModalConnect").modal('hide');
-	    //});
+	    $("#myBtnSignin").click(function(){
+	       $("#myModalConnect").modal('hide');
+	    });
 	});
 	
 	$scope.$on('userNotFound', function(event) {
