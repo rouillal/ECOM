@@ -1,6 +1,6 @@
 eComBioApp.controller('ConnectCtrl', [ '$scope','$window','userInfoSvc', function($scope,$window,userInfoSvc) {
 	$scope.errorMessage='';
-	$scope.connectInfo={'usrmail':'dupont@gmail.com','psw':'xx'};
+	$scope.connectInfo={'usrmail':'biotobealive@gmail.com','psw':'xx'};
 	$scope.user = userInfoSvc.getUserInfoPrenom();
 	
 	$scope.isErrorMessage = function() {
