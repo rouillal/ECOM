@@ -31,6 +31,30 @@ public InfosArticle(String name, String variete, int quantite, int quotite, Stri
 	this.unite = unite;
 }
 /**
+ * @return the quotite
+ */
+public int getQuotite() {
+	return quotite;
+}
+/**
+ * @param quotite the quotite to set
+ */
+public void setQuotite(int quotite) {
+	this.quotite = quotite;
+}
+/**
+ * @return the unite
+ */
+public String getUnite() {
+	return unite;
+}
+/**
+ * @param unite the unite to set
+ */
+public void setUnite(String unite) {
+	this.unite = unite;
+}
+/**
  * 
  */
 public InfosArticle() {
