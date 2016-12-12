@@ -50,7 +50,6 @@ eComBioApp.controller('CommandeAdminCtrl', [
 
 			$scope.$on('userConnectionChanged', function(event,
 					listCommandesReceived) {
-				$window.alert('ff');
 				$scope.isGestion = userInfoSvc.isGestion();
 				$scope.isAdmin = userInfoSvc.isAdmin();
 			});

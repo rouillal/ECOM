@@ -57,13 +57,21 @@ eComBioApp.factory('commandeSvc', [ '$rootScope', 'restBackendSvc', '$window','p
 				});
 	}
 	
+	var boolToInt = function(boolCond) {
+		var ret=1;
+		if (!boolCond) {
+			ret=0;
+		}
+		return ret;
+	}
+	
 	var getCommandesByDateLivraison = function(searchDateLivraison,searchEnt,searchDom,page,tri) {
 		var restAdress = "?";//"/filter?";
 		if (searchDateLivraison != '') {
 			restAdress += 'date=' + searchDateLivraison;
 		}
-		restAdress += '&ent=' + searchEnt;
-		restAdress += '&dom=' + searchDom;
+		restAdress += '&ent=' + boolToInt(searchEnt);
+		restAdress += '&dom=' + boolToInt(searchDom);
 		restAdress += '&page=' + page;
 		//restAdress += '&tri=' + tri;
 		$rootScope.$broadcast('debug', restAdress);
@@ -71,12 +79,19 @@ eComBioApp.factory('commandeSvc', [ '$rootScope', 'restBackendSvc', '$window','p
 			var listCommandes = data.data;
 			$rootScope.$broadcast('listCommandesSupplied',listCommandes);
 		}, function(reason) {
-			$rootScope.$broadcast('debug', reason);
 			if (reason.status == 404) {
 				$rootScope.$broadcast('listCommandesSupplied', '');
 			} else {
+				$rootScope.$broadcast('debug', reason);
 				alert('Failed: ' + reason);
 			}
+		});
+		restBackendSvc.getItemsByUrl('admin/commande/page'+restAdress).then(function(data) {
+			var pageMax = data.data;
+			$rootScope.$broadcast('pageMaxCommandeReset',pageMax);
+		}, function(reason) {
+			$rootScope.$broadcast('debug', reason);
+			alert('Failed: ' + reason);
 		});
 	}
 	
@@ -87,17 +102,16 @@ eComBioApp.factory('commandeSvc', [ '$rootScope', 'restBackendSvc', '$window','p
 	
 	var changeLivraisonStatut= function(commandeChanged) {
 		//var infoJson = angular.toJson(commandeChanged);
-		var restAdress = "admin/commande?livree="+commandeChanged.delivred;
+		var restAdress = "admin/commande?livree="+boolToInt(commandeChanged.delivred);
 		restAdress += '&id=' + commandeChanged.id;
 		$rootScope.$broadcast('debug', restAdress);
 		restBackendSvc.updateItem(restAdress,commandeChanged).then(function(data) {
-			//$rootScope.$broadcast('listCommandesSupplied',listCommandes);
-			$window.alert('modif livree MAJ serveur');
+			
 		}, function(reason) {
-			$rootScope.$broadcast('debug', reason);
 			if (reason.status == 404) {
 				$rootScope.$broadcast('listCommandesSupplied', '');
 			} else {
+				$rootScope.$broadcast('debug', reason);
 				alert('Failed: ' + reason);
 			}
 		});
