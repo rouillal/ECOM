@@ -152,6 +152,7 @@ public class RegistreRepository {
 		com.setHeure(infos.getCommandInfo().getHeure());
 		com.setClient(client);
 		com.setPanier(nouveauPanier);
+		com.setLivDom(infos.getCommandInfo().getLivDom());
 		em.persist(com);
 	}
 }

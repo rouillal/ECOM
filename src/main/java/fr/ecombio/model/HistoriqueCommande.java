@@ -66,6 +66,25 @@ public class HistoriqueCommande implements Serializable {
 	 * heure de la commande
 	 */
 	private String heure;
+	
+	/**
+	 * adresse de livraison
+	 */
+	private String livDom;
+
+	/**
+	 * @return the livDom
+	 */
+	public String getLivDom() {
+		return livDom;
+	}
+
+	/**
+	 * @param livDom the livDom to set
+	 */
+	public void setLivDom(String livDom) {
+		this.livDom = livDom;
+	}
 
 	/**
 	 * @return the id
