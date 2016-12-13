@@ -1,5 +1,5 @@
-eComBioApp.controller('ProduitAdminCtrl', [ '$scope', '$location','$window','userInfoSvc','productSvc',
-		function($scope, $location,$window,userInfoSvc,productSvc) {
+eComBioApp.controller('ProduitAdminCtrl', [ '$scope', '$location','$window','$timeout','userInfoSvc','productSvc',
+		function($scope, $location,$window,$timeout,userInfoSvc,productSvc) {
 	
 	$scope.visuMode='N';
 	$scope.messageInfo="";
@@ -64,13 +64,16 @@ eComBioApp.controller('ProduitAdminCtrl', [ '$scope', '$location','$window','use
 	
 	$scope.$on('createProduitOk', function(event) {
 		$scope.messageInfo="Produit créé avec succès !";
+		$timeout(function(){$scope.messageInfo = ''}, 5000);  
 	});
 	
 	$scope.$on('updateProduitOk', function(event) {
 		$scope.messageInfo="Produit modifié avec succès !";
+		$timeout(function(){$scope.messageInfo = ''}, 5000);  
 	});
 	
 	$scope.$on('updateStockOk', function(event) {
 		$scope.messageInfo="Stock du produit modifié avec succès !";
+		$timeout(function(){$scope.messageInfo = ''}, 5000);  
 	});
 } ]);
