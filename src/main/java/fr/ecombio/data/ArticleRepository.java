@@ -63,7 +63,6 @@ public class ArticleRepository {
 	 * @param article Article a faire mettre a jour
 	 */
 	public void updateArticle(Article article) {
-		ProduitRepository.updateProduit(article.getProduit());
 		em.merge(article);
 	}
 
