@@ -32,8 +32,7 @@ eComBioApp.controller('ProduitCatalogCtrl', [
 				$scope.listProduits = listProductsReceived;
 			});
 			
-			$scope.$on('userConnectionChanged', function(event,
-					listCommandesReceived) {
+			$scope.$on('userConnectionChanged', function(event) {
 				$scope.isGestion = userInfoSvc.isGestion();
 				$scope.isAdmin = userInfoSvc.isAdmin();
 			});

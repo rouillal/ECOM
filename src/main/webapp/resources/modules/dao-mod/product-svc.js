@@ -6,7 +6,7 @@ eComBioApp.factory('productSvc', [
 		function($rootScope, restBackendSvc, $window,imgProviderSvc) {
 			
 			var getEmptyItem = function() {
-				var emptyItem = {"categorie":{"id":1,"name":"Fruits"},"name":'O',"variete":'',"unite":'',"quantite":0,"stock":0,"prix":0.0,"filename":'',"provenance":'',"dateCueillette":'',"dureeConservation":0,"calories":0,"glucides":9,"fibres":2,"proteines":1};
+				var emptyItem = {"categorie":{"id":1,"name":"Fruits"},"name":'',"variete":'',"unite":'',"quantite":0,"stock":0,"prix":0.0,"filename":'',"provenance":'',"dateCueillette":'',"dureeConservation":0,"calories":0,"glucides":0,"fibres":0,"proteines":0};
 				return emptyItem;
 			}
 			
