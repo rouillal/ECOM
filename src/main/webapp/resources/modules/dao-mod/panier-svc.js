@@ -12,14 +12,11 @@ eComBioApp.factory('panierSvc', [
 			
 			var recalculPanier = function() {
 				montantTotal = 0.00;
-				//var listPanierCommandeJson = angular.toJson(listePanier);
-				//$window.alert('restaurPanier'+listPanierCommandeJson);
 				angular.forEach(listePanier, function(ligneArticle, key) {
 					ligneArticle['prixTotal'] = Math.round(ligneArticle.quotite * ligneArticle.prix*100)/100;
 					montantTotal += ligneArticle.prixTotal;
 				});
-				//var listPanierCommandeJson2 = angular.toJson(listePanier);
-				//$window.alert('restaurPanier MAJ prix'+listPanierCommandeJson2);
+				$rootScope.$broadcast('rafraichirPanier',listePanier,montantTotal);
 			}
 			
 			var resetPanierDapresServeur = function() {
@@ -28,7 +25,7 @@ eComBioApp.factory('panierSvc', [
 				montantTotal = 0.00;
 				idPanierServer = -1;
 				cookieStoreSvc.storeLocalString('idPanierServer',idPanierServer);
-				$rootScope.$broadcast('rafraichirPanier');
+				$rootScope.$broadcast('rafraichirPanier',listePanier,montantTotal);
 			};
 			
 			var restaurPanierInit = function() {
@@ -37,27 +34,31 @@ eComBioApp.factory('panierSvc', [
 				idPanierServer = cookieStoreSvc.getStoredLocalString('idPanierServer');
 				if (idPanierServer.length>0) {
 					var urlPanierRestau = 'panier?id='+idPanierServer;
-					$window.alert('RRR0_'+urlPanierRestau);
 					restBackendSvc.getItemsByUrl(urlPanierRestau).then(function(data) {
 						listePanier = data.data;
 						recalculPanier();
-						$rootScope.$broadcast('rafraichirPanier');
 					}, function(reason) {
 						if (reason.status == 404) {
 							alert('Reset -> rien');
 							resetPanierDapresServeur();
-							$rootScope.$broadcast('rafraichirPanier', '');
 						} else {
 							$rootScope.$broadcast('debug', reason);
 						}
 					});
 				} else {
-					$window.alert('RRR1_'+urlPanierRestau);
 					resetPanierDapresServeur();
 				}
 			};
 			
 			restaurPanierInit();
+			
+			var addProduitNew = function(produitAjouter,quantite) {
+				var ligneTmp = produitAjouter;
+				ligneTmp['quotite'] = quantite;
+				var price = quantite * produitAjouter.prix;
+				ligneTmp['prixTotal'] = price;
+				listePanier.push(ligneTmp);
+			}
 			
 			var setSelectedProduit = function(newSelectedProduit) {
 				selectedProduit = newSelectedProduit;
@@ -119,11 +120,7 @@ eComBioApp.factory('panierSvc', [
 					if (ligne == '') {
 						// Le produit à changer n'a pas été trouvé dans la
 						// liste, il faut le créer
-						var ligneTmp = produitAChanger;
-						ligneTmp['quotite'] = quantite;
-						var price = quantite * produitAChanger.prix;
-						ligneTmp['prixTotal'] = price;
-						listePanier.push(ligneTmp);
+						addProduitNew(produitAChanger,quantite);
 					}
 					recalculPanier();
 				}
@@ -150,13 +147,16 @@ eComBioApp.factory('panierSvc', [
 								}
 								montantTotal += ligneArticle.prixTotal;
 							});
-							$rootScope.$broadcast('rafraichirPanier');
+							$rootScope.$broadcast('rafraichirPanier',listePanier,montantTotal);
 							$rootScope.$broadcast('StockInsuffisant');
 							$rootScope.$broadcast('anomalieTechnique', "Plus de stock");
-							//$window.alert("Votre produit n'est plus en stock");
 						} else if (error.status == 404) {
-							$rootScope.$broadcast('anomalieTechnique', "Votre panier a été supprimé, temps d'inactivité trop long - Recréation - "+errorJson);
-							$window.alert("Votre panier a été supprimé, temps d'inactivité trop long - Recréation - "+errorJson);
+							resetPanierDapresServeur();
+							//$rootScope.$broadcast('anomalieTechnique', "Votre panier a été supprimé, temps d'inactivité trop long - Recréation - "+errorJson);
+							$window.alert("Votre panier a été supprimé, temps d'inactivité trop long - Recréation - ");
+							resetPanierDapresServeur();
+							addProduitNew(produitAChanger,1);
+							panierJson = prepareMessageServeur();
 							restBackendSvc.createItem('panier', panierJson).then(
 									function(data) {
 										idPanierServer = data.data;
@@ -164,6 +164,17 @@ eComBioApp.factory('panierSvc', [
 										$window.alert("Panier créé à nouveau !");
 									});
 						} else {
+							montantTotal = 0;
+							angular.forEach(listePanier, function(ligneArticle, key) {
+								if (produitAChanger.id == ligneArticle.id) {
+									ligneArticle.quotite = quantite-1;
+									ligneArticle.prixTotal = Math.round((quantite-1) * ligneArticle.prix*100)/100;
+									ligne = ligneArticle;
+								}
+								montantTotal += ligneArticle.prixTotal;
+							});
+							$window.alert("Rollback suite anomalie serveur");
+							$rootScope.$broadcast('rafraichirPanier',listePanier,montantTotal);
 							$rootScope.$broadcast('anomalieTechnique', errorJson);
 							$window.alert('Error : '+errorJson);
 						}
@@ -171,7 +182,7 @@ eComBioApp.factory('panierSvc', [
 				}
 				$rootScope.$broadcast('selectedProduitChange', produitAChanger,
 						quantite);
-				$rootScope.$broadcast('rafraichirPanier');
+				$rootScope.$broadcast('rafraichirPanier',listePanier,montantTotal);
 			};
 			
 			var supprimeArticlePanier = function(ligne) {
@@ -184,7 +195,7 @@ eComBioApp.factory('panierSvc', [
 						montantTotal += ligneArticle.prixTotal;
 					}
 				});
-				$rootScope.$broadcast('rafraichirPanier');
+				$rootScope.$broadcast('rafraichirPanier',listePanier,montantTotal);
 			};
 			
 			var getIdPanierServer = function() {
