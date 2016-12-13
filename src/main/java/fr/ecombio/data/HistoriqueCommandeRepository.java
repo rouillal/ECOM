@@ -2,6 +2,7 @@ package fr.ecombio.data;
 
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -10,9 +11,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import fr.ecombio.model.Categorie;
 import fr.ecombio.model.HistoriqueCommande;
-import fr.ecombio.model.Produit;
 
 /**
  * <p>
@@ -27,6 +26,7 @@ import fr.ecombio.model.Produit;
  * @see HistoriqueCommande
  *
  */
+@Stateless
 public class HistoriqueCommandeRepository {
 
 	/**
@@ -62,15 +62,15 @@ public class HistoriqueCommandeRepository {
 
 		Predicate predicate = cb.equal(HistoriqueCommande.get("date"), date) ;
 		Predicate p2 = null;
-		boolean b = true;
+		boolean efalse = true;
 		if (e) {
 			p2 = cb.equal(HistoriqueCommande.get("livDom"), "e");
-			b = false;
+			efalse = false;
 		} else {
 			p2 = cb.equal(HistoriqueCommande.get("livDom"), "x");
 		}
 		if (d) {
-			if (b) {
+			if (efalse) {
 				p2 = cb.equal(HistoriqueCommande.get("livDom"), "d");
 			} else {
 				p2 = cb.or(p2, cb.equal(HistoriqueCommande.get("livDom"), "d"));
@@ -119,7 +119,7 @@ public class HistoriqueCommandeRepository {
 			predicate = cb.and(predicate,p2);
 		}
 		criteria.where(predicate);
-		return (long) (Math.ceil((float)em.createQuery(criteria).getSingleResult()/6)) ;
+		return (long) (Math.ceil((float)em.createQuery(criteria).getSingleResult()/2)) ;
 	}
 	/**
 	 * Mise a jour de l'etat d'une commande
@@ -128,8 +128,10 @@ public class HistoriqueCommandeRepository {
 	 */
 	public void setCommandeDelivred(boolean isDelivred, Long id) {
 		HistoriqueCommande commande = this.findById(id);
-		commande.setDelivred(isDelivred);
-		em.merge(commande);
+		if(commande != null){
+			commande.setDelivred(isDelivred);
+			em.merge(commande);
+		}
 	}
 
 }

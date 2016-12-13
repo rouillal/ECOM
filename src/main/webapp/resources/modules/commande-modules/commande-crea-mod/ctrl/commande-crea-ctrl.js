@@ -5,13 +5,20 @@ eComBioApp.controller('CommandeCreaCtrl', [ '$scope', '$location','$window','com
 	$scope.payerInfoVoir = false;
 	$scope.seeCalend = false;
 	$scope.recapInfoVoir = false;
+	$scope.load = false;
 	$scope.erreurPaiement='';
 	$scope.montantTotal = panierSvc.getMontantTotal();
 	var date = new Date();
-	$scope.FormDate = ('0' + date.getDate()).slice(-2) + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
+	$scope.dateOk = true;
+	$scope.FormDate = ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();
+	$scope.dateLendemain = ('0' + (date.getDate()+1)).slice(-2) + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();
 	
 	$scope.isErrorMessage = function() {
 		return $scope.erreurPaiement != '';
+	}
+	
+	$scope.isErrorDate = function() {
+		return $scope.dateOk != true;
 	}
 	
 	//Liste des horaires
@@ -82,6 +89,7 @@ eComBioApp.controller('CommandeCreaCtrl', [ '$scope', '$location','$window','com
 	
 	$scope.validationCmd = function(){
 		commandeSvc.validePaiement();
+		$scope.load=true;
 	}
 	
 	$scope.seeCalendar = function(){
@@ -90,6 +98,22 @@ eComBioApp.controller('CommandeCreaCtrl', [ '$scope', '$location','$window','com
 	
 	$scope.hideCalendar = function(){
 		$scope.seeCalend = false;
+		var dateEnter = ($scope.commandInfo.date).split('/');
+		var dateCur = $scope.FormDate.split('/');
+		if (dateEnter[2]>=dateCur[2]){
+			if (dateEnter[1]>=dateCur[1]){
+				if(dateEnter[0]>dateCur[0]){
+					$scope.dateOk = true;
+				}
+				else 
+					$scope.dateOk = false;
+			}
+			else
+				$scope.dateOk = false;
+		}
+		else
+			$scope.dateOk = false;
+		//$window.alert($scope.FormDate);
 	}
 	
 	$scope.$on('errorDateExpi', function(event) {
@@ -111,6 +135,7 @@ eComBioApp.controller('CommandeCreaCtrl', [ '$scope', '$location','$window','com
 		$scope.recapInfoVoir = false;
 		$scope.payerInfoVoir = true;
 		$scope.erreurPaiement=message;
+		$scope.load=false;
 	});
 	
 	$(window).ready(function(){

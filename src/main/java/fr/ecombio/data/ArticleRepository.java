@@ -5,7 +5,6 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import fr.ecombio.model.Article;
-import fr.ecombio.model.Categorie;
 
 
 /**
@@ -64,7 +63,11 @@ public class ArticleRepository {
 	 * @param article Article a faire mettre a jour
 	 */
 	public void updateArticle(Article article) {
-		ProduitRepository.updateProduit(article.getProduit());
 		em.merge(article);
+	}
+
+
+	public void SupprimeArticle(Article a) {
+		em.remove(em.find(Article.class, a.getId()));
 	}
 }

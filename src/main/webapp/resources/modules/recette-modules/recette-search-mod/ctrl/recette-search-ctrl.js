@@ -8,7 +8,7 @@ eComBioApp.controller('RecetteSearchCtrl', [ '$scope','$window','recetteSearchSv
 	$scope.listCompositionChoix=recetteSearchSvc.getListCompositionChoix();
 	
 	$scope.searchRecetteString = recetteSearchSvc.getSearchRecetteString();
-	$scope.debug = 'Url Rest Search à venir';
+	$scope.debug = '';
 	
 	$scope.changeCategorieRecette = function() {
 		recetteSearchSvc.changeListCategoriesRecetteChoix($scope.listCategoriesRecetteChoix);
@@ -42,6 +42,6 @@ eComBioApp.controller('RecetteSearchCtrl', [ '$scope','$window','recetteSearchSv
 	});
 	
 	$scope.$on('debug', function(event,message) {
-		$scope.debug = message;
+		//$scope.debug = message;
 	});
 } ]);

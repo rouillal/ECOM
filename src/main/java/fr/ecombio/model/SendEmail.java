@@ -1,24 +1,15 @@
 package fr.ecombio.model;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
-import javax.mail.BodyPart;
 import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.*;
-
-import com.itextpdf.text.DocumentException;
-
-import javax.inject.Inject;
-import javax.jws.WebMethod;
-import javax.jws.WebService;
 
 import fr.ecombio.data.PanierRepository;
 

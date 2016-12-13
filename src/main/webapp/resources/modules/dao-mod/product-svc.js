@@ -41,7 +41,6 @@ eComBioApp.factory('productSvc', [
 				
 				restAdress += 'page=' + page;
 				restAdress += '&tri=' + tri;
-				$rootScope.$broadcast('debug', restAdress);
 				restBackendSvc.getItemsByUrl('produit'+restAdress).then(function(data) {
 					var listProduit = data.data;
 					angular.forEach(listProduit, function(produit, key) {
@@ -51,27 +50,23 @@ eComBioApp.factory('productSvc', [
 					});
 					$rootScope.$broadcast('listProductsSupplied',listProduit);
 				}, function(reason) {
-					$rootScope.$broadcast('debug', reason);
 					if (reason.status == 404) {
 						$rootScope.$broadcast('listProductsSupplied', '');
 					} else {
-						alert('Failed: ' + reason);
+						$rootScope.$broadcast('anomalieTechnique',reason);
 					}
 				});
 				restBackendSvc.getItemsByUrl('produit/page'+restAdress).then(function(data) {
 					var pageMax = data.data;
 					$rootScope.$broadcast('pageMaxProduitReset',pageMax);
 				}, function(reason) {
-					$rootScope.$broadcast('debug', reason);
-					alert('Failed: ' + reason);
+					$rootScope.$broadcast('anomalieTechnique',reason);
 				});
 			}
 
 			var createProduct = function(product) {
 				var messageServeurJson = angular.toJson(product);
-				//$window.alert('Create produit !'+messageServeurJson);
 				restBackendSvc.createItem('produit',messageServeurJson).then(function(data) {
-					//inform with message
 					$window.alert('Create produit ok');
 				});
 			}
@@ -99,7 +94,6 @@ eComBioApp.factory('productSvc', [
 				productServeur.fibres=productUpdatedParam.fibres;
 				productServeur.proteines=productUpdatedParam.proteines;
 				var messageServeurJson = angular.toJson(productServeur);
-				//$window.alert('Update produit !'+messageServeurJson);
 				restBackendSvc.updateItem('produit',messageServeurJson).then(function(data) {
 					//inform with message
 					$window.alert('Update produit ok');

@@ -41,20 +41,25 @@ eComBioApp.factory('commandeSvc', [ '$rootScope', 'restBackendSvc', '$window','p
 		messageServeur['commandInfo'] = commandInfo;
 		messageServeur['commandPaieInfo'] = commandPaieInfo;
 		var messageServeurJson = angular.toJson(messageServeur);
-		//$window.alert("messageServeurJson : "+messageServeurJson);
 		restBackendSvc.createItem('paiement', messageServeurJson).then(
 				function(data) {
-						panierSvc.resetPanier();
+						panierSvc.resetPanierDapresServeur();
 						$rootScope.$broadcast('recapAEditer');
 				}, function(error) {
 					if (error.status == 403) {
 						$rootScope.$broadcast('errorDateExpi');
 					} else {
-						/*var errorJson = angular.toJson(error);
-						$rootScope.$broadcast('anomalieTechnique', errorJson);
-						$window.alert('Failed: ' + errorJson);*/
+						$rootScope.$broadcast('anomalieTechnique', error);
 					}
 				});
+	}
+	
+	var boolToInt = function(boolCond) {
+		var ret=1;
+		if (!boolCond) {
+			ret=0;
+		}
+		return ret;
 	}
 	
 	var getCommandesByDateLivraison = function(searchDateLivraison,searchEnt,searchDom,page,tri) {
@@ -62,8 +67,8 @@ eComBioApp.factory('commandeSvc', [ '$rootScope', 'restBackendSvc', '$window','p
 		if (searchDateLivraison != '') {
 			restAdress += 'date=' + searchDateLivraison;
 		}
-		restAdress += '&ent=' + searchEnt;
-		restAdress += '&dom=' + searchDom;
+		restAdress += '&ent=' + boolToInt(searchEnt);
+		restAdress += '&dom=' + boolToInt(searchDom);
 		restAdress += '&page=' + page;
 		//restAdress += '&tri=' + tri;
 		$rootScope.$broadcast('debug', restAdress);
@@ -71,12 +76,17 @@ eComBioApp.factory('commandeSvc', [ '$rootScope', 'restBackendSvc', '$window','p
 			var listCommandes = data.data;
 			$rootScope.$broadcast('listCommandesSupplied',listCommandes);
 		}, function(reason) {
-			$rootScope.$broadcast('debug', reason);
 			if (reason.status == 404) {
 				$rootScope.$broadcast('listCommandesSupplied', '');
 			} else {
-				alert('Failed: ' + reason);
+				$rootScope.$broadcast('anomalieTechnique', reason);
 			}
+		});
+		restBackendSvc.getItemsByUrl('admin/commande/page'+restAdress).then(function(data) {
+			var pageMax = data.data;
+			$rootScope.$broadcast('pageMaxCommandeReset',pageMax);
+		}, function(reason) {
+			$rootScope.$broadcast('anomalieTechnique',reason);
 		});
 	}
 	
@@ -87,18 +97,16 @@ eComBioApp.factory('commandeSvc', [ '$rootScope', 'restBackendSvc', '$window','p
 	
 	var changeLivraisonStatut= function(commandeChanged) {
 		//var infoJson = angular.toJson(commandeChanged);
-		var restAdress = "admin/commande?livree="+commandeChanged.delivred;
+		var restAdress = "admin/commande?livree="+boolToInt(commandeChanged.delivred);
 		restAdress += '&id=' + commandeChanged.id;
 		$rootScope.$broadcast('debug', restAdress);
 		restBackendSvc.updateItem(restAdress,commandeChanged).then(function(data) {
-			//$rootScope.$broadcast('listCommandesSupplied',listCommandes);
-			$window.alert('modif livree MAJ serveur');
+			
 		}, function(reason) {
-			$rootScope.$broadcast('debug', reason);
 			if (reason.status == 404) {
 				$rootScope.$broadcast('listCommandesSupplied', '');
 			} else {
-				alert('Failed: ' + reason);
+				$rootScope.$broadcast('anomalieTechnique',reason);
 			}
 		});
 	}

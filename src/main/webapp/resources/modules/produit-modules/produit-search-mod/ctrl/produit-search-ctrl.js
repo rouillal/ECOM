@@ -2,7 +2,7 @@ eComBioApp.controller('SearchProductCtrl', [ '$scope','$window','searchProductSv
 	$scope.listCategories = searchProductSvc.getListCategories();
 	$scope.listCategoriesChoix=searchProductSvc.getListCategoriesChoix();
 	$scope.searchProductString = searchProductSvc.getSearchString();
-	$scope.debug = 'Url Rest Search à venir';
+	$scope.debug = '';
 	$scope.isSaison = searchProductSvc.getIsSaison();
 	
 	$scope.changeProductCatego = function() {
@@ -23,6 +23,6 @@ eComBioApp.controller('SearchProductCtrl', [ '$scope','$window','searchProductSv
 	});
 	
 	$scope.$on('debug', function(event,message) {
-		$scope.debug = message;
+		//$scope.debug = message;
 	});
 } ]);

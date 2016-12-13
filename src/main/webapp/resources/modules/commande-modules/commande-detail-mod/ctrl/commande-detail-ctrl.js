@@ -3,12 +3,17 @@ eComBioApp.controller('CommandeDetailCtrl', [
 		'$window',
 		'panierSvc',
 		function($scope, $window, panierSvc) {
-			$scope.listePanier = panierSvc.getListePanier();
+			$scope.listePanier = [];
 			$scope.selectedCommandeDetail = '';
 
 			$scope.$on('selectDetailsCommandeProvided', function(event,
 					newSelectedCommande) {
 				$scope.selectedCommandeDetail = newSelectedCommande;
+			});
+			
+			$scope.$on('listPanierCommandeSupplied', function(event,
+					listPanierCommande) {
+				$scope.listePanier = listPanierCommande;
 			});
 			
 			//Liste des horaires

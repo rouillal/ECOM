@@ -24,7 +24,7 @@ eComBioApp.controller('PanierCtrl', [ '$scope', '$location','$window','panierSvc
 			};
 
 			$scope.supprimeLigne = function(ligne) {
-				panierSvc.supprimeArticlePanier(ligne);
+				panierSvc.changeProduit(ligne,0);
 			};
 
 			$scope.isTotalAffiche = function() {
@@ -47,7 +47,7 @@ eComBioApp.controller('PanierCtrl', [ '$scope', '$location','$window','panierSvc
 				$location.path("commande");
 			}
 
-			$scope.$on('rafraichirPanier', function(event) {
+			$scope.$on('rafraichirPanier', function(event,listePanierParam,montantTotalParam) {
 				$scope.listePanier = panierSvc.getListePanier();
 				$scope.montantTotal = panierSvc.getMontantTotal();
 			});

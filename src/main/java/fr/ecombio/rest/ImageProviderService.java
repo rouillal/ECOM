@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletResponse;
         initParams =
         {
             @WebInitParam(name = "saveDir", value = "/home/im2ag/images/"),
-            @WebInitParam(name = "filenameParamName", value = "name")
         }
 )
 public class ImageProviderService extends HttpServlet implements ServletContextListener {

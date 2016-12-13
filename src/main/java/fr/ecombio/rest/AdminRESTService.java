@@ -14,9 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import fr.ecombio.data.StockManagerRepository;
-import fr.ecombio.model.CategorieRecette;
 import fr.ecombio.model.HistoriqueCommande;
-import fr.ecombio.data.CategorieRecetteRepository;
 import fr.ecombio.data.HistoriqueCommandeRepository;
 
 /**

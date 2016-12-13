@@ -13,22 +13,27 @@ import java.io.Serializable;
  */
 @SuppressWarnings("serial")
 public class InfosArticle implements Serializable {
+private Long id;
 private String name;
 private int quotite;
 private int quantite;
 private String unite;
+private float prix;
 
 
 /**
  * @param name
  * @param quantite
+ * @param id 
  */
-public InfosArticle(String name, String variete, int quantite, int quotite, String unite) {
+public InfosArticle(String name, String variete, int quantite, int quotite, String unite, float prix, Long id ) {
 	super();
 	this.name = name +" "+ variete;
 	this.quantite = quantite;
 	this.quotite = quotite;
 	this.unite = unite;
+	this.prix = prix;
+	this.id = id;
 }
 /**
  * @return the quotite
@@ -85,4 +90,29 @@ public void setQuantite(int quantite) {
 	this.quantite = quantite;
 }
 
+/**
+ * @return the prix
+ */
+public float getPrix() {
+	return prix;
+}
+/**
+ * @param prix the prix to set
+ */
+public void setPrix(float prix) {
+	this.prix = prix;
+}
+
+/**
+ * @return the id
+ */
+public Long getId() {
+	return id;
+}
+/**
+ * @param id the id to set
+ */
+public void setId(Long id) {
+	this.id = id;
+}
 }

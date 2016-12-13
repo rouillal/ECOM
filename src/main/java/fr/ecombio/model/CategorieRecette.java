@@ -1,8 +1,6 @@
 package fr.ecombio.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.*;

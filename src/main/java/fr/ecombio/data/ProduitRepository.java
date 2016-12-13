@@ -14,7 +14,6 @@ import fr.ecombio.model.Categorie;
 import fr.ecombio.model.GestionProduit;
 import fr.ecombio.model.Produit;
 import fr.ecombio.model.ProduitSaison;
-import fr.ecombio.model.Recette;
 import fr.ecombio.model.Saison;
 
 import java.util.Calendar;
@@ -22,7 +21,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 /**
  * <p>

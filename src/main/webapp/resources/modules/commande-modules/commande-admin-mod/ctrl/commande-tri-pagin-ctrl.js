@@ -1,16 +1,16 @@
 eComBioApp.controller('CommandeTriPaginCtrl', [
 		'$scope',
 		'$window',
-		'searchCommandeSvc',
-		function($scope, $window, searchCommandeSvc) {
+		'commandeSearchSvc',
+		function($scope, $window, commandeSearchSvc) {
 			$scope.pageMax=0;
-			$scope.listeTris = searchCommandeSvc.getlisteTris();
-			$scope.currentPage = searchCommandeSvc.getCurrentPage();
-			$scope.currentTri = searchCommandeSvc
+			$scope.listeTris = commandeSearchSvc.getlisteTris();
+			$scope.currentPage = commandeSearchSvc.getCurrentPage();
+			$scope.currentTri = commandeSearchSvc
 					.getCurrentTri();
 			
 			$scope.$watch('currentTri', function() {
-				searchCommandeSvc.setCurrentTri($scope.currentTri);
+				commandeSearchSvc.setCurrentTri($scope.currentTri);
 			});
 
 			$scope.isPagedownActive = function() {
@@ -18,12 +18,12 @@ eComBioApp.controller('CommandeTriPaginCtrl', [
 			};
 
 			$scope.pagedown = function() {
-				$scope.currentPage = searchCommandeSvc.pagedown();
+				$scope.currentPage = commandeSearchSvc.pagedown();
 			};
 
 			$scope.pageup = function() {
 				if($scope.currentPage < ($scope.pageMax-1)){
-					$scope.currentPage = searchCommandeSvc.pageup();
+					$scope.currentPage = commandeSearchSvc.pageup();
 				}
 			};
 			
