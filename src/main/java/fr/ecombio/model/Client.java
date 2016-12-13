@@ -78,6 +78,7 @@ public class Client implements Serializable {
 	 * <li>c: client lambda</li>
 	 * </ul>
 	 */
+	@Column(name = "client_type")
 	private String typeClient = "c";
 
 	/**

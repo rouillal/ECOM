@@ -5,10 +5,47 @@ eComBioApp.factory('panierSvc', [
 		'cookieStoreSvc',
 		'imgProviderSvc',
 		function($rootScope, restBackendSvc, $window,cookieStoreSvc,imgProviderSvc) {
-			var listePanier = cookieStoreSvc.getStoredLocalItem('panier');
+			var listePanier = [];// cookieStoreSvc.getStoredLocalItem('panier');
 			var selectedProduit = '';
-			var montantTotal = cookieStoreSvc.getStoredLocalString('montantTotal');
+			var montantTotal = 0;// cookieStoreSvc.getStoredLocalString('montantTotal');
 			var idPanierServer = cookieStoreSvc.getStoredLocalString('idPanierServer');
+			
+			var recalculPanier = function() {
+				montantTotal = 0.00;
+				var listPanierCommandeJson = angular.toJson(listePanier);
+				$window.alert('restaurPanier'+listPanierCommandeJson);
+				angular.forEach(listePanier, function(ligneArticle, key) {
+					ligneArticle['prixTotal'] = Math.round(ligneArticle.quotite * ligneArticle.prix*100)/100;
+					montantTotal += ligneArticle.prixTotal;
+				});
+				var listPanierCommandeJson2 = angular.toJson(listePanier);
+				$window.alert('restaurPanier MAJ prix'+listPanierCommandeJson2);
+			}
+			
+			var restaurPanierInit = function(idPanierServer) {
+				listePanier = [];
+				selectedProduit = '';
+				montantTotal = 0.00;
+				var urlPanierRestau = 'panier?id='+idPanierServer;
+				//$window.alert('RRR0_'+urlPanierRestau);
+				restBackendSvc.getItemsByUrl(urlPanierRestau).then(function(data) {
+					listePanier = data.data;
+					recalculPanier();
+					$rootScope.$broadcast('rafraichirPanier');
+				}, function(reason) {
+					$rootScope.$broadcast('debug', reason);
+					if (reason.status == 404) {
+						$rootScope.$broadcast('rafraichirPanier', '');
+					} else {
+						alert('Failed: ' + reason);
+					}
+				});
+			};
+			
+			if (idPanierServer.length>0) {
+				restaurPanierInit(idPanierServer);
+			}
+				
 			if (idPanierServer=='') {
 				idPanierServer=-1;
 			}
@@ -46,20 +83,6 @@ eComBioApp.factory('panierSvc', [
 				});
 			};
 
-			var supprimeArticlePanier = function(ligne) {
-				montantTotal = 0.00;
-				angular.forEach(listePanier, function(ligneArticle, key) {
-					if (ligneArticle.id == ligne.id) {
-						listePanier.splice(key, 1);
-					} else {
-						montantTotal += ligneArticle.prixTotal;
-					}
-				});
-				cookieStoreSvc.storeLocalItem('panier',listePanier);
-				cookieStoreSvc.storeLocalString('montantTotal',montantTotal);
-				$rootScope.$broadcast('rafraichirPanier');
-			};
-			
 			var prepareMessageServeur = function() {
 				var listePanierServeur = [];
 				angular.forEach(listePanier, function(ligneArticle, key) {
@@ -77,25 +100,23 @@ eComBioApp.factory('panierSvc', [
 					supprimeArticlePanier(produitAChanger);
 				} else {
 					var ligne = '';
-					montantTotal = 0.00;
 					angular.forEach(listePanier, function(ligneArticle, key) {
 						if (produitAChanger.id == ligneArticle.id) {
 							ligneArticle.quotite = quantite;
-							ligneArticle.prixTotal = Math.round(quantite * ligneArticle.prix*100)/100;
 							ligne = ligneArticle;
 						}
-						montantTotal += ligneArticle.prixTotal;
 					});
 					var infoJson = angular.toJson(produitAChanger);
 					if (ligne == '') {
-						//Le produit à changer n'a pas été trouvé dans la liste, il faut le créer
+						// Le produit à changer n'a pas été trouvé dans la
+						// liste, il faut le créer
 						var ligneTmp = produitAChanger;
 						ligneTmp['quotite'] = quantite;
 						var price = quantite * produitAChanger.prix;
 						ligneTmp['prixTotal'] = price;
 						listePanier.push(ligneTmp);
-						montantTotal += price;
 					}
+					recalculPanier();
 				}
 				cookieStoreSvc.storeLocalItem('panier',listePanier);
 				cookieStoreSvc.storeLocalString('montantTotal',montantTotal);
@@ -143,6 +164,21 @@ eComBioApp.factory('panierSvc', [
 				}
 				$rootScope.$broadcast('selectedProduitChange', produitAChanger,
 						quantite);
+				$rootScope.$broadcast('rafraichirPanier');
+			};
+			
+			var supprimeArticlePanier = function(ligne) {
+				montantTotal = 0.00;
+				angular.forEach(listePanier, function(ligneArticle, key) {
+					if (ligneArticle.id == ligne.id) {
+						changeProduit(ligneArticle,0);
+						listePanier.splice(key, 1);
+					} else {
+						montantTotal += ligneArticle.prixTotal;
+					}
+				});
+				cookieStoreSvc.storeLocalItem('panier',listePanier);
+				cookieStoreSvc.storeLocalString('montantTotal',montantTotal);
 				$rootScope.$broadcast('rafraichirPanier');
 			};
 			

@@ -66,4 +66,9 @@ public class ArticleRepository {
 		ProduitRepository.updateProduit(article.getProduit());
 		em.merge(article);
 	}
+
+
+	public void SupprimeArticle(Article a) {
+		em.remove(em.find(Article.class, a.getId()));
+	}
 }

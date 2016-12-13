@@ -48,6 +48,7 @@ eComBioApp.controller('PanierCtrl', [ '$scope', '$location','$window','panierSvc
 			}
 
 			$scope.$on('rafraichirPanier', function(event) {
+				$window.alert('Panier MAJ !!');
 				$scope.listePanier = panierSvc.getListePanier();
 				$scope.montantTotal = panierSvc.getMontantTotal();
 			});

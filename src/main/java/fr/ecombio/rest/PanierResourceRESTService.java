@@ -87,8 +87,11 @@ public class PanierResourceRESTService {
 		if (p != null) {
 			this.log.info(p.toString());
 			for (Article a : p.getArticles()) {
-				retour.add(new InfosArticle(a.getProduit().getName(), a.getProduit().getVariete(), a.getProduit().getQuantite(), a.getQuotite(),  a.getProduit().getUnite()));
+				retour.add(new InfosArticle(a.getProduit().getName(), a.getProduit().getVariete(), a.getProduit().getQuantite(), a.getQuotite(),  a.getProduit().getUnite(), a.getProduit().getPrix()));
 			}
+		} else {
+			Throwable cause = new Throwable("Votre panier a été supprimé, temps d'inactivité trop long");
+			throw new WebApplicationException(cause,Response.Status.NOT_FOUND);
 		}
 		return retour;
 	}
@@ -125,12 +128,12 @@ public class PanierResourceRESTService {
 				ArticleRepository.AjoutArticle(a);
 				// on l'ajoute au panier
 				panier.getArticles().add(a);
+				// on va alors décrementer les stocks en base
 				StockManagerRepository.decrementeStock(panier,a);
 			} else {
 				return Response.notModified("Le stock de ce produit n'est pas suffisant").build();
 			}
 		}
-		// on va alors décrementer les stocks en base
 		PanierRepository.updatePanier(panier);
 		return Response.ok(PanierID).build();
 	}

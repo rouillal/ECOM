@@ -38,7 +38,7 @@ public class RegistreClient implements Serializable {
 	 * mail = login
 	 */
 	@NotNull
-	@Column(unique = true)
+	@Column(unique = true, name = "registreclient_mail")
 	@Index(name = "mail")
 	private String mail;
 	
@@ -46,6 +46,7 @@ public class RegistreClient implements Serializable {
 	 * mot de passe
 	 */
 	@NotNull
+	@Column(name = "registreclient_mdp")
 	private String mdp;
 	
 
