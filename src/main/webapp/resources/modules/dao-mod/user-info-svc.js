@@ -1,7 +1,10 @@
-eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','commandeSvc',
-                                    function($rootScope,restBackendSvc,$window,commandeSvc) {
+eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','commandeSvc','cookieStoreSvc',
+                                    function($rootScope,restBackendSvc,$window,commandeSvc,cookieStoreSvc) {
 
-	var userInfo = {'nom':'','prenom':'','mail':'biotobealive@gmail.com','adresse':'17 Rue des Marguerites','cp':'38000','ville':'Grenoble','psw':'xx','typeClient':'n'};
+	var userInfo = cookieStoreSvc.getStoredLocalItem('userInfo');
+	if (typeof userInfo != 'undefined') {
+		userInfo = {'nom':'','prenom':'','mail':'biotobealive@gmail.com','adresse':'17 Rue des Marguerites','cp':'38000','ville':'Grenoble','psw':'xx','typeClient':'n'};
+	}
 	var userInfoToPersist = {'nom':'','prenom':'','mail':'','adresse':'','cp':'','ville':'','psw':''};
 	
 	var getInfoInit = function() {
@@ -28,6 +31,7 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','c
 		restBackendSvc.createItem('connect', userInfoJson).then(
 				function(data) {
 					var userInfo = angular.toJson(data.data);
+					cookieStoreSvc.storeLocalItem('userInfo',userInfo);
 					commandeSvc.setCommandInfo(userInfo);
 					$rootScope.$broadcast('userConnectionChanged');
 					$("#myModalSignin").modal('hide');
@@ -46,6 +50,7 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','c
 		var restAdress = 'connect?mail='+mailParam+'&psw='+pswParam;
 		restBackendSvc.getItemsByUrl(restAdress).then(function(data) {
 			userInfo = data.data;
+			cookieStoreSvc.storeLocalItem('userInfo',userInfo);
 			commandeSvc.setCommandInfo(userInfo);
 			$rootScope.$broadcast('userConnectionChanged');
 			$("#myModalConnect").modal('hide');
