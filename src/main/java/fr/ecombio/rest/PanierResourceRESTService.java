@@ -3,6 +3,7 @@ package fr.ecombio.rest;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -163,6 +164,12 @@ public class PanierResourceRESTService {
 		Panier panier = PanierRepository.findById(id);
 		// si le panier existe
 		if (panier != null) {
+			log.log(Level.INFO, "panier : " +panier.toString());
+			String str = "";
+			for(GestionArticle article : commande) {
+				str += article.toString();
+			}
+			log.log(Level.INFO, "commande : " +str);
 			// pour chaque article
 			for(GestionArticle article : commande) {
 				log.log(Level.INFO, "article"+article.getId());
@@ -174,21 +181,15 @@ public class PanierResourceRESTService {
 				if (a!=null) {
 					if (a.getQuotite() < article.getQuotite() ) {
 						if (produit.getStock()>=1) {
-							log.log(Level.INFO, "quotité panier "+article.getQuotite());
-							log.log(Level.INFO, "quotité base "+a.getQuotite());
-							log.log(Level.INFO, "quotité stock "+produit.getStock());
 							for (int i =0; i<(article.getQuotite() - a.getQuotite()) ; i++) {
 								StockManagerRepository.decrementeStock(produit.getId());
 							}
 							a.setQuotite(article.getQuotite());
 							ArticleRepository.updateArticle(a);
 						} else {
-							log.log(Level.INFO, "echec pas de stock pour "+produit.getName()+", end transaction");
-							log.log(Level.INFO, "quotité panier "+article.getQuotite());
-							log.log(Level.INFO, "quotité stock "+produit.getStock());
 							return Response.notModified("Le stock de ce produit n'est pas suffisant").build();
 						}
-					} else if (a.getQuotite() > article.getQuotite()) {
+					} else if (a.getQuotite() > article.getQuotite() && article.getQuotite() != 0) {
 						for (int i =0; i<Math.abs(a.getQuotite() - article.getQuotite()) ; i++) {
 							StockManagerRepository.incrementeStock(produit.getId());
 						}
@@ -218,9 +219,10 @@ public class PanierResourceRESTService {
 			// on supprime les articles à supprimer
 			List<Article> toDelete = new LinkedList<Article>();
 			for (Article a : panier.getArticles()){
+				log.log(Level.INFO, "check article is in panier : " +a.getProduit().getName());
 				boolean isInCommande = false;
 				for(GestionArticle article : commande) {
-					if (article.getId() == a.getProduit().getId()) {
+					if (article.getId() == a.getProduit().getId() || article.getQuotite() == 0) {
 						isInCommande = true;
 						break;
 					}
@@ -229,12 +231,18 @@ public class PanierResourceRESTService {
 					toDelete.add(a);
 				}
 			}
+			Set<Article> newArticles = panier.getArticles();
 			for (Article a : toDelete) {
+				log.log(Level.INFO, "delete : " +a.getProduit().getName());
 				for (int i =0; i<Math.abs(a.getQuotite()) ; i++) {
-					StockManagerRepository.incrementeStock(panier,a);
+					StockManagerRepository.incrementeStock(a.getProduit().getId());
 				}
-				panier.getArticles().remove(a);
+				a.setPanier(null);
+				ArticleRepository.updateArticle(a);
+				newArticles.remove(a);
+				ArticleRepository.SupprimeArticle(a);
 			}
+			panier.setArticles(newArticles);
 			log.log(Level.INFO, "save : " +panier.toString());
 			PanierRepository.updatePanier(panier);
 			return Response.ok().build();
