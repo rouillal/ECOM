@@ -137,6 +137,7 @@ eComBioApp.factory('panierSvc', [
 				} else {
 					var urlUpdate = 'panier?id='+idPanierServer;
 					restBackendSvc.updateItem(urlUpdate, panierJson).then(function(response) {
+						$rootScope.$broadcast('StockOk');
 					}, function(error) {
 						var errorJson = angular.toJson(error);
 						if (error.status == 304) {
@@ -152,7 +153,7 @@ eComBioApp.factory('panierSvc', [
 							$rootScope.$broadcast('rafraichirPanier');
 							$rootScope.$broadcast('StockInsuffisant');
 							$rootScope.$broadcast('anomalieTechnique', "Plus de stock");
-							$window.alert("Votre produit n'est plus en stock");
+							//$window.alert("Votre produit n'est plus en stock");
 						} else if (error.status == 404) {
 							$rootScope.$broadcast('anomalieTechnique', "Votre panier a été supprimé, temps d'inactivité trop long - Recréation - "+errorJson);
 							$window.alert("Votre panier a été supprimé, temps d'inactivité trop long - Recréation - "+errorJson);
