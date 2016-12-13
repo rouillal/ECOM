@@ -188,7 +188,7 @@ public class PanierResourceRESTService {
 							log.log(Level.INFO, "quotité stock "+produit.getStock());
 							return Response.notModified("Le stock de ce produit n'est pas suffisant").build();
 						}
-					} else if (a.getQuotite() > article.getQuotite()) {
+					} else if (a.getQuotite() > article.getQuotite() && article.getQuotite() != 0) {
 						for (int i =0; i<Math.abs(a.getQuotite() - article.getQuotite()) ; i++) {
 							StockManagerRepository.incrementeStock(produit.getId());
 						}
@@ -220,7 +220,7 @@ public class PanierResourceRESTService {
 			for (Article a : panier.getArticles()){
 				boolean isInCommande = false;
 				for(GestionArticle article : commande) {
-					if (article.getId() == a.getProduit().getId()) {
+					if (article.getId() == a.getProduit().getId() || article.getQuotite() == 0) {
 						isInCommande = true;
 						break;
 					}
@@ -231,7 +231,7 @@ public class PanierResourceRESTService {
 			}
 			for (Article a : toDelete) {
 				for (int i =0; i<Math.abs(a.getQuotite()) ; i++) {
-					StockManagerRepository.incrementeStock(panier,a);
+					StockManagerRepository.incrementeStock(a.getProduit().getId());
 				}
 				panier.getArticles().remove(a);
 			}
