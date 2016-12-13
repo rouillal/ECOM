@@ -119,9 +119,9 @@
 			src="'resources/modules/recette-modules/recette-panier-mod/partials/selected-product-display-recette.html'"></div>
 	<div id="ruban" class="row">
 		<ul class="col-xs-12">
-		 	<li ng-show="!isAdmin" class="col-md-3 col-xs-1"></li>
-			<li ng-show="isAdmin" class="col-md-2 col-xs-1"></li>
-			<li class="col-md-1 col-xs-5" ng-class="menuIndice == 6 ? 'current':''" ng-show="isAdmin"><a
+		 	<li ng-show="!isAdmin && !isGestion" class="col-md-3 col-xs-1"></li>
+			<li ng-show="isAdmin || isGestion" class="col-md-2 col-xs-1"></li>
+			<li class="col-md-1 col-xs-5" ng-class="menuIndice == 6 ? 'current':''" ng-show="isAdmin || isGestion"><a
 				ng-click="menuIndice = 6" id="gestion" href="#/gestion""> </a></li>
 			<li class="col-md-1 col-xs-5" ng-class="(menuIndice == $location.path()) || (menuIndice == 1) ? 'current':''"><a
 				ng-click="menuIndice = 1" id="product" href="#"> </a></li>
