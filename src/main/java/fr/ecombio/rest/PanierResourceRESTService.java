@@ -87,7 +87,7 @@ public class PanierResourceRESTService {
 		if (p != null) {
 			this.log.info(p.toString());
 			for (Article a : p.getArticles()) {
-				retour.add(new InfosArticle(a.getProduit().getName(), a.getProduit().getVariete(), a.getProduit().getQuantite(), a.getQuotite(),  a.getProduit().getUnite(), a.getProduit().getPrix()));
+				retour.add(new InfosArticle(a.getProduit().getName(), a.getProduit().getVariete(), a.getProduit().getQuantite(), a.getQuotite(),  a.getProduit().getUnite(), a.getProduit().getPrix(), a.getProduit().getId()));
 			}
 		} else {
 			Throwable cause = new Throwable("Votre panier a été supprimé, temps d'inactivité trop long");
