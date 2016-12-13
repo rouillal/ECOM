@@ -17,18 +17,20 @@ private String name;
 private int quotite;
 private int quantite;
 private String unite;
+private float prix;
 
 
 /**
  * @param name
  * @param quantite
  */
-public InfosArticle(String name, String variete, int quantite, int quotite, String unite) {
+public InfosArticle(String name, String variete, int quantite, int quotite, String unite, float prix ) {
 	super();
 	this.name = name +" "+ variete;
 	this.quantite = quantite;
 	this.quotite = quotite;
 	this.unite = unite;
+	this.prix = prix;
 }
 /**
  * @return the quotite
@@ -83,6 +85,19 @@ public int getQuantite() {
  */
 public void setQuantite(int quantite) {
 	this.quantite = quantite;
+}
+
+/**
+ * @return the prix
+ */
+public float getPrix() {
+	return prix;
+}
+/**
+ * @param prix the prix to set
+ */
+public void setPrix(float prix) {
+	this.prix = prix;
 }
 
 }
