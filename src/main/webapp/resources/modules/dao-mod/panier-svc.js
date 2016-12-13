@@ -5,9 +5,9 @@ eComBioApp.factory('panierSvc', [
 		'cookieStoreSvc',
 		'imgProviderSvc',
 		function($rootScope, restBackendSvc, $window,cookieStoreSvc,imgProviderSvc) {
-			var listePanier = [];// cookieStoreSvc.getStoredLocalItem('panier');
+			var listePanier = [];
 			var selectedProduit = '';
-			var montantTotal = 0;// cookieStoreSvc.getStoredLocalString('montantTotal');
+			var montantTotal = 0;
 			var idPanierServer = '';
 			
 			var recalculPanier = function() {
@@ -39,10 +39,9 @@ eComBioApp.factory('panierSvc', [
 						recalculPanier();
 					}, function(reason) {
 						if (reason.status == 404) {
-							alert('Reset -> rien');
 							resetPanierDapresServeur();
 						} else {
-							$rootScope.$broadcast('debug', reason);
+							$rootScope.$broadcast('anomalieTechnique',reason);
 						}
 					});
 				} else {
@@ -84,11 +83,10 @@ eComBioApp.factory('panierSvc', [
 					});
 					$rootScope.$broadcast('listSuggestedRecettesSupplied', listRecette);
 				}, function(reason) {
-					$rootScope.$broadcast('debug', reason);
 					if (reason.status == 404) {
 						$rootScope.$broadcast('listRecettesSupplied', '');
 					} else {
-						alert('Failed: ' + reason);
+						$rootScope.$broadcast('anomalieTechnique',reason);
 					}
 				});
 			};
@@ -136,7 +134,6 @@ eComBioApp.factory('panierSvc', [
 					restBackendSvc.updateItem(urlUpdate, panierJson).then(function(response) {
 						$rootScope.$broadcast('StockOk');
 					}, function(error) {
-						var errorJson = angular.toJson(error);
 						if (error.status == 304) {
 							montantTotal = 0;
 							angular.forEach(listePanier, function(ligneArticle, key) {
@@ -152,7 +149,6 @@ eComBioApp.factory('panierSvc', [
 							$rootScope.$broadcast('anomalieTechnique', "Plus de stock");
 						} else if (error.status == 404) {
 							resetPanierDapresServeur();
-							//$rootScope.$broadcast('anomalieTechnique', "Votre panier a été supprimé, temps d'inactivité trop long - Recréation - "+errorJson);
 							$window.alert("Votre panier a été supprimé, temps d'inactivité trop long - Recréation - ");
 							resetPanierDapresServeur();
 							addProduitNew(produitAChanger,1);
@@ -175,8 +171,7 @@ eComBioApp.factory('panierSvc', [
 							});
 							$window.alert("Rollback suite anomalie serveur");
 							$rootScope.$broadcast('rafraichirPanier',listePanier,montantTotal);
-							$rootScope.$broadcast('anomalieTechnique', errorJson);
-							$window.alert('Error : '+errorJson);
+							$rootScope.$broadcast('anomalieTechnique',error);
 						}
 					});
 				}
@@ -218,18 +213,15 @@ eComBioApp.factory('panierSvc', [
 			
 			var getPanierCommande = function(idPanierCommande) {
 				var urlPanierCommande = 'panier?id='+idPanierCommande;
-				$window.alert('RRR0_'+urlPanierCommande);
 				restBackendSvc.getItemsByUrl(urlPanierCommande).then(function(data) {
 					var listPanierCommande = data.data;
 					var listPanierCommandeJson = angular.toJson(listPanierCommande);
-					$window.alert('RRR0888_'+listPanierCommandeJson);
 					$rootScope.$broadcast('listPanierCommandeSupplied', listPanierCommande);
 				}, function(reason) {
-					$rootScope.$broadcast('debug', reason);
 					if (reason.status == 404) {
 						$rootScope.$broadcast('listPanierCommandeSupplied', '');
 					} else {
-						alert('Failed: ' + reason);
+						$rootScope.$broadcast('anomalieTechnique',reason);
 					}
 				});
 			}

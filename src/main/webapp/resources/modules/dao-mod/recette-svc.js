@@ -54,20 +54,6 @@ eComBioApp.factory('recetteSvc', [
 					restAdress += '&compo=' + compoSelected;
 				}
 				restAdress += '&tri=' + tri;
-				$rootScope.$broadcast('debug', restAdress);
-				// Mock
-				/*
-				 * var listRecette = [{'name':'Tofu en
-				 * bolo','nbPersonnes':4,'tpsPreparation':15,'tpsCuisson':20,'cout':'Bon
-				 * marché','difficulte':'Très facile','listeIngredients':'<ul><li>1
-				 * oignon,</li><li>2 carottes</li></ul>','preparation':'<ul><li>1.</li><li>2.</li><li>3.</li></ul>'},
-				 * {'name':'Tofu2 en
-				 * bolo','nbPersonnes':4,'tpsPreparation':15,'tpsCuisson':20,'cout':'Bon
-				 * marché','difficulte':'Très facile','listeIngredients':'1
-				 * oignon','preparation':'<ul><li>1.</li><li>2.</li><li>3.</li></ul>'}];
-				 * var listRecetteJson = angular.toJson(listRecette);
-				 */
-				// Fin Mock
 				restBackendSvc.getItemsByUrl('recette'+restAdress).then(function(data) {
 					var listRecette = data.data;
 					angular.forEach(listRecette, function(recette, key) {
@@ -75,19 +61,17 @@ eComBioApp.factory('recetteSvc', [
 					});
 					$rootScope.$broadcast('listRecettesSupplied', listRecette);
 				}, function(reason) {
-					$rootScope.$broadcast('debug', reason);
 					if (reason.status == 404) {
 						$rootScope.$broadcast('listRecettesSupplied', '');
 					} else {
-						alert('Failed: ' + reason);
+						$rootScope.$broadcast('anomalieTechnique',reason);
 					}
 				});
 				restBackendSvc.getItemsByUrl('recette/page'+restAdress).then(function(data) {
 					var pageMax = data.data;
 					$rootScope.$broadcast('pageMaxRecetteReset',pageMax);
 				}, function(reason) {
-					//$rootScope.$broadcast('debug', reason);
-					//alert('Failed: ' + reason);
+					$rootScope.$broadcast('anomalieTechnique',reason);
 				});
 			}
 
@@ -104,12 +88,11 @@ eComBioApp.factory('recetteSvc', [
 													recette);
 								},
 								function(reason) {
-									$rootScope.$broadcast('debug', reason);
 									if (reason.status == 404) {
 										$rootScope.$broadcast(
 												'detailsRecetteSupplied', []);
 									} else {
-										alert('Failed: ' + reason);
+										$rootScope.$broadcast('anomalieTechnique',reason);
 									}
 								});
 			}

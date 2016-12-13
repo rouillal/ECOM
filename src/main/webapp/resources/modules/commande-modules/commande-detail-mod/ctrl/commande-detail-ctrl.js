@@ -13,7 +13,6 @@ eComBioApp.controller('CommandeDetailCtrl', [
 			
 			$scope.$on('listPanierCommandeSupplied', function(event,
 					listPanierCommande) {
-				$window.alert('RRR');
 				$scope.listePanier = listPanierCommande;
 			});
 			

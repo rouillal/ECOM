@@ -2,7 +2,7 @@ eComBioApp.controller('CommandeSearchCtrl', [ '$scope','$window','commandeSearch
 	$scope.searchCommandeDate = commandeSearchSvc.getDateLivraison();
 	$scope.searchEnt = commandeSearchSvc.getSearchEnt();
 	$scope.searchDom = commandeSearchSvc.getSearchDom();
-	$scope.debug = 'Url2 Rest Search à venir';
+	$scope.debug = '';
 	
 	$scope.searchCommandeByDate  = function() {
 		commandeSearchSvc.changeDateLivraison($scope.searchCommandeDate);

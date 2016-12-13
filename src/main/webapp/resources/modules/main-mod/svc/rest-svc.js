@@ -78,12 +78,10 @@ eComBioApp.factory('restBackendSvc', [
 					deferred.resolve(response);
 					$rootScope.$broadcast('datasupplied', response);
 				}, function(error) {
-					$rootScope.$broadcast('debug', error);
 					if (error.status == 404) {
 						$rootScope.$broadcast('datasupplied', response);
 					} else {
 						$rootScope.$broadcast('anomalieTechnique', error);
-						console.log("error");
 						deferred.reject(error);
 					}
 				});
