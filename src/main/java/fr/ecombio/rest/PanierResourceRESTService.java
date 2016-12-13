@@ -117,24 +117,21 @@ public class PanierResourceRESTService {
 		Panier panier = new Panier();
 		Long PanierID = PanierRepository.AjoutPanier(panier);
 		for(GestionArticle article : commande) {
-			if (article != null) {
-				this.log.info(" DEBUG FRED :: "+Long.toString(article.getId()));
-				Produit produit = ProduitRepository.findById(article.getId());
-				// si le stock est suffisant 
-				if (produit.getStock()>=1) {
-					// on crée l'article
-					Article a = new Article();
-					a.setProduit(produit);
-					a.setQuotite(article.getQuotite());
-					a.setPanier(panier);
-					ArticleRepository.AjoutArticle(a);
-					// on l'ajoute au panier
-					panier.getArticles().add(a);
-					// on va alors décrementer les stocks en base
-					StockManagerRepository.decrementeStock(panier,a);
-				} else {
-					return Response.notModified("Le stock de ce produit n'est pas suffisant").build();
-				}
+			Produit produit = ProduitRepository.findById(article.getId());
+			// si le stock est suffisant 
+			if (produit.getStock()>=1) {
+				// on crée l'article
+				Article a = new Article();
+				a.setProduit(produit);
+				a.setQuotite(article.getQuotite());
+				a.setPanier(panier);
+				ArticleRepository.AjoutArticle(a);
+				// on l'ajoute au panier
+				panier.getArticles().add(a);
+				// on va alors décrementer les stocks en base
+				StockManagerRepository.decrementeStock(produit.getId());
+			} else {
+				return Response.notModified("Le stock de ce produit n'est pas suffisant").build();
 			}
 		}
 		PanierRepository.updatePanier(panier);
