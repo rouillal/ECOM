@@ -33,7 +33,6 @@ eComBioApp.controller('CommandeAdminCtrl', [
 			$scope.selectDetailsCommande = function(selectedCommandeParam) {
 				commandeSvc.setSelectedCommande(selectedCommandeParam);
 				$scope.selectedCommande = selectedCommandeParam;
-				$window.alert('RRR55');
 				panierSvc.getPanierCommande(selectedCommandeParam.panier.id);
 			}
 

@@ -41,7 +41,6 @@ eComBioApp.factory('commandeSvc', [ '$rootScope', 'restBackendSvc', '$window','p
 		messageServeur['commandInfo'] = commandInfo;
 		messageServeur['commandPaieInfo'] = commandPaieInfo;
 		var messageServeurJson = angular.toJson(messageServeur);
-		//$window.alert("messageServeurJson : "+messageServeurJson);
 		restBackendSvc.createItem('paiement', messageServeurJson).then(
 				function(data) {
 						panierSvc.resetPanierDapresServeur();
@@ -50,9 +49,7 @@ eComBioApp.factory('commandeSvc', [ '$rootScope', 'restBackendSvc', '$window','p
 					if (error.status == 403) {
 						$rootScope.$broadcast('errorDateExpi');
 					} else {
-						/*var errorJson = angular.toJson(error);
-						$rootScope.$broadcast('anomalieTechnique', errorJson);
-						$window.alert('Failed: ' + errorJson);*/
+						$rootScope.$broadcast('anomalieTechnique', error);
 					}
 				});
 	}
@@ -82,16 +79,14 @@ eComBioApp.factory('commandeSvc', [ '$rootScope', 'restBackendSvc', '$window','p
 			if (reason.status == 404) {
 				$rootScope.$broadcast('listCommandesSupplied', '');
 			} else {
-				$rootScope.$broadcast('debug', reason);
-				alert('Failed: ' + reason);
+				$rootScope.$broadcast('anomalieTechnique', reason);
 			}
 		});
 		restBackendSvc.getItemsByUrl('admin/commande/page'+restAdress).then(function(data) {
 			var pageMax = data.data;
 			$rootScope.$broadcast('pageMaxCommandeReset',pageMax);
 		}, function(reason) {
-			$rootScope.$broadcast('debug', reason);
-			alert('Failed: ' + reason);
+			$rootScope.$broadcast('anomalieTechnique',reason);
 		});
 	}
 	
@@ -111,8 +106,7 @@ eComBioApp.factory('commandeSvc', [ '$rootScope', 'restBackendSvc', '$window','p
 			if (reason.status == 404) {
 				$rootScope.$broadcast('listCommandesSupplied', '');
 			} else {
-				$rootScope.$broadcast('debug', reason);
-				alert('Failed: ' + reason);
+				$rootScope.$broadcast('anomalieTechnique',reason);
 			}
 		});
 	}

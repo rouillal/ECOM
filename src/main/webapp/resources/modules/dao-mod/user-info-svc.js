@@ -39,9 +39,7 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','c
 					if (error.status == 403) {
 						$rootScope.$broadcast('userAlreadyExist');
 					} else {
-						/*var errorJson = angular.toJson(error);
-						$rootScope.$broadcast('anomalieTechnique', errorJson);
-						$window.alert('Failed: ' + errorJson);*/
+						$rootScope.$broadcast('anomalieTechnique',reason);
 					}
 				});
 	};
@@ -58,9 +56,7 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','c
 			if (error.status == 404) {
 				$rootScope.$broadcast('userNotFound');
 			} else {
-				var errorJson = angular.toJson(error);
-				$rootScope.$broadcast('anomalieTechnique', errorJson);
-				alert('Failed: ' + errorJson);
+				$rootScope.$broadcast('anomalieTechnique',reason);
 			}
 		});
 	};
