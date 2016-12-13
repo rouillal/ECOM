@@ -62,15 +62,15 @@ public class HistoriqueCommandeRepository {
 
 		Predicate predicate = cb.equal(HistoriqueCommande.get("date"), date) ;
 		Predicate p2 = null;
-		boolean b = true;
+		boolean efalse = true;
 		if (e) {
 			p2 = cb.equal(HistoriqueCommande.get("livDom"), "e");
-			b = false;
+			efalse = false;
 		} else {
 			p2 = cb.equal(HistoriqueCommande.get("livDom"), "x");
 		}
 		if (d) {
-			if (b) {
+			if (efalse) {
 				p2 = cb.equal(HistoriqueCommande.get("livDom"), "d");
 			} else {
 				p2 = cb.or(p2, cb.equal(HistoriqueCommande.get("livDom"), "d"));
