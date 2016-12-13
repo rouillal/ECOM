@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -58,6 +60,9 @@ public class StockManagerRepository {
 	 */
 	@Inject
 	private ArticleRepository Articlerepository;
+	
+	//Logger log;
+	Logger log = java.util.logging.Logger.getLogger("org.hibernate");
 
 	/**
 	 * increment du stock lorsqu'un panier a atteint un time-out d'inactivité
@@ -75,54 +80,13 @@ public class StockManagerRepository {
 	}
 
 	/**
-	 * incremente le stock correspondant a un produit
-	 * @param panier
-	 * @param article
-	 */
-	public void incrementeStock(Panier panier, Article article) {
-		Iterator<Article> i=panier.getArticles().iterator();
-		while(i.hasNext()) // tant qu'on a un suivant
-		{
-			Article valeur = i.next();
-			if (valeur.getId() == article.getId()){
-				Produit p = Produitrepository.findById(valeur.getProduit().getId());
-				p.setStock(p.getStock()+1);
-				Produitrepository.updateProduit(p);
-			}
-		}
-		panier.setDateDerniereModif(new Date());
-		Panierrepository.updatePanier(panier);
-	}
-
-	/**
-	 * decremente le stock correspondant à un produit
-	 * @param panier
-	 * @param article
-	 */
-	public void decrementeStock(Panier panier, Article article) {
-
-		Iterator<Article> i=panier.getArticles().iterator();
-		while(i.hasNext()) // tant qu'on a un suivant
-		{
-			Article valeur = i.next();
-			if (valeur.getId() == article.getId()){
-				Produit p = Produitrepository.findById(valeur.getProduit().getId());
-				p.setStock(p.getStock()-1);
-				Produitrepository.updateProduit(p);
-			}
-		}
-		panier.setDateDerniereModif(new Date());
-		Panierrepository.updatePanier(panier);
-	}
-
-
-
-	/**
 	 * Incremente le stock du produit
 	 * @param id identifiant du produit
 	 */
 	public void incrementeStock(Long id) {
 		Produit p = Produitrepository.findById(id);
+		log.log(Level.INFO, "incrémente produit "+p.getName());
+		log.log(Level.INFO, "nouveau stock "+(p.getStock()+1));
 		p.setStock(p.getStock()+1);
 		Produitrepository.updateProduit(p);
 	}
@@ -133,6 +97,8 @@ public class StockManagerRepository {
 	 */
 	public void decrementeStock(Long id) {
 		Produit p = Produitrepository.findById(id);
+		log.log(Level.INFO, "decremente produit "+p.getName());
+		log.log(Level.INFO, "nouveau stock "+(p.getStock()-1));
 		p.setStock(p.getStock()-1);
 		Produitrepository.updateProduit(p);
 	}

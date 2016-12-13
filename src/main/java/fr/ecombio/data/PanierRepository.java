@@ -73,11 +73,6 @@ public class PanierRepository {
 	 * @param panier panier a modifier
 	 */
 	public void updatePanier(Panier panier) {
-		Iterator<Article> i=panier.getArticles().iterator();
-		while(i.hasNext()) // tant qu'on a un suivant
-		{
-			ArticleRepository.updateArticle(i.next());
-		}
 		em.merge(panier);
 	}
 

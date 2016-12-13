@@ -1,5 +1,7 @@
 package fr.ecombio.model;
 
+import java.util.Iterator;
+
 /**
  * <p>
  * Classe pour serialiser des donnes sur un article :
@@ -42,5 +44,13 @@ public class GestionArticle {
 		this.quotite = quotite;
 	}
 
-
+	/**
+	 * Generation du contenu de panier sou la forme :
+	 * <quantite,produit>,<qte2,pdt2>,...
+	 * @return contenu du panier
+	 */
+	@Override
+	public String toString() {
+			return "<"+this.getQuotite()+":id<"+this.getId()+">>," ;
+	}
 }
