@@ -1,9 +1,8 @@
 eComBioApp.controller('SigninCtrl', [ '$scope','$window','userInfoSvc', function($scope,$window,userInfoSvc) {
 	$scope.signinInfo = userInfoSvc.getUserInfo();
-	$scope.signinPswCheck = 'xx';
+	$scope.signinPswCheck = '';
 	$scope.erreurSignin='';
-	$scope.user = userInfoSvc.getUserInfoPrenom();
-
+	
 	$scope.isErrorMessage = function() {
 		return $scope.erreurSignin != '';
 	}
@@ -35,7 +34,7 @@ eComBioApp.controller('SigninCtrl', [ '$scope','$window','userInfoSvc', function
 	});
 	
 	$scope.$on('userConnectionChanged', function(event) {
-		$scope.user = userInfoSvc.getUserInfoPrenom();
+		$scope.signinInfo = userInfoSvc.getUserInfo();
 	});
 
 } ]);

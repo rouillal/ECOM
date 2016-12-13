@@ -2,8 +2,9 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','c
                                     function($rootScope,restBackendSvc,$window,commandeSvc,cookieStoreSvc) {
 
 	var userInfo = cookieStoreSvc.getStoredLocalItem('userInfo');
-	if (typeof userInfo != 'undefined') {
-		userInfo = {'nom':'','prenom':'','mail':'biotobealive@gmail.com','adresse':'17 Rue des Marguerites','cp':'38000','ville':'Grenoble','psw':'xx','typeClient':'n'};
+	$rootScope.$broadcast('userConnectionChanged');
+	if (typeof userInfo == 'undefined') {
+		userInfo = {'nom':'','prenom':'','mail':'biotobealive@gmail.com','adresse':'','cp':'','ville':'','psw':'','typeClient':'n'};
 	}
 	var userInfoToPersist = {'nom':'','prenom':'','mail':'','adresse':'','cp':'','ville':'','psw':''};
 	
@@ -30,7 +31,7 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','c
 		var userInfoJson = angular.toJson(userInfoToPersist);
 		restBackendSvc.createItem('connect', userInfoJson).then(
 				function(data) {
-					var userInfo = angular.toJson(data.data);
+					userInfo = data.data;
 					cookieStoreSvc.storeLocalItem('userInfo',userInfo);
 					commandeSvc.setCommandInfo(userInfo);
 					$rootScope.$broadcast('userConnectionChanged');
@@ -68,6 +69,12 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','c
 	var isGestion = function() {
 		return userInfo.typeClient=='a'||userInfo.typeClient=='g';
 	};
+	
+	var deconnect = function() {
+		userInfo = {'nom':'','prenom':'','mail':'','adresse':'','cp':'','ville':'','psw':'','typeClient':'n'};
+		cookieStoreSvc.storeLocalItem('userInfo',userInfo);
+		$rootScope.$broadcast('userConnectionChanged');
+	};
 
 	return {
 		getUserInfo : getUserInfo,
@@ -75,6 +82,7 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','c
 		retrieveUserInfo : retrieveUserInfo,
 		getUserInfoPrenom : getUserInfoPrenom,
 		isAdmin : isAdmin,
-		isGestion : isGestion
+		isGestion : isGestion,
+		deconnect : deconnect
 	};
 } ]);

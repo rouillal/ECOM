@@ -6,7 +6,7 @@ eComBioApp.factory('productSvc', [
 		function($rootScope, restBackendSvc, $window,imgProviderSvc) {
 			
 			var getEmptyItem = function() {
-				var emptyItem = {"categorie":{"id":1,"name":"Fruits"},"name":'O',"variete":'',"unite":'',"quantite":0,"stock":0,"prix":0.0,"filename":'',"provenance":'',"dateCueillette":'',"dureeConservation":0,"calories":0,"glucides":9,"fibres":2,"proteines":1};
+				var emptyItem = {"categorie":{"id":1,"name":"Fruits"},"name":'',"variete":'',"unite":'',"quantite":0,"stock":0,"prix":0.0,"filename":'',"provenance":'',"dateCueillette":'',"dureeConservation":0,"calories":0,"glucides":0,"fibres":0,"proteines":0};
 				return emptyItem;
 			}
 			
@@ -67,7 +67,7 @@ eComBioApp.factory('productSvc', [
 			var createProduct = function(product) {
 				var messageServeurJson = angular.toJson(product);
 				restBackendSvc.createItem('produit',messageServeurJson).then(function(data) {
-					$window.alert('Create produit ok');
+					$rootScope.$broadcast('createProduitOk');
 				});
 			}
 
@@ -96,7 +96,32 @@ eComBioApp.factory('productSvc', [
 				var messageServeurJson = angular.toJson(productServeur);
 				restBackendSvc.updateItem('produit',messageServeurJson).then(function(data) {
 					//inform with message
-					$window.alert('Update produit ok');
+					$rootScope.$broadcast('updateProduitOk');
+				});
+			}
+			
+			var updateStock = function(productUpdatedParam) {
+				var productServeur = getEmptyItem();
+				productServeur['id']=productUpdatedParam.id;
+				productServeur.name=productUpdatedParam.name;
+				productServeur.categorie=productUpdatedParam.categorie;
+				productServeur.variete=productUpdatedParam.variete;
+				productServeur.unite=productUpdatedParam.unite;
+				productServeur.quantite=productUpdatedParam.quantite;
+				productServeur.stock=productUpdatedParam.stock;
+				productServeur.prix=productUpdatedParam.prix;
+				productServeur.filename=productUpdatedParam.filename;
+				productServeur.provenance=productUpdatedParam.provenance;
+				productServeur.dateCueillette=productUpdatedParam.dateCueillette;
+				productServeur.dureeConservation=productUpdatedParam.dureeConservation;
+				productServeur.calories=productUpdatedParam.calories;
+				productServeur.glucides=productUpdatedParam.glucides;
+				productServeur.fibres=productUpdatedParam.fibres;
+				productServeur.proteines=productUpdatedParam.proteines;
+				var messageServeurJson = angular.toJson(productServeur);
+				restBackendSvc.updateItem('produit',messageServeurJson).then(function(data) {
+					//inform with message
+					$rootScope.$broadcast('updateStockOk');
 				});
 			}
 
@@ -112,6 +137,7 @@ eComBioApp.factory('productSvc', [
 				getProductBySearchName : getProductBySearchName,
 				createProduct : createProduct,
 				updateProductToEdit : updateProductToEdit,
+				updateStock : updateStock,
 				updateProduct : updateProduct,
 				removeItem : removeItem
 			};

@@ -137,7 +137,7 @@
 				id="myBtnSign" class="menuText" data-toggle="modal"
 				data-target="#/signin"><span>M'inscrire</span></button></div>
 				<div ng-show="user!=''" style="margin-left:60px; color: rgb(221, 131, 14); font-family: Times New Roman;">Bienvenue {{user}}</div>
-				<button ng-show="user!=''" style="margin-left:60px;" class="menuText"><span>Me déconnecter</span></button>
+				<button ng-show="user!=''" style="margin-left:60px;" class="menuText" ng-click="deconnect()"><span>Me déconnecter</span></button>
 				<ul>
 					<li ng-class="menuIndice == 5 ? 'current':''"><a style="margin-left:17px;" id="basket"
 						ng-click="menuIndice = 5" href="#/panier"></a></li>
