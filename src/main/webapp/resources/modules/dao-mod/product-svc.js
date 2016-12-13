@@ -67,7 +67,7 @@ eComBioApp.factory('productSvc', [
 			var createProduct = function(product) {
 				var messageServeurJson = angular.toJson(product);
 				restBackendSvc.createItem('produit',messageServeurJson).then(function(data) {
-					$window.alert('Create produit ok');
+					$rootScope.$broadcast('createProduitOk');
 				});
 			}
 
@@ -96,7 +96,7 @@ eComBioApp.factory('productSvc', [
 				var messageServeurJson = angular.toJson(productServeur);
 				restBackendSvc.updateItem('produit',messageServeurJson).then(function(data) {
 					//inform with message
-					$window.alert('Update produit ok');
+					$rootScope.$broadcast('updateProduitOk');
 				});
 			}
 
