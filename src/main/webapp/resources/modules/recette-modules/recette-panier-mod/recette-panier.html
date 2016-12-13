@@ -1,5 +1,6 @@
 <div ng-controller="RecettePanierCtrl">
 	<div style="margin-left:100px; color: rgb(221, 131, 14);">Je complète mon panier<br><br></div>
+	<h4 class="ano" align="center" ng-show="isErrorMessage()">{{errorStock}}</h4>
 	<div class="row" ng-repeat="ligne in listeProduitsRecette">
 		<div class="col-xs-1">
 			<button class="btn" ng-click="selectDetailsProduit(ligne)"

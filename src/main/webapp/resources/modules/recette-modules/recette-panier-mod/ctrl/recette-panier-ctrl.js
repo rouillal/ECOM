@@ -1,6 +1,20 @@
 eComBioApp.controller('RecettePanierCtrl', [ '$scope','$window','panierSvc','imgProviderSvc',function($scope,$window,panierSvc,imgProviderSvc) {
 	$scope.listeProduitsRecette = [];
 	$scope.selectedProduit='';
+	$scope.errorStock='';
+	
+	$scope.isErrorMessage = function() {
+		return $scope.errorStock != '';
+	}
+	
+	$scope.$on('StockInsuffisant', function(event) {
+		$scope.selectedProduit.quotite = $scope.selectedProduit.quotite - 1 ;
+		$scope.errorStock = "Votre produit n'est plus en stock";
+	});
+	
+	$scope.$on('StockOk', function(event) {
+		$scope.errorStock = '';
+	});
 	
 	$scope.selectDetailsProduit = function(selectedProduitParam) {
 		panierSvc.setSelectedProduit(selectedProduitParam);
@@ -12,10 +26,10 @@ eComBioApp.controller('RecettePanierCtrl', [ '$scope','$window','panierSvc','img
 	};
 	
 	$scope.moinsProduit = function(produitSelect) {
+		$scope.selectedProduit=produitSelect;
 		if (produitSelect.quotite > 0) {
-			produitSelect.quotite -= 1;
 			panierSvc.changeProduit(produitSelect,
-					produitSelect.quotite);
+					produitSelect.quotite -1);
 		}
 	};
 
@@ -24,9 +38,9 @@ eComBioApp.controller('RecettePanierCtrl', [ '$scope','$window','panierSvc','img
 	};
 
 	$scope.plusProduit = function(produitSelect) {
-		produitSelect.quotite += 1;
+		$scope.selectedProduit=produitSelect;
 		panierSvc.changeProduit(produitSelect,
-				produitSelect.quotite);
+				produitSelect.quotite + 1);
 	};
 	
 	$scope.supprimeLigne = function(produitSelect) {

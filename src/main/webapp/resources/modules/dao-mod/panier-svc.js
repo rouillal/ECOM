@@ -5,14 +5,60 @@ eComBioApp.factory('panierSvc', [
 		'cookieStoreSvc',
 		'imgProviderSvc',
 		function($rootScope, restBackendSvc, $window,cookieStoreSvc,imgProviderSvc) {
-			var listePanier = cookieStoreSvc.getStoredLocalItem('panier');
+			var listePanier = [];// cookieStoreSvc.getStoredLocalItem('panier');
 			var selectedProduit = '';
-			var montantTotal = cookieStoreSvc.getStoredLocalString('montantTotal');
-			var idPanierServer = cookieStoreSvc.getStoredLocalString('idPanierServer');
-			if (idPanierServer=='') {
-				idPanierServer=-1;
+			var montantTotal = 0;// cookieStoreSvc.getStoredLocalString('montantTotal');
+			var idPanierServer = '';
+			
+			var recalculPanier = function() {
+				montantTotal = 0.00;
+				//var listPanierCommandeJson = angular.toJson(listePanier);
+				//$window.alert('restaurPanier'+listPanierCommandeJson);
+				angular.forEach(listePanier, function(ligneArticle, key) {
+					ligneArticle['prixTotal'] = Math.round(ligneArticle.quotite * ligneArticle.prix*100)/100;
+					montantTotal += ligneArticle.prixTotal;
+				});
+				//var listPanierCommandeJson2 = angular.toJson(listePanier);
+				//$window.alert('restaurPanier MAJ prix'+listPanierCommandeJson2);
 			}
-
+			
+			var resetPanierDapresServeur = function() {
+				listePanier = [];
+				selectedProduit = '';
+				montantTotal = 0.00;
+				idPanierServer = -1;
+				cookieStoreSvc.storeLocalString('idPanierServer',idPanierServer);
+				$rootScope.$broadcast('rafraichirPanier');
+			};
+			
+			var restaurPanierInit = function() {
+				selectedProduit = '';
+				montantTotal = 0.00;
+				idPanierServer = cookieStoreSvc.getStoredLocalString('idPanierServer');
+				if (idPanierServer.length>0) {
+					var urlPanierRestau = 'panier?id='+idPanierServer;
+					$window.alert('RRR0_'+urlPanierRestau);
+					restBackendSvc.getItemsByUrl(urlPanierRestau).then(function(data) {
+						listePanier = data.data;
+						recalculPanier();
+						$rootScope.$broadcast('rafraichirPanier');
+					}, function(reason) {
+						if (reason.status == 404) {
+							alert('Reset -> rien');
+							resetPanierDapresServeur();
+							$rootScope.$broadcast('rafraichirPanier', '');
+						} else {
+							$rootScope.$broadcast('debug', reason);
+						}
+					});
+				} else {
+					$window.alert('RRR1_'+urlPanierRestau);
+					resetPanierDapresServeur();
+				}
+			};
+			
+			restaurPanierInit();
+			
 			var setSelectedProduit = function(newSelectedProduit) {
 				selectedProduit = newSelectedProduit;
 				var qtret = getPanierQuantite(newSelectedProduit);
@@ -46,20 +92,6 @@ eComBioApp.factory('panierSvc', [
 				});
 			};
 
-			var supprimeArticlePanier = function(ligne) {
-				montantTotal = 0.00;
-				angular.forEach(listePanier, function(ligneArticle, key) {
-					if (ligneArticle.id == ligne.id) {
-						listePanier.splice(key, 1);
-					} else {
-						montantTotal += ligneArticle.prixTotal;
-					}
-				});
-				cookieStoreSvc.storeLocalItem('panier',listePanier);
-				cookieStoreSvc.storeLocalString('montantTotal',montantTotal);
-				$rootScope.$broadcast('rafraichirPanier');
-			};
-			
 			var prepareMessageServeur = function() {
 				var listePanierServeur = [];
 				angular.forEach(listePanier, function(ligneArticle, key) {
@@ -77,28 +109,24 @@ eComBioApp.factory('panierSvc', [
 					supprimeArticlePanier(produitAChanger);
 				} else {
 					var ligne = '';
-					montantTotal = 0.00;
 					angular.forEach(listePanier, function(ligneArticle, key) {
 						if (produitAChanger.id == ligneArticle.id) {
 							ligneArticle.quotite = quantite;
-							ligneArticle.prixTotal = Math.round(quantite * ligneArticle.prix*100)/100;
 							ligne = ligneArticle;
 						}
-						montantTotal += ligneArticle.prixTotal;
 					});
 					var infoJson = angular.toJson(produitAChanger);
 					if (ligne == '') {
-						//Le produit à changer n'a pas été trouvé dans la liste, il faut le créer
+						// Le produit à changer n'a pas été trouvé dans la
+						// liste, il faut le créer
 						var ligneTmp = produitAChanger;
 						ligneTmp['quotite'] = quantite;
 						var price = quantite * produitAChanger.prix;
 						ligneTmp['prixTotal'] = price;
 						listePanier.push(ligneTmp);
-						montantTotal += price;
 					}
+					recalculPanier();
 				}
-				cookieStoreSvc.storeLocalItem('panier',listePanier);
-				cookieStoreSvc.storeLocalString('montantTotal',montantTotal);
 				var panierJson = prepareMessageServeur();
 				if (idPanierServer < 0) {
 					restBackendSvc.createItem('panier', panierJson).then(
@@ -109,7 +137,7 @@ eComBioApp.factory('panierSvc', [
 				} else {
 					var urlUpdate = 'panier?id='+idPanierServer;
 					restBackendSvc.updateItem(urlUpdate, panierJson).then(function(response) {
-						//$window.alert('OK !!');
+						$rootScope.$broadcast('StockOk');
 					}, function(error) {
 						var errorJson = angular.toJson(error);
 						if (error.status == 304) {
@@ -125,13 +153,14 @@ eComBioApp.factory('panierSvc', [
 							$rootScope.$broadcast('rafraichirPanier');
 							$rootScope.$broadcast('StockInsuffisant');
 							$rootScope.$broadcast('anomalieTechnique', "Plus de stock");
-							$window.alert("Votre produit n'est plus en stock");
+							//$window.alert("Votre produit n'est plus en stock");
 						} else if (error.status == 404) {
 							$rootScope.$broadcast('anomalieTechnique', "Votre panier a été supprimé, temps d'inactivité trop long - Recréation - "+errorJson);
 							$window.alert("Votre panier a été supprimé, temps d'inactivité trop long - Recréation - "+errorJson);
 							restBackendSvc.createItem('panier', panierJson).then(
 									function(data) {
 										idPanierServer = data.data;
+										cookieStoreSvc.storeLocalString('idPanierServer',idPanierServer);
 										$window.alert("Panier créé à nouveau !");
 									});
 						} else {
@@ -145,21 +174,23 @@ eComBioApp.factory('panierSvc', [
 				$rootScope.$broadcast('rafraichirPanier');
 			};
 			
+			var supprimeArticlePanier = function(ligne) {
+				montantTotal = 0.00;
+				angular.forEach(listePanier, function(ligneArticle, key) {
+					if (ligneArticle.id == ligne.id) {
+						changeProduit(ligneArticle,0);
+						listePanier.splice(key, 1);
+					} else {
+						montantTotal += ligneArticle.prixTotal;
+					}
+				});
+				$rootScope.$broadcast('rafraichirPanier');
+			};
+			
 			var getIdPanierServer = function() {
 				return idPanierServer;
 			};
 			
-			var resetPanier = function() {
-				listePanier = [];
-				selectedProduit = '';
-				montantTotal = 0.00;
-				idPanierServer = -1;
-				cookieStoreSvc.storeLocalItem('panier',listePanier);
-				cookieStoreSvc.storeLocalString('idPanierServer',idPanierServer);
-				cookieStoreSvc.storeLocalString('montantTotal',montantTotal);
-				$rootScope.$broadcast('rafraichirPanier');
-			};
-
 			var getPanierQuantite = function(produit) {
 				var ret = 0;
 				angular.forEach(listePanier, function(article, key) {
@@ -196,12 +227,12 @@ eComBioApp.factory('panierSvc', [
 				setSelectedProduit : setSelectedProduit,
 				getSelectedProduit : getSelectedProduit,
 				getListePanier : getListePanier,
+				resetPanierDapresServeur : resetPanierDapresServeur,
 				getSuggestedRecette : getSuggestedRecette,
 				changeProduit : changeProduit,
 				getIdPanierServer : getIdPanierServer,
 				getPanierQuantite : getPanierQuantite,
 				supprimeArticlePanier : supprimeArticlePanier,
-				resetPanier : resetPanier,
 				getMontantTotal : getMontantTotal,
 				getPanierCommande : getPanierCommande
 			};
