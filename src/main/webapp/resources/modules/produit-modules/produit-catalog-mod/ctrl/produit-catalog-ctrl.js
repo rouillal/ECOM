@@ -22,7 +22,11 @@ eComBioApp.controller('ProduitCatalogCtrl', [
 				// panierSvc.setSelectedProduit(selectedProduitParam);
 				// $scope.selectedProduit=selectedProduitParam;
 			}
-
+			
+			$scope.updateStock = function(produit) {
+				productSvc.updateStock(produit);
+			}
+			
 			$scope.isSelectProduct = function() {
 				return $scope.searchProductString != "";
 			}

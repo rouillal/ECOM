@@ -69,4 +69,8 @@ eComBioApp.controller('ProduitAdminCtrl', [ '$scope', '$location','$window','use
 	$scope.$on('updateProduitOk', function(event) {
 		$scope.messageInfo="Produit modifié avec succès !";
 	});
+	
+	$scope.$on('updateStockOk', function(event) {
+		$scope.messageInfo="Stock du produit modifié avec succès !";
+	});
 } ]);

@@ -99,6 +99,31 @@ eComBioApp.factory('productSvc', [
 					$rootScope.$broadcast('updateProduitOk');
 				});
 			}
+			
+			var updateStock = function(productUpdatedParam) {
+				var productServeur = getEmptyItem();
+				productServeur['id']=productUpdatedParam.id;
+				productServeur.name=productUpdatedParam.name;
+				productServeur.categorie=productUpdatedParam.categorie;
+				productServeur.variete=productUpdatedParam.variete;
+				productServeur.unite=productUpdatedParam.unite;
+				productServeur.quantite=productUpdatedParam.quantite;
+				productServeur.stock=productUpdatedParam.stock;
+				productServeur.prix=productUpdatedParam.prix;
+				productServeur.filename=productUpdatedParam.filename;
+				productServeur.provenance=productUpdatedParam.provenance;
+				productServeur.dateCueillette=productUpdatedParam.dateCueillette;
+				productServeur.dureeConservation=productUpdatedParam.dureeConservation;
+				productServeur.calories=productUpdatedParam.calories;
+				productServeur.glucides=productUpdatedParam.glucides;
+				productServeur.fibres=productUpdatedParam.fibres;
+				productServeur.proteines=productUpdatedParam.proteines;
+				var messageServeurJson = angular.toJson(productServeur);
+				restBackendSvc.updateItem('produit',messageServeurJson).then(function(data) {
+					//inform with message
+					$rootScope.$broadcast('updateStockOk');
+				});
+			}
 
 			var removeItem = function(product) {
 				restBackendSvc.deleteItem(product._links.self.href).then(
@@ -112,6 +137,7 @@ eComBioApp.factory('productSvc', [
 				getProductBySearchName : getProductBySearchName,
 				createProduct : createProduct,
 				updateProductToEdit : updateProductToEdit,
+				updateStock : updateStock,
 				updateProduct : updateProduct,
 				removeItem : removeItem
 			};
