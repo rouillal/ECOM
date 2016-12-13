@@ -27,7 +27,6 @@ import fr.ecombio.model.Produit;
  * @see PanierRepository
  *
  */
-@Stateless
 public class StockManagerRepository {
 
 	private static boolean isInit = false;

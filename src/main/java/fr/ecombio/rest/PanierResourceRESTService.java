@@ -129,7 +129,7 @@ public class PanierResourceRESTService {
 				// on l'ajoute au panier
 				panier.getArticles().add(a);
 				// on va alors décrementer les stocks en base
-				StockManagerRepository.decrementeStock(panier,a);
+				StockManagerRepository.decrementeStock(produit.getId());
 			} else {
 				return Response.notModified("Le stock de ce produit n'est pas suffisant").build();
 			}
