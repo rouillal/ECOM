@@ -7,7 +7,7 @@ eComBioApp.controller('MainCtrl', [ '$scope', '$window','productSvc','categorieS
 	$scope.isGestion = userInfoSvc.isGestion();
 	$scope.isAdmin = userInfoSvc.isAdmin();
 	
-	$scope.$on('rafraichirPanier', function(event) {
+	$scope.$on('rafraichirPanier', function(event,listePanierParam,montantTotalParam) {
 		$scope.montantPanier = panierSvc.getMontantTotal();
 	});
 	
