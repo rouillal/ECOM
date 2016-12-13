@@ -7,7 +7,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
-import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import fr.ecombio.model.Article;
@@ -27,7 +26,6 @@ import fr.ecombio.model.Produit;
  * @see PanierRepository
  *
  */
-@Stateless
 public class StockManagerRepository {
 
 	private static boolean isInit = false;
@@ -38,6 +36,7 @@ public class StockManagerRepository {
 	public StockManagerRepository() {
 		if (!isInit) {
 			initTimer();
+			System.out.println("tache de fond lancée");
 		}
 	}
 
@@ -52,6 +51,12 @@ public class StockManagerRepository {
 	 */
 	@Inject
 	private PanierRepository Panierrepository;
+	
+	/**
+	 * @see Articlerepository
+	 */
+	@Inject
+	private ArticleRepository Articlerepository;
 
 	/**
 	 * increment du stock lorsqu'un panier a atteint un time-out d'inactivité
@@ -62,8 +67,9 @@ public class StockManagerRepository {
 		while(i.hasNext()) // tant qu'on a un suivant
 		{
 			Article valeur = i.next();
-			valeur.getProduit().setStock(valeur.getProduit().getStock()+valeur.getQuotite());
-			Produitrepository.updateProduit(valeur.getProduit());
+			Produit p = Produitrepository.findById(valeur.getProduit().getId());
+			p.setStock(p.getStock()+valeur.getQuotite());
+			Produitrepository.updateProduit(p);
 		}
 	}
 
@@ -78,8 +84,9 @@ public class StockManagerRepository {
 		{
 			Article valeur = i.next();
 			if (valeur.getId() == article.getId()){
-				valeur.getProduit().setStock(valeur.getProduit().getStock()+1);
-				Produitrepository.updateProduit(valeur.getProduit());
+				Produit p = Produitrepository.findById(valeur.getProduit().getId());
+				p.setStock(p.getStock()+1);
+				Produitrepository.updateProduit(p);
 			}
 		}
 		panier.setDateDerniereModif(new Date());
@@ -98,8 +105,9 @@ public class StockManagerRepository {
 		{
 			Article valeur = i.next();
 			if (valeur.getId() == article.getId()){
-				valeur.getProduit().setStock(valeur.getProduit().getStock()-1);
-				Produitrepository.updateProduit(valeur.getProduit());
+				Produit p = Produitrepository.findById(valeur.getProduit().getId());
+				p.setStock(p.getStock()-1);
+				Produitrepository.updateProduit(p);
 			}
 		}
 		panier.setDateDerniereModif(new Date());
@@ -130,14 +138,11 @@ public class StockManagerRepository {
 
 	/**
 	 * Tache qui tourne sur le serveur:
-	 *   Elle supprime un panier au bou d'un time out d'inactivite,
+	 *   Elle supprime un panier au bout d'un time out d'inactivite,
 	 *   de maniere à liberer les stocks.
 	 */
 	private void initTimer() {
 		TimerTask timertask = new TimerTask() {
-
-			@Inject
-			private PanierRepository Panierrepository2;
 
 			public long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
 				long diffInMillies = date2.getTime() - date1.getTime();
@@ -146,25 +151,29 @@ public class StockManagerRepository {
 			@Override
 			public void run() {
 				Date today = new Date();
-				if (Panierrepository2 != null) {
-					List<Panier> paniers = Panierrepository2.getAll();
+				if (Panierrepository != null) {
+					List<Panier> paniers = Panierrepository.getAll();
 					for(Panier panier : paniers) {
 						if (!panier.getIsRegistred() && getDateDiff(panier.getDateDerniereModif(),today,TimeUnit.MINUTES) >= 1){
 							// on incrémente le stock
 							incrementeStock(panier);
+							for (Article a : panier.getArticles()){
+								a.setPanier(null);
+								Articlerepository.updateArticle(a);
+								Articlerepository.SupprimeArticle(a);
+							}
 							// on supprime le panier
-							Panierrepository2.SupprimePanier(panier);
+							Panierrepository.SupprimePanier(panier);
 							// on envoie un evenement suppression
 							// on l'envoie au moment où le client fait un put et que l'id du panier n'est plus en base
 						}
 					}
-					StockManagerRepository.isInit = true;
 				}
 			}
 		};
-
+		StockManagerRepository.isInit = true;
 		Timer timer = new Timer("mon timer");
-		timer.scheduleAtFixedRate(timertask, 0, 60000);
+		timer.schedule(timertask, 0, 60000);
 	}
 
 }

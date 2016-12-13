@@ -10,7 +10,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import fr.ecombio.model.Composition;
-import fr.ecombio.model.Produit;
 
 /**
  * <p>

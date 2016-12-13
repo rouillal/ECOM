@@ -24,13 +24,13 @@ import javax.servlet.http.HttpServletResponse;
         urlPatterns = "/image",
         initParams =
         {
-            @WebInitParam(name = "saveDir", value = "/Users/lorrie/Desktop/images/"),
+            @WebInitParam(name = "saveDir", value = "/home/apollinaire/Documents/UJF/M2/ECOM/images/"),
             @WebInitParam(name = "filenameParamName", value = "name")
         }
 )
 public class ImageProviderService extends HttpServlet implements ServletContextListener {
 	//Directory path where the files are stored
-	private String fileDirName;
+	//private String fileDirName;
 
 	/**
 	 * requete de l'image en http

@@ -8,17 +8,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
-import fr.ecombio.model.Article;
-import fr.ecombio.model.GestionArticle;
-import fr.ecombio.model.Panier;
-import fr.ecombio.model.Produit;
 import fr.ecombio.model.Saison;
-import fr.ecombio.data.ArticleRepository;
-import fr.ecombio.data.PanierRepository;
-import fr.ecombio.data.ProduitRepository;
 import fr.ecombio.data.SaisonRepository;
-import fr.ecombio.data.StockManagerRepository;
 
 /**
  * <p>

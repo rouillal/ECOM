@@ -31,7 +31,7 @@ public class HistoriqueCommande implements Serializable {
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "produit_id")
+	@Column(name = "historiquecommande_id")
 	private Long id;
 
 	/**

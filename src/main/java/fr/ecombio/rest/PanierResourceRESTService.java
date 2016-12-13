@@ -22,15 +22,12 @@ import javax.xml.ws.ResponseWrapper;
 import fr.ecombio.data.PanierRepository;
 import fr.ecombio.data.ArticleRepository;
 import fr.ecombio.data.ProduitRepository;
-import fr.ecombio.data.RegistreRepository;
 import fr.ecombio.data.StockManagerRepository;
 import fr.ecombio.model.Article;
 import fr.ecombio.model.GestionArticle;
 import fr.ecombio.model.InfosArticle;
 import fr.ecombio.model.Panier;
 import fr.ecombio.model.Produit;
-import fr.ecombio.model.SendEmail;
-import fr.ecombio.model.ValidationCommande;
 
 /**
  * <p>
@@ -88,9 +85,13 @@ public class PanierResourceRESTService {
 		Panier p = PanierRepository.findById(id);
 		List<InfosArticle> retour = new LinkedList<InfosArticle>();
 		if (p != null) {
+			this.log.info(p.toString());
 			for (Article a : p.getArticles()) {
-				retour.add(new InfosArticle(a.getProduit().getName(), a.getProduit().getVariete(), a.getProduit().getQuantite(), a.getQuotite(),  a.getProduit().getUnite()));
+				retour.add(new InfosArticle(a.getProduit().getName(), a.getProduit().getVariete(), a.getProduit().getQuantite(), a.getQuotite(),  a.getProduit().getUnite(), a.getProduit().getPrix()));
 			}
+		} else {
+			Throwable cause = new Throwable("Votre panier a été supprimé, temps d'inactivité trop long");
+			throw new WebApplicationException(cause,Response.Status.NOT_FOUND);
 		}
 		return retour;
 	}
@@ -127,12 +128,12 @@ public class PanierResourceRESTService {
 				ArticleRepository.AjoutArticle(a);
 				// on l'ajoute au panier
 				panier.getArticles().add(a);
+				// on va alors décrementer les stocks en base
 				StockManagerRepository.decrementeStock(panier,a);
 			} else {
 				return Response.notModified("Le stock de ce produit n'est pas suffisant").build();
 			}
 		}
-		// on va alors décrementer les stocks en base
 		PanierRepository.updatePanier(panier);
 		return Response.ok(PanierID).build();
 	}

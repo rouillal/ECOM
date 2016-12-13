@@ -51,7 +51,7 @@ public class Saison implements Serializable {
 	 * produits associés
 	 * @see ProduitSaison
 	 */
-	@OneToMany(mappedBy="saisons", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="saisons", fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
 	@JsonBackReference
 	private Set<ProduitSaison> produits;
 	
@@ -59,7 +59,7 @@ public class Saison implements Serializable {
 	 * recettes associees
 	 * @see RecetteSaison
 	 */
-	@OneToMany(mappedBy="saisons", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="saisons", fetch=FetchType.LAZY, cascade=CascadeType.DETACH)
 	@JsonBackReference
 	private Set<RecetteSaison> recettes;
 	
