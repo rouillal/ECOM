@@ -174,20 +174,23 @@ public class PanierResourceRESTService {
 				if (a!=null) {
 					if (a.getQuotite() < article.getQuotite() ) {
 						if (produit.getStock()>=1) {
-							for (int i =0; i<Math.abs(a.getQuotite() - article.getQuotite()) ; i++) {
-								StockManagerRepository.decrementeStock(panier,a);
+							log.log(Level.INFO, "quotité panier "+article.getQuotite());
+							log.log(Level.INFO, "quotité base "+a.getQuotite());
+							log.log(Level.INFO, "quotité stock "+produit.getStock());
+							for (int i =0; i<(article.getQuotite() - a.getQuotite()) ; i++) {
+								StockManagerRepository.decrementeStock(produit.getId());
 							}
 							a.setQuotite(article.getQuotite());
 							ArticleRepository.updateArticle(a);
 						} else {
 							log.log(Level.INFO, "echec pas de stock pour "+produit.getName()+", end transaction");
 							log.log(Level.INFO, "quotité panier "+article.getQuotite());
-							log.log(Level.INFO, "quotité base "+a.getQuotite());
+							log.log(Level.INFO, "quotité stock "+produit.getStock());
 							return Response.notModified("Le stock de ce produit n'est pas suffisant").build();
 						}
 					} else if (a.getQuotite() > article.getQuotite()) {
 						for (int i =0; i<Math.abs(a.getQuotite() - article.getQuotite()) ; i++) {
-							StockManagerRepository.incrementeStock(panier,a);
+							StockManagerRepository.incrementeStock(produit.getId());
 						}
 						a.setQuotite(article.getQuotite());
 						ArticleRepository.updateArticle(a);
@@ -203,7 +206,7 @@ public class PanierResourceRESTService {
 						ArticleRepository.AjoutArticle(a2);
 						panier.getArticles().add(a2);
 						for (int i =0; i<a2.getQuotite() ; i++) {
-							StockManagerRepository.decrementeStock(panier,a2);
+							StockManagerRepository.decrementeStock(produit.getId());
 						} 
 					} else {								
 						log.log(Level.INFO, "echec pas de stock pour "+produit.getName()+", end transaction");

@@ -7,6 +7,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import fr.ecombio.model.Article;
@@ -26,6 +27,7 @@ import fr.ecombio.model.Produit;
  * @see PanierRepository
  *
  */
+@Stateless
 public class StockManagerRepository {
 
 	private static boolean isInit = false;
