@@ -44,7 +44,7 @@ eComBioApp.factory('commandeSvc', [ '$rootScope', 'restBackendSvc', '$window','p
 		//$window.alert("messageServeurJson : "+messageServeurJson);
 		restBackendSvc.createItem('paiement', messageServeurJson).then(
 				function(data) {
-						panierSvc.resetPanier();
+						panierSvc.resetPanierDapresServeur();
 						$rootScope.$broadcast('recapAEditer');
 				}, function(error) {
 					if (error.status == 403) {
