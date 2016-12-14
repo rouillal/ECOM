@@ -1,16 +1,13 @@
 eComBioApp.controller('MainCtrl', [ '$scope', '$window','productSvc','categorieSvc','panierSvc', 'userInfoSvc','cookieStoreSvc',
                                     function($scope, $window,productSvc,categorieSvc,panierSvc,userInfoSvc,cookieStoreSvc) {
 	$scope.montantPanier = panierSvc.getMontantTotal();
-	$scope.user = userInfoSvc.getUserInfoPrenom();
 	$scope.anomalieTechnique = "";
+	$scope.isUserDefined = userInfoSvc.isUserDefined();
 	$scope.userInfo=userInfoSvc.getUserInfo();
 	$scope.isGestion = userInfoSvc.isGestion();
 	$scope.deconnect = function() {
 		userInfoSvc.deconnect();
-	}
-	
-	$scope.isUserDefined = function(){
-		return $scope.user.length > 0;
+		$scope.isUserDefined = false;
 	}
 	
 	$scope.isAdmin = userInfoSvc.isAdmin();
@@ -24,6 +21,7 @@ eComBioApp.controller('MainCtrl', [ '$scope', '$window','productSvc','categorieS
 		$scope.isAdmin = userInfoSvc.isAdmin();
 		$scope.user = userInfoSvc.getUserInfoPrenom();
 		$scope.userInfo=userInfoSvc.getUserInfo();
+		$scope.isUserDefined = userInfoSvc.isUserDefined();
 	});
 	
 	$scope.$on('anomalieTechnique', function(event, msg) {

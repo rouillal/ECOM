@@ -32,7 +32,7 @@ eComBioApp.factory('cookieStoreSvc', [ '$rootScope','$window','$cookies',
 		//$window.alert("frommm : "+name+" value : "+objetJson);
 		var ret = angular.fromJson(objetJson);
 		if (typeof ret == 'undefined') {
-			ret = [];
+			ret = '';
 		}
 		return ret;
 	}

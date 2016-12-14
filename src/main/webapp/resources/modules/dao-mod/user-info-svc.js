@@ -1,17 +1,22 @@
 eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','commandeSvc','cookieStoreSvc',
                                     function($rootScope,restBackendSvc,$window,commandeSvc,cookieStoreSvc) {
-
+	
 	var userInfo = cookieStoreSvc.getStoredLocalItem('userInfo');
 	commandeSvc.setCommandInfo(userInfo);
 	$rootScope.$broadcast('userConnectionChanged');
-	if (typeof userInfo == 'undefined') {
+	if (userInfo == '') {
 		userInfo = {'nom':'','prenom':'','mail':'biotobealive@gmail.com','adresse':'','cp':'','ville':'','psw':'','typeClient':'n'};
 	}
+	
 	var userInfoToPersist = {'nom':'','prenom':'','mail':'','adresse':'','cp':'','ville':'','psw':''};
 	
 	var getInfoInit = function() {
 		return userInfo;
 	};
+	
+	var isUserDefined = function(){
+		return (userInfo != '') && (userInfo.prenom.length > 0);
+	}
 	
 	var getUserInfo = function() {
 		return userInfo;
@@ -85,6 +90,7 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','c
 		getUserInfoPrenom : getUserInfoPrenom,
 		isAdmin : isAdmin,
 		isGestion : isGestion,
+		isUserDefined : isUserDefined,
 		deconnect : deconnect
 	};
 } ]);
