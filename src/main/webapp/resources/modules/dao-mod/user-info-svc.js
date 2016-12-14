@@ -2,6 +2,7 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','c
                                     function($rootScope,restBackendSvc,$window,commandeSvc,cookieStoreSvc) {
 
 	var userInfo = cookieStoreSvc.getStoredLocalItem('userInfo');
+	commandeSvc.setCommandInfo(userInfo);
 	$rootScope.$broadcast('userConnectionChanged');
 	if (typeof userInfo == 'undefined') {
 		userInfo = {'nom':'','prenom':'','mail':'biotobealive@gmail.com','adresse':'','cp':'','ville':'','psw':'','typeClient':'n'};
@@ -73,6 +74,7 @@ eComBioApp.factory('userInfoSvc', [ '$rootScope', 'restBackendSvc', '$window','c
 	var deconnect = function() {
 		userInfo = {'nom':'','prenom':'','mail':'','adresse':'','cp':'','ville':'','psw':'','typeClient':'n'};
 		cookieStoreSvc.storeLocalItem('userInfo',userInfo);
+		commandeSvc.setCommandInfo(userInfo);
 		$rootScope.$broadcast('userConnectionChanged');
 	};
 
