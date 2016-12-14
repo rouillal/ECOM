@@ -39,7 +39,6 @@ public class Categorie implements Serializable {
 	@Size(min = 1, max = 25)
 	@Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
     @Column(name = "categorie_name")
-	@Index(name = "name")
 	private String name;
 	
 	/**

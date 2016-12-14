@@ -24,8 +24,7 @@ import javax.servlet.http.HttpServletResponse;
         urlPatterns = "/image",
         initParams =
         {
-            @WebInitParam(name = "saveDir", value = "/home/apollinaire/Documents/UJF/M2/ECOM/images/"),
-            @WebInitParam(name = "filenameParamName", value = "name")
+            @WebInitParam(name = "saveDir", value = "/home/im2ag/images/"),
         }
 )
 public class ImageProviderService extends HttpServlet implements ServletContextListener {

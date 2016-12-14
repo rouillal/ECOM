@@ -48,7 +48,7 @@ public class Client implements Serializable {
 	 * mail (doit etre unique)
 	 */
 	@NotNull
-	@Column(name = "client_mail")
+	@Column(unique = true, name = "client_mail")
 	@Index(name = "mail2")
 	private String mail;
 

@@ -3,6 +3,7 @@ package fr.ecombio.model;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.jdo.annotations.Index;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,7 +45,8 @@ public class Saison implements Serializable {
 	 */
 	@Size(min = 1, max = 25)
 	@Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
-    @Column(name = "saison_name")
+    @Column(unique = true, name = "saison_name")
+	@Index(name="nameSaison")
 	private String name;
 	
 	/**

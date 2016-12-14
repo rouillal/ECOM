@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "produit")
+@Table(name = "produit", uniqueConstraints=@UniqueConstraint(columnNames={"produit_name", "produit_variete"}))
 public class Produit implements Serializable {
 	
 	/**
@@ -131,6 +131,7 @@ public class Produit implements Serializable {
 	@Size(min = 1, max = 25)
 	@Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
     @Column(name = "produit_name")
+	@Index(name = "nameProduit")
 	private String name;
 
 	/**
