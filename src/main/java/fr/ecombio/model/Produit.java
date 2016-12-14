@@ -130,7 +130,8 @@ public class Produit implements Serializable {
 	@NotNull
 	@Size(min = 1, max = 25)
 	@Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
-    @Column(name = "produit_name")
+    @Column(unique = true, name = "produit_name")
+	@Index(name = "nameProduit")
 	private String name;
 
 	/**
