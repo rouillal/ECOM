@@ -28,8 +28,8 @@ eComBioApp.factory('cookieStoreSvc', [ '$rootScope','$window','$cookies',
 	}
 	
 	var getStoredLocalItem = function(name) {
-		//$window.alert("from : "+name+" value : "+$cookies.get(name));
 		var objetJson = $cookies.get(name);
+		//$window.alert("frommm : "+name+" value : "+objetJson);
 		var ret = angular.fromJson(objetJson);
 		if (typeof ret == 'undefined') {
 			ret = [];

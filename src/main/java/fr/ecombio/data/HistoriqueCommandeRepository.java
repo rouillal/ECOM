@@ -81,8 +81,8 @@ public class HistoriqueCommandeRepository {
 		}
 		criteria.where(predicate);
 		TypedQuery<HistoriqueCommande> typequery = em.createQuery(criteria);
-		typequery.setFirstResult(page*2);
-		typequery.setMaxResults(2);
+		typequery.setFirstResult(page*10);
+		typequery.setMaxResults(10);
 		return typequery.getResultList();
 	}
 
@@ -119,7 +119,7 @@ public class HistoriqueCommandeRepository {
 			predicate = cb.and(predicate,p2);
 		}
 		criteria.where(predicate);
-		return (long) (Math.ceil((float)em.createQuery(criteria).getSingleResult()/2)) ;
+		return (long) (Math.ceil((float)em.createQuery(criteria).getSingleResult()/10)) ;
 	}
 	/**
 	 * Mise a jour de l'etat d'une commande
