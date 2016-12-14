@@ -9,6 +9,10 @@ eComBioApp.controller('MainCtrl', [ '$scope', '$window','productSvc','categorieS
 		userInfoSvc.deconnect();
 	}
 	
+	$scope.isUserDefined = function(){
+		return $scope.user.length > 0;
+	}
+	
 	$scope.isAdmin = userInfoSvc.isAdmin();
 	
 	$scope.$on('rafraichirPanier', function(event,listePanierParam,montantTotalParam) {
