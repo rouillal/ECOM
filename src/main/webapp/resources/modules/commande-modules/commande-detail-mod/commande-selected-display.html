@@ -11,7 +11,6 @@
 					{{listeHoraires[selectedCommandeDetail.heure].libelle}}h</div>
 			</div>
 			<div class="modal-body">
-				<h4>listePanier:{{listePanier}}</h4>
 				<div>Client :
 					{{selectedCommandeDetail.client.nom}}&nbsp;{{selectedCommandeDetail.client.prenom}}</div>
 				<div ng-show="selectedCommandeDetail.livDom=='e'">Livraison :
@@ -20,8 +19,8 @@
 					{{selectedCommandeDetail.client.adresse}} -
 					{{selectedCommandeDetail.client.cp}}
 					{{selectedCommandeDetail.client.ville}}</div>
-				<div>Produits commandés :</div>
-				<div style="margin-top: 20px;"
+				<div style="margin-top: 20px;">Produits commandés :</div>
+				<div 
 					ng-repeat="ligne in listePanier">
 					<div>{{ligne.name}} {{ligne.variete}}:
 						{{ligne.quantite}} {{ligne.unite}} x{{ligne.quotite}}</div>
