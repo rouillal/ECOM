@@ -121,7 +121,7 @@ public class StockManagerRepository {
 				if (Panierrepository != null) {
 					List<Panier> paniers = Panierrepository.getAll();
 					for(Panier panier : paniers) {
-						if (!panier.getIsRegistred() && getDateDiff(panier.getDateDerniereModif(),today,TimeUnit.MINUTES) >= 1){
+						if (!panier.getIsRegistred() && getDateDiff(panier.getDateDerniereModif(),today,TimeUnit.MINUTES) >= 3){
 							// on incrémente le stock
 							incrementeStock(panier);
 							for (Article a : panier.getArticles()){
