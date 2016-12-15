@@ -1,6 +1,6 @@
-eComBioApp.controller('RecettePanierCtrl', [ '$scope','$window','panierSvc','imgProviderSvc',function($scope,$window,panierSvc,imgProviderSvc) {
+eComBioApp.controller('RecettePanierCtrl', [ '$scope','$window','$timeout','panierSvc','imgProviderSvc',function($scope,$window,$timeout,panierSvc,imgProviderSvc) {
 	$scope.listeProduitsRecette = [];
-	$scope.selectedProduit='';
+	$scope.selectedProduitRecette='';
 	$scope.errorStock='';
 
 	$scope.isErrorMessage = function() {
@@ -8,8 +8,8 @@ eComBioApp.controller('RecettePanierCtrl', [ '$scope','$window','panierSvc','img
 	}
 
 	$scope.$on('StockInsuffisant', function(event) {
-		$scope.selectedProduit.quotite = $scope.selectedProduit.quotite - 1 ;
 		$scope.errorStock = "Votre produit n'est plus en stock";
+		$timeout(function(){$scope.errorStock = ''}, 5000);
 		});
 
 	$scope.$on('StockOk', function(event) {
@@ -18,27 +18,27 @@ eComBioApp.controller('RecettePanierCtrl', [ '$scope','$window','panierSvc','img
 
 	$scope.selectDetailsProduit = function(selectedProduitParam) {
 		panierSvc.setSelectedProduit(selectedProduitParam);
-		$scope.selectedProduit=selectedProduitParam;
+		$scope.selectedProduitRecette=selectedProduitParam;
 	}
 
-	$scope.isMoinsProduitInactif = function(produitSelect) {
+	$scope.isMoinsProduitInactifRecettePanier = function(produitSelect) {
 		return !(produitSelect.quotite > 0);
 	};
 
-	$scope.moinsProduit = function(produitSelect) {
-		$scope.selectedProduit=produitSelect;
+	$scope.moinsProduitRecettePanier = function(produitSelect) {
+		$scope.selectedProduitRecette=produitSelect;
 		if (produitSelect.quotite > 0) {
 			panierSvc.changeProduit(produitSelect,
 					produitSelect.quotite -1);
 		}
 	};
 
-	$scope.isPlusProduitInactif = function(produitSelect) {
+	$scope.isPlusProduitInactifRecettePanier = function(produitSelect) {
 		return false;
 	};
 
-	$scope.plusProduit = function(produitSelect) {
-		$scope.selectedProduit=produitSelect;
+	$scope.plusProduitRecettePanier = function(produitSelect) {
+		$scope.selectedProduitRecette=produitSelect;
 		panierSvc.changeProduit(produitSelect,
 				produitSelect.quotite + 1);
 	};
@@ -71,6 +71,7 @@ eComBioApp.controller('RecettePanierCtrl', [ '$scope','$window','panierSvc','img
 			if (produit.id == produitAChanger.id) {
 				produit.quotite=quantite;
 			}
+			
 		});
 	});
 

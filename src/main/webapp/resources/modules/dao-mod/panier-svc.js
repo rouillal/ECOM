@@ -133,6 +133,8 @@ eComBioApp.factory('panierSvc', [
 					var urlUpdate = 'panier?id='+idPanierServer;
 					restBackendSvc.updateItem(urlUpdate, panierJson).then(function(response) {
 						$rootScope.$broadcast('StockOk');
+						$rootScope.$broadcast('selectedProduitChange', produitAChanger,
+								quantite);
 					}, function(error) {
 						if (error.status == 304) {
 							montantTotal = 0;
@@ -158,6 +160,23 @@ eComBioApp.factory('panierSvc', [
 										idPanierServer = data.data;
 										cookieStoreSvc.storeLocalString('idPanierServer',idPanierServer);
 										$window.alert("Panier créé à nouveau !");
+										$rootScope.$broadcast('selectedProduitChange', produitAChanger,
+												quantite);
+									}, function(error) {
+										if (error.status == 304) {
+											montantTotal = 0;
+											angular.forEach(listePanier, function(ligneArticle, key) {
+												if (produitAChanger.id == ligneArticle.id) {
+													ligneArticle.quotite = quantite-1;
+													ligneArticle.prixTotal = Math.round((quantite-1) * ligneArticle.prix*100)/100;
+													ligne = ligneArticle;
+												}
+												montantTotal += ligneArticle.prixTotal;
+											});
+											$rootScope.$broadcast('rafraichirPanier',listePanier,montantTotal);
+											$rootScope.$broadcast('StockInsuffisant');
+											$rootScope.$broadcast('anomalieTechnique', "Plus de stock");
+										}
 									});
 						} else {
 							montantTotal = 0;
@@ -175,8 +194,6 @@ eComBioApp.factory('panierSvc', [
 						}
 					});
 				}
-				$rootScope.$broadcast('selectedProduitChange', produitAChanger,
-						quantite);
 				$rootScope.$broadcast('rafraichirPanier',listePanier,montantTotal);
 			};
 			
