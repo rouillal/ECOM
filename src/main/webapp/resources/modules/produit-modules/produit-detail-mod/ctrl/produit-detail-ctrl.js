@@ -1,8 +1,9 @@
 eComBioApp.controller('ProduitDetailCtrl', [
 		'$scope',
 		'$window',
+		'$timeout',
 		'panierSvc',
-		function($scope, $window, panierSvc) {
+		function($scope, $window, $timeout, panierSvc) {
 			$scope.selectedProduitDetail = '';
 			$scope.panierQuantite = 0;
 			$scope.panierPrixQt = 0;
@@ -37,6 +38,7 @@ eComBioApp.controller('ProduitDetailCtrl', [
 
 			$scope.$on('selectedProduitChange', function(event,
 					newSelectedProduit, qt ) {
+				$scope.errorStock = '';
 				$scope.selectedProduitDetail = newSelectedProduit;
 				$scope.panierQuantite = qt;
 				$scope.panierPrixQt = Math.round(qt * newSelectedProduit.prix*100)/100;
@@ -44,22 +46,28 @@ eComBioApp.controller('ProduitDetailCtrl', [
 			
 			
 			$scope.$on('StockInsuffisant', function(event) {
-				$scope.panierQuantite = $scope.panierQuantite - 1 ;
 				$scope.errorStock = "Votre produit n'est plus en stock";
-			});
+				$timeout(function(){$scope.errorStock = ''}, 5000);
+				});
 			
 			$scope.$on('StockOk', function(event) {
 				$scope.errorStock = '';
 			});
 			
-			
-			$(document).ready(function(){
-					$('#tooltip').tooltip({title: "Ajouté", trigger: "click"}); 
+			$scope.$on('rafraichirPanier', function(event,listePanierParam,montantTotalParam) {
+				$scope.panierQuantite=panierSvc.getPanierQuantite($scope.selectedProduitDetail);
+				$scope.panierPrixQt = Math.round(qt * newSelectedProduit.prix*100)/100;
 			});
 			
-			$('#tooltip').on('shown.bs.tooltip', function () {
+			
+			
+			$(document).ready(function(){
+			    $('[data-toggle="tooltip"]').tooltip({trigger: "click"});   
+			});
+			
+			$('[data-toggle="tooltip"]').on('shown.bs.tooltip', function () {
 				   setTimeout(function () {
-				    $('#tooltip').tooltip('hide');
-				   }, 1000);
+				    $('[data-toggle="tooltip"]').tooltip('hide');
+				   }, 500);
 				})
 		} ]);

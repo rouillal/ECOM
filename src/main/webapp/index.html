@@ -124,7 +124,7 @@
 			<li ng-show="isAdmin || isGestion" class="col-md-2 col-xs-1"></li>
 			<li class="col-md-1 col-xs-5" ng-class="menuIndice == 6 ? 'current':''" ng-show="isAdmin || isGestion"><a
 				ng-click="menuIndice = 6" id="gestion" href="#/gestion""> </a></li>
-			<li class="col-md-1 col-xs-5" ng-class="(menuIndice == $location.path()) || (menuIndice == 1) ? 'current':''"><a
+			<li class="col-md-1 col-xs-5" ng-class="(menuIndice == 1) ? 'current':''"><a
 				ng-click="menuIndice = 1" id="product" href="#"> </a></li>
 			<li class="col-md-1 col-xs-5" ng-class="menuIndice == 2 ? 'current':''"><a
 				id="recette" ng-click="menuIndice = 2" href="#/recette"> </a></li>

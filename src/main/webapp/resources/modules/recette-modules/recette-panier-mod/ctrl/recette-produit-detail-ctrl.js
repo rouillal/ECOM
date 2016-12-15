@@ -1,8 +1,9 @@
 eComBioApp.controller('RecetteProduitDetailCtrl', [
 		'$scope',
 		'$window',
+		'$timeout',
 		'panierSvc',
-		function($scope, $window, panierSvc) {
+		function($scope, $window, $timeout, panierSvc) {
 			$scope.selectedProduitRecette = panierSvc.getSelectedProduit();
 			$scope.panierQuantite = 0;
 			$scope.panierPrixQt = 0;
@@ -13,9 +14,9 @@ eComBioApp.controller('RecetteProduitDetailCtrl', [
 			}
 			
 			$scope.$on('StockInsuffisant', function(event) {
-				$scope.panierQuantite = $scope.panierQuantite - 1 ;
 				$scope.errorStock = "Votre produit n'est plus en stock";
-			});
+				$timeout(function(){$scope.errorStock = ''}, 5000);
+				});
 			
 			$scope.$on('StockOk', function(event) {
 				$scope.errorStock = '';
@@ -46,6 +47,7 @@ eComBioApp.controller('RecetteProduitDetailCtrl', [
 
 			$scope.$on('selectedProduitChange', function(event,
 					newSelectedProduit, qt ) {
+				$scope.errorStock='';
 				$scope.selectedProduitRecette = newSelectedProduit;
 				$scope.panierQuantite = qt;
 				$scope.panierPrixQt = Math.round(qt * newSelectedProduit.prix*100)/100;

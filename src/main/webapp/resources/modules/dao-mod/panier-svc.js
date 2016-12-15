@@ -104,7 +104,7 @@ eComBioApp.factory('panierSvc', [
 			}
 
 			var changeProduit = function(produitAChanger, quantite) {
-				if (quantite == 0) {
+				if (quantite <= 0) {
 					supprimeArticlePanier(produitAChanger);
 				} else {
 					var ligne = '';
@@ -133,6 +133,8 @@ eComBioApp.factory('panierSvc', [
 					var urlUpdate = 'panier?id='+idPanierServer;
 					restBackendSvc.updateItem(urlUpdate, panierJson).then(function(response) {
 						$rootScope.$broadcast('StockOk');
+						$rootScope.$broadcast('selectedProduitChange', produitAChanger,
+								quantite);
 					}, function(error) {
 						if (error.status == 304) {
 							montantTotal = 0;
@@ -150,14 +152,23 @@ eComBioApp.factory('panierSvc', [
 						} else if (error.status == 404) {
 							resetPanierDapresServeur();
 							$window.alert("Votre panier a été supprimé, temps d'inactivité trop long - Recréation - ");
-							resetPanierDapresServeur();
-							addProduitNew(produitAChanger,1);
+							quantite=1;
+							addProduitNew(produitAChanger,quantite);
 							panierJson = prepareMessageServeur();
 							restBackendSvc.createItem('panier', panierJson).then(
 									function(data) {
 										idPanierServer = data.data;
 										cookieStoreSvc.storeLocalString('idPanierServer',idPanierServer);
 										$window.alert("Panier créé à nouveau !");
+										$rootScope.$broadcast('selectedProduitChange', produitAChanger,
+												quantite);
+									}, function(error) {
+										if (error.status == 304) {
+											supprimeArticlePanier(produitAChanger);
+											$rootScope.$broadcast('rafraichirPanier',listePanier,montantTotal);
+											$rootScope.$broadcast('StockInsuffisant');
+											$rootScope.$broadcast('anomalieTechnique', "Plus de stock");
+										}
 									});
 						} else {
 							montantTotal = 0;
@@ -175,8 +186,6 @@ eComBioApp.factory('panierSvc', [
 						}
 					});
 				}
-				$rootScope.$broadcast('selectedProduitChange', produitAChanger,
-						quantite);
 				$rootScope.$broadcast('rafraichirPanier',listePanier,montantTotal);
 			};
 			
