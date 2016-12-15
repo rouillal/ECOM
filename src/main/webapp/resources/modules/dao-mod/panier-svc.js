@@ -104,7 +104,7 @@ eComBioApp.factory('panierSvc', [
 			}
 
 			var changeProduit = function(produitAChanger, quantite) {
-				if (quantite == 0) {
+				if (quantite <= 0) {
 					supprimeArticlePanier(produitAChanger);
 				} else {
 					var ligne = '';

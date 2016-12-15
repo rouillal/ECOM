@@ -46,6 +46,7 @@ eComBioApp.controller('RecetteProduitDetailCtrl', [
 
 			$scope.$on('selectedProduitChange', function(event,
 					newSelectedProduit, qt ) {
+				$scope.errorStock='';
 				$scope.selectedProduitRecette = newSelectedProduit;
 				$scope.panierQuantite = qt;
 				$scope.panierPrixQt = Math.round(qt * newSelectedProduit.prix*100)/100;

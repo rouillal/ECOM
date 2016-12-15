@@ -37,6 +37,7 @@ eComBioApp.controller('ProduitDetailCtrl', [
 
 			$scope.$on('selectedProduitChange', function(event,
 					newSelectedProduit, qt ) {
+				$scope.errorStock = '';
 				$scope.selectedProduitDetail = newSelectedProduit;
 				$scope.panierQuantite = qt;
 				$scope.panierPrixQt = Math.round(qt * newSelectedProduit.prix*100)/100;
@@ -53,13 +54,14 @@ eComBioApp.controller('ProduitDetailCtrl', [
 			});
 			
 			
+			
 			$(document).ready(function(){
-					$('#tooltip').tooltip({title: "Ajouté", trigger: "click"}); 
+			    $('[data-toggle="tooltip"]').tooltip({trigger: "click"});   
 			});
 			
-			$('#tooltip').on('shown.bs.tooltip', function () {
+			$('[data-toggle="tooltip"]').on('shown.bs.tooltip', function () {
 				   setTimeout(function () {
-				    $('#tooltip').tooltip('hide');
-				   }, 1000);
+				    $('[data-toggle="tooltip"]').tooltip('hide');
+				   }, 500);
 				})
 		} ]);
