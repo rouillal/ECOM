@@ -54,6 +54,11 @@ eComBioApp.controller('ProduitDetailCtrl', [
 				$scope.errorStock = '';
 			});
 			
+			$scope.$on('rafraichirPanier', function(event,listePanierParam,montantTotalParam) {
+				$scope.panierQuantite=panierSvc.getPanierQuantite($scope.selectedProduitDetail);
+				$scope.panierPrixQt = Math.round(qt * newSelectedProduit.prix*100)/100;
+			});
+			
 			
 			
 			$(document).ready(function(){

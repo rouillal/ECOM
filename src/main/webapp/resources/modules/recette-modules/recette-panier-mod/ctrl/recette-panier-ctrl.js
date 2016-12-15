@@ -65,6 +65,13 @@ eComBioApp.controller('RecettePanierCtrl', [ '$scope','$window','$timeout','pani
 			produit['url']=imgProviderSvc.getImage(produit.filename);
 		});
 	});
+	
+	$scope.$on('rafraichirPanier', function(event,listePanierParam,montantTotalParam) {
+		angular.forEach($scope.listeProduitsRecette, function(produit, key) {
+			produit.quotite=panierSvc.getPanierQuantite(produit);
+			produit['quotite']=panierSvc.getPanierQuantite(produit);
+		});
+	});
 
 	$scope.$on('selectedProduitChange', function(event,produitAChanger,quantite) {
 		angular.forEach($scope.listeProduitsRecette, function(produit, key) {
